@@ -38,9 +38,9 @@ import java.nio.ByteBuffer;
  */
 public class UINT extends Type {
 
-	private static final long MIN_VALUE = 0;
+	public static final long MIN_VALUE = 0;
 
-	private static final long MAX_VALUE = 4294967295L;
+	public static final long MAX_VALUE = 4294967295L;
 
 	private static final int SIZE = 4;
 
