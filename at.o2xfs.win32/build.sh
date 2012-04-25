@@ -1,0 +1,1 @@
+make -f "`dirname "$0"`/native/O2XfsWIN32/O2XfsWIN32.mk" basedir="`dirname "$0"`"
