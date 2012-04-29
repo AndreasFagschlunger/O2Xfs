@@ -1,0 +1,35 @@
+<project name="O2XfsLogger" basedir="." default="compile">
+	<property name="src.dir" value="./src" />
+	<property name="build.dir" value="bin"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="lib.dir" value="${build.dir}/lib"/>
+	<property name="dist.dir" value="${build.dir}/dist"/>
+	
+	<target name="clean">
+		<delete dir="${build.dir}"/>		
+	</target>
+	
+	<target name="compile" depends="clean">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${lib.dir}" />
+		<copy todir="${lib.dir}" flatten="true">
+			<fileset dir="C:/Programme/Java">
+				<include name="slf4j-1.6.1/slf4j-api-1.6.1.jar" />
+				<include name="slf4j-1.6.1/slf4j-log4j12-1.6.1.jar" />
+				<include name="apache-log4j-1.2.16/log4j-1.2.16.jar" />
+			</fileset>
+		</copy>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}">
+			<classpath>				
+				<pathelement location="${lib.dir}/slf4j-api-1.6.1.jar" />
+			</classpath>
+		</javac>
+		
+	</target>
+	
+	<target name="jar" depends="compile">
+		<mkdir dir="${dist.dir}" />
+		<jar destfile="${dist.dir}/at.o2xfs.log.jar" basedir="${classes.dir}" />
+	</target>
+</project>
