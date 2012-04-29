@@ -25,19 +25,36 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINMessage implements XfsConstant {
+
+	/**
+	 * A key has been pressed at the PIN pad.
+	 */
+	WFS_EXEE_PIN_KEY(401L),
+
+	/**
+	 * The encryption module is now initialized.
+	 */
+	WFS_SRVE_PIN_INITIALIZED(402L),
+
+	/**
+	 * An error occured accessing an encryption key.
+	 */
+	WFS_SRVE_PIN_ILLEGAL_KEY_ACCESS(403L);
+
+	private final long value;
+
+	private PINMessage(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
+
 }

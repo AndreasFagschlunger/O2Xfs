@@ -25,19 +25,33 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.util;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import java.util.Set;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+import at.o2xfs.win32.DWORD;
+import at.o2xfs.xfs.XfsConstant;
+
+public class Bitmask {
+
+	public static DWORD of(final XfsConstant... values) {
+		int result = 0;
+		if (values != null) {
+			for (final XfsConstant value : values) {
+				result |= value.getValue();
+			}
+		}
+		final DWORD dword = new DWORD();
+		dword.allocate();
+		dword.put(result);
+		return dword;
 	}
 
-	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public static <E extends Enum<E>> long of(final Set<E> enums) {
+		long mask = 0L;
+		for (final E e : enums) {
+			mask |= ((XfsConstant) e).getValue();
+		}
+		return mask;
 	}
 }

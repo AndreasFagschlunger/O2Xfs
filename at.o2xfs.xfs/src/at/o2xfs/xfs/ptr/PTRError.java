@@ -25,19 +25,40 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.ptr;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PTRError implements XfsConstant {
+
+	WFS_ERR_PTR_FORMNOTFOUND(-100L),
+	WFS_ERR_PTR_FIELDNOTFOUND(-101L),
+	WFS_ERR_PTR_NOMEDIAPRESENT(-102L),
+	WFS_ERR_PTR_READNOTSUPPORTED(-103L),
+	WFS_ERR_PTR_FLUSHFAIL(-104L),
+	WFS_ERR_PTR_MEDIAOVERFLOW(-105L),
+	WFS_ERR_PTR_FIELDSPECFAILURE(-106L),
+	WFS_ERR_PTR_FIELDERROR(-107L),
+	WFS_ERR_PTR_MEDIANOTFOUND(-108L),
+	WFS_ERR_PTR_EXTENTNOTSUPPORTED(-109L),
+	WFS_ERR_PTR_MEDIAINVALID(-110L),
+	WFS_ERR_PTR_FORMINVALID(-111L),
+	WFS_ERR_PTR_FIELDINVALID(-112L),
+	WFS_ERR_PTR_MEDIASKEWED(-113L),
+	WFS_ERR_PTR_RETRACTBINFULL(-114L),
+	WFS_ERR_PTR_STACKERFULL(-115L),
+	WFS_ERR_PTR_PAGETURNFAIL(-116L),
+	WFS_ERR_PTR_MEDIATURNFAIL(-117L);
+
+	private long value = 0;
+
+	private PTRError(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
+
 }

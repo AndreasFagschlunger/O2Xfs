@@ -25,19 +25,80 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import org.apache.commons.lang.builder.ToStringBuilder;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+import at.o2xfs.win32.ByteArray;
+import at.o2xfs.win32.Pointer;
+import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.USHORT;
+
+public class WFSXDATA extends Structure {
+
+	/**
+	 * @since 3.10
+	 */
+	private final USHORT length = new USHORT();
+
+	/**
+	 * @since 3.10
+	 */
+	private final Pointer data = new Pointer();
+
+	public WFSXDATA() {
+		add(length);
+		add(data);
+	}
+
+	public WFSXDATA(final Pointer p) {
+		this();
+		useBuffer(p);
+	}
+
+	public WFSXDATA(final WFSXDATA xData) {
+		this();
+		allocate();
+		setData(xData.getData());
+	}
+
+	/**
+	 * {@link #length}
+	 */
+	private int getLength() {
+		return length.intValue();
+	}
+
+	/**
+	 * {@link #length}
+	 */
+	private void setLength(final int length) {
+		this.length.put(length);
+	}
+
+	/**
+	 * {@link #data}
+	 */
+	public byte[] getData() {
+		if (Pointer.NULL.equals(data)) {
+			return null;
+		}
+		final byte[] b = new byte[getLength()];
+		data.get(b.length).get(b);
+		return b;
+	}
+
+	/**
+	 * {@link #data}
+	 */
+	public void setData(final byte[] data) {
+		setLength(data.length);
+		this.data.pointTo(new ByteArray(data));
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public String toString() {
+		return new ToStringBuilder(this).append("length", getLength())
+				.append("data", getData()).toString();
 	}
 }

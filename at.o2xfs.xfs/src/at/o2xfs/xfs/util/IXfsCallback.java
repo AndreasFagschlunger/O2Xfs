@@ -25,19 +25,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.util;
+
+import at.o2xfs.xfs.WFSResult;
+import at.o2xfs.xfs.XfsMessage;
 
 /**
  * @author Andreas Fagschlunger
  */
-public class XfsServiceException extends XfsException {
+public interface IXfsCallback {
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
-	}
-
-	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
-	}
+	public void callback(XfsMessage msg, WFSResult wfsResult);
 }

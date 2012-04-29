@@ -25,19 +25,53 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINFDK implements XfsConstant {
+	WFS_PIN_FK_FDK01(0x00000001L),
+	WFS_PIN_FK_FDK02(0x00000002L),
+	WFS_PIN_FK_FDK03(0x00000004L),
+	WFS_PIN_FK_FDK04(0x00000008L),
+	WFS_PIN_FK_FDK05(0x00000010L),
+	WFS_PIN_FK_FDK06(0x00000020L),
+	WFS_PIN_FK_FDK07(0x00000040L),
+	WFS_PIN_FK_FDK08(0x00000080L),
+	WFS_PIN_FK_FDK09(0x00000100L),
+	WFS_PIN_FK_FDK10(0x00000200L),
+	WFS_PIN_FK_FDK11(0x00000400L),
+	WFS_PIN_FK_FDK12(0x00000800L),
+	WFS_PIN_FK_FDK13(0x00001000L),
+	WFS_PIN_FK_FDK14(0x00002000L),
+	WFS_PIN_FK_FDK15(0x00004000L),
+	WFS_PIN_FK_FDK16(0x00008000L),
+	WFS_PIN_FK_FDK17(0x00010000L),
+	WFS_PIN_FK_FDK18(0x00020000L),
+	WFS_PIN_FK_FDK19(0x00040000L),
+	WFS_PIN_FK_FDK20(0x00080000L),
+	WFS_PIN_FK_FDK21(0x00100000L),
+	WFS_PIN_FK_FDK22(0x00200000L),
+	WFS_PIN_FK_FDK23(0x00400000L),
+	WFS_PIN_FK_FDK24(0x00800000L),
+	WFS_PIN_FK_FDK25(0x01000000L),
+	WFS_PIN_FK_FDK26(0x02000000L),
+	WFS_PIN_FK_FDK27(0x04000000L),
+	WFS_PIN_FK_FDK28(0x08000000L),
+	WFS_PIN_FK_FDK29(0x10000000L),
+	WFS_PIN_FK_FDK30(0x20000000L),
+	WFS_PIN_FK_FDK31(0x40000000L),
+	WFS_PIN_FK_FDK32(0x80000000L);
+
+	private final long value;
+
+	private PINFDK(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
+
 }

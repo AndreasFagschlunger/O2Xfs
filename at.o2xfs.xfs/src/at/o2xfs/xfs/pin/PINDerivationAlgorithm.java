@@ -25,19 +25,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINDerivationAlgorithm implements XfsConstant {
+
+	/**
+	 * Algorithm for the derivation of a chip card individual key as described
+	 * by the German ZKA.
+	 */
+	WFS_PIN_CHIP_ZKA(0x0001L);
+
+	private final long value;
+
+	private PINDerivationAlgorithm(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

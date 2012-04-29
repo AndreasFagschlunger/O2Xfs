@@ -25,19 +25,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.AbstractXfsExceptionFactory;
+import at.o2xfs.xfs.XfsException;
+import at.o2xfs.xfs.XfsServiceClass;
+import at.o2xfs.xfs.util.XfsConstants;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public class PINServiceExceptionFactory extends AbstractXfsExceptionFactory {
+
+	public PINServiceExceptionFactory() {
+		super(XfsServiceClass.WFS_SERVICE_CLASS_PIN);
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public void throwException(final long errorCode) throws XfsException {
+		final PINError error = XfsConstants.valueOf(errorCode, PINError.class);
+		switch (error) {
+			default:
+				throw new PINServiceException(error);
+		}
 	}
+
 }

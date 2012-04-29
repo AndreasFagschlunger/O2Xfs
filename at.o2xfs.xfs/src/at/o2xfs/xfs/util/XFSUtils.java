@@ -25,19 +25,58 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.util;
 
 /**
  * @author Andreas Fagschlunger
  */
-public class XfsServiceException extends XfsException {
+public class XFSUtils {
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+	public static int getVersionsRequired(String lowestVersion,
+			String highestVersion) {
+		int versionsRequired = getVersion(lowestVersion);
+		versionsRequired <<= 16;
+		versionsRequired |= getVersion(highestVersion);
+		return versionsRequired;
 	}
 
-	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public static short getVersion(String version) {
+		short s = 0;
+		int endIndex = version.indexOf('.');
+		if (endIndex >= 0) {
+			String minorVersion = version.substring(endIndex + 1);
+			if (minorVersion.length() > 0) {
+				try {
+					short minor = Short.parseShort(minorVersion);
+					if (minor < 0 || minor > 255) {
+						throw new IllegalArgumentException(
+								"Minor version out of range. Value:\"" + minor
+										+ "\"");
+					}
+					minor <<= 8;
+					s |= minor;
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			endIndex = version.length();
+		}
+		String majorVersion = version.substring(0, endIndex);
+		if (majorVersion.length() > 0) {
+			short major = Short.parseShort(majorVersion);
+			if (major < 0 || major > 255) {
+				throw new IllegalArgumentException(
+						"Major version out of range. Value:\"" + majorVersion
+								+ "\"");
+			}
+			s |= (major & 0xFF);
+		}
+		return s;
+	}
+
+	public static String getVersionAsString(int i) {
+		String v = Integer.toString(i & 0xFF);
+		return v + "." + Integer.toString((i) >>> 8);
 	}
 }

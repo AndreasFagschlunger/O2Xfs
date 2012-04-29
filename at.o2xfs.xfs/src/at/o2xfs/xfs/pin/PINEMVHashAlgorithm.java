@@ -25,19 +25,29 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINEMVHashAlgorithm implements XfsConstant {
+
+	/**
+	 * The SHA 1 digest algorithm is supported by the WFS_CMD_PIN_DIGEST
+	 * command.
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_HASH_SHA1_DIGEST(0x0001L);
+
+	private final long value;
+
+	private PINEMVHashAlgorithm(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
+
 }

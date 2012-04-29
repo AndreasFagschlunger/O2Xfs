@@ -25,19 +25,19 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsException;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public class PINServiceException extends XfsException {
+
+	protected PINServiceException(final PINError error) {
+		super(error);
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public PINError getError() {
+		return getError(PINError.class);
 	}
+
 }

@@ -25,19 +25,35 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.ttu;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum TTUKeyLock implements XfsConstant {
+
+	/**
+	 * The keyboard lock switch is not available.
+	 */
+	WFS_TTU_KBDLOCKNA(0L),
+
+	/**
+	 * The keyboard lock switch is activated.
+	 */
+	WFS_TTU_KBDLOCKON(1L),
+
+	/**
+	 * The keyboard lock switch is not activated.
+	 */
+	WFS_TTU_KBDLOCKOFF(2L);
+
+	private final long value;
+
+	private TTUKeyLock(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

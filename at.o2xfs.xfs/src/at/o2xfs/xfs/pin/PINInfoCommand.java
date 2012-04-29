@@ -25,19 +25,68 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINInfoCommand implements XfsConstant {
+
+	/**
+	 * The WFS_INF_PIN_STATUS command returns several kinds of status
+	 * information.
+	 */
+	WFS_INF_PIN_STATUS(401L),
+
+	/**
+	 * This command is used to retrieve the capabilities of the PIN pad.
+	 * 
+	 * @see WFSPINCAPS
+	 */
+	WFS_INF_PIN_CAPABILITIES(402L),
+
+	/**
+	 * This command returns detailed information about the keys in the
+	 * encryption module.
+	 */
+	WFS_INF_PIN_KEY_DETAIL(404L),
+
+	/**
+	 * This command returns information about the names of the Function Keys
+	 * supported by the device. Location information is also returned for the
+	 * supported FDKs (Function Descriptor Keys) or Touch Screen Pads if this
+	 * XFS interface is used for Touch Screen input.
+	 */
+	WFS_INF_PIN_FUNCKEY_DETAIL(405L),
+
+	/**
+	 * @since 3.00
+	 */
+	WFS_INF_PIN_HSM_TDATA(406L),
+
+	/**
+	 * @since 3.00
+	 */
+	WFS_INF_PIN_KEY_DETAIL_EX(407L),
+
+	/**
+	 * @since 3.00
+	 */
+	WFS_INF_PIN_SECUREKEY_DETAIL(408L),
+
+	/**
+	 * @since 3.10
+	 */
+	WFS_INF_PIN_QUERY_LOGICAL_HSM_DETAIL(409L);
+
+	private final long value;
+
+	private PINInfoCommand(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
+
 }

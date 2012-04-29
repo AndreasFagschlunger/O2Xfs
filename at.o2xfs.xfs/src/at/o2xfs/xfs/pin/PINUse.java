@@ -25,19 +25,36 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINUse implements XfsConstant {
+
+	WFS_PIN_USECONSTRUCT(0x0100L),
+	WFS_PIN_USESECURECONSTRUCT(0x0200L),
+	WFS_PIN_USEANSTR31MASTER(0x0400L),
+	WFS_PIN_USEPINLOCAL(0x00010000L),
+	WFS_PIN_USERSAPUBLIC(0x00020000L),
+	WFS_PIN_USERSAPRIVATE(0x00040000L),
+	WFS_PIN_USECHIPINFO(0x00100000L),
+	WFS_PIN_USECHIPPIN(0x00200000L),
+	WFS_PIN_USECHIPPS(0x00400000L),
+	WFS_PIN_USECHIPMAC(0x00800000L),
+	WFS_PIN_USECHIPLT(0x01000000L),
+	WFS_PIN_USECHIPMACLZ(0x02000000L),
+	WFS_PIN_USECHIPMACAZ(0x04000000L),
+	WFS_PIN_USERSAPUBLICVERIFY(0x08000000L),
+	WFS_PIN_USERSAPRIVATESIGN(0x10000000L);
+
+	private final long value;
+
+	private PINUse(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }
