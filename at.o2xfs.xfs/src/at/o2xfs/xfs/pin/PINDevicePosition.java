@@ -25,19 +25,51 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINDevicePosition implements XfsConstant {
+
+	/**
+	 * The device is in its normal operating position, or is fixed in place and
+	 * cannot be moved.
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_DEVICEINPOSITION(0L),
+
+	/**
+	 * The device has been removed from its normal operating position.
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_DEVICENOTINPOSITION(1L),
+
+	/**
+	 * Due to a hardware error or other condition, the position of the device
+	 * cannot be determined.
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_DEVICEPOSUNKNOWN(2L),
+
+	/**
+	 * The physical device does not have the capability of detecting the
+	 * position.
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_DEVICEPOSNOTSUPP(3L);
+
+	private final long value;
+
+	private PINDevicePosition(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

@@ -25,19 +25,70 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINAlgorithm implements XfsConstant {
+
+	/**
+	 * Electronic Code Book
+	 */
+	WFS_PIN_CRYPTDESECB(0x0001L),
+
+	/**
+	 * Cipher Block Chaining
+	 */
+	WFS_PIN_CRYPTDESCBC(0x0002L),
+
+	/**
+	 * Cipher Feed Back
+	 */
+	WFS_PIN_CRYPTDESCFB(0x0004L),
+
+	/**
+	 * RSA Encryption
+	 */
+	WFS_PIN_CRYPTRSA(0x0008L),
+
+	/**
+	 * ECMA Encryption
+	 */
+	WFS_PIN_CRYPTECMA(0x0010L),
+
+	/**
+	 * MAC calculation using CBC
+	 */
+	WFS_PIN_CRYPTDESMAC(0x0020L),
+
+	/**
+	 * Triple DES with Electronic Code Book
+	 */
+	WFS_PIN_CRYPTTRIDESECB(0x0040L),
+
+	/**
+	 * Triple DES with Cipher Block Chaining
+	 */
+	WFS_PIN_CRYPTTRIDESCBC(0x0080L),
+
+	/**
+	 * Triple DES with Cipher Feed Back
+	 */
+	WFS_PIN_CRYPTTRIDESCFB(0x0100L),
+
+	/**
+	 * Triple DES MAC calculation using CBC
+	 */
+	WFS_PIN_CRYPTTRIDESMAC(0x0200L);
+
+	private final long value;
+
+	private PINAlgorithm(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

@@ -25,19 +25,39 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINRSASignatureAlgorithm implements XfsConstant {
+
+	/**
+	 * @since 3.10
+	 */
+	WFS_PIN_SIGN_NA(0L),
+
+	/**
+	 * SSA_PKCS_V1_5 Signatures supported.
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_SIGN_RSASSA_PKCS1_V1_5(0x00000001L),
+
+	/**
+	 * SSA_PSS Signatures supported.
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_SIGN_RSASSA_PSS(0x00000002L);
+
+	private final long value;
+
+	private PINRSASignatureAlgorithm(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

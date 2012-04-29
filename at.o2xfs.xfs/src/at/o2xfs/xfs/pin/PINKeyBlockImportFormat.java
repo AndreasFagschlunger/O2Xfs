@@ -25,19 +25,27 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINKeyBlockImportFormat implements XfsConstant {
+
+	/**
+	 * Supports ANS TR-31 Keyblock format key import.
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_ANSTR31KEYBLOCK(0x0001L);
+
+	private final long value;
+
+	private PINKeyBlockImportFormat(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

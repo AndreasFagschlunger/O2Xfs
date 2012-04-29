@@ -25,19 +25,49 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINENCIOProtocols implements XfsConstant {
+
+	/**
+	 * For Swiss specific protocols. The document specification for Swiss
+	 * specific protocols is "CMD_ENC_IO - CH Protocol.doc". This document is
+	 * available at the following address:
+	 * 
+	 * EUROPAY (Switzerland) SA Terminal Management Hertistrasse 27 CH-8304
+	 * Wallisellen
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_ENC_PROT_CH(0x0001L),
+
+	/**
+	 * Protocol for "Groupement des Cartes Bancaires" (France).
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_ENC_PROT_GIECB(0x0002L),
+
+	/**
+	 * Protocol for Luxemburg commands. The reference for this specific protocol
+	 * is the Authorization Center in Luxemburg (CETREL.) Cryptography
+	 * Management Postal address: CETREL Soci�t� Coop�rative Centre de
+	 * Transferts Electroniques L-2956 Luxembourg
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_ENC_PROT_LUX(0x0004L);
+
+	private final long value;
+
+	private PINENCIOProtocols(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

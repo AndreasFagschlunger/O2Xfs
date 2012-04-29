@@ -25,19 +25,34 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINAutoBeepMode implements XfsConstant {
+
+	/**
+	 * An automatic tone will be generated for all active keys.
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_BEEP_ON_ACTIVE(0x0001L),
+
+	/**
+	 * An automatic tone will be generated for all in-active keys.
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_BEEP_ON_INACTIVE(0x0002L);
+
+	private final long value;
+
+	private PINAutoBeepMode(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

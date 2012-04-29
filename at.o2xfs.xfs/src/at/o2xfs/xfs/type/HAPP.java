@@ -25,19 +25,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.type;
+
+import at.o2xfs.win32.HANDLE;
 
 /**
  * @author Andreas Fagschlunger
  */
-public class XfsServiceException extends XfsException {
+public class HAPP extends HANDLE {
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
-	}
-
-	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
-	}
 }

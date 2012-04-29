@@ -25,19 +25,41 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINKeyCheckMode implements XfsConstant {
+
+	/**
+	 * @since 3.00
+	 */
+	WFS_PIN_KCVNONE(0x0000L),
+
+	/**
+	 * The key check value is created by an encryption of the key with itself.
+	 * For a double length key the KCV is generated using 3DES encryption using
+	 * the first half of the key as the source data for the encryption.
+	 * 
+	 * @since 3.00
+	 */
+	WFS_PIN_KCVSELF(0x0001L),
+
+	/**
+	 * The key check value is created by encrypting a zero value with the key.
+	 * 
+	 * @since 3.00
+	 */
+	WFS_PIN_KCVZERO(0x0002L);
+
+	private final long value;
+
+	private PINKeyCheckMode(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

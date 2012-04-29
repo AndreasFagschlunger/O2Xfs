@@ -25,19 +25,35 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINDisplay implements XfsConstant {
+
+	/**
+	 * No display unit.
+	 */
+	WFS_PIN_DISPNONE(1L),
+
+	/**
+	 * Lights next to text guide user.
+	 */
+	WFS_PIN_DISPLEDTHROUGH(2L),
+
+	/**
+	 * A real display is available (this doesn’t apply for self-service).
+	 */
+	WFS_PIN_DISPDISPLAY(3L);
+
+	private final long value;
+
+	private PINDisplay(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

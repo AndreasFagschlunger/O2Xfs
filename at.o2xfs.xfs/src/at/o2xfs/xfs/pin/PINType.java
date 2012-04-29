@@ -25,19 +25,37 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINType implements XfsConstant {
+
+	/**
+	 * Electronic PIN pad (keyboard data entry device).
+	 */
+	WFS_PIN_TYPEEPP(0x0001L),
+
+	/**
+	 * Encryption/decryption module.
+	 */
+	WFS_PIN_TYPEEDM(0x0002L),
+
+	/**
+	 * Hardware security module (electronic PIN pad and encryption module within
+	 * the same physical unit).
+	 */
+	WFS_PIN_TYPEHSM(0x0004L);
+
+	private final long value;
+
+	private PINType(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
+
 }

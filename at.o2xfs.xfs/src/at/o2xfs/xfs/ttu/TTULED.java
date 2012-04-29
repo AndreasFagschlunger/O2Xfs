@@ -25,19 +25,55 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.ttu;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum TTULED implements XfsConstant {
+
+	/**
+	 * The status is not available.
+	 */
+	WFS_TTU_LEDNA(0x0000L),
+
+	/**
+	 * The LED is turned off.
+	 */
+	WFS_TTU_LEDOFF(0x0001L),
+
+	/**
+	  * 
+	  */
+	WFS_TTU_LEDON(0x0002L),
+
+	/**
+	 * The LED is blinking slowly.
+	 */
+	WFS_TTU_LEDSLOWFLASH(0x0004L),
+
+	/**
+	 * The LED is blinking medium frequency.
+	 */
+	WFS_TTU_LEDMEDIUMFLASH(0x0008L),
+
+	/**
+	 * The LED is blinking quickly.
+	 */
+	WFS_TTU_LEDQUICKFLASH(0x0010L),
+
+	/**
+	 * The light is turned on continuous (steady).
+	 */
+	WFS_TTU_LEDCONTINUOUS(0x0080L);
+
+	private final long value;
+
+	private TTULED(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

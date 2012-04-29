@@ -25,19 +25,59 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINEncStat implements XfsConstant {
+
+	/**
+	 * The encryption module is initialized and ready (at least one key is
+	 * imported into the encryption module).
+	 */
+	WFS_PIN_ENCREADY(0L),
+
+	/**
+	 * The encryption module is not ready.
+	 */
+	WFS_PIN_ENCNOTREADY(1L),
+
+	/**
+	 * The encryption module is not initialized (no master key loaded).
+	 */
+	WFS_PIN_ENCNOTINITIALIZED(2L),
+
+	/**
+	 * The encryption module is busy (implies that the device is busy).
+	 */
+	WFS_PIN_ENCBUSY(3L),
+
+	/**
+	 * The encryption module state is undefined.
+	 */
+	WFS_PIN_ENCUNDEFINED(4L),
+
+	/**
+	 * The encryption module is initialized and master key (where required) and
+	 * any other initial keys are loaded; ready to import other keys.
+	 */
+	WFS_PIN_ENCINITIALIZED(5L),
+
+	/**
+	 * TODO
+	 * 
+	 * @since 3.10
+	 */
+	WFS_PIN_ENCPINTAMPERED(6L);
+
+	private final long value;
+
+	private PINEncStat(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

@@ -25,19 +25,50 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.ttu;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum TTUInfoCommand implements XfsConstant {
+
+	/**
+	 * This command reports the full range of information available, including
+	 * the information that is provided by the service provider.
+	 */
+	WFS_INF_TTU_STATUS(701L),
+
+	/**
+	 * This command is used to retrieve the capabilities of the text terminal
+	 * unit.
+	 */
+	WFS_INF_TTU_CAPABILITIES(702L),
+
+	/**
+	 * This command is used to retrieve the list of forms available on the
+	 * device.
+	 */
+	WFS_INF_TTU_FORM_LIST(703L),
+
+	/**
+	 * This command is used to retrieve details of the definition of a specified
+	 * form.
+	 */
+	WFS_INF_TTU_QUERY_FORM(704L),
+
+	/**
+	 * This command is used to retrieve details of the definition of a single or
+	 * all fields on a specified form.
+	 */
+	WFS_INF_TTU_QUERY_FIELD(705L);
+
+	private final long value;
+
+	private TTUInfoCommand(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

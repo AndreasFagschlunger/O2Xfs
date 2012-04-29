@@ -25,19 +25,55 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINAntiFraudModule implements XfsConstant {
+
+	/**
+	 * No anti-fraud module is available.
+	 * 
+	 * @since 3.20
+	 */
+	WFS_PIN_AFMNOTSUPP(0L),
+
+	/**
+	 * Anti-fraud module is in a good state and no foreign device is detected.
+	 * 
+	 * @since 3.20
+	 */
+	WFS_PIN_AFMOK(1L),
+
+	/**
+	 * Anti-fraud module is inoperable.
+	 * 
+	 * @since 3.20
+	 */
+	WFS_PIN_AFMINOP(2L),
+
+	/**
+	 * Anti-fraud module detected the presence of a foreign device.
+	 * 
+	 * @since 3.20
+	 */
+	WFS_PIN_AFMDEVICEDETECTED(3L),
+
+	/**
+	 * The state of the anti-fraud module cannot be determined.
+	 * 
+	 * @since 3.20
+	 */
+	WFS_PIN_AFMUNKNOWN(4L);
+
+	private final long value;
+
+	private PINAntiFraudModule(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }

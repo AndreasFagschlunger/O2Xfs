@@ -25,19 +25,40 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.pin;
 
-/**
- * @author Andreas Fagschlunger
- */
-public class XfsServiceException extends XfsException {
+import at.o2xfs.xfs.XfsConstant;
 
-	protected XfsServiceException(final XfsError xfsError) {
-		super(xfsError);
+public enum PINValidationAlgorithm implements XfsConstant {
+
+	/**
+	 * DES algorithm
+	 */
+	WFS_PIN_DES(0x0001L),
+
+	/**
+	 * EUROCHEQUE algorithm
+	 */
+	WFS_PIN_EUROCHEQUE(0x0002L),
+
+	/**
+	 * VISA algorithm
+	 */
+	WFS_PIN_VISA(0x0004L),
+
+	/**
+	 * DES offset generation algorithm
+	 */
+	WFS_PIN_DES_OFFSET(0x0008L);
+
+	private final long value;
+
+	private PINValidationAlgorithm(final long value) {
+		this.value = value;
 	}
 
 	@Override
-	public XfsError getError() {
-		return getError(XfsError.class);
+	public long getValue() {
+		return value;
 	}
 }
