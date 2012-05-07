@@ -1,23 +1,22 @@
 <project name="O2Xfs" basedir="." default="jar">
-	<property name="src.dir" value="./src" />
-	<property name="build.dir" value="./bin"/>
-	<property name="classes.dir" value="${build.dir}/classes"/>
-	<property name="lib.dir" value="${build.dir}/lib"/>
-	<property name="dist.dir" value="${build.dir}"/>
+	<property name="src.dir" value="src" />
+	<property name="build.home" value="target" />
+	<property name="lib.dir" value="${build.home}/lib" />
 
-	<target name="clean">
-		<delete dir="${build.dir}"/>
+	<target name="init" depends="clean">
+		<mkdir dir="${build.home}"/>
 	</target>
 	
-	<target name="compile" depends="clean">
-		<mkdir dir="${build.dir}" />
-		<mkdir dir="${classes.dir}" />
-		<mkdir dir="${lib.dir}" />
-		<mkdir dir="${dist.dir}" />
+	<target name="clean">
+		<delete dir="${build.home}"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<mkdir dir="${build.home}/classes" />
+		<antcall target="library" />
 		<subant target="jar">
-			<property name="dist.dir" location="${lib.dir}"/>
-			<fileset dir="../O2XfsLogger" includes="build.xml"/>
-			<fileset dir="../O2XfsWIN32" includes="build.xml"/>
+			<fileset dir="../at.o2xfs.log" includes="build.xml"/>
+			<fileset dir="../at.o2xfs.win32" includes="build.xml"/>
 		</subant>
 		<copy todir="${lib.dir}" flatten="true">
 			<fileset dir="C:/Programme/Java">
@@ -25,10 +24,10 @@
 				<include name="commons-lang-2.5/commons-lang-2.5.jar" />
 			</fileset>
 		</copy>
-		<javac srcdir="${src.dir}" destdir="${classes.dir}">
+		<javac srcdir="${src.dir}" destdir="${build.home}/classes">
 			<classpath>
-				<pathelement location="${lib.dir}/O2XfsWIN32.jar" />
-				<pathelement location="${lib.dir}/O2XfsLogger.jar" />
+				<pathelement location="../at.o2xfs.win32/target/at.o2xfs.win32.jar" />
+				<pathelement location="../at.o2xfs.log/target/at.o2xfs.log.jar" />
 				<pathelement location="${lib.dir}/commons-codec-1.4.jar" />
 				<pathelement location="${lib.dir}/commons-lang-2.5.jar" />
 			</classpath>
@@ -45,7 +44,6 @@
 	</target>
 	
 	<target name="jar" depends="compile">
-		<mkdir dir="${dist.dir}" />
-		<jar destfile="${dist.dir}/O2Xfs.jar" basedir="${classes.dir}" />
+		<jar destfile="${build.home}/at.o2xfs.xfs.jar" basedir="${build.home}/classes" />
 	</target>
 </project>
