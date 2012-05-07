@@ -1,27 +1,26 @@
 <project name="at.o2xfs.win32" basedir="." default="jar">
 	<property name="src.dir" value="src" />
-	<property name="build.dir" value="bin"/>
-	<property name="classes.dir" value="${build.dir}"/>
-	<property name="lib.dir" value="${build.dir}/lib"/>
-	<property name="dist.dir" value="${build.dir}/dist"/>
+	<property name="build.home" value="target"/>
+	<property name="lib.dir" value="${build.home}/lib"/>
+	
+	<target name="init" depends="clean">
+		<mkdir dir="${build.home}"/>
+	</target>
 	
 	<target name="clean">
-		<delete dir="${build.dir}"/>
+		<delete dir="${build.home}"/>
 	</target>
 		
-	<target name="compile" depends="clean">
-		<mkdir dir="${build.dir}" />
-		<mkdir dir="${classes.dir}" />
-		<mkdir dir="${lib.dir}" />
-		<mkdir dir="${dist.dir}" />
-		<antcall target="library" />
+	<target name="compile" depends="init">
+		<mkdir dir="${build.home}/classes" />
+		<antcall target="library" />		
 		<copy todir="${lib.dir}" flatten="true">
 			<fileset dir="C:/Programme/Java">
 				<include name="commons-codec-1.4/commons-codec-1.4.jar" />
 				<include name="commons-lang-2.5/commons-lang-2.5.jar" />
 			</fileset>
 		</copy>
-		<javac srcdir="${src.dir}" destdir="${classes.dir}">
+		<javac srcdir="${src.dir}" destdir="${build.home}/classes">
 			<classpath>				
 				<pathelement location="${lib.dir}/commons-codec-1.4.jar" />
 				<pathelement location="${lib.dir}/commons-lang-2.5.jar" />
@@ -38,7 +37,8 @@
 		</exec>
 	</target>
 	
-	<target name="jar" depends="compile">		
-		<jar destfile="${dist.dir}/at.o2xfs.win32.jar" basedir="${classes.dir}" />
+	<target name="jar" depends="compile">
+		<mkdir dir="${build.home}" />
+		<jar destfile="${build.home}/at.o2xfs.win32.jar" basedir="${build.home}/classes" />
 	</target>
 </project>
