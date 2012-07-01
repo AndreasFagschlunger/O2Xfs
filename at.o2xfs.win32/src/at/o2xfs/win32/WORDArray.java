@@ -40,4 +40,12 @@ public class WORDArray extends Array<WORD> {
 			array[i] = new WORD();
 		}
 	}
+
+	public int[] asIntArray() {
+		final int ints[] = new int[length];
+		for (int i = 0; i < length; i++) {
+			ints[i] = array[i].intValue();
+		}
+		return ints;
+	}
 }
