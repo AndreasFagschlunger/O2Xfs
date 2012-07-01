@@ -41,10 +41,16 @@ import java.util.Iterator;
  */
 public abstract class Array<E extends Type> extends Type implements Iterable<E> {
 
-	protected E[] array = null;
+	protected final E[] array;
+
+	/**
+	 * The length of the array
+	 */
+	public final int length;
 
 	protected Array(final E[] structArray) {
 		this.array = structArray;
+		this.length = structArray.length;
 	}
 
 	@Override
@@ -78,7 +84,9 @@ public abstract class Array<E extends Type> extends Type implements Iterable<E> 
 
 	/**
 	 * @return the length of the array
+	 * @deprecated {@link #length}
 	 */
+	@Deprecated
 	public int getLength() {
 		return array.length;
 	}
@@ -101,7 +109,7 @@ public abstract class Array<E extends Type> extends Type implements Iterable<E> 
 	public boolean equals(Object obj) {
 		if (obj instanceof Array<?>) {
 			final Array<?> a = (Array<?>) obj;
-			if (getLength() == a.getLength()) {
+			if (length == a.length) {
 				for (int i = 0; i < array.length; i++) {
 					if (!array[i].equals(a.array[i])) {
 						return false;
