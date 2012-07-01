@@ -38,17 +38,20 @@ import at.o2xfs.xfs.XfsMessage;
 /**
  * @author Andreas Fagschlunger
  */
-public final class MessageHandler extends Thread {
+public final class MessageHandler {
 
 	private final static Logger LOG = LoggerFactory
 			.getLogger(MessageHandler.class);
+
+	private Thread thread = null;
 
 	private IXfsCallback xfsCallback = null;
 
 	private HWND hWnd = null;
 
-	public MessageHandler(IXfsCallback xfsCallback) {
-		super(MessageHandler.class.getSimpleName());
+	private boolean windowCreated = false;
+
+	public MessageHandler(final IXfsCallback xfsCallback) {
 		if (xfsCallback == null) {
 			throw new IllegalArgumentException("xfsCallback must not be null");
 		}
@@ -57,31 +60,46 @@ public final class MessageHandler extends Thread {
 		this.xfsCallback = xfsCallback;
 	}
 
-	@Override
-	public synchronized void start() {
-		super.start();
-		try {
-			wait();
-		} catch (InterruptedException e) {
-			LOG.error("start()", "Interrupted while waiting for hWnd", e);
-		}
+	public void start() {
+		final String method = "start()";
+		synchronized (this) {
+			if (thread != null) {
+				throw new IllegalStateException("Already started");
+			}
+			thread = new Thread(new Runnable() {
 
+				@Override
+				public void run() {
+					runMessageLoop();
+				}
+			}, getClass().getSimpleName());
+			thread.start();
+			try {
+				while (!windowCreated) {
+					wait();
+				}
+			} catch (final InterruptedException e) {
+				if (LOG.isErrorEnabled()) {
+					LOG.error(method, "Interrupted", e);
+				}
+			}
+		}
 	}
 
-	@Override
-	public void run() {
+	private void runMessageLoop() {
 		run0(hWnd.buffer());
 	}
 
 	private native void run0(ByteBuffer hWnd);
 
 	private void hWnd() {
-		String method = "hWnd()";
 		synchronized (this) {
+			final String method = "hWnd()";
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "hWnd=" + hWnd);
 			}
-			notify();
+			windowCreated = true;
+			notifyAll();
 		}
 	}
 
@@ -98,7 +116,7 @@ public final class MessageHandler extends Thread {
 			}
 			return;
 		}
-		WFSResult wfsResult = new WFSResult(buffer);
+		final WFSResult wfsResult = new WFSResult(buffer);
 		xfsCallback.callback(xfsMessage, wfsResult);
 	}
 
