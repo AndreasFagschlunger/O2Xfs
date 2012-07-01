@@ -34,7 +34,7 @@ package at.o2xfs.win32;
  * 
  * @author Andreas Fagschlunger
  */
-public class USHORT extends Type {
+public class USHORT extends Type implements IntegerType {
 
 	private static final int MIN_VALUE = 0;
 
@@ -47,7 +47,7 @@ public class USHORT extends Type {
 		return SIZE;
 	}
 
-	public void put(final USHORT value) {
+	public void put(final IntegerType value) {
 		put(value.intValue());
 	}
 
@@ -70,6 +70,7 @@ public class USHORT extends Type {
 		put((int) value);
 	}
 
+	@Override
 	public int intValue() {
 		return (int) (buffer().getShort(getOffset()) & 0xFFFFL);
 	}

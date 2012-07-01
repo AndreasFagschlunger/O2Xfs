@@ -34,7 +34,7 @@ package at.o2xfs.win32;
  * 
  * @author Andreas Fagschlunger
  */
-public class INT extends Type {
+public class INT extends Type implements IntegerType {
 
 	private final static int SIZE = 4;
 
@@ -47,9 +47,14 @@ public class INT extends Type {
 		buffer().putInt(getOffset(), value);
 	}
 
+	public void put(final IntegerType value) {
+		put(value.intValue());
+	}
+
 	/**
 	 * @return the primitive <code>int</code> value represented by this object.
 	 */
+	@Override
 	public int intValue() {
 		return buffer().getInt(getOffset());
 	}

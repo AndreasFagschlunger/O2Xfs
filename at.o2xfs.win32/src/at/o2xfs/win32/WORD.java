@@ -34,4 +34,14 @@ package at.o2xfs.win32;
  */
 public class WORD extends USHORT {
 
+	public WORD() {
+		super();
+	}
+
+	public WORD(final int value) {
+		super();
+		allocate();
+		put(value);
+	}
+
 }
