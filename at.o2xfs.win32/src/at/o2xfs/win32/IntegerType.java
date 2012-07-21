@@ -30,4 +30,6 @@ package at.o2xfs.win32;
 public interface IntegerType {
 
 	public int intValue();
+
+	public long longValue();
 }
