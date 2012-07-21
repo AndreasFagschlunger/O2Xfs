@@ -51,13 +51,15 @@ public class ChipIOCommand implements IXfsCommand<WFSIDCCHIPIO> {
 
 	public ChipIOCommand(final IDCService idcService,
 			final WFSIDCCHIPIO chipIoIn) {
-		ExceptionUtil.nullArgument("idcService");
+		if (idcService == null) {
+			ExceptionUtil.nullArgument("idcService");
+		}
 		this.idcService = idcService;
 		this.chipIoIn = chipIoIn;
 	}
 
 	@Override
-	public WFSIDCCHIPIO execute() throws XfsException {
+	public WFSIDCCHIPIO execute() throws InterruptedException, XfsException {
 		XfsCommand xfsCommand = new XfsExecuteCommand(idcService,
 				IDCExecuteCommand.WFS_CMD_IDC_CHIP_IO, chipIoIn);
 		WFSResult wfsResult = null;
