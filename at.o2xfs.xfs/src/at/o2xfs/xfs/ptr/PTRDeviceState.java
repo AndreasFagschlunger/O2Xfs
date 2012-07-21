@@ -27,15 +27,6 @@
 
 package at.o2xfs.xfs.ptr;
 
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVBUSY;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVFRAUDATTEMPT;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVHWERROR;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVNODEVICE;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVOFFLINE;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVONLINE;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVPOTENTIALFRAUD;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVPOWEROFF;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVUSERERROR;
 import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.XfsDeviceState;
 
@@ -44,53 +35,53 @@ public enum PTRDeviceState implements XfsConstant {
 	/**
 	 * The device is online (i.e. powered on and operable).
 	 */
-	ONLINE(WFS_STAT_DEVONLINE),
+	ONLINE(XfsDeviceState.ONLINE),
 
 	/**
 	 * The device is offline (e.g. the operator has taken the device offline by
 	 * turning a switch or pulling out the device).
 	 */
-	OFFLINE(WFS_STAT_DEVOFFLINE),
+	OFFLINE(XfsDeviceState.OFFLINE),
 
 	/**
 	 * The device is powered off or physically not connected.
 	 */
-	POWEROFF(WFS_STAT_DEVPOWEROFF),
+	POWEROFF(XfsDeviceState.POWEROFF),
 
 	/**
 	 * There is no device intended to be there; e.g. this type of self service
 	 * machine does not contain such a device or it is internally not
 	 * configured.
 	 */
-	NODEVICE(WFS_STAT_DEVNODEVICE),
+	NODEVICE(XfsDeviceState.NODEVICE),
 
 	/**
 	 * The device is inoperable due to a hardware error.
 	 */
-	HWERROR(WFS_STAT_DEVHWERROR),
+	HWERROR(XfsDeviceState.HWERROR),
 
 	/**
 	 * The device is present but a person is preventing proper device operation.
 	 */
-	USERERROR(WFS_STAT_DEVUSERERROR),
+	USERERROR(XfsDeviceState.USERERROR),
 
 	/**
 	 * The device is busy and unable to process an execute command at this time.
 	 */
-	BUSY(WFS_STAT_DEVBUSY),
+	BUSY(XfsDeviceState.BUSY),
 
 	/**
 	 * The device is present but is inoperable because it has detected a fraud
 	 * attempt.
 	 */
-	FRAUDATTEMPT(WFS_STAT_DEVFRAUDATTEMPT),
+	FRAUDATTEMPT(XfsDeviceState.FRAUDATTEMPT),
 
 	/**
 	 * The device has detected a potential fraud attempt and is capable of
 	 * remaining in service. In this case the application should make the
 	 * decision as to whether to take the device offline.
 	 */
-	POTENTIALFRAUD(WFS_STAT_DEVPOTENTIALFRAUD);
+	POTENTIALFRAUD(XfsDeviceState.POTENTIALFRAUD);
 
 	private final long value;
 
