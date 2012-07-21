@@ -41,12 +41,14 @@ import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.lookup.RegistryServiceLookup;
 import at.o2xfs.xfs.service.pin.PINService;
+import at.o2xfs.xfs.service.siu.SIUEnableEventsCommand;
+import at.o2xfs.xfs.service.siu.SIUService;
 
 public class XfsStartUpTask extends Task {
 
 	private final int STATUS_COLUMN = 1;
 
-	public void execute() {
+	public void execute() throws Exception {
 		final XfsServiceManager xfsServiceManager = XfsServiceManager
 				.getInstance();
 		final Table table = new Table(getClass(), "Service", "Status");
@@ -65,14 +67,18 @@ public class XfsStartUpTask extends Task {
 					new Label(getClass()).append("Initiate") });
 			Object status = null;
 			try {
-				xfsServiceManager.openAndRegister(logicalName, serviceClass);
+				final XfsService xfsService = xfsServiceManager
+						.openAndRegister(logicalName, serviceClass);
 				status = XfsError.WFS_SUCCESS;
-			} catch (XfsException e) {
+				if (XfsServiceClass.SIU.equals(service.getValue())) {
+					new SIUEnableEventsCommand((SIUService) xfsService)
+							.execute();
+				}
+			} catch (final XfsException e) {
 				status = e.getError();
 			}
 			table.setValueAt(status, row++, STATUS_COLUMN);
 		}
-
 		if (hasChildNodes()) {
 			final Task task = getChildAt(0);
 			task.setParent(null);
@@ -83,13 +89,16 @@ public class XfsStartUpTask extends Task {
 
 	private Class<? extends XfsService> map(final XfsServiceClass serviceClass) {
 		switch (serviceClass) {
-			case WFS_SERVICE_CLASS_IDC:
+			case IDC:
 				return IDCService.class;
-			case WFS_SERVICE_CLASS_PIN:
+			case PIN:
 				return PINService.class;
-				// case WFS_SERVICE_CLASS_SIU:
-				// return SIUService.class;
-				// case WFS_SERVICE_CLASS_TTU:
+			case PTR:
+				// return PTRService.class;
+				return null;
+			case SIU:
+				return SIUService.class;
+				// case TTU:
 				// return TTUService.class;
 			default:
 				return null;
