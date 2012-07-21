@@ -30,39 +30,39 @@ package at.o2xfs.xfs.idc;
 import at.o2xfs.xfs.XfsConstant;
 
 public enum IDCError implements XfsConstant {
-	WFS_ERR_IDC_MEDIAJAM(-200L),
-	WFS_ERR_IDC_NOMEDIA(-201L),
-	WFS_ERR_IDC_MEDIARETAINED(-202L),
-	WFS_ERR_IDC_RETAINBINFULL(-203L),
-	WFS_ERR_IDC_INVALIDDATA(-204L),
-	WFS_ERR_IDC_INVALIDMEDIA(-205L),
-	WFS_ERR_IDC_FORMNOTFOUND(-206L),
-	WFS_ERR_IDC_FORMINVALID(-207L),
-	WFS_ERR_IDC_DATASYNTAX(-208L),
+	MEDIAJAM(-200L),
+	NOMEDIA(-201L),
+	MEDIARETAINED(-202L),
+	RETAINBINFULL(-203L),
+	INVALIDDATA(-204L),
+	INVALIDMEDIA(-205L),
+	FORMNOTFOUND(-206L),
+	FORMINVALID(-207L),
+	DATASYNTAX(-208L),
 
 	/**
 	 * The open of the shutter failed due to manipulation or hardware error.
 	 * Operator intervention is required.
 	 */
-	WFS_ERR_IDC_SHUTTERFAIL(-209L),
-	WFS_ERR_IDC_SECURITYFAIL(-210L),
-	WFS_ERR_IDC_PROTOCOLNOTSUPP(-211L),
-	WFS_ERR_IDC_ATRNOTOBTAINED(-212L),
+	SHUTTERFAIL(-209L),
+	SECURITYFAIL(-210L),
+	PROTOCOLNOTSUPP(-211L),
+	ATRNOTOBTAINED(-212L),
 
 	/**
 	 * The key does not fit to the security module.
 	 * 
 	 * @since 3.00
 	 */
-	WFS_ERR_IDC_INVALIDKEY(-213L),
+	INVALIDKEY(-213L),
 
 	/**
 	 * {@link IDCWriteMethod} value is inconsistent with device capabilities.
 	 * 
 	 * @since 3.00
 	 */
-	WFS_ERR_IDC_WRITE_METHOD(-214L),
-	WFS_ERR_IDC_CHIPPOWERNOTSUPP(-215L),
+	WRITE_METHOD(-214L),
+	CHIPPOWERNOTSUPP(-215L),
 
 	/**
 	 * The card that was inserted is too short. When this error occurs the card
@@ -70,7 +70,7 @@ public enum IDCError implements XfsConstant {
 	 * 
 	 * @since 3.00
 	 */
-	WFS_ERR_IDC_CARDTOOSHORT(-216L),
+	CARDTOOSHORT(-216L),
 
 	/**
 	 * The card that was inserted is too long. When this error occurs the card
@@ -78,12 +78,12 @@ public enum IDCError implements XfsConstant {
 	 * 
 	 * @since 3.00
 	 */
-	WFS_ERR_IDC_CARDTOOLONG(-217L),
-	WFS_ERR_IDC_INVALID_PORT(-218L),
-	WFS_ERR_IDC_POWERSAVETOOSHORT(-219L),
-	WFS_ERR_IDC_POWERSAVEMEDIAPRESENT(-220L),
-	WFS_ERR_IDC_CARDPRESENT(-221L),
-	WFS_ERR_IDC_POSITIONINVALID(-222L);
+	CARDTOOLONG(-217L),
+	INVALID_PORT(-218L),
+	POWERSAVETOOSHORT(-219L),
+	POWERSAVEMEDIAPRESENT(-220L),
+	CARDPRESENT(-221L),
+	POSITIONINVALID(-222L);
 
 	private final long value;
 
