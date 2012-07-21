@@ -39,7 +39,7 @@ public abstract class AbstractXfsExceptionFactory {
 	}
 
 	protected AbstractXfsExceptionFactory(final XfsServiceClass serviceClass) {
-		serviceOffset = serviceClass.getIdentifier();
+		serviceOffset = serviceClass.getValue();
 	}
 
 	public long getServiceOffset() {
