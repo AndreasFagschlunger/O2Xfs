@@ -27,9 +27,6 @@
 
 package at.o2xfs.xfs.service;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
@@ -41,54 +38,29 @@ public class EventDispatcher {
 	private final static Logger LOG = LoggerFactory
 			.getLogger(EventDispatcher.class);
 
-	private class XfsEvent implements Runnable {
-
-		private XfsMessage xfsMessage = null;
-
-		private XfsEventNotification eventNotification = null;
-
-		private WFSResult wfsResult = null;
-
-		public XfsEvent(final XfsMessage xfsMessage,
-				final XfsEventNotification eventNotification,
-				final WFSResult wfsResult) {
-			this.xfsMessage = xfsMessage;
-			this.eventNotification = eventNotification;
-			this.wfsResult = wfsResult;
-		}
-
-		public void run() {
-			try {
-				if (xfsMessage.isOperationComplete()) {
-					eventNotification.fireOperationCompleteEvent(wfsResult);
-				} else if (xfsMessage.isIntermediateEvent()) {
-					eventNotification.fireIntermediateEvent(wfsResult);
-				}
-			} catch (Exception e) {
-				final String method = "run()";
-				if (LOG.isErrorEnabled()) {
-					LOG.error(method, "Error dispatching XfsEvent", e);
-				}
-			}
-		}
-	}
-
-	private ExecutorService threadPool = null;
-
 	public EventDispatcher() {
-		threadPool = Executors.newCachedThreadPool();
 	}
 
-	public void dispatch(XfsMessage message,
-			XfsEventNotification eventNotification, WFSResult wfsResult) {
+	public void dispatch(final XfsMessage xfsMessage,
+			final XfsEventNotification eventNotification,
+			final WFSResult wfsResult) {
 		final String method = "dispatch(XFSMessage, IXfsEventNotification, WFSResult)";
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(method, "message=" + message + ",eventNotification="
-					+ eventNotification + ",wfsResult=" + wfsResult);
+			LOG.debug(method, "xfsMessage=" + xfsMessage
+					+ ",eventNotification=" + eventNotification + ",wfsResult="
+					+ wfsResult);
 		}
-		final XfsEvent xfsEvent = new XfsEvent(message, eventNotification,
-				wfsResult);
-		threadPool.execute(xfsEvent);
+		try {
+			if (xfsMessage.isOperationComplete()) {
+				eventNotification.fireOperationCompleteEvent(wfsResult);
+			} else if (xfsMessage.isIntermediateEvent()) {
+				eventNotification.fireIntermediateEvent(wfsResult);
+			}
+		} catch (Exception e) {
+			if (LOG.isErrorEnabled()) {
+				LOG.error(method, "Error dispatching XfsEvent", e);
+			}
+		}
 	}
 
 	public void dispatch(final XfsMessage message, final XfsService xfsService,
@@ -108,9 +80,5 @@ public class EventDispatcher {
 		} finally {
 			XfsServiceManager.getInstance().free(wfsResult);
 		}
-	}
-
-	public void close() {
-		threadPool.shutdown();
 	}
 }
