@@ -29,7 +29,7 @@ package at.o2xfs.xfs.service.util;
 
 public class ExceptionUtil {
 
-	public static IllegalArgumentException nullArgument(String name) {
-		return new IllegalArgumentException(name + " must not be null");
+	public static void nullArgument(final String name) {
+		throw new IllegalArgumentException(name + " must not be null");
 	}
 }
