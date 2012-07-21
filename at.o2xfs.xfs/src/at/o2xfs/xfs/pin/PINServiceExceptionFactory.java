@@ -35,7 +35,7 @@ import at.o2xfs.xfs.util.XfsConstants;
 public class PINServiceExceptionFactory extends AbstractXfsExceptionFactory {
 
 	public PINServiceExceptionFactory() {
-		super(XfsServiceClass.WFS_SERVICE_CLASS_PIN);
+		super(XfsServiceClass.PIN);
 	}
 
 	@Override
