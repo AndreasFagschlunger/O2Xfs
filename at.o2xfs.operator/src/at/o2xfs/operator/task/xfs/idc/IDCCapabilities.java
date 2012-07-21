@@ -49,7 +49,9 @@ public class IDCCapabilities extends Task {
 	private Table table = null;
 
 	public IDCCapabilities(final IDCService idcService) {
-		ExceptionUtil.nullArgument("idcService");
+		if (idcService == null) {
+			ExceptionUtil.nullArgument("idcService");
+		}
 		this.idcService = idcService;
 	}
 

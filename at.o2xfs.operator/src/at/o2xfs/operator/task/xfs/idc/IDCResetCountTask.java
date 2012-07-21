@@ -51,7 +51,9 @@ public class IDCResetCountTask extends Task {
 	private IDCService idcService = null;
 
 	public IDCResetCountTask(final IDCService idcService) {
-		ExceptionUtil.nullArgument("idcService");
+		if (idcService == null) {
+			ExceptionUtil.nullArgument("idcService");
+		}
 		this.idcService = idcService;
 	}
 

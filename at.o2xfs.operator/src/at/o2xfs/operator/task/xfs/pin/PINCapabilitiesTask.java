@@ -44,10 +44,12 @@ public class PINCapabilitiesTask extends Task {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(PINCapabilitiesTask.class);
 
-	private PINService pinService = null;
+	private final PINService pinService;
 
 	public PINCapabilitiesTask(final PINService pinService) {
-		ExceptionUtil.nullArgument("pinService");
+		if (pinService == null) {
+			ExceptionUtil.nullArgument("pinService");
+		}
 		this.pinService = pinService;
 	}
 
