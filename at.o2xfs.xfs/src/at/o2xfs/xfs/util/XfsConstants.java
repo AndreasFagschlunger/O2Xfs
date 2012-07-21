@@ -32,8 +32,7 @@ import java.util.Set;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
-import at.o2xfs.win32.UINT;
-import at.o2xfs.win32.WORD;
+import at.o2xfs.win32.IntegerType;
 import at.o2xfs.xfs.XfsConstant;
 
 public class XfsConstants {
@@ -41,30 +40,22 @@ public class XfsConstants {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(XfsConstants.class);
 
-	public static final <E extends Enum<E>> E valueOf(final WORD value,
-			final Class<E> xfsConstantType) {
-		if (value == null) {
-			throw new IllegalArgumentException("value must not be null");
-		}
-		return XfsConstants.valueOf(value.intValue(), xfsConstantType);
-	}
-
-	public static final <E extends Enum<E>> E valueOf(final UINT value,
-			final Class<E> xfsConstantType) {
+	public static final <E extends Enum<E> & XfsConstant> E valueOf(
+			final IntegerType value, final Class<E> xfsConstantType) {
 		if (value == null) {
 			throw new IllegalArgumentException("value must not be null");
 		}
 		return XfsConstants.valueOf(value.longValue(), xfsConstantType);
 	}
 
-	public static final <E extends Enum<E>> E valueOf(final long value,
-			final Class<E> xfsConstantType) {
+	public static final <E extends Enum<E> & XfsConstant> E valueOf(
+			final long value, final Class<E> xfsConstantType) {
 		if (xfsConstantType == null) {
 			throw new IllegalArgumentException(
 					"xfsConstantType must not be null");
 		}
 		for (final E e : xfsConstantType.getEnumConstants()) {
-			if (((XfsConstant) e).getValue() == value) {
+			if (e.getValue() == value) {
 				return e;
 			}
 		}
@@ -76,31 +67,23 @@ public class XfsConstants {
 		return null;
 	}
 
-	public static final <E extends Enum<E>> Set<E> of(final WORD value,
-			final Class<E> xfsConstantType) {
-		if (value == null) {
-			throw new IllegalArgumentException("value must not be null");
-		}
-		return of(value.intValue(), xfsConstantType);
-	}
-
-	public static final <E extends Enum<E>> Set<E> of(final UINT value,
-			final Class<E> xfsConstantType) {
+	public static final <E extends Enum<E> & XfsConstant> Set<E> of(
+			final IntegerType value, final Class<E> xfsConstantType) {
 		if (value == null) {
 			throw new IllegalArgumentException("value must not be null");
 		}
 		return of(value.longValue(), xfsConstantType);
 	}
 
-	private static final <E extends Enum<E>> Set<E> of(final long value,
-			final Class<E> xfsConstantType) {
+	public static final <E extends Enum<E> & XfsConstant> Set<E> of(
+			final long value, final Class<E> xfsConstantType) {
 		if (xfsConstantType == null) {
 			throw new IllegalArgumentException(
 					"xfsConstantType must not be null");
 		}
 		final EnumSet<E> enumSet = EnumSet.noneOf(xfsConstantType);
 		for (final E e : xfsConstantType.getEnumConstants()) {
-			final long eValue = ((XfsConstant) e).getValue();
+			final long eValue = e.getValue();
 			if (eValue == 0L) {
 				continue;
 			}
