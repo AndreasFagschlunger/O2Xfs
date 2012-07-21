@@ -55,7 +55,7 @@ public class Table {
 		taskName = taskClass.getSimpleName();
 	}
 
-	private void notifyTableChanged() {
+	public void fireTableChanged() {
 		for (final TableListener listener : tableListeners) {
 			listener.tableChanged();
 		}
@@ -101,7 +101,7 @@ public class Table {
 
 	public void addRow(final Object... rowData) {
 		rows.add(new Row(rowData));
-		notifyTableChanged();
+		fireTableChanged();
 	}
 
 	public void addRowWithCommand(final TaskCommand command,
@@ -110,12 +110,12 @@ public class Table {
 			throw new IllegalArgumentException("TaskCommand must not be null");
 		}
 		rows.add(new Row(command, rowData));
-		notifyTableChanged();
+		fireTableChanged();
 	}
 
 	public void setValueAt(final Object value, final int row, final int column) {
 		rows.get(row).setRowData(column, value);
-		notifyTableChanged();
+		fireTableChanged();
 	}
 
 	public Object getValueAt(final int row, final int column) {
