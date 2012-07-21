@@ -129,12 +129,14 @@ public class WFSResult extends Structure {
 		return result.intValue();
 	}
 
-	public <E extends Enum<E>> E getCommandCode(final Class<E> enumType) {
+	public <E extends Enum<E> & XfsConstant> E getCommandCode(
+			final Class<E> enumType) {
 		final DWORD value = u.get(COMMANDCODE, DWORD.class);
 		return XfsConstants.valueOf(value, enumType);
 	}
 
-	public <E extends Enum<E>> E getEventID(final Class<E> enumType) {
+	public <E extends Enum<E> & XfsConstant> E getEventID(
+			final Class<E> enumType) {
 		final DWORD value = u.get(EVENTID, DWORD.class);
 		return XfsConstants.valueOf(value, enumType);
 	}
