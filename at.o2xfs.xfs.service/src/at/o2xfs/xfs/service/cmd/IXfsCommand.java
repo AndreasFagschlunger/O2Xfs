@@ -29,7 +29,11 @@ package at.o2xfs.xfs.service.cmd;
 
 import at.o2xfs.xfs.XfsException;
 
+/**
+ * @deprecated replaced by {@link XfsCallable}
+ */
+@Deprecated
 public interface IXfsCommand<E> {
 
-	public E execute() throws XfsException;
+	public E execute() throws InterruptedException, XfsException;
 }
