@@ -27,14 +27,6 @@
 
 package at.o2xfs.xfs.pin;
 
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVBUSY;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVFRAUDATTEMPT;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVHWERROR;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVNODEVICE;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVOFFLINE;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVONLINE;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVPOWEROFF;
-import static at.o2xfs.xfs.XfsDeviceState.WFS_STAT_DEVUSERERROR;
 import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.XfsDeviceState;
 
@@ -43,45 +35,52 @@ public enum PINDeviceState implements XfsConstant {
 	/**
 	 * @see XfsDeviceState#WFS_STAT_DEVONLINE
 	 */
-	WFS_PIN_DEVONLINE(WFS_STAT_DEVONLINE),
+	ONLINE(XfsDeviceState.ONLINE),
 
 	/**
-	 * @see XfsDeviceState#WFS_STAT_DEVOFFLINE
+	 * @see XfsDeviceState#XfsDeviceState
 	 */
-	WFS_PIN_DEVOFFLINE(WFS_STAT_DEVOFFLINE),
+	OFFLINE(XfsDeviceState.OFFLINE),
 
 	/**
-	 * @see XfsDeviceState#WFS_STAT_DEVPOWEROFF
+	 * @see XfsDeviceState#XfsDeviceState
 	 */
-	WFS_PIN_DEVPOWEROFF(WFS_STAT_DEVPOWEROFF),
+	POWEROFF(XfsDeviceState.POWEROFF),
 
 	/**
-	 * @see XfsDeviceState#WFS_STAT_DEVBUSY
+	 * @see XfsDeviceState#XfsDeviceState
 	 */
-	WFS_PIN_DEVBUSY(WFS_STAT_DEVBUSY),
+	BUSY(XfsDeviceState.BUSY),
 
 	/**
-	 * @see XfsDeviceState#WFS_STAT_DEVNODEVICE
+	 * @see XfsDeviceState#XfsDeviceState
 	 */
-	WFS_PIN_DEVNODEVICE(WFS_STAT_DEVNODEVICE),
+	NODEVICE(XfsDeviceState.NODEVICE),
 
 	/**
-	 * @see XfsDeviceState#WFS_STAT_DEVHWERROR
+	 * @see XfsDeviceState#XfsDeviceState
 	 */
-	WFS_PIN_DEVHWERROR(WFS_STAT_DEVHWERROR),
+	HWERROR(XfsDeviceState.HWERROR),
 
 	/**
-	 * @see XfsDeviceState#WFS_STAT_DEVUSERERROR
+	 * @see XfsDeviceState#XfsDeviceState
 	 */
-	WFS_PIN_DEVUSERERROR(WFS_STAT_DEVUSERERROR),
+	USERERROR(XfsDeviceState.USERERROR),
 
 	/**
 	 * The device is present but has detected a fraud attempt.
 	 * 
-	 * @see XfsDeviceState#WFS_STAT_DEVFRAUDATTEMPT
+	 * @see XfsDeviceState#XfsDeviceState
 	 * @since 3.10
 	 */
-	WFS_PIN_DEVFRAUDATTEMPT(WFS_STAT_DEVFRAUDATTEMPT);
+	FRAUDATTEMPT(XfsDeviceState.FRAUDATTEMPT),
+
+	/**
+	 * {@link XfsDeviceState#POTENTIALFRAUD}
+	 * 
+	 * @since 3.20
+	 */
+	POTENTIALFRAUD(XfsDeviceState.POTENTIALFRAUD);
 
 	private final long value;
 
