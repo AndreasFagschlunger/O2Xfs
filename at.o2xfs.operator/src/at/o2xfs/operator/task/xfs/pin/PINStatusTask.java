@@ -56,7 +56,7 @@ public class PINStatusTask extends Task {
 	}
 
 	@Override
-	public void execute() {
+	public void execute() throws InterruptedException {
 		final String method = "execute()";
 		try {
 			final WFSPINSTATUS pinStatus = new PINStatusCommand(pinService)
