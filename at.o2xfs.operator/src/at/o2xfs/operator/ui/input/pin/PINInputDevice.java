@@ -39,7 +39,6 @@ import at.o2xfs.operator.task.xfs.pin.PINKeyUtil;
 import at.o2xfs.operator.ui.input.AbstractInputDevice;
 import at.o2xfs.operator.ui.input.VirtualKey;
 import at.o2xfs.operator.ui.input.XfsInputDevice;
-import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.pin.PINFDK;
 import at.o2xfs.xfs.pin.PINFK;
 import at.o2xfs.xfs.pin.WFSPINFDK;
@@ -167,7 +166,7 @@ public class PINInputDevice extends AbstractInputDevice implements
 				supportedFDKs.add(pinFDK.getFDK());
 			}
 			notifySupportedKeysChange();
-		} catch (final XfsException e) {
+		} catch (final Exception e) {
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Error getting function key information", e);
 			}
@@ -280,9 +279,9 @@ public class PINInputDevice extends AbstractInputDevice implements
 	}
 
 	@Override
-	public void commandFailed(final XfsException e) {
+	public void commandFailed(final Exception e) {
 		if (LOG.isErrorEnabled()) {
-			final String method = "commandFailed(XfsException)";
+			final String method = "commandFailed(Exception)";
 			LOG.error(method, "Error executing PINGetDataCommand", e);
 		}
 		reset();
