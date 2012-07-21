@@ -27,6 +27,7 @@
 
 package at.o2xfs.operator.ui.swing.i18n;
 
+import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -73,14 +74,19 @@ public class Messages {
 
 	public final static String getText(final Label label) {
 		final Iterator<String> iterator = new LabelIterator(label);
+		String pattern = null;
 		String key = null;
 		do {
 			key = iterator.next();
 			if (bundle.containsKey(key)) {
-				return bundle.getString(key);
+				pattern = bundle.getString(key);
+				break;
 			}
 		} while (iterator.hasNext());
-		return getText(StringUtils.join(label.getLabel(), '.'));
+		if (pattern == null) {
+			pattern = getText(StringUtils.join(label.getLabel(), '.'));
+		}
+		return MessageFormat.format(pattern, label.getArguments());
 	}
 
 	public static final String getMessage(final ErrorMessage error) {
