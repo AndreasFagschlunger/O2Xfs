@@ -36,47 +36,58 @@ public enum TTUDevice implements XfsConstant {
 	 * The device is on-line. The device is present and operational (i.e. not
 	 * busy processing a request and not having a hardware error).
 	 */
-	WFS_TTU_DEVONLINE(XfsDeviceState.WFS_STAT_DEVONLINE),
+	ONLINE(XfsDeviceState.ONLINE),
 
 	/**
 	 * The device is off-line. The device is present and powered on but it is
 	 * not operational (e.g. a switch may have been used to change it to an
 	 * off-line state).
 	 */
-	WFS_TTU_DEVOFFLINE(XfsDeviceState.WFS_STAT_DEVOFFLINE),
+	OFFLINE(XfsDeviceState.OFFLINE),
 
 	/**
 	 * The device is powered off. The device is present, but is currently
 	 * powered off.
 	 */
-	WFS_TTU_DEVPOWEROFF(XfsDeviceState.WFS_STAT_DEVPOWEROFF),
+	POWEROFF(XfsDeviceState.POWEROFF),
 
 	/**
 	 * The device is busy processing a request. The device is present and an
 	 * EXECUTE request is currently being processed.
 	 */
-	WFS_TTU_DEVBUSY(XfsDeviceState.WFS_STAT_DEVBUSY),
+	BUSY(XfsDeviceState.BUSY),
 
 	/**
 	 * There is no device connected.
 	 */
-	WFS_TTU_DEVNODEVICE(XfsDeviceState.WFS_STAT_DEVNODEVICE),
+	NODEVICE(XfsDeviceState.NODEVICE),
 
 	/**
 	 * The device is inoperable due to a hardware error. The device is present
 	 * but a hardware fault prevents it from being used.
 	 */
-	WFS_TTU_DEVHWERROR(XfsDeviceState.WFS_STAT_DEVHWERROR),
+	HWERROR(XfsDeviceState.HWERROR),
 
 	/**
 	 * The device is present but a person is preventing proper operation. The
 	 * application should suspend the device operation or remove the device from
 	 * service until the service provider generates a device state change event
 	 * indicating the condition of the device has changed i.e. the error is
-	 * removed ({@link #WFS_TTU_DEVONLINE}) or a permanent error condition has
-	 * occurred ({@link #WFS_TTU_DEVHWERROR}).
+	 * removed ({@link #ONLINE}) or a permanent error condition has occurred (
+	 * {@link #HWERROR}).
 	 */
-	WFS_TTU_DEVUSERERROR(XfsDeviceState.WFS_STAT_DEVUSERERROR);
+	USERERROR(XfsDeviceState.USERERROR),
+
+	/**
+	 * 
+	 */
+	FRAUDATTEMPT(XfsDeviceState.FRAUDATTEMPT),
+
+	/**
+	 * 
+	 * @since 3.20
+	 */
+	POTENTIALFRAUD(XfsDeviceState.POTENTIALFRAUD);
 
 	private final long value;
 
