@@ -27,22 +27,68 @@
 
 package at.o2xfs.xfs.service.siu;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.service.XfsService;
+import at.o2xfs.xfs.siu.SIUMessage;
+import at.o2xfs.xfs.siu.SIUPortEvent;
 
 public class SIUService extends XfsService {
 
+	private static final Logger LOG = LoggerFactory.getLogger(SIUService.class);
+
+	private final List<SIUServiceListener> serviceListeners;
+
 	public SIUService(final String logicalName) {
-		super(logicalName, XfsServiceClass.WFS_SERVICE_CLASS_SIU);
+		super(logicalName, XfsServiceClass.SIU);
+		serviceListeners = new CopyOnWriteArrayList<SIUServiceListener>();
+	}
+
+	private void notifyPortStatus(final SIUPortEvent portEvent) {
+		for (final SIUServiceListener l : serviceListeners) {
+			l.portStatus(new SIUPortEvent(portEvent));
+		}
+	}
+
+	public void addServiceListener(final SIUServiceListener listener) {
+		serviceListeners.add(listener);
+	}
+
+	public void removeServiceListener(final SIUServiceListener listener) {
+		serviceListeners.remove(listener);
 	}
 
 	@Override
 	public void fireServiceEvent(final WFSResult wfsResult) {
+		final String method = "fireServiceEvent(WFSResult)";
+		final SIUMessage eventID = wfsResult.getEventID(SIUMessage.class);
+		switch (eventID) {
+			case PORT_STATUS:
+				final SIUPortEvent portEvent = new SIUPortEvent(
+						wfsResult.getBuffer());
+				if (LOG.isInfoEnabled()) {
+					LOG.info(method, portEvent);
+				}
+				notifyPortStatus(portEvent);
+				break;
+			default:
+				if (LOG.isWarnEnabled()) {
+					LOG.warn(method, "Unknown service event: " + wfsResult);
+				}
+		}
 	}
 
 	@Override
 	public void fireUserEvent(final WFSResult wfsResult) {
+		final String method = "fireUserEvent(WFSResult)";
+		if (LOG.isInfoEnabled()) {
+			LOG.info(method, wfsResult);
+		}
 	}
 
 }
