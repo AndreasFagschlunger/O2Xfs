@@ -31,7 +31,6 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.xfs.WFSResult;
-import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.IDCExecuteCommand;
 import at.o2xfs.xfs.idc.IDCPowerOption;
 import at.o2xfs.xfs.service.XfsServiceManager;
@@ -55,7 +54,9 @@ public class IDCResetCommand extends
 	private XfsCommand resetCommand = null;
 
 	public IDCResetCommand(final IDCService idcService) {
-		ExceptionUtil.nullArgument("idcService");
+		if (idcService == null) {
+			ExceptionUtil.nullArgument("idcService");
+		}
 		this.idcService = idcService;
 	}
 
@@ -76,7 +77,7 @@ public class IDCResetCommand extends
 			try {
 				wfsResult = resetCommand.call();
 				notifyCommandSuccessful();
-			} catch (final XfsException e) {
+			} catch (final Exception e) {
 				if (LOG.isErrorEnabled()) {
 					LOG.error(method, "Error executing XfsCommand: "
 							+ resetCommand, e);
