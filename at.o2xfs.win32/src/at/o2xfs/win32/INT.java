@@ -60,6 +60,11 @@ public class INT extends Type implements IntegerType {
 	}
 
 	@Override
+	public long longValue() {
+		return intValue();
+	}
+
+	@Override
 	public String toString() {
 		return Integer.toString(intValue());
 	}
