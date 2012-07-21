@@ -27,7 +27,6 @@
 
 package at.o2xfs.xfs.service.cmd;
 
-import at.o2xfs.xfs.XfsException;
 
 public interface IAsyncCommandListener {
 
@@ -35,5 +34,5 @@ public interface IAsyncCommandListener {
 
 	public void commandCancelled();
 
-	public void commandFailed(final XfsException e);
+	public void commandFailed(final Exception e);
 }
