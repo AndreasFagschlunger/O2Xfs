@@ -32,6 +32,7 @@ import java.util.List;
 
 import at.o2xfs.xfs.idc.IDCServiceExceptionFactory;
 import at.o2xfs.xfs.pin.PINServiceExceptionFactory;
+import at.o2xfs.xfs.siu.SIUServiceExceptionFactory;
 
 /**
  * @see AbstractXfsExceptionFactory
@@ -47,6 +48,7 @@ public abstract class XfsException extends Exception {
 		exceptionFactories.add(new XfsServiceExceptionFactory());
 		exceptionFactories.add(new IDCServiceExceptionFactory());
 		exceptionFactories.add(new PINServiceExceptionFactory());
+		exceptionFactories.add(new SIUServiceExceptionFactory());
 	}
 
 	private Enum<?> error = null;
@@ -70,7 +72,7 @@ public abstract class XfsException extends Exception {
 	}
 
 	protected <E extends Enum<E>> E getError(final Class<E> enumType) {
-		return (E) error;
+		return enumType.cast(error);
 	}
 
 	public static void throwFor(final long errorCode) throws XfsException {
