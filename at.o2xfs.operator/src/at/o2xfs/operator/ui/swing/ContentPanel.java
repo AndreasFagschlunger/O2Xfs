@@ -27,8 +27,10 @@
 
 package at.o2xfs.operator.ui.swing;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.List;
@@ -38,6 +40,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -76,6 +79,10 @@ public class ContentPanel extends JPanel {
 		gbc.weightx = 1.0d;
 		if (component instanceof JTable) {
 			gbc.weighty = 1.0d;
+		} else {
+			final Dimension d = component.getPreferredSize();
+			component.setPreferredSize(new Dimension(getPreferredSize().width,
+					d.height));
 		}
 		add(component, gbc);
 	}
@@ -118,8 +125,10 @@ public class ContentPanel extends JPanel {
 
 	private void addText(final Label label) {
 		final String text = Messages.getText(label);
-		final JPanel panel = new JPanel();
-		panel.add(new JLabel(text));
+		final JPanel panel = new JPanel(new BorderLayout());
+		final JLabel jLabel = new JLabel(SwingUtil.textToHTML(text));
+		jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(jLabel, BorderLayout.CENTER);
 		panel.setBorder(BorderFactory.createLineBorder(new Color(0x7A, 0x8A,
 				0x99), 1));
 		addComponent(panel);
