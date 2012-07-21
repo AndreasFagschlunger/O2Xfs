@@ -35,15 +35,19 @@ import at.o2xfs.xfs.util.XfsConstants;
 public class IDCServiceExceptionFactory extends AbstractXfsExceptionFactory {
 
 	public IDCServiceExceptionFactory() {
-		super(XfsServiceClass.WFS_SERVICE_CLASS_IDC);
+		super(XfsServiceClass.IDC);
 	}
 
 	@Override
 	public void throwException(final long errorCode) throws XfsException {
 		final IDCError error = XfsConstants.valueOf(errorCode, IDCError.class);
 		switch (error) {
-			case WFS_ERR_IDC_MEDIAJAM:
-				throw new IDCMediaJamException();
+			case MEDIAJAM:
+				throw new MediaJamException();
+			case NOMEDIA:
+				throw new NoMediaException();
+			case MEDIARETAINED:
+				throw new MediaRetainedException();
 			default:
 				throw new IDCServiceException(error);
 		}
