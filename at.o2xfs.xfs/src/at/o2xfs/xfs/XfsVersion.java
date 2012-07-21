@@ -29,6 +29,8 @@ package at.o2xfs.xfs;
 
 import java.util.Formatter;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+
 import at.o2xfs.xfs.util.XFSUtils;
 
 /**
@@ -106,6 +108,16 @@ public class XfsVersion implements Comparable<XfsVersion> {
 		return compareTo(version) < 0;
 	}
 
+	/**
+	 * @param version
+	 *            the version to be compared.
+	 * @return true as this version is less than or equal to the specified
+	 *         version.
+	 */
+	public boolean isLE(final XfsVersion version) {
+		return compareTo(version) <= 0;
+	}
+
 	@Override
 	public int compareTo(final XfsVersion version) {
 		if (version == null || majorVersion > version.majorVersion) {
@@ -120,6 +132,16 @@ public class XfsVersion implements Comparable<XfsVersion> {
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj instanceof XfsVersion) {
+			final XfsVersion v = (XfsVersion) obj;
+			return new EqualsBuilder().append(majorVersion, v.majorVersion)
+					.append(minorVersion, v.minorVersion).isEquals();
+		}
+		return false;
 	}
 
 	@Override
