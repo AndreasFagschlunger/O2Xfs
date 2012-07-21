@@ -52,7 +52,7 @@ public abstract class Task {
 		this.taskManager = taskManager;
 	}
 
-	abstract protected void execute();
+	abstract protected void execute() throws Exception;
 
 	protected Task getParent() {
 		return parent;
