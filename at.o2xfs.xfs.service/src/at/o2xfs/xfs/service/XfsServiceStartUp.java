@@ -33,9 +33,9 @@ import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsEventClass;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.XfsVersion;
+import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsOpenCommand;
 import at.o2xfs.xfs.service.cmd.XfsRegisterCommand;
-import at.o2xfs.xfs.service.cmd.XfsCommand;
 
 public class XfsServiceStartUp {
 
@@ -48,7 +48,7 @@ public class XfsServiceStartUp {
 		this.xfsService = xfsService;
 	}
 
-	private void open() throws XfsException {
+	private void open() throws InterruptedException, XfsException {
 		final XfsCommand openCommand = new XfsOpenCommand(xfsService);
 		WFSResult result = null;
 		try {
@@ -61,7 +61,7 @@ public class XfsServiceStartUp {
 
 	}
 
-	private void register() throws XfsException {
+	private void register() throws InterruptedException, XfsException {
 		final XfsCommand registerCommand = new XfsRegisterCommand(xfsService,
 				XfsEventClass.values());
 		WFSResult result = null;
@@ -75,7 +75,7 @@ public class XfsServiceStartUp {
 
 	}
 
-	public void startUp() throws XfsException {
+	public void startUp() throws InterruptedException, XfsException {
 		final String method = "startUp()";
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, "Starting up " + xfsService.getLogicalName()
