@@ -78,8 +78,8 @@ public abstract class XfsCommand implements Callable<WFSResult> {
 	 * @see java.util.concurrent.Callable#call()
 	 */
 	@Override
-	public WFSResult call() throws XfsException {
-		return new SynchronousExecution(this).execute();
+	public WFSResult call() throws InterruptedException, XfsException {
+		return new XfsCallable(this).call();
 	}
 
 	/**
