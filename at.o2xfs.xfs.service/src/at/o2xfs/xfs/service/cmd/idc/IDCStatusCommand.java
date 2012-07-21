@@ -55,7 +55,7 @@ public class IDCStatusCommand implements IXfsCommand<WFSIDCSTATUS> {
 	}
 
 	@Override
-	public WFSIDCSTATUS execute() throws XfsException {
+	public WFSIDCSTATUS execute() throws InterruptedException, XfsException {
 		XfsInfoCommand infoCommand = new XfsInfoCommand(idcService,
 				IDCInfoCommand.WFS_INF_IDC_STATUS);
 		WFSResult wfsResult = infoCommand.call();
