@@ -36,12 +36,22 @@ public class Label {
 
 	private List<String> label = null;
 
+	private Object[] arguments = null;
+
 	public Label(final Class<? extends Task> taskClass, final String... labels) {
 		label = new ArrayList<String>();
 		append(taskClass.getSimpleName());
 		for (final String l : labels) {
 			append(l);
 		}
+	}
+
+	public void setArguments(final Object... arguments) {
+		this.arguments = arguments;
+	}
+
+	public Object[] getArguments() {
+		return arguments;
 	}
 
 	public String[] getLabel() {
