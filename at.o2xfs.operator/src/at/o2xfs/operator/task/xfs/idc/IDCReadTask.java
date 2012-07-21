@@ -83,22 +83,26 @@ public class IDCReadTask extends Task implements ReadCardListener {
 	}
 
 	@Override
-	public void execute() {
+	public void execute() throws Exception {
+		final String method = "execute()";
 		command = new ReadCardCommand(idcService);
+		WFSIDCCAPS caps;
 		try {
-			final WFSIDCCAPS caps = new IDCCapabilitiesCommand(idcService)
-					.execute();
-			for (final IDCTrack track : caps.getReadTracks()) {
-				command.addReadData(track);
+			caps = new IDCCapabilitiesCommand(idcService).execute();
+		} catch (final Exception e) {
+			if (LOG.isErrorEnabled()) {
+				LOG.error(method, "Error getting IDC capabilities", e);
 			}
-			if (!caps.getChipProtocols().isEmpty()) {
-				command.addReadData(IDCTrack.WFS_IDC_CHIP);
-			}
-			if (!IDCSecType.WFS_IDC_SECNOTSUPP.equals(caps.getSecType())) {
-				command.addReadData(IDCTrack.WFS_IDC_SECURITY);
-			}
-		} catch (XfsException e) {
-			e.printStackTrace();
+			throw e;
+		}
+		for (final IDCTrack track : caps.getReadTracks()) {
+			command.addReadData(track);
+		}
+		if (!caps.getChipProtocols().isEmpty()) {
+			command.addReadData(IDCTrack.WFS_IDC_CHIP);
+		}
+		if (!IDCSecType.WFS_IDC_SECNOTSUPP.equals(caps.getSecType())) {
+			command.addReadData(IDCTrack.WFS_IDC_SECURITY);
 		}
 		command.addCommandListener(this);
 		command.execute();
@@ -138,6 +142,8 @@ public class IDCReadTask extends Task implements ReadCardListener {
 			}
 		} catch (final XfsException e) {
 			LOG.error(method, "Error retrieving status", e);
+		} catch (final InterruptedException e) {
+			// TODO: ?
 		}
 		return false;
 	}
@@ -171,8 +177,8 @@ public class IDCReadTask extends Task implements ReadCardListener {
 	}
 
 	@Override
-	public void commandFailed(final XfsException e) {
-		final String method = "commandFailed(XfsException)";
+	public void commandFailed(final Exception e) {
+		final String method = "commandFailed(Exception)";
 		if (LOG.isErrorEnabled()) {
 			LOG.error(method, "ReadCardCommand failed", e);
 		}

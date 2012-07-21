@@ -29,7 +29,6 @@ package at.o2xfs.operator.task.xfs.idc;
 
 import at.o2xfs.operator.task.ExecuteTaskCommand;
 import at.o2xfs.operator.task.Task;
-import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.service.cmd.IAsyncCommandListener;
 import at.o2xfs.xfs.service.cmd.idc.IDCResetCommand;
 import at.o2xfs.xfs.service.idc.IDCService;
@@ -62,7 +61,7 @@ public class IDCResetTask extends Task implements IAsyncCommandListener {
 	}
 
 	@Override
-	public void commandFailed(final XfsException e) {
+	public void commandFailed(final Exception e) {
 		showError(e);
 		finishTask();
 	}

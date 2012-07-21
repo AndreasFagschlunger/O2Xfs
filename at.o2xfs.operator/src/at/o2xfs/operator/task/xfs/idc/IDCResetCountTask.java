@@ -31,12 +31,15 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.task.ExecuteTaskCommand;
 import at.o2xfs.operator.task.Task;
+import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.IDCExecuteCommand;
+import at.o2xfs.xfs.idc.WFSIDCSTATUS;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
+import at.o2xfs.xfs.service.cmd.idc.IDCStatusCallable;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.util.ExceptionUtil;
 
@@ -53,13 +56,18 @@ public class IDCResetCountTask extends Task {
 	}
 
 	@Override
-	protected void execute() {
+	protected void execute() throws Exception {
 		final String method = "execute()";
 		final XfsCommand resetCountCommand = new XfsExecuteCommand(idcService,
 				IDCExecuteCommand.WFS_CMD_IDC_RESET_COUNT);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = resetCountCommand.call();
+			final WFSIDCSTATUS status = new IDCStatusCallable(idcService)
+					.call();
+			final Label label = new Label(getClass(), "CardsRetained");
+			label.setArguments(status.getCards());
+			taskManager.setContent(label);
 		} catch (final XfsException e) {
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Error resetting count", e);
