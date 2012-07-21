@@ -34,7 +34,7 @@ import at.o2xfs.xfs.service.XfsService;
 public class PINService extends XfsService {
 
 	public PINService(final String logicalName) {
-		super(logicalName, XfsServiceClass.WFS_SERVICE_CLASS_PIN);
+		super(logicalName, XfsServiceClass.PIN);
 	}
 
 	@Override
