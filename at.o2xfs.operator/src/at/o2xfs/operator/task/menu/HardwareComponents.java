@@ -29,10 +29,14 @@ package at.o2xfs.operator.task.menu;
 
 import at.o2xfs.operator.task.xfs.idc.IDCMenu;
 import at.o2xfs.operator.task.xfs.pin.PINMenu;
+import at.o2xfs.operator.task.xfs.ptr.PTRMenu;
+import at.o2xfs.operator.task.xfs.siu.SIUMenuTask;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.pin.PINService;
+import at.o2xfs.xfs.service.ptr.PTRService;
+import at.o2xfs.xfs.service.siu.SIUService;
 
 public class HardwareComponents extends MenuTask {
 
@@ -41,11 +45,17 @@ public class HardwareComponents extends MenuTask {
 		final XfsServiceManager manager = XfsServiceManager.getInstance();
 		for (final XfsService xfsService : manager.getServices()) {
 			switch (xfsService.getServiceClass()) {
-				case WFS_SERVICE_CLASS_IDC:
+				case IDC:
 					appendChild(new IDCMenu((IDCService) xfsService));
 					break;
-				case WFS_SERVICE_CLASS_PIN:
+				case PIN:
 					appendChild(new PINMenu((PINService) xfsService));
+					break;
+				case PTR:
+					appendChild(new PTRMenu((PTRService) xfsService));
+					break;
+				case SIU:
+					appendChild(new SIUMenuTask((SIUService) xfsService));
 					break;
 			}
 		}
