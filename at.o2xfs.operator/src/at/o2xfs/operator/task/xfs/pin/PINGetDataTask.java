@@ -102,7 +102,7 @@ public class PINGetDataTask extends Task implements PINTaskConfigKey,
 	}
 
 	@Override
-	public void execute() {
+	public void execute() throws InterruptedException {
 		final String method = "execute()";
 		try {
 			if (LOG.isDebugEnabled()) {
@@ -218,8 +218,8 @@ public class PINGetDataTask extends Task implements PINTaskConfigKey,
 	}
 
 	@Override
-	public void commandFailed(final XfsException e) {
-		final String method = "commandFailed(XfsException)";
+	public void commandFailed(final Exception e) {
+		final String method = "commandFailed(Exception)";
 		if (LOG.isErrorEnabled()) {
 			LOG.error(method, "PINGetDataCommand failed", e);
 		}
