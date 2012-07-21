@@ -46,6 +46,7 @@ import at.o2xfs.xfs.idc.IDCTrack;
 import at.o2xfs.xfs.idc.WFSIDCCARDDATA;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncCommand;
+import at.o2xfs.xfs.service.cmd.EventQueue;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.events.XfsEventNotification;
@@ -58,16 +59,23 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 	private final static Logger LOG = LoggerFactory
 			.getLogger(ReadCardCommand.class);
 
-	private XfsServiceManager serviceManager = XfsServiceManager.getInstance();
+	private final XfsServiceManager serviceManager = XfsServiceManager
+			.getInstance();
 
-	private IDCService idcService = null;
+	private final IDCService idcService;
 
 	private Set<IDCTrack> readData = null;
 
 	private XfsCommand xfsCommand = null;
 
+	private final EventQueue eventQueue;
+
 	public ReadCardCommand(final IDCService idcService) {
+		if (idcService == null) {
+			throw new IllegalArgumentException("idcService must not be null");
+		}
 		this.idcService = idcService;
+		eventQueue = new EventQueue(this);
 		readData = EnumSet.noneOf(IDCTrack.class);
 	}
 
@@ -101,8 +109,8 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 				IDCExecuteCommand.WFS_CMD_IDC_READ_RAW_DATA, new DWORD(
 						Bitmask.of(readData)));
 		try {
-			xfsCommand.execute(this);
-		} catch (XfsException e) {
+			xfsCommand.execute(eventQueue);
+		} catch (final XfsException e) {
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Error executing XfsCommand: " + xfsCommand,
 						e);
