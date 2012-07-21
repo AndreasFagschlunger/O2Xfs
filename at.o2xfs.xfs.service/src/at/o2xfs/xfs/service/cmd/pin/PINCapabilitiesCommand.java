@@ -51,7 +51,7 @@ public class PINCapabilitiesCommand implements IXfsCommand<WFSPINCAPS> {
 	}
 
 	@Override
-	public WFSPINCAPS execute() throws XfsException {
+	public WFSPINCAPS execute() throws InterruptedException, XfsException {
 		final String method = "execute()";
 		final XfsCommand xfsCommand = new XfsInfoCommand(pinService,
 				PINInfoCommand.WFS_INF_PIN_CAPABILITIES);
