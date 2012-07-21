@@ -66,6 +66,9 @@ public class IDCCapabilities extends Task {
 				LOG.error(method, "Error getting capabilities", e);
 			}
 			showError(e);
+		} catch (final InterruptedException e) {
+			Thread.currentThread().interrupt();
+			return;
 		}
 		taskManager.setNextCommand(new ExecuteTaskCommand(getParent(),
 				taskManager));
