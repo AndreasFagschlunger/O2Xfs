@@ -176,7 +176,7 @@ public class WFSPTRCAPS extends Structure {
 		writeForm.put(caps.writeForm);
 		extents.put(caps.extents);
 		control.put(caps.control);
-		if (XfsVersion.V2_00.isLE(version)) {
+		if (version.isLE(XfsVersion.V2_00)) {
 			maxRetract.put(caps.maxRetract);
 		}
 		maxMediaOnStacker.put(caps.maxMediaOnStacker);
@@ -185,15 +185,17 @@ public class WFSPTRCAPS extends Structure {
 		paperSources.put(caps.paperSources);
 		mediaTaken.set(caps.isMediaTaken());
 		retractBins.put(caps.retractBins);
-		final List<Integer> retractCounts = caps.getMaxRetracts();
-		if (!retractCounts.isEmpty()) {
-			final USHORTArray maxRetracts = new USHORTArray(
-					retractCounts.size());
-			maxRetracts.allocate();
-			for (int i = 0; i < maxRetracts.length; i++) {
-				maxRetracts.get(i).put(retractCounts.get(i));
+		if (getRetractBins() > 0) {
+			final List<Integer> retractCounts = caps.getMaxRetracts();
+			if (!retractCounts.isEmpty()) {
+				final USHORTArray maxRetracts = new USHORTArray(
+						retractCounts.size());
+				maxRetracts.allocate();
+				for (int i = 0; i < maxRetracts.length; i++) {
+					maxRetracts.get(i).put(retractCounts.get(i));
+				}
+				this.maxRetracts.pointTo(maxRetracts);
 			}
-			this.maxRetracts.pointTo(maxRetracts);
 		}
 		imageType.put(caps.imageType);
 		frontImageColorFormat.put(caps.frontImageColorFormat);
