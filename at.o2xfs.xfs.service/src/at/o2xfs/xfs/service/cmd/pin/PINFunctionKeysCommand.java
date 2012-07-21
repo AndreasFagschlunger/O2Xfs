@@ -71,7 +71,8 @@ public class PINFunctionKeysCommand implements IXfsCommand<WFSPINFUNCKEYDETAIL> 
 	}
 
 	@Override
-	public WFSPINFUNCKEYDETAIL execute() throws XfsException {
+	public WFSPINFUNCKEYDETAIL execute() throws InterruptedException,
+			XfsException {
 		final String method = "execute()";
 		final DWORD fdkMask = new DWORD(Bitmask.of(fdks));
 		final XfsCommand xfsCommand = new XfsInfoCommand(pinService,
