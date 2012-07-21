@@ -36,7 +36,7 @@ import java.nio.ByteBuffer;
  * 
  * @author Andreas Fagschlunger
  */
-public class UINT extends Type {
+public class UINT extends Type implements IntegerType {
 
 	public static final long MIN_VALUE = 0;
 
@@ -72,9 +72,15 @@ public class UINT extends Type {
 		buffer().putInt(getOffset(), (int) value);
 	}
 
+	@Override
+	public int intValue() {
+		return (int) longValue();
+	}
+
 	/**
 	 * @return the primitive <code>long</code> value represented by this object.
 	 */
+	@Override
 	public long longValue() {
 		return buffer().getInt(getOffset()) & 0xFFFFFFFFL;
 	}
