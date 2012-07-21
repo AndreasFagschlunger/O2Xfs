@@ -42,7 +42,6 @@ import at.o2xfs.operator.config.Config;
 import at.o2xfs.operator.task.xfs.pin.PINKeyUtil;
 import at.o2xfs.operator.ui.input.VirtualKey;
 import at.o2xfs.operator.ui.swing.menu.MenuButton;
-import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.pin.WFSPINFDK;
 import at.o2xfs.xfs.pin.WFSPINFUNCKEYDETAIL;
 import at.o2xfs.xfs.service.XfsService;
@@ -194,7 +193,7 @@ public class UILayout implements XfsServiceListener {
 		WFSPINFUNCKEYDETAIL funcKeyDetail = null;
 		try {
 			funcKeyDetail = new PINFunctionKeysCommand(pinService).execute();
-		} catch (final XfsException e) {
+		} catch (final Exception e) {
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Error getting function key information", e);
 			}
