@@ -51,7 +51,7 @@ public class IDCCapabilitiesCommand implements IXfsCommand<WFSIDCCAPS> {
 	}
 
 	@Override
-	public WFSIDCCAPS execute() throws XfsException {
+	public WFSIDCCAPS execute() throws InterruptedException, XfsException {
 		final String method = "execute()";
 		final XfsCommand xfsCommand = new XfsInfoCommand(idcService,
 				IDCInfoCommand.WFS_INF_IDC_CAPABILITIES);
@@ -64,7 +64,7 @@ public class IDCCapabilitiesCommand implements IXfsCommand<WFSIDCCAPS> {
 				LOG.debug(method, "capabilities=" + capabilities);
 			}
 			return new WFSIDCCAPS(idcService.getXfsVersion(), capabilities);
-		} catch (XfsException e) {
+		} catch (final XfsException e) {
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Error executing XfsCommand: " + xfsCommand,
 						e);
