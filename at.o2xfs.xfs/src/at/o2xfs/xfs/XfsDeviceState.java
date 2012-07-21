@@ -36,44 +36,44 @@ public enum XfsDeviceState implements XfsConstant {
 	 * The device is present, powered on and online (i.e., operational, not busy
 	 * processing a request and not in an error state).
 	 */
-	WFS_STAT_DEVONLINE(0L),
+	ONLINE(0L),
 
 	/**
 	 * The device is present and powered on, but offline (not operational�e.g.,
 	 * an operator has switched it offline).
 	 */
-	WFS_STAT_DEVOFFLINE(1L),
+	OFFLINE(1L),
 
 	/**
 	 * The device is present but powered off.
 	 */
-	WFS_STAT_DEVPOWEROFF(2L),
+	POWEROFF(2L),
 
 	/**
 	 * There is no device connected.
 	 */
-	WFS_STAT_DEVNODEVICE(3L),
+	NODEVICE(3L),
 
 	/**
 	 * The device is present but inoperable due to a hardware fault that
 	 * prevents it from being used.
 	 */
-	WFS_STAT_DEVHWERROR(4L),
+	HWERROR(4L),
 
 	/**
 	 * The device is present but a person is preventing proper device operation.
 	 * The application should suspend the device operation or remove the device
 	 * from service until the service provider generates a device state change
 	 * event indicating the condition of the device has changed e.g.the error is
-	 * removed ({@link #WFS_STAT_DEVONLINE}) or a permanent error condition has
-	 * occurred ({@link #WFS_STAT_DEVHWERROR}).
+	 * removed ({@link #ONLINE}) or a permanent error condition has occurred (
+	 * {@link #HWERROR}).
 	 */
-	WFS_STAT_DEVUSERERROR(5L),
+	USERERROR(5L),
 
 	/**
 	 * The device is present and is busy processing an Execute request.
 	 */
-	WFS_STAT_DEVBUSY(6L),
+	BUSY(6L),
 
 	/**
 	 * Some devices are capable of identifying a malicious physical attack which
@@ -81,7 +81,16 @@ public enum XfsDeviceState implements XfsConstant {
 	 * this status code is returned to indicate the device is inoperable because
 	 * a person attempted a fraudulent act on the device.
 	 */
-	WFS_STAT_DEVFRAUDATTEMPT(7L);
+	FRAUDATTEMPT(7L),
+
+	/**
+	 * The device has detected a potential fraud attempt and is capable of
+	 * remaining in service. In this case the application should make the
+	 * decision as to whether to take the device offline.
+	 * 
+	 * @since 3.20
+	 */
+	POTENTIALFRAUD(8L);
 
 	private final long value;
 
