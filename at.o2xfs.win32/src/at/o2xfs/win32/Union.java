@@ -87,7 +87,7 @@ public class Union extends Type {
 	public <T extends Type> T get(final String name, final Class<T> type) {
 		for (Field field : fields) {
 			if (field.getName().equals(name)) {
-				return (T) field.getType();
+				return type.cast(field.getType());
 			}
 		}
 		return null;
