@@ -52,7 +52,7 @@ public class PINCapabilitiesTask extends Task {
 	}
 
 	@Override
-	protected void execute() {
+	protected void execute() throws InterruptedException {
 		final String method = "execute()";
 		final PINCapabilitiesCommand command = new PINCapabilitiesCommand(
 				pinService);
