@@ -48,12 +48,12 @@ import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.XfsMessage;
 import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.service.cmd.XfsCloseCommand;
-import at.o2xfs.xfs.service.cmd.XfsDeRegisterCommand;
-import at.o2xfs.xfs.service.cmd.XfsOpenCommand;
-import at.o2xfs.xfs.service.cmd.XfsRegisterCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
+import at.o2xfs.xfs.service.cmd.XfsDeRegisterCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
+import at.o2xfs.xfs.service.cmd.XfsOpenCommand;
+import at.o2xfs.xfs.service.cmd.XfsRegisterCommand;
 import at.o2xfs.xfs.service.events.XfsEventNotification;
 import at.o2xfs.xfs.type.HAPP;
 import at.o2xfs.xfs.type.HSERVICE;
@@ -143,14 +143,15 @@ public class XfsServiceManager implements IXfsCallback {
 		}
 	}
 
-	public <E extends XfsService> void openAndRegister(
-			final String logicalName, final Class<E> serviceClass)
-			throws XfsException {
+	public <E extends XfsService> E openAndRegister(final String logicalName,
+			final Class<E> serviceClass) throws InterruptedException,
+			XfsException {
 		final E xfsService = XfsServiceFactory
 				.create(logicalName, serviceClass);
 		new XfsServiceStartUp(xfsService).startUp();
 		xfsServices.add(xfsService);
 		notifyXfsServiceStarted(xfsService);
+		return xfsService;
 	}
 
 	public <E extends XfsService> E getService(final String logicalName,
@@ -158,7 +159,7 @@ public class XfsServiceManager implements IXfsCallback {
 		synchronized (xfsServices) {
 			for (final XfsService xfsService : xfsServices) {
 				if (xfsService.getLogicalName().equals(logicalName)) {
-					return (E) xfsService;
+					return serviceClass.cast(xfsService);
 				}
 			}
 		}
@@ -181,7 +182,7 @@ public class XfsServiceManager implements IXfsCallback {
 		final List<E> services = new ArrayList<E>();
 		for (final XfsService service : xfsServices) {
 			if (serviceType.isInstance(service)) {
-				services.add((E) service);
+				services.add(serviceType.cast(service));
 			}
 		}
 		return services;
@@ -190,7 +191,7 @@ public class XfsServiceManager implements IXfsCallback {
 	public <E extends XfsService> E getService(final Class<E> serviceClass) {
 		for (final XfsService xfsService : xfsServices) {
 			if (serviceClass.isInstance(xfsService)) {
-				return (E) xfsService;
+				return serviceClass.cast(xfsService);
 			}
 		}
 		return null;
@@ -447,7 +448,7 @@ public class XfsServiceManager implements IXfsCallback {
 						LOG.debug(method, "wfsResult=" + wfsResult);
 					}
 					free(wfsResult);
-				} catch (XfsException e) {
+				} catch (final Exception e) {
 					if (LOG.isErrorEnabled()) {
 						LOG.error(method, "Error closing XfsService: "
 								+ xfsService, e);
@@ -481,9 +482,6 @@ public class XfsServiceManager implements IXfsCallback {
 			xfsAPI.wfsCleanUp();
 		} catch (XfsException e) {
 			LOG.error(method, "Error cleaning up XFS", e);
-		}
-		if (eventDispatcher != null) {
-			eventDispatcher.close();
 		}
 		messageHandler.close();
 	}
