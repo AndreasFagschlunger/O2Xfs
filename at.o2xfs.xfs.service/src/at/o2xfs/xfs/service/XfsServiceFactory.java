@@ -29,6 +29,7 @@ package at.o2xfs.xfs.service;
 
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.pin.PINService;
+import at.o2xfs.xfs.service.ptr.PTRService;
 import at.o2xfs.xfs.service.siu.SIUService;
 import at.o2xfs.xfs.service.ttu.TTUService;
 
@@ -41,13 +42,15 @@ public class XfsServiceFactory {
 	public static final <E extends XfsService> E create(
 			final String logicalName, final Class<E> serviceClass) {
 		if (IDCService.class.equals(serviceClass)) {
-			return (E) new IDCService(logicalName);
+			return serviceClass.cast(new IDCService(logicalName));
 		} else if (PINService.class.equals(serviceClass)) {
-			return (E) new PINService(logicalName);
+			return serviceClass.cast(new PINService(logicalName));
+		} else if (PTRService.class.equals(serviceClass)) {
+			return serviceClass.cast(new PTRService(logicalName));
 		} else if (SIUService.class.equals(serviceClass)) {
-			return (E) new SIUService(logicalName);
+			return serviceClass.cast(new SIUService(logicalName));
 		} else if (TTUService.class.equals(serviceClass)) {
-			return (E) new TTUService(logicalName);
+			return serviceClass.cast(new TTUService(logicalName));
 		} else {
 			throw new IllegalArgumentException("Unknown service class: "
 					+ serviceClass);
