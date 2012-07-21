@@ -50,7 +50,7 @@ public class PINStatusCommand implements IXfsCommand<WFSPINSTATUS> {
 	}
 
 	@Override
-	public WFSPINSTATUS execute() throws XfsException {
+	public WFSPINSTATUS execute() throws InterruptedException, XfsException {
 		final String method = "execute()";
 		final XfsInfoCommand infoCommand = new XfsInfoCommand(pinService,
 				PINInfoCommand.WFS_INF_PIN_STATUS);
