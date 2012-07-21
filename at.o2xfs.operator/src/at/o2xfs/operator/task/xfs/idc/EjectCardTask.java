@@ -27,19 +27,13 @@
 
 package at.o2xfs.operator.task.xfs.idc;
 
-import at.o2xfs.log.Logger;
-import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.task.ExecuteTaskCommand;
 import at.o2xfs.operator.task.Task;
-import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.service.cmd.idc.ejectcard.EjectCardCommand;
-import at.o2xfs.xfs.service.cmd.idc.ejectcard.EjectCardListener;
+import at.o2xfs.xfs.service.cmd.idc.EjectCardCommand;
+import at.o2xfs.xfs.service.cmd.idc.EjectCardListener;
 import at.o2xfs.xfs.service.idc.IDCService;
 
 public class EjectCardTask extends Task implements EjectCardListener {
-
-	private final static Logger LOG = LoggerFactory
-			.getLogger(EjectCardTask.class);
 
 	private IDCService idcService = null;
 
@@ -91,7 +85,7 @@ public class EjectCardTask extends Task implements EjectCardListener {
 	}
 
 	@Override
-	public void commandFailed(final XfsException e) {
+	public void commandFailed(final Exception e) {
 		showError(e);
 		finishTask();
 	}
