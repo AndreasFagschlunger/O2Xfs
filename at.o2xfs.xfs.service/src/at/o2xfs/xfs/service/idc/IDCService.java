@@ -45,7 +45,7 @@ public class IDCService extends XfsService {
 	private List<IDCServiceListener> serviceListeners = null;
 
 	public IDCService(final String logicalName) {
-		super(logicalName, XfsServiceClass.WFS_SERVICE_CLASS_IDC);
+		super(logicalName, XfsServiceClass.IDC);
 		serviceListeners = new CopyOnWriteArrayList<IDCServiceListener>();
 	}
 
