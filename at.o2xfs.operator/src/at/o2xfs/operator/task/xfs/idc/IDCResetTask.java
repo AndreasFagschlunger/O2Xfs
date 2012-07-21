@@ -39,7 +39,9 @@ public class IDCResetTask extends Task implements IAsyncCommandListener {
 	private IDCService idcService = null;
 
 	public IDCResetTask(final IDCService idcService) {
-		ExceptionUtil.nullArgument("idcService");
+		if (idcService == null) {
+			ExceptionUtil.nullArgument("idcService");
+		}
 		this.idcService = idcService;
 	}
 
