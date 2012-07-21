@@ -27,8 +27,6 @@
 
 package at.o2xfs.operator.task.xfs.status;
 
-import at.o2xfs.log.Logger;
-import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.task.ExecuteTaskCommand;
 import at.o2xfs.operator.task.Task;
 import at.o2xfs.operator.task.TaskCommand;
@@ -44,12 +42,10 @@ import at.o2xfs.xfs.service.pin.PINService;
 
 public class DeviceStatusTask extends Task {
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(DeviceStatusTask.class);
-
 	private Table table = null;
 
-	private void addIDCService(final IDCService idcService) {
+	private void addIDCService(final IDCService idcService)
+			throws InterruptedException {
 		Object idcStatus = null;
 		try {
 			idcStatus = new IDCStatusCommand(idcService).execute().getDevice();
@@ -63,7 +59,8 @@ public class DeviceStatusTask extends Task {
 		table.addRowWithCommand(command, idcService, idcStatus);
 	}
 
-	private void addPINService(final PINService pinService) {
+	private void addPINService(final PINService pinService)
+			throws InterruptedException {
 		Object pinStatus = null;
 		try {
 			pinStatus = new PINStatusCommand(pinService).execute().getDevice();
@@ -79,7 +76,7 @@ public class DeviceStatusTask extends Task {
 	}
 
 	@Override
-	public void execute() {
+	public void execute() throws Exception {
 		table = new Table(getClass(), "Device", "Status");
 		final XfsServiceManager manager = XfsServiceManager.getInstance();
 		for (final IDCService idcService : manager
