@@ -32,10 +32,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
-import at.o2xfs.xfs.XfsException;
 
-public abstract class AbstractAsyncCommand<E extends IAsyncCommandListener> implements
-		IAsyncCommand<E> {
+public abstract class AbstractAsyncCommand<E extends IAsyncCommandListener>
+		implements IAsyncCommand<E> {
 
 	private final static Logger LOG = LoggerFactory
 			.getLogger(AbstractAsyncCommand.class);
@@ -81,7 +80,7 @@ public abstract class AbstractAsyncCommand<E extends IAsyncCommandListener> impl
 		}
 	}
 
-	protected void notifyCommandFailed(final XfsException e) {
+	protected void notifyCommandFailed(final Exception e) {
 		for (final E listener : commandListeners) {
 			listener.commandFailed(e);
 		}
