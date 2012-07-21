@@ -27,78 +27,76 @@
 
 package at.o2xfs.xfs;
 
-public enum XfsServiceClass {
+public enum XfsServiceClass implements XfsConstant {
 
 	/**
 	 * Printers
 	 */
-	WFS_SERVICE_CLASS_PTR(1, "PTR"),
+	PTR(1L, "PTR"),
 
 	/**
 	 * Identification Card Units
 	 */
-	WFS_SERVICE_CLASS_IDC(2, "IDC"),
+	IDC(2L, "IDC"),
 
 	/**
 	 * Cash Dispensers
 	 */
-	WFS_SERVICE_CLASS_CDM(3, "CDM"),
+	CDM(3L, "CDM"),
 
 	/**
 	 * PIN pads
 	 */
-	WFS_SERVICE_CLASS_PIN(4, "PIN"),
+	PIN(4L, "PIN"),
 
 	/**
 	 * Check Readers and Scanners
 	 */
-	WFS_SERVICE_CLASS_CHK(5, "CHK"),
+	CHK(5L, "CHK"),
 
 	/**
 	 * Depository Units
 	 */
-	WFS_SERVICE_CLASS_DEP(6, "DEP"),
+	DEP(6L, "DEP"),
 
 	/**
 	 * Text Terminal Units
 	 */
-	WFS_SERVICE_CLASS_TTU(7, "TTU"),
+	TTU(7L, "TTU"),
 
 	/**
 	 * Sensors and Indicators Units
 	 */
-	WFS_SERVICE_CLASS_SIU(8, "SIU"),
+	SIU(8L, "SIU"),
 
 	/**
 	 * Vendor Dependent Mode
 	 */
-	WFS_SERVICE_CLASS_VDM(9, "VDM"),
+	VDM(9L, "VDM"),
 
 	/**
 	 * Cameras
 	 */
-	WFS_SERVICE_CLASS_CAM(10, "CAM");
+	CAM(10L, "CAM");
 
 	/**
 	 * Class Identifier
 	 */
-	private final long identifier;
+	private final long value;
 
 	/**
 	 * Class Name
 	 */
 	private final String name;
 
-	private XfsServiceClass(final long identifier, final String name) {
-		this.identifier = identifier;
+	private XfsServiceClass(final long value, final String name) {
+		this.value = value;
 		this.name = name;
 	}
 
-	/**
-	 * @return the service class identifier
-	 */
-	public long getIdentifier() {
-		return identifier;
+	@Override
+	public long getValue() {
+		return value;
 	}
 
 	public final static XfsServiceClass getForServiceClassName(
