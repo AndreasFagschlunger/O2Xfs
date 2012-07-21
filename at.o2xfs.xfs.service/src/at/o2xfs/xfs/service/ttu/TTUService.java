@@ -34,7 +34,7 @@ import at.o2xfs.xfs.service.XfsService;
 public class TTUService extends XfsService {
 
 	public TTUService(final String logicalName) {
-		super(logicalName, XfsServiceClass.WFS_SERVICE_CLASS_TTU);
+		super(logicalName, XfsServiceClass.TTU);
 	}
 
 	@Override
