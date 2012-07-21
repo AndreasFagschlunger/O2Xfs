@@ -54,7 +54,7 @@ public class IDCStatusTask extends Task {
 	}
 
 	@Override
-	public void execute() {
+	public void execute() throws InterruptedException {
 		final String method = "execute()";
 		try {
 			final Table table = new Table(getClass(), "Component", "Status");
