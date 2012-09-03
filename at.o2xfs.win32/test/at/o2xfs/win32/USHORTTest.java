@@ -50,7 +50,7 @@ public class USHORTTest {
 	public void testGet() {
 		USHORT uShort = new USHORT();
 		uShort.allocate();
-		int max = 65535;
+		int max = USHORT.MAX_VALUE;
 		for (int i = 0; i <= max; i++) {
 			uShort.put(i);
 			assertEquals(i, uShort.intValue());
