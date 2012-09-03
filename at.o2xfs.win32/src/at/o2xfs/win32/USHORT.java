@@ -36,11 +36,20 @@ package at.o2xfs.win32;
  */
 public class USHORT extends Type implements IntegerType {
 
-	private static final int MIN_VALUE = 0;
+	public static final int MIN_VALUE = 0;
 
-	private static final int MAX_VALUE = 65535;
+	public static final int MAX_VALUE = 65535;
 
 	private final static int SIZE = 2;
+
+	public USHORT() {
+		super();
+	}
+
+	public USHORT(final int value) {
+		allocate();
+		put(value);
+	}
 
 	@Override
 	public int getSize() {
