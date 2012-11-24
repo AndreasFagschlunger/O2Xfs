@@ -27,6 +27,9 @@
 
 package at.o2xfs.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -65,6 +68,20 @@ public class HexTest {
 					Hex.decode(hexString.toLowerCase()));
 			Assert.assertArrayEquals(expecteds,
 					Hex.decode(hexString.toUpperCase()));
+		}
+	}
+
+	@Test
+	public final void testEncodeInt() {
+		final Map<Integer, String> values = new HashMap<Integer, String>();
+		values.put(Integer.valueOf(0x00), "00");
+		values.put(Integer.valueOf(0xF), "0F");
+		values.put(Integer.valueOf(0xFF), "FF");
+		values.put(Integer.valueOf(-1), "FFFFFFFF");
+		for (Map.Entry<Integer, String> entry : values.entrySet()) {
+			final String expected = entry.getValue();
+			final String actual = Hex.encode(entry.getKey().intValue());
+			Assert.assertEquals(expected, actual);
 		}
 	}
 
