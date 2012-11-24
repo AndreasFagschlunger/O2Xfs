@@ -33,7 +33,23 @@ public final class Hex {
 			'5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
 	private Hex() {
-		return;
+		throw new AssertionError();
+	}
+
+	public static final String encode(int i) {
+		char[] cbuf = new char[8];
+		int charPos = cbuf.length - 1;
+		do {
+			cbuf[charPos--] = DIGITS[i & 0xF];
+			i >>>= 4;
+			cbuf[charPos--] = DIGITS[i & 0xF];
+			i >>>= 4;
+		} while (i != 0);
+		return new String(cbuf, charPos + 1, cbuf.length - charPos - 1);
+	}
+
+	public static final String encode(final byte b) {
+		return encode(new byte[] { b });
 	}
 
 	public static final String encode(final byte[] b) {
