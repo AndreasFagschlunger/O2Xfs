@@ -38,7 +38,7 @@ import org.apache.commons.codec.binary.Hex;
  */
 public class Pointer extends Type {
 
-	private final static int SIZE = 4;
+	protected final static int SIZE = 4;
 
 	/**
 	 * NULL Pointer
