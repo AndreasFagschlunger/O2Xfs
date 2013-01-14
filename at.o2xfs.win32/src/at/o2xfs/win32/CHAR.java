@@ -45,6 +45,16 @@ public class CHAR extends Type {
 		return (char) buffer().get(getOffset());
 	}
 
+	/**
+	 * Sets the specified <code>char</code> value.
+	 * 
+	 * @param value
+	 *            a <code>char</code> value
+	 */
+	public void set(char value) {
+		buffer().putChar(getOffset(), value);
+	}
+
 	@Override
 	public int getSize() {
 		return SIZE;
