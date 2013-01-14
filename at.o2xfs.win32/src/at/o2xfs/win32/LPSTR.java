@@ -40,6 +40,28 @@ public class LPSTR extends Pointer implements ASCII {
 		super();
 	}
 
+	/**
+	 * Makes this <code>Pointer</code> point to a {@link ZSTR} with the
+	 * specified <code>String</code> value or points to <code>NULL</code> if no
+	 * <code>String</code> is given.
+	 * 
+	 * @param s
+	 *            a <code>String</code> or <code>null</code>
+	 */
+	public void pointTo(String s) {
+		if (s == null) {
+			pointToNULL();
+			return;
+		}
+		pointTo(new ZSTR(s));
+	}
+
+	private void pointToNULL() {
+		for (int i = 0; i < SIZE; i++) {
+			buffer().put(getOffset() + i, (byte) 0x00);
+		}
+	}
+
 	private String get() {
 		for (int length = 1;; length++) {
 			byte[] bytes = new byte[length];
