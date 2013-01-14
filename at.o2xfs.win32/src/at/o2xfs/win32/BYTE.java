@@ -36,9 +36,27 @@ package at.o2xfs.win32;
  */
 public class BYTE extends Type {
 
+	/**
+	 * Set the specified value.
+	 * 
+	 * @param b
+	 *            the byte to set
+	 */
+	public void set(byte b) {
+		buffer().put(getOffset(), b);
+	}
+
+	/**
+	 * Returns the value of this <code>BYTE</code>.
+	 * 
+	 * @return the <code>byte</code> value
+	 */
+	public byte get() {
+		return buffer().get(getOffset());
+	}
+
 	@Override
 	public int getSize() {
 		return 1;
 	}
-
 }
