@@ -27,31 +27,33 @@
 
 package at.o2xfs.ctapi;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
+import at.o2xfs.win32.Buffer;
+import at.o2xfs.win32.ByteArray;
+import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.UINT8;
 import at.o2xfs.win32.USHORT;
+import at.o2xfs.win32.ZSTR;
 
 public final class CTAPI {
 
 	static {
-		System.loadLibrary("CT-API");
+		System.loadLibrary("O2XfsWIN32");
+		System.loadLibrary("at.o2xfs.ctapi");
 	}
 
 	private static final Logger LOG = LoggerFactory.getLogger(CTAPI.class);
 
 	private String fileName = "CT32.dll";
 
-	private long moduleHandle = 0L;
+	private Pointer moduleHandle = null;
 
-	private long initFunctionAddress = 0L;
+	private Pointer initFunctionAddress = null;
 
-	private long dataFunctionAddress = 0L;
+	private Pointer dataFunctionAddress = null;
 
-	private long closeFunctionAddress = 0L;
+	private Pointer closeFunctionAddress = null;
 
 	public CTAPI() {
 		loadLibrary(fileName);
@@ -59,25 +61,25 @@ public final class CTAPI {
 	}
 
 	private void loadLibrary(final String fileName) {
-		if (moduleHandle != 0L) {
+		if (moduleHandle != null) {
 			throw new IllegalStateException();
 		}
 		try {
-			moduleHandle = loadLibrary0(fileName);
-			initFunctionAddress = getFunctionAddress("CT_init");
-			dataFunctionAddress = getFunctionAddress("CT_data");
-			closeFunctionAddress = getFunctionAddress("CT_close");
+			moduleHandle = new Pointer(loadLibrary0(new ZSTR(fileName)));
+			initFunctionAddress = new Pointer(getFunctionAddress("CT_init"));
+			dataFunctionAddress = new Pointer(getFunctionAddress("CT_data"));
+			closeFunctionAddress = new Pointer(getFunctionAddress("CT_close"));
 		} catch (final NativeException e) {
 			throw new RuntimeException("Error loading library: " + fileName, e);
 		}
 	}
 
-	private native long loadLibrary0(final String fileName)
+	private native Buffer loadLibrary0(final ZSTR fileName)
 			throws NativeException;
 
-	private long getFunctionAddress(final String name) {
+	private Buffer getFunctionAddress(final String name) {
 		try {
-			return getFunctionAddress0(moduleHandle, name);
+			return getFunctionAddress0(moduleHandle, new ZSTR(name));
 		} catch (final NativeException e) {
 			throw new RuntimeException(
 					"Error getting function address: moduleHandle="
@@ -85,8 +87,8 @@ public final class CTAPI {
 		}
 	}
 
-	private native long getFunctionAddress0(final long moduleHandle,
-			final String name) throws NativeException;
+	private native Buffer getFunctionAddress0(final Pointer moduleHandle,
+			final ZSTR name) throws NativeException;
 
 	/**
 	 * 
@@ -97,53 +99,44 @@ public final class CTAPI {
 	 *            Port number of the physical interface
 	 */
 	public void init(int ctn, int pn) throws CTException {
-		final int rc = init0(initFunctionAddress, new USHORT(ctn).buffer(),
-				new USHORT(pn).buffer());
+		final int rc = init0(initFunctionAddress, new USHORT(ctn), new USHORT(
+				pn));
 		CTException.throwFor(rc);
 	}
 
-	private native int init0(long address, ByteBuffer ctn, ByteBuffer pn);
+	private native int init0(Pointer address, USHORT ctn, USHORT pn);
 
 	public byte[] data(int ctn, int dad, int sad, byte[] command)
 			throws CTException {
-		final ByteBuffer cmdBuf = createBuffer(command.length);
-		final ByteBuffer rspBuf = createBuffer(258);
-		final USHORT lenr = new USHORT(rspBuf.capacity());
-		cmdBuf.put(command);
-		final int rc = data0(dataFunctionAddress, new USHORT(ctn).buffer(),
-				new UINT8(dad).buffer(), new UINT8(sad).buffer(), cmdBuf,
-				lenr.buffer(), rspBuf);
+		final ByteArray cmdBuf = new ByteArray(command);
+		final ByteArray rspBuf = new ByteArray(258);
+		final USHORT lenr = new USHORT(rspBuf.getSize());
+		final int rc = data0(dataFunctionAddress, new USHORT(ctn), new UINT8(
+				dad), new UINT8(sad), cmdBuf, lenr, rspBuf);
 		CTException.throwFor(rc);
 		final byte[] rsp = new byte[lenr.intValue()];
-		rspBuf.get(rsp, 0, rsp.length);
+		System.arraycopy(rspBuf.toByteArray(), 0, rsp, 0, rsp.length);
 		return rsp;
 	}
 
-	private ByteBuffer createBuffer(final int capacity) {
-		final ByteBuffer buffer = ByteBuffer.allocateDirect(capacity);
-		buffer.order(ByteOrder.nativeOrder());
-		return buffer;
-	}
-
-	private native int data0(long address, ByteBuffer ctn, ByteBuffer dad,
-			ByteBuffer sad, ByteBuffer command, ByteBuffer lenr,
-			ByteBuffer response);
+	private native int data0(Pointer address, USHORT ctn, UINT8 dad, UINT8 sad,
+			ByteArray command, USHORT lenr, ByteArray response);
 
 	public void close(int ctn) throws CTException {
-		final int rc = close0(closeFunctionAddress, new USHORT(ctn).buffer());
+		final int rc = close0(closeFunctionAddress, new USHORT(ctn));
 		CTException.throwFor(rc);
 	}
 
-	private native int close0(long address, ByteBuffer ctn);
+	private native int close0(Pointer address, USHORT ctn);
 
 	private void addShutdownHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 
 			public void run() {
-				if (moduleHandle != 0L) {
+				if (moduleHandle != null) {
 					try {
 						freeLibrary0(moduleHandle);
-						moduleHandle = 0L;
+						moduleHandle = null;
 					} catch (final NativeException e) {
 						final String method = "run()";
 						LOG.error(method,
@@ -156,6 +149,6 @@ public final class CTAPI {
 		});
 	}
 
-	private native void freeLibrary0(final long moduleHandle)
+	private native void freeLibrary0(final Pointer moduleHandle)
 			throws NativeException;
 }
