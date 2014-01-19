@@ -230,4 +230,30 @@ public final class Bytes {
 		System.arraycopy(value, pos, result, 0, len);
 		return result;
 	}
+
+	public static final String toBinaryString(byte[] b) {
+		return toBinaryString(b, new char[0]);
+	}
+
+	public static final String toBinaryString(byte[] b, char separator) {
+		return toBinaryString(b, new char[] { separator });
+	}
+
+	private static final String toBinaryString(byte[] b, char[] separator) {
+		int sepSpace = separator.length * (b.length - 1);
+		char[] str = new char[(b.length * 8) + sepSpace];
+		int cpos = 0;
+		int iMax = b.length - 1;
+		for (int i = 0;; i++) {
+			for (int mask = Bit.B8; mask >= 1; mask >>>= 1) {
+				str[cpos++] = Bit.isSet(b[i], mask) ? '1' : '0';
+			}
+			if (i == iMax) {
+				break;
+			}
+			System.arraycopy(separator, 0, str, cpos, separator.length);
+			cpos += separator.length;
+		}
+		return new String(str);
+	}
 }
