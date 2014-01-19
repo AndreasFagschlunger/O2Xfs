@@ -36,7 +36,7 @@ import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.DWORDArray;
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsVersion;
@@ -47,7 +47,7 @@ import at.o2xfs.xfs.util.XfsConstants;
 /**
  * 
  */
-public class WFSIDCCAPS extends Structure {
+public class WFSIDCCAPS extends Struct {
 
 	/**
 	 * 
@@ -267,7 +267,7 @@ public class WFSIDCCAPS extends Structure {
 
 	public WFSIDCCAPS(final XfsVersion xfsVersion, final Pointer pCaps) {
 		this(xfsVersion);
-		useBuffer(pCaps);
+		assignBuffer(pCaps);
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class WFSIDCCAPS extends Structure {
 		allocate();
 		clazz.put(caps.clazz);
 		type.put(caps.type);
-		compound.set(caps.isCompound());
+		compound.put(caps.isCompound());
 		readTracks.put(caps.readTracks);
 		writeTracks.put(caps.writeTracks);
 		chipProtocols.put(caps.chipProtocols);
@@ -293,7 +293,7 @@ public class WFSIDCCAPS extends Structure {
 		setExtra(caps.getExtra());
 		dipMode.put(caps.dipMode);
 		// FIXME: memoryChipProtocols
-		for (int i = 0; i < guidLights.getLength(); i++) {
+		for (int i = 0; i < guidLights.length; i++) {
 			guidLights.get(i).put(caps.guidLights.get(i));
 		}
 		ejectPosition.put(caps.ejectPosition);
@@ -328,7 +328,7 @@ public class WFSIDCCAPS extends Structure {
 	 * @see #compound
 	 */
 	public void setCompound(final boolean compound) {
-		this.compound.set(compound);
+		this.compound.put(compound);
 	}
 
 	/**
@@ -440,7 +440,7 @@ public class WFSIDCCAPS extends Structure {
 	 * @see #fluxSensorProgrammable
 	 */
 	public void setFluxSensorProgrammable(final boolean fluxSensorProgrammable) {
-		this.fluxSensorProgrammable.set(fluxSensorProgrammable);
+		this.fluxSensorProgrammable.put(fluxSensorProgrammable);
 	}
 
 	/**
@@ -455,7 +455,7 @@ public class WFSIDCCAPS extends Structure {
 	 */
 	public void setReadWriteAccessFollowingEject(
 			final boolean readWriteAccessFollowingEject) {
-		this.readWriteAccessFollowingEject.set(readWriteAccessFollowingEject);
+		this.readWriteAccessFollowingEject.put(readWriteAccessFollowingEject);
 	}
 
 	/**
@@ -553,7 +553,7 @@ public class WFSIDCCAPS extends Structure {
 	}
 
 	public void setPowerSaveControl(final boolean powerSaveControl) {
-		this.powerSaveControl.set(powerSaveControl);
+		this.powerSaveControl.put(powerSaveControl);
 	}
 
 	public int getParkingStations() {
@@ -569,7 +569,7 @@ public class WFSIDCCAPS extends Structure {
 	}
 
 	public void setAntiFraudModule(final boolean antiFraudModule) {
-		this.antiFraudModule.set(antiFraudModule);
+		this.antiFraudModule.put(antiFraudModule);
 	}
 
 	@Override

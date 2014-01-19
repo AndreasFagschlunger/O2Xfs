@@ -30,12 +30,12 @@ package at.o2xfs.xfs.pin;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPINKEY extends Structure {
+public class WfsPINKey extends Struct {
 
 	/**
 	 * Specifies the reason for completion of the entry. Possible values are:
@@ -51,20 +51,20 @@ public class WFSPINKEY extends Structure {
 	 */
 	private ULONG digit = new ULONG();
 
-	public WFSPINKEY() {
+	public WfsPINKey() {
 		add(completion);
 		add(digit);
 	}
 
-	public WFSPINKEY(Pointer p) {
+	public WfsPINKey(Pointer p) {
 		this();
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	/**
 	 * Copy constructor.
 	 */
-	public WFSPINKEY(final WFSPINKEY pinKey) {
+	public WfsPINKey(final WfsPINKey pinKey) {
 		this();
 		allocate();
 		completion.put(pinKey.completion);

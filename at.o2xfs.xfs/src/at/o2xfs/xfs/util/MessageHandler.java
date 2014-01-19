@@ -27,11 +27,12 @@
 
 package at.o2xfs.xfs.util;
 
-import java.nio.ByteBuffer;
-
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
+import at.o2xfs.win32.Buffer;
 import at.o2xfs.win32.HWND;
+import at.o2xfs.win32.Pointer;
+import at.o2xfs.win32.Type;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsMessage;
 
@@ -43,9 +44,15 @@ public final class MessageHandler {
 	private final static Logger LOG = LoggerFactory
 			.getLogger(MessageHandler.class);
 
+	private static native void init();
+
+	static {
+		init();
+	}
+
 	private Thread thread = null;
 
-	private IXfsCallback xfsCallback = null;
+	private final IXfsCallback xfsCallback;
 
 	private HWND hWnd = null;
 
@@ -56,7 +63,6 @@ public final class MessageHandler {
 			throw new IllegalArgumentException("xfsCallback must not be null");
 		}
 		hWnd = new HWND();
-		hWnd.allocate();
 		this.xfsCallback = xfsCallback;
 	}
 
@@ -87,10 +93,10 @@ public final class MessageHandler {
 	}
 
 	private void runMessageLoop() {
-		run0(hWnd.buffer());
+		run0(hWnd);
 	}
 
-	private native void run0(ByteBuffer hWnd);
+	private native void run0(Type hWnd);
 
 	private void hWnd() {
 		synchronized (this) {
@@ -103,10 +109,10 @@ public final class MessageHandler {
 		}
 	}
 
-	private void callback(final int msg, final ByteBuffer buffer) {
-		final String method = "callback(int, ByteBuffer)";
+	private void callback(final int msg, final Buffer lpWFSResult) {
+		final String method = "callback(int, Buffer)";
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(method, "msg=" + msg + ",buffer=" + buffer);
+			LOG.debug(method, "msg=" + msg + ",lpWFSResult=" + lpWFSResult);
 		}
 		final XfsMessage xfsMessage = XfsConstants.valueOf(msg,
 				XfsMessage.class);
@@ -116,7 +122,7 @@ public final class MessageHandler {
 			}
 			return;
 		}
-		final WFSResult wfsResult = new WFSResult(buffer);
+		final WFSResult wfsResult = new WFSResult(new Pointer(lpWFSResult));
 		xfsCallback.callback(xfsMessage, wfsResult);
 	}
 
@@ -126,11 +132,11 @@ public final class MessageHandler {
 			LOG.debug(method, "hWnd=" + hWnd);
 		}
 		if (hWnd != null) {
-			close(hWnd.buffer());
+			close0(hWnd);
 		}
 	}
 
-	private native void close(ByteBuffer hWnd);
+	private native void close0(Type hWnd);
 
 	/**
 	 * @return the hWnd

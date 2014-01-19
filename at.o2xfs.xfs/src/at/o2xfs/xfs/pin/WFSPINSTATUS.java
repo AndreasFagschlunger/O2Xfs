@@ -36,7 +36,7 @@ import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.DWORDArray;
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsVersion;
@@ -47,7 +47,7 @@ import at.o2xfs.xfs.util.XfsConstants;
 /**
  * @author Andreas Fagschlunger
  */
-public class WFSPINSTATUS extends Structure {
+public class WFSPINSTATUS extends Struct {
 
 	private static final int WFS_PIN_GUIDLIGHTS_SIZE = 32;
 
@@ -156,7 +156,7 @@ public class WFSPINSTATUS extends Structure {
 
 	public WFSPINSTATUS(final XfsVersion xfsVersion, final Pointer p) {
 		this(xfsVersion);
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	public WFSPINSTATUS(final XfsVersion xfsVersion,

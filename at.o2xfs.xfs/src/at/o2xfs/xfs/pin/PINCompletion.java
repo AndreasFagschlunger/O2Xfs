@@ -35,52 +35,52 @@ public enum PINCompletion implements XfsConstant {
 	 * The command terminated automatically, because maximum PIN length was
 	 * reached.
 	 */
-	WFS_PIN_COMPAUTO(0L),
+	AUTO(0L),
 
 	/**
 	 * The ENTER Function Key was pressed.
 	 */
-	WFS_PIN_COMPENTER(1L),
+	ENTER(1L),
 
 	/**
 	 * The CANCEL Function Key was pressed.
 	 */
-	WFS_PIN_COMPCANCEL(2L),
+	CANCEL(2L),
 
 	/**
 	 * Input continues (this value is only used in the execute event
 	 * {@link PINMessage#WFS_EXEE_PIN_KEY}).
 	 */
-	WFS_PIN_COMPCONTINUE(6L),
+	CONTINUE(6L),
 
 	/**
 	 * The CLEAR Function Key was pressed and the previous input is cleared
 	 * (this value is only used in the execute event
 	 * {@link PINMessage#WFS_EXEE_PIN_KEY}).
 	 */
-	WFS_PIN_COMPCLEAR(7L),
+	CLEAR(7L),
 
 	/**
 	 * The last input digit was cleared (this value is only used in the execute
 	 * event {@link PINMessage#WFS_EXEE_PIN_KEY}).
 	 */
-	WFS_PIN_COMPBACKSPACE(8L),
+	BACKSPACE(8L),
 
 	/**
 	 * An FDK was pressed.
 	 */
-	WFS_PIN_COMPFDK(9L),
+	FDK(9L),
 
 	/**
 	 * The HELP Function Key was pressed.
 	 */
-	WFS_PIN_COMPHELP(10L),
+	HELP(10L),
 
 	/**
 	 * A Function Key (FK) other than ENTER, CLEAR, CANCEL, BACKSPACE, HELP was
 	 * pressed.
 	 */
-	WFS_PIN_COMPFK(11L),
+	FK(11L),
 
 	/**
 	 * Input continues, FDK was pressed (this value is only used in the execute
@@ -88,7 +88,7 @@ public enum PINCompletion implements XfsConstant {
 	 * 
 	 * @since 3.00
 	 */
-	WFS_PIN_COMPCONTFDK(12L);
+	CONTFDK(12L);
 
 	private final long value;
 

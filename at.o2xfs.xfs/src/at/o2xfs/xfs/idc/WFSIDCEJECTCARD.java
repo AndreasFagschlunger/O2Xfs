@@ -29,11 +29,11 @@ package at.o2xfs.xfs.idc;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSIDCEJECTCARD extends Structure {
+public class WFSIDCEJECTCARD extends Struct {
 
 	/**
 	 * Specifies the destination of the card ejection for motorized card

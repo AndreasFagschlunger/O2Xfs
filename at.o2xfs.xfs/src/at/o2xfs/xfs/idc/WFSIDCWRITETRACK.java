@@ -30,13 +30,13 @@ package at.o2xfs.xfs.idc;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPSTR;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.win32.ZSTR;
 import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSIDCWRITETRACK extends Structure {
+public class WFSIDCWRITETRACK extends Struct {
 
 	/**
 	 * Points to the name of the form to be used.

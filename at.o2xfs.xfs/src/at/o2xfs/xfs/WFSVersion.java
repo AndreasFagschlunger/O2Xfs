@@ -29,11 +29,11 @@ package at.o2xfs.xfs;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.win32.ZSTR;
 
-public class WFSVersion extends Structure {
+public class WFSVersion extends Struct {
 
 	private final static int WFSDDESCRIPTION_LEN = 256;
 	private final static int WFSDSYSSTATUS_LEN = 256;

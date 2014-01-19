@@ -38,7 +38,7 @@ import at.o2xfs.win32.DWORDArray;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.win32.ZSTR;
@@ -50,7 +50,7 @@ import at.o2xfs.xfs.util.XfsConstants;
 /**
  * @author Andreas Fagschlunger
  */
-public class WFSPINCAPS extends Structure {
+public class WFSPINCAPS extends Struct {
 
 	/**
 	 * Specifies the logical service class, value is: WFS_SERVICE_CLASS_PIN
@@ -383,7 +383,7 @@ public class WFSPINCAPS extends Structure {
 
 	public WFSPINCAPS(final XfsVersion xfsVersion, final Pointer p) {
 		this(xfsVersion);
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	/**
@@ -394,14 +394,14 @@ public class WFSPINCAPS extends Structure {
 		allocate();
 		clazz.put(pinCaps.clazz);
 		type.put(pinCaps.type);
-		compound.set(pinCaps.isCompound());
+		compound.put(pinCaps.isCompound());
 		keyNum.put(pinCaps.keyNum);
 		algorithms.put(pinCaps.algorithms);
 		pinFormats.put(pinCaps.pinFormats);
 		derivationAlgorithms.put(pinCaps.derivationAlgorithms);
 		presentationAlgorithms.put(pinCaps.presentationAlgorithms);
 		display.put(pinCaps.display);
-		idConnect.set(pinCaps.isIDConnect());
+		idConnect.put(pinCaps.isIDConnect());
 		idKey.put(pinCaps.idKey);
 		validationAlgorithms.put(pinCaps.validationAlgorithms);
 		keyCheckModes.put(pinCaps.keyCheckModes);
@@ -551,7 +551,7 @@ public class WFSPINCAPS extends Structure {
 	 * {@link #pinCanPersistAfterUse}
 	 */
 	public void setPINCanPersistAfterUse(final boolean pinCanPersistAfterUse) {
-		this.pinCanPersistAfterUse.set(pinCanPersistAfterUse);
+		this.pinCanPersistAfterUse.put(pinCanPersistAfterUse);
 	}
 
 	/**
@@ -593,7 +593,7 @@ public class WFSPINCAPS extends Structure {
 	 * {@link #hsmJournaling}
 	 */
 	public void setHSMJournaling(final boolean hsmJournaling) {
-		this.hsmJournaling.set(hsmJournaling);
+		this.hsmJournaling.put(hsmJournaling);
 	}
 
 	/**
@@ -714,7 +714,7 @@ public class WFSPINCAPS extends Structure {
 	 * {@link #keyImportThroughParts}
 	 */
 	public void setKeyImportThroughParts(boolean keyImportThroughParts) {
-		this.keyImportThroughParts.set(keyImportThroughParts);
+		this.keyImportThroughParts.put(keyImportThroughParts);
 	}
 
 	/**
@@ -742,7 +742,7 @@ public class WFSPINCAPS extends Structure {
 	 * {@link #typeCombined}
 	 */
 	public void setTypeCombined(final boolean typeCombined) {
-		this.typeCombined.set(typeCombined);
+		this.typeCombined.put(typeCombined);
 	}
 
 	/**
@@ -756,7 +756,7 @@ public class WFSPINCAPS extends Structure {
 	 * {@link #setPinblockDataRequired}
 	 */
 	public void setSetPinblockDataRequired(boolean setPinblockDataRequired) {
-		this.setPinblockDataRequired.set(setPinblockDataRequired);
+		this.setPinblockDataRequired.put(setPinblockDataRequired);
 	}
 
 	/**
@@ -786,7 +786,7 @@ public class WFSPINCAPS extends Structure {
 	 * {@link #powerSaveControl}
 	 */
 	public void setPowerSaveControl(final boolean powerSaveControl) {
-		this.powerSaveControl.set(powerSaveControl);
+		this.powerSaveControl.put(powerSaveControl);
 	}
 
 	public boolean isAntiFraudModule() {
@@ -794,7 +794,7 @@ public class WFSPINCAPS extends Structure {
 	}
 
 	public void setAntiFraudModule(final boolean antiFraudModule) {
-		this.antiFraudModule.set(antiFraudModule);
+		this.antiFraudModule.put(antiFraudModule);
 	}
 
 	@Override

@@ -30,12 +30,12 @@ package at.o2xfs.xfs.idc;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSIDCRETAINCARD extends Structure {
+public class WFSIDCRETAINCARD extends Struct {
 
 	/**
 	 * Total number of ID cards retained up to and including this operation,
@@ -62,7 +62,7 @@ public class WFSIDCRETAINCARD extends Structure {
 
 	public WFSIDCRETAINCARD(final Pointer p) {
 		this(false);
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	public WFSIDCRETAINCARD(final WFSIDCRETAINCARD retainCard) {

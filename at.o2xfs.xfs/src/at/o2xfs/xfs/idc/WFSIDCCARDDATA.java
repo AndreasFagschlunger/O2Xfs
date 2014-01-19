@@ -31,7 +31,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsVersion;
@@ -41,7 +41,7 @@ import at.o2xfs.xfs.util.XfsConstants;
  * @author Andreas Fagschlunger
  * 
  */
-public class WFSIDCCARDDATA extends Structure {
+public class WFSIDCCARDDATA extends Struct {
 
 	/**
 	 * Specifies the source of the card data as one of the following flags:
@@ -90,7 +90,7 @@ public class WFSIDCCARDDATA extends Structure {
 	 */
 	public WFSIDCCARDDATA(final XfsVersion xfsVersion, final Pointer pCardData) {
 		this(xfsVersion);
-		useBuffer(pCardData);
+		assignBuffer(pCardData);
 	}
 
 	/**
@@ -140,12 +140,11 @@ public class WFSIDCCARDDATA extends Structure {
 	}
 
 	public byte[] getData() {
-		if (Pointer.NULL.equals(pData)) {
-			return null;
+		byte[] result = null;
+		if (!Pointer.NULL.equals(pData)) {
+			result = pData.buffer((int) getDataLength()).get();
 		}
-		final byte[] b = new byte[(int) getDataLength()];
-		pData.get(b.length).get(b);
-		return b;
+		return result;
 	}
 
 	public IDCWriteMethod getWriteMethod() {

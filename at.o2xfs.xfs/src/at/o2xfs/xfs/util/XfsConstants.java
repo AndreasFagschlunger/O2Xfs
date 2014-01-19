@@ -32,7 +32,7 @@ import java.util.Set;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
-import at.o2xfs.win32.IntegerType;
+import at.o2xfs.win32.NumberType;
 import at.o2xfs.xfs.XfsConstant;
 
 public class XfsConstants {
@@ -41,7 +41,7 @@ public class XfsConstants {
 			.getLogger(XfsConstants.class);
 
 	public static final <E extends Enum<E> & XfsConstant> E valueOf(
-			final IntegerType value, final Class<E> xfsConstantType) {
+			final NumberType value, final Class<E> xfsConstantType) {
 		if (value == null) {
 			throw new IllegalArgumentException("value must not be null");
 		}
@@ -68,7 +68,7 @@ public class XfsConstants {
 	}
 
 	public static final <E extends Enum<E> & XfsConstant> Set<E> of(
-			final IntegerType value, final Class<E> xfsConstantType) {
+			final NumberType value, final Class<E> xfsConstantType) {
 		if (value == null) {
 			throw new IllegalArgumentException("value must not be null");
 		}

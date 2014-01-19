@@ -50,7 +50,6 @@ public class XFSVersionDWORD extends DWORD {
 		allocate();
 		setLowVersion(lowVersion);
 		setHighVersion(highVersion);
-
 	}
 
 	public void setLowVersion(final XfsVersion lowVersion) {

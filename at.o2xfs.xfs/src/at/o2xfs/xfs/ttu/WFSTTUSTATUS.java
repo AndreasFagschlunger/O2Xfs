@@ -33,13 +33,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.win32.WORDArray;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSTTUSTATUS extends Structure {
+public class WFSTTUSTATUS extends Struct {
 
 	private final static int WFS_TTU_LEDS_MAX = 8;
 
@@ -102,7 +102,7 @@ public class WFSTTUSTATUS extends Structure {
 
 	public WFSTTUSTATUS(final Pointer pStatus) {
 		this();
-		useBuffer(pStatus);
+		assignBuffer(pStatus);
 	}
 
 	public TTUDevice getDevice() {

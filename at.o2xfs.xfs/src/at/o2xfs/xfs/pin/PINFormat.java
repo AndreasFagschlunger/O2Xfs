@@ -42,7 +42,7 @@ public enum PINFormat implements XfsConstant {
 	 * with padding character 0x0F to the right, PIN length 4-12 digits, XORed
 	 * with PAN (Primary Account Number, minimum 12 digits without check number)
 	 */
-	WFS_PIN_FORMANSI(0x0002L),
+	ANSI(0x0002L),
 
 	/**
 	 * PIN is preceded by 0x00 and the length of the PIN (0x04 to 0x0C), filled
@@ -50,42 +50,67 @@ public enum PINFormat implements XfsConstant {
 	 * with PAN (Primary Account Number, no minimum length specified, missing
 	 * digits are filled with 0x00)
 	 */
-	WFS_PIN_FORMISO0(0x0004L),
+	ISO0(0x0004L),
 
 	/**
 	 * PIN is preceded by 0x01 and the length of the PIN (0x04 to 0x0C), padding
 	 * characters are taken from a transaction field (10 digits)
 	 */
-	WFS_PIN_FORMISO1(0x0008L),
+	ISO1(0x0008L),
 
 	/**
 	 * (similar to {@link #WFS_PIN_FORM3624}), PIN only 4 digits
 	 */
-	WFS_PIN_FORMECI2(0x0010L),
+	ECI2(0x0010L),
 
 	/**
 	 * PIN is preceded by the length (digit), PIN length 4-6 digits, padded with
 	 * 0x00
 	 */
-	WFS_PIN_FORMECI3(0x0020L),
+	ECI3(0x0020L),
 
 	/**
-	 * same as {@link #WFS_PIN_FORMECI3}
+	 * same as {@link #ECI3}
 	 */
-	WFS_PIN_FORMVISA(WFS_PIN_FORMECI3.getValue()),
+	VISA(ECI3.getValue()),
 
 	/**
 	 * PIN is padded with the padding character and may be not encrypted, single
 	 * encrypted or double encrypted.
 	 */
-	WFS_PIN_FORMDIEBOLD(0x0080L),
+	DIEBOLD(0x0080L),
 
 	/**
 	 * PIN is preceded by the two-digit coordination number, padded with the
 	 * padding character and may be not encrypted, single encrypted or double
 	 * encrypted.
 	 */
-	WFS_PIN_FORMDIEBOLDCO(0x0100L);
+	DIEBOLDCO(0x0100L),
+
+	/**
+	 * 
+	 */
+	VISA3(0x0200L),
+
+	/**
+	 * 
+	 */
+	BANKSYS(0x0400L),
+
+	/**
+	 * 
+	 */
+	EMV(0x0800L),
+
+	/**
+	 * 
+	 */
+	ISO3(0x2000L),
+
+	/**
+	 * 
+	 */
+	AP(0x4000L);
 
 	private final long value;
 

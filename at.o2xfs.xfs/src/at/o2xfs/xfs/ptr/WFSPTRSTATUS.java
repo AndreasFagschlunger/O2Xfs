@@ -36,7 +36,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import at.o2xfs.win32.DWORDArray;
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.win32.WORDArray;
@@ -45,7 +45,7 @@ import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPTRSTATUS extends Structure {
+public class WFSPTRSTATUS extends Struct {
 
 	private static final int WFS_PTR_GUIDLIGHTS_SIZE = 32;
 	private static final int WFS_PTR_SUPPLYSIZE = 16;
@@ -116,7 +116,7 @@ public class WFSPTRSTATUS extends Structure {
 
 	public WFSPTRSTATUS(final XfsVersion xfsVersion, final Pointer p) {
 		this(xfsVersion);
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	public WFSPTRSTATUS(final XfsVersion xfsVersion,
@@ -199,19 +199,19 @@ public class WFSPTRSTATUS extends Structure {
 	 * @return
 	 */
 	public List<WFSPTRRETRACTBINS> getRetractBins() {
-		final List<WFSPTRRETRACTBINS> retractBins = new ArrayList<WFSPTRRETRACTBINS>();
+		final List<WFSPTRRETRACTBINS> result = new ArrayList<WFSPTRRETRACTBINS>();
 		if (retractBin != null) {
 			if (!PTRRetractBin.NOTSUPP.equals(retractBin.getRetractBin())) {
-				retractBins.add(retractBin);
+				result.add(retractBin);
 			}
 		} else if (retractBins != null) {
 			final ZList list = new ZList(retractBins);
 			for (final Pointer p : list) {
 				final WFSPTRRETRACTBINS bin = new WFSPTRRETRACTBINS(p);
-				retractBins.add(new WFSPTRRETRACTBINS(bin));
+				result.add(new WFSPTRRETRACTBINS(bin));
 			}
 		}
-		return retractBins;
+		return result;
 	}
 
 	/**

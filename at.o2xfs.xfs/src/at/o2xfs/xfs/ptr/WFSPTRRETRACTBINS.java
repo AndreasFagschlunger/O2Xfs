@@ -30,12 +30,12 @@ package at.o2xfs.xfs.ptr;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPTRRETRACTBINS extends Structure {
+public class WFSPTRRETRACTBINS extends Struct {
 
 	private final WORD retractBin = new WORD();
 	private final USHORT retractCount = new USHORT();
@@ -47,7 +47,7 @@ public class WFSPTRRETRACTBINS extends Structure {
 
 	public WFSPTRRETRACTBINS(final Pointer p) {
 		this();
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	public WFSPTRRETRACTBINS(final WFSPTRRETRACTBINS bin) {

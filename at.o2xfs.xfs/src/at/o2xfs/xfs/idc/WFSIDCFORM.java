@@ -34,11 +34,11 @@ import at.o2xfs.win32.CHAR;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSIDCFORM extends Structure {
+public class WFSIDCFORM extends Struct {
 	private final LPSTR formName = new LPSTR();
 	private final CHAR fieldSeparatorTrack1 = new CHAR();
 	private final CHAR fieldSeparatorTrack2 = new CHAR();
@@ -65,7 +65,7 @@ public class WFSIDCFORM extends Structure {
 
 	public WFSIDCFORM(final Pointer pForm) {
 		this();
-		useBuffer(pForm);
+		assignBuffer(pForm);
 	}
 
 	public String getFormName() {
@@ -73,15 +73,15 @@ public class WFSIDCFORM extends Structure {
 	}
 
 	public char getFieldSeparatorTrack1() {
-		return fieldSeparatorTrack1.charValue();
+		return fieldSeparatorTrack1.getChar();
 	}
 
 	public char getFieldSeparatorTrack2() {
-		return fieldSeparatorTrack2.charValue();
+		return fieldSeparatorTrack2.getChar();
 	}
 
 	public char getFieldSeparatorTrack3() {
-		return fieldSeparatorTrack3.charValue();
+		return fieldSeparatorTrack3.getChar();
 	}
 
 	public IDCAction getAction() {

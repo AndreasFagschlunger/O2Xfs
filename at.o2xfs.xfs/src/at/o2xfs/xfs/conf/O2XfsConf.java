@@ -27,7 +27,6 @@
 
 package at.o2xfs.xfs.conf;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +35,7 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.HKEY;
+import at.o2xfs.win32.Type;
 import at.o2xfs.win32.ZSTR;
 import at.o2xfs.xfs.XfsException;
 
@@ -115,14 +115,14 @@ public class O2XfsConf {
 	 * @throws XfsException
 	 */
 	public void wfmCloseKey(final HKEY hKey) throws XfsException {
-		final int errorCode = wfmCloseKey(hKey.buffer());
+		final int errorCode = wfmCloseKey0(hKey);
 		XfsException.throwFor(errorCode);
 		synchronized (openKeys) {
 			openKeys.remove(hKey);
 		}
 	}
 
-	private native int wfmCloseKey(ByteBuffer hKey);
+	private native int wfmCloseKey0(Type hKey);
 
 	/**
 	 * Opens the specified key.
@@ -130,8 +130,8 @@ public class O2XfsConf {
 	public HKEY wfmOpenKey(final HKEY hKey, final String subKey)
 			throws XfsException {
 		HKEY hkResult = new HKEY();
-		final int errorCode = wfmOpenKey(hKey.buffer(), (subKey == null ? null
-				: new ZSTR(subKey).buffer()), hkResult.buffer());
+		final int errorCode = wfmOpenKey0(hKey, (subKey == null ? null
+				: new ZSTR(subKey)), hkResult);
 		XfsException.throwFor(errorCode);
 		synchronized (openKeys) {
 			openKeys.add(hkResult);
@@ -139,8 +139,7 @@ public class O2XfsConf {
 		return hkResult;
 	}
 
-	private native int wfmOpenKey(final ByteBuffer hKey,
-			final ByteBuffer lpszSubKey, final ByteBuffer phkResult);
+	private native int wfmOpenKey0(Type hKey, Type lpszSubKey, Type phkResult);
 
 	/**
 	 * Retrieves the data for the value with the specified name, within the
@@ -149,14 +148,13 @@ public class O2XfsConf {
 	public String wfmQueryValue(final HKEY hKey, final String valueName)
 			throws XfsException {
 		final ZSTR data = new ZSTR(SIZE_LIMIT, true);
-		final int errorCode = wfmQueryValue(hKey.buffer(),
-				new ZSTR(valueName).buffer(), data.buffer());
+		final int errorCode = wfmQueryValue0(hKey, new ZSTR(valueName), data);
 		XfsException.throwFor(errorCode);
 		return data.toString();
 	}
 
-	private native int wfmQueryValue(ByteBuffer hKey, ByteBuffer lpszValueName,
-			ByteBuffer lpszData);
+	private native int wfmQueryValue0(Type hKey, Type lpszValueName,
+			Type lpszData);
 
 	/**
 	 * Enumerates the subkeys of the specified open key. Retrieves information
@@ -170,14 +168,12 @@ public class O2XfsConf {
 	public String wfmEnumKey(final HKEY key, final DWORD iSubKey)
 			throws XfsException {
 		final ZSTR name = new ZSTR(SIZE_LIMIT, true);
-		final int errorCode = wfmEnumKey(key.buffer(), iSubKey.buffer(),
-				name.buffer());
+		final int errorCode = wfmEnumKey0(key, iSubKey, name);
 		XfsException.throwFor(errorCode);
 		return name.toString();
 	}
 
-	private native int wfmEnumKey(ByteBuffer hKey, ByteBuffer iSubKey,
-			ByteBuffer lpszName);
+	private native int wfmEnumKey0(Type hKey, Type iSubKey, Type lpszName);
 
 	/**
 	 * Enumerates the values of the specified open key. Retrieves the name and
@@ -187,14 +183,13 @@ public class O2XfsConf {
 			final DWORD iValue) throws XfsException {
 		ZSTR value = new ZSTR(SIZE_LIMIT, true);
 		ZSTR data = new ZSTR(SIZE_LIMIT, true);
-		final int errorCode = wfmEnumValue(hKey.buffer(), iValue.buffer(),
-				value.buffer(), data.buffer());
+		final int errorCode = wfmEnumValue0(hKey, iValue, value, data);
 		XfsException.throwFor(errorCode);
 		return new ValuePair(value.toString(), data.toString());
 	}
 
-	private native int wfmEnumValue(ByteBuffer hKey, ByteBuffer iValue,
-			ByteBuffer lpszValue, ByteBuffer lpszData);
+	private native int wfmEnumValue0(Type hKey, Type iValue, Type lpszValue,
+			Type lpszData);
 
 	@Override
 	protected void finalize() throws Throwable {
@@ -219,5 +214,4 @@ public class O2XfsConf {
 			}
 		}
 	}
-
 }

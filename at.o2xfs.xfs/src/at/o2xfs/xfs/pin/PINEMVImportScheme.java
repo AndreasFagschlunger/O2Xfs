@@ -36,7 +36,7 @@ public enum PINEMVImportScheme implements XfsConstant {
 	 * 
 	 * @since 3.10
 	 */
-	WFS_PIN_EMV_IMPORT_PLAIN_CA(1L),
+	PLAIN_CA(1L),
 
 	/**
 	 * A plain text CA public key is imported using the EMV 2000 verification
@@ -44,7 +44,7 @@ public enum PINEMVImportScheme implements XfsConstant {
 	 * 
 	 * @since 3.10
 	 */
-	WFS_PIN_EMV_IMPORT_CHKSUM_CA(2L),
+	CHKSUM_CA(2L),
 
 	/**
 	 * A CA public key is imported using the selfsign scheme defined in the
@@ -53,7 +53,7 @@ public enum PINEMVImportScheme implements XfsConstant {
 	 * 
 	 * @since 3.10
 	 */
-	WFS_PIN_EMV_IMPORT_EPI_CA(3L),
+	EPI_CA(3L),
 
 	/**
 	 * An Issuer public key is imported as defined in EMV 2000 Book II, [Ref.
@@ -61,14 +61,14 @@ public enum PINEMVImportScheme implements XfsConstant {
 	 * 
 	 * @since 3.10
 	 */
-	WFS_PIN_EMV_IMPORT_ISSUER(4L),
+	ISSUER(4L),
 
 	/**
 	 * An ICC public key is imported as defined in EMV 2000 Book II, [Ref. 4].
 	 * 
 	 * @since 3.10
 	 */
-	WFS_PIN_EMV_IMPORT_ICC(5L),
+	ICC(5L),
 
 	/**
 	 * An ICC PIN public key is imported as defined in EMV 2000 Book II, [Ref.
@@ -76,7 +76,7 @@ public enum PINEMVImportScheme implements XfsConstant {
 	 * 
 	 * @since 3.10
 	 */
-	WFS_PIN_EMV_IMPORT_ICC_PIN(6L),
+	ICC_PIN(6L),
 
 	/**
 	 * A CA public key is imported and verified using a signature generated with
@@ -84,7 +84,7 @@ public enum PINEMVImportScheme implements XfsConstant {
 	 * 
 	 * @since 3.10
 	 */
-	WFS_PIN_EMV_IMPORT_PKCSV1_5_CA(7L);
+	PKCSV1_5_CA(7L);
 
 	private final long value;
 

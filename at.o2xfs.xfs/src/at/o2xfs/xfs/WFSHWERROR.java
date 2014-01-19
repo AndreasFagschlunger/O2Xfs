@@ -33,14 +33,14 @@ import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ZSTR;
 import at.o2xfs.xfs.util.XfsConstants;
 
 /**
  * @author Andreas Fagschlunger
  */
-public class WFSHWERROR extends Structure {
+public class WFSHWERROR extends Struct {
 
 	/**
 	 * Pointer to the logical service name of the service that generated the
@@ -105,7 +105,7 @@ public class WFSHWERROR extends Structure {
 
 	public WFSHWERROR(final XfsVersion xfsVersion, final Pointer p) {
 		this(xfsVersion);
-		useBuffer(p);
+		assignBuffer(p.buffer(getSize()));
 	}
 
 	/**
@@ -171,9 +171,7 @@ public class WFSHWERROR extends Structure {
 			return null;
 		}
 		final int capacity = (int) size.longValue();
-		final byte[] b = new byte[capacity];
-		description.get(capacity).get(b);
-		return b;
+		return description.buffer(capacity).get();
 	}
 
 	public void setDescription(final byte[] description) {

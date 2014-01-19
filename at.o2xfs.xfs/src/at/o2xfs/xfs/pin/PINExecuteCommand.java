@@ -34,217 +34,217 @@ public enum PINExecuteCommand implements XfsConstant {
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_CRYPT(401L),
+	CRYPT(401L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_IMPORT_KEY(403L),
+	IMPORT_KEY(403L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_GET_PIN(405L),
+	GET_PIN(405L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_GET_PINBLOCK(407L),
+	GET_PINBLOCK(407L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_GET_DATA(408L),
+	GET_DATA(408L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_INITIALIZATION(409L),
+	INITIALIZATION(409L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_LOCAL_DES(410L),
+	LOCAL_DES(410L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_LOCAL_EUROCHEQUE(411L),
+	LOCAL_EUROCHEQUE(411L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_LOCAL_VISA(412L),
+	LOCAL_VISA(412L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_CREATE_OFFSET(413L),
+	CREATE_OFFSET(413L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_DERIVE_KEY(414L),
+	DERIVE_KEY(414L),
 
 	/**
 	 * 
 	 */
-	WFS_CMD_PIN_PRESENT_IDC(415L),
+	PRESENT_IDC(415L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_LOCAL_BANKSYS(416L),
+	LOCAL_BANKSYS(416L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_BANKSYS_IO(417L),
+	BANKSYS_IO(417L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_RESET(418L),
+	RESET(418L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_HSM_SET_TDATA(419L),
+	HSM_SET_TDATA(419L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_SECURE_MSG_SEND(420L),
+	SECURE_MSG_SEND(420L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_SECURE_MSG_RECEIVE(421L),
+	SECURE_MSG_RECEIVE(421L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_GET_JOURNAL(422L),
+	GET_JOURNAL(422L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_IMPORT_KEY_EX(423L),
+	IMPORT_KEY_EX(423L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_ENC_IO(424L),
+	ENC_IO(424L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_HSM_INIT(425L),
+	HSM_INIT(425L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_IMPORT_RSA_PUBLIC_KEY(426L),
+	IMPORT_RSA_PUBLIC_KEY(426L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_EXPORT_RSA_ISSUER_SIGNED_ITEM(427L),
+	EXPORT_RSA_ISSUER_SIGNED_ITEM(427L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_IMPORT_RSA_SIGNED_DES_KEY(428L),
+	IMPORT_RSA_SIGNED_DES_KEY(428L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_GENERATE_RSA_KEY_PAIR(429L),
+	GENERATE_RSA_KEY_PAIR(429L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_EXPORT_RSA_EPP_SIGNED_ITEM(430L),
+	EXPORT_RSA_EPP_SIGNED_ITEM(430L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_LOAD_CERTIFICATE(431L),
+	LOAD_CERTIFICATE(431L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_GET_CERTIFICATE(432L),
+	GET_CERTIFICATE(432L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_REPLACE_CERTIFICATE(433L),
+	REPLACE_CERTIFICATE(433L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_START_KEY_EXCHANGE(434L),
+	START_KEY_EXCHANGE(434L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_IMPORT_RSA_ENCIPHERED_PKCS7_KEY(435L),
+	IMPORT_RSA_ENCIPHERED_PKCS7_KEY(435L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_EMV_IMPORT_PUBLIC_KEY(436L),
+	EMV_IMPORT_PUBLIC_KEY(436L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_DIGEST(437L),
+	DIGEST(437L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_SECUREKEY_ENTRY(438L),
+	SECUREKEY_ENTRY(438L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_CMD_PIN_GENERATE_KCV(439L),
+	GENERATE_KCV(439L),
 
 	/**
 	 * @since 3.10
 	 */
-	WFS_CMD_PIN_SET_GUIDANCE_LIGHT(441L),
+	SET_GUIDANCE_LIGHT(441L),
 
 	/**
 	 * @since 3.10
 	 */
-	WFS_CMD_PIN_MAINTAIN_PIN(442L),
+	MAINTAIN_PIN(442L),
 
 	/**
 	 * @since 3.10
 	 */
-	WFS_CMD_PIN_KEYPRESS_BEEP(443L),
+	KEYPRESS_BEEP(443L),
 
 	/**
 	 * @since 3.10
 	 */
-	WFS_CMD_PIN_SET_PINBLOCK_DATA(444L),
+	SET_PINBLOCK_DATA(444L),
 
 	/**
 	 * @since 3.10
 	 */
-	WFS_CMD_PIN_SET_LOGICAL_HSM(445L),
+	SET_LOGICAL_HSM(445L),
 
 	/**
 	 * @since 3.10
 	 */
-	WFS_CMD_PIN_IMPORT_KEYBLOCK(446L),
+	IMPORT_KEYBLOCK(446L),
 
 	/**
 	 * @since 3.10
 	 */
-	WFS_CMD_PIN_POWER_SAVE_CONTROL(447L);
+	POWER_SAVE_CONTROL(447L);
 
 	private final long value;
 

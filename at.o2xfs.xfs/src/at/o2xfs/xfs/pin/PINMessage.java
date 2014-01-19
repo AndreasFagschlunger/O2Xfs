@@ -44,7 +44,19 @@ public enum PINMessage implements XfsConstant {
 	/**
 	 * An error occured accessing an encryption key.
 	 */
-	WFS_SRVE_PIN_ILLEGAL_KEY_ACCESS(403L);
+	WFS_SRVE_PIN_ILLEGAL_KEY_ACCESS(403L),
+
+	WFS_SRVE_PIN_OPT_REQUIRED(404),
+	WFS_SRVE_PIN_HSM_TDATA_CHANGED(405),
+	WFS_SRVE_PIN_CERTIFICATE_CHANGE(406),
+	WFS_SRVE_PIN_HSM_CHANGED(407),
+
+	/**
+	 * @since 3.10
+	 */
+	WFS_EXEE_PIN_ENTERDATA(408),
+	WFS_SRVE_PIN_DEVICEPOSITION(409),
+	WFS_SRVE_PIN_POWER_SAVE_CHANGE(410);
 
 	private final long value;
 

@@ -99,6 +99,10 @@ public enum XfsServiceClass implements XfsConstant {
 		return value;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public final static XfsServiceClass getForServiceClassName(
 			final String className) {
 		for (XfsServiceClass serviceClass : values()) {

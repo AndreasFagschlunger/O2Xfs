@@ -32,13 +32,13 @@ import java.util.Set;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.BOOL;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.util.Bitmask;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPINGETDATA extends Structure {
+public class WfsPINGetData extends Struct {
 
 	/**
 	 * Specifies the maximum number of digits which can be returned to the
@@ -78,7 +78,7 @@ public class WFSPINGETDATA extends Structure {
 	 */
 	private ULONG terminateKeys = new ULONG();
 
-	public WFSPINGETDATA() {
+	public WfsPINGetData() {
 		add(maxLen);
 		add(autoEnd);
 		add(activeFDKs);
@@ -100,7 +100,7 @@ public class WFSPINGETDATA extends Structure {
 	}
 
 	public void setAutoEnd(final boolean autoEnd) {
-		this.autoEnd.set(autoEnd);
+		this.autoEnd.put(autoEnd);
 	}
 
 	public Set<PINFDK> getActiveFDKs() {

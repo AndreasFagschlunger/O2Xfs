@@ -47,10 +47,10 @@ public class Bitmask {
 		return dword;
 	}
 
-	public static <E extends Enum<E>> long of(final Set<E> enums) {
+	public static <E extends Enum<E> & XfsConstant> long of(final Set<E> enums) {
 		long mask = 0L;
 		for (final E e : enums) {
-			mask |= ((XfsConstant) e).getValue();
+			mask |= e.getValue();
 		}
 		return mask;
 	}
