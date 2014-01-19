@@ -150,8 +150,8 @@ public class EjectCardCommand extends AbstractAsyncCommand<EjectCardListener>
 	}
 
 	@Override
-	protected void executeInternal() {
-		final String method = "executeInternal()";
+	protected void doExecute() {
+		final String method = "doExecute()";
 		try {
 			idcService.addIDCServiceListener(this);
 			ejectCard();
@@ -205,7 +205,7 @@ public class EjectCardCommand extends AbstractAsyncCommand<EjectCardListener>
 
 	private void ejectCard() throws Exception {
 		ejectCardCommand = new XfsExecuteCommand(idcService,
-				IDCExecuteCommand.WFS_CMD_IDC_EJECT_CARD);
+				IDCExecuteCommand.EJECT_CARD);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = ejectCardCommand.call();

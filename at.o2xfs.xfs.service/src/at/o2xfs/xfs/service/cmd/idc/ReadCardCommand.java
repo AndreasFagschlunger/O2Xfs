@@ -103,11 +103,11 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 	}
 
 	@Override
-	protected void executeInternal() {
-		final String method = "executeInternal()";
+	protected void doExecute() {
+		final String method = "doExecute()";
 		xfsCommand = new XfsExecuteCommand(idcService,
-				IDCExecuteCommand.WFS_CMD_IDC_READ_RAW_DATA, new DWORD(
-						Bitmask.of(readData)));
+				IDCExecuteCommand.READ_RAW_DATA,
+				new DWORD(Bitmask.of(readData)));
 		try {
 			xfsCommand.execute(eventQueue);
 		} catch (final XfsException e) {
@@ -168,7 +168,7 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 			}
 			XfsException.throwFor(wfsResult.getResult());
 			final List<WFSIDCCARDDATA> cardDataList = new ArrayList<WFSIDCCARDDATA>();
-			final ZList zList = new ZList(wfsResult.getBuffer());
+			final ZList zList = new ZList(wfsResult.getResults());
 			for (final Pointer pCardData : zList) {
 				final WFSIDCCARDDATA cardData = new WFSIDCCARDDATA(
 						idcService.getXfsVersion(), pCardData);

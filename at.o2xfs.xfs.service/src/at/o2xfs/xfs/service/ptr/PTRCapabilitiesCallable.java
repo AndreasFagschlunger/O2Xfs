@@ -59,7 +59,7 @@ public class PTRCapabilitiesCallable implements Callable<WFSPTRCAPS> {
 				PTRInfoCommand.CAPABILITIES);
 		final WFSResult wfsResult = infoCommand.call();
 		try {
-			final WFSPTRCAPS caps = new WFSPTRCAPS(wfsResult.getBuffer(),
+			final WFSPTRCAPS caps = new WFSPTRCAPS(wfsResult.getResults(),
 					ptrService.getXfsVersion());
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, "WFSPTRCAPS: " + caps);

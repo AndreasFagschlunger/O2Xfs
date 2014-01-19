@@ -59,7 +59,7 @@ public class PTRStatusCallable implements Callable<WFSPTRSTATUS> {
 		final WFSResult wfsResult = infoCommand.call();
 		try {
 			final WFSPTRSTATUS status = new WFSPTRSTATUS(
-					ptrService.getXfsVersion(), wfsResult.getBuffer());
+					ptrService.getXfsVersion(), wfsResult.getResults());
 			if (LOG.isInfoEnabled()) {
 				final String method = "call()";
 				LOG.info(method, "WFSPTRSTATUS: " + status);

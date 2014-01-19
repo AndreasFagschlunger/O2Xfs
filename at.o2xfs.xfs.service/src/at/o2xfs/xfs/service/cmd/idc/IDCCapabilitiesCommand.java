@@ -59,7 +59,7 @@ public class IDCCapabilitiesCommand implements IXfsCommand<WFSIDCCAPS> {
 		try {
 			wfsResult = xfsCommand.call();
 			final WFSIDCCAPS capabilities = new WFSIDCCAPS(
-					idcService.getXfsVersion(), wfsResult.getBuffer());
+					idcService.getXfsVersion(), wfsResult.getResults());
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "capabilities=" + capabilities);
 			}

@@ -27,10 +27,10 @@
 
 package at.o2xfs.xfs.service.cmd.pin;
 
-import at.o2xfs.xfs.pin.WFSPINKEY;
+import at.o2xfs.xfs.pin.WfsPINKey;
 import at.o2xfs.xfs.service.cmd.IAsyncCommandListener;
 
 public interface PINDataListener extends IAsyncCommandListener {
 
-	public void keyPressed(final WFSPINKEY pinKey);
+	public void keyPressed(final WfsPINKey pinKey);
 }

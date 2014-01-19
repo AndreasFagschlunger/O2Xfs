@@ -62,7 +62,7 @@ public class SIUStatusCallable implements Callable<SIUStatus> {
 		try {
 			wfsResult = xfsCommand.call();
 			final SIUStatus siuStatus = new SIUStatus(
-					siuService.getXfsVersion(), wfsResult.getBuffer());
+					siuService.getXfsVersion(), wfsResult.getResults());
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, siuStatus);
 			}

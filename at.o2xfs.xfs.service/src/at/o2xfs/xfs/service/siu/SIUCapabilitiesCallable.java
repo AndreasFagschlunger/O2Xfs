@@ -62,7 +62,7 @@ public class SIUCapabilitiesCallable implements Callable<SIUCapabilities> {
 		try {
 			wfsResult = xfsCommand.call();
 			final SIUCapabilities capabilities = new SIUCapabilities(
-					siuService.getXfsVersion(), wfsResult.getBuffer());
+					siuService.getXfsVersion(), wfsResult.getResults());
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, capabilities);
 			}

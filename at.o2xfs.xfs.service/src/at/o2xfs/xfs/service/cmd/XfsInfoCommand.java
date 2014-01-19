@@ -27,6 +27,8 @@
 
 package at.o2xfs.xfs.service.cmd;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import at.o2xfs.win32.Type;
 import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.service.XfsService;
@@ -37,9 +39,9 @@ import at.o2xfs.xfs.service.XfsService;
  */
 public class XfsInfoCommand extends XfsCommand {
 
-	private XfsConstant category = null;
+	private final XfsConstant category;
 
-	private Type queryDetails = null;
+	private final Type queryDetails;
 
 	public XfsInfoCommand(XfsService xfsService, XfsConstant category) {
 		this(xfsService, category, null);
@@ -69,4 +71,10 @@ public class XfsInfoCommand extends XfsCommand {
 		return queryDetails;
 	}
 
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).appendSuper(super.toString())
+				.append("category", category)
+				.append("queryDetails", queryDetails).toString();
+	}
 }

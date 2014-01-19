@@ -59,7 +59,7 @@ public class PINCapabilitiesCommand implements IXfsCommand<WFSPINCAPS> {
 		try {
 			wfsResult = xfsCommand.call();
 			final WFSPINCAPS pinCaps = new WFSPINCAPS(
-					pinService.getXfsVersion(), wfsResult.getBuffer());
+					pinService.getXfsVersion(), wfsResult.getResults());
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, "WFSPINCAPS: " + pinCaps);
 			}

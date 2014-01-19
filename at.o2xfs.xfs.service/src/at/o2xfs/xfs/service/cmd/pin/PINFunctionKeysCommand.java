@@ -80,7 +80,7 @@ public class PINFunctionKeysCommand implements IXfsCommand<WFSPINFUNCKEYDETAIL> 
 		final WFSResult wfsResult = xfsCommand.call();
 		try {
 			final WFSPINFUNCKEYDETAIL funcKeyDetail = new WFSPINFUNCKEYDETAIL(
-					wfsResult.getBuffer());
+					wfsResult.getResults());
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, "funcKeyDetail=" + funcKeyDetail);
 			}

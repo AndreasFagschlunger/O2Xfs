@@ -9,11 +9,11 @@ extern "C" {
 #endif
 /*
  * Class:     at_o2xfs_win32_Type
- * Method:    address
- * Signature: (Ljava/nio/ByteBuffer;)J
+ * Method:    init
+ * Signature: ()V
  */
-JNIEXPORT jlong JNICALL Java_at_o2xfs_win32_Type_address
-  (JNIEnv *, jobject, jobject);
+JNIEXPORT void JNICALL Java_at_o2xfs_win32_Type_init
+  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }
