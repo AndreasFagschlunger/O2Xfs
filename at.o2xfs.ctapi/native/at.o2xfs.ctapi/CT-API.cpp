@@ -30,6 +30,7 @@
 #include <tchar.h>
 #include "at_o2xfs_ctapi_CTAPI.h"
 #include "ct_api.h"
+#include "O2XfsWIN32.h"
 
 void ThrowLastError(JNIEnv *);
 
@@ -39,51 +40,6 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
 	return TRUE;
-}
-
-/*
- * Class:     at_o2xfs_ctapi_CTAPI
- * Method:    loadLibrary0
- * Signature: (Ljava/lang/String;)V
- */
-JNIEXPORT jlong JNICALL Java_at_o2xfs_ctapi_CTAPI_loadLibrary0(JNIEnv *env, jobject obj, jstring fileName) {
-	const jchar *str = env->GetStringChars(fileName, NULL);
-	if(str == NULL) {
-		return 0;
-	}
-	HMODULE hLib = LoadLibrary((LPWSTR) str);
-	env->ReleaseStringChars(fileName, str);
-	if(hLib == NULL) {		
-		ThrowLastError(env);
-	}
-	return (jlong) hLib;
-}
-
-/*
- * Class:     at_o2xfs_ctapi_CTAPI
- * Method:    getFunctionAddress0
- * Signature: (JLjava/lang/String;)J
- */
-JNIEXPORT jlong JNICALL Java_at_o2xfs_ctapi_CTAPI_getFunctionAddress0(JNIEnv *env, jobject obj, jlong hLib, jstring name) {
-	const char *procName = env->GetStringUTFChars(name, NULL);
-	FARPROC procAddress = GetProcAddress((HMODULE) hLib, (LPCSTR) procName);
-	env->ReleaseStringUTFChars(name, procName);
-	if(procAddress == NULL) {
-		ThrowLastError(env);
-	}
-	 
-	return (jlong) procAddress;
-}
-
-/*
- * Class:     at_o2xfs_ctapi_CTAPI
- * Method:    freeLibrary0
- * Signature: ()V
- */
-JNIEXPORT void JNICALL Java_at_o2xfs_ctapi_CTAPI_freeLibrary0(JNIEnv *env, jobject obj, jlong hLib) {
-	if(FreeLibrary((HMODULE) hLib) == 0) {
-		ThrowLastError(env);
-	}
 }
 
 void ThrowLastError(JNIEnv *env) {
@@ -108,31 +64,78 @@ void ThrowLastError(JNIEnv *env) {
 
 /*
  * Class:     at_o2xfs_ctapi_CTAPI
- * Method:    init0
- * Signature: (JLjava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
+ * Method:    loadLibrary0
+ * Signature: (Lat/o2xfs/win32/ZSTR;)Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_init0(JNIEnv *env, jobject obj, jlong addr, jobject ctn, jobject pn) {
-	CT_INIT CT_init = (CT_INIT) addr;
-	return CT_init((*(PUSHORT) env->GetDirectBufferAddress(ctn)), (*(PUSHORT) env->GetDirectBufferAddress(pn)));
+JNIEXPORT jobject JNICALL Java_at_o2xfs_ctapi_CTAPI_loadLibrary0(JNIEnv *env, jobject obj, jobject fileName) {
+	HMODULE hLib = LoadLibrary((LPCTSTR) GetTypeAddress(env, fileName));
+	if(hLib == NULL) {		
+		ThrowLastError(env);
+	}
+	return NewBuffer(env, hLib, sizeof(hLib));
+}
+
+/*
+ * Class:     at_o2xfs_ctapi_CTAPI
+ * Method:    getFunctionAddress0
+ * Signature: (Lat/o2xfs/win32/Pointer;Lat/o2xfs/win32/ZSTR;)Lat/o2xfs/win32/Buffer;
+ */
+JNIEXPORT jobject JNICALL Java_at_o2xfs_ctapi_CTAPI_getFunctionAddress0(JNIEnv *env, jobject obj, jobject hLib, jobject procName) {
+	FARPROC procAddress = GetProcAddress((HMODULE) GetTypeAddress(env, hLib), (LPCSTR) GetTypeAddress(env, procName));
+	if(procAddress == NULL) {
+		ThrowLastError(env);
+	}
+	return NewBuffer(env, procAddress, sizeof(procAddress));
+}
+
+/*
+ * Class:     at_o2xfs_ctapi_CTAPI
+ * Method:    init0
+ * Signature: (Lat/o2xfs/win32/Pointer;Lat/o2xfs/win32/USHORT;Lat/o2xfs/win32/USHORT;)I
+ */
+JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_init0(JNIEnv *env, jobject obj, jobject addrObj, jobject ctnObj, jobject pnObj) {
+	CT_INIT CT_init = (CT_INIT) GetTypeAddress(env, addrObj);
+	USHORT ctn = (*(PUSHORT) GetTypeAddress(env, ctnObj));
+	USHORT pn (*(PUSHORT) GetTypeAddress(env, pnObj));
+	return CT_init(ctn, pn);
 }
 
 /*
  * Class:     at_o2xfs_ctapi_CTAPI
  * Method:    data0
- * Signature: (JLjava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
+ * Signature: (Lat/o2xfs/win32/Pointer;Lat/o2xfs/win32/USHORT;Lat/o2xfs/win32/UINT8;Lat/o2xfs/win32/UINT8;Lat/o2xfs/win32/ByteArray;Lat/o2xfs/win32/USHORT;Lat/o2xfs/win32/ByteArray;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_data0(JNIEnv *env, jobject obj, jlong addr, jobject ctn, jobject dad, jobject sad, jobject command, jobject lenr, jobject response) {
-	CT_DATA CT_data = (CT_DATA) addr;
-	CHAR rc = CT_data((*(PUSHORT) env->GetDirectBufferAddress(ctn)), (UCHAR*) env->GetDirectBufferAddress(dad), (UCHAR*) env->GetDirectBufferAddress(sad), (USHORT) env->GetDirectBufferCapacity(command), (UCHAR*) env->GetDirectBufferAddress(command), (USHORT*) env->GetDirectBufferAddress(lenr), (UCHAR*) env->GetDirectBufferAddress(response));
+JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_data0(JNIEnv *env, jobject obj, jobject addrObj, jobject ctnObj, jobject dadObj, jobject sadObj, jobject commandObj, jobject lenrObj, jobject responseObj) {
+	CT_DATA CT_data = (CT_DATA) GetTypeAddress(env, addrObj);
+	USHORT ctn = (*(PUSHORT) GetTypeAddress(env, ctnObj));
+	UCHAR *dad = (UCHAR*) GetTypeAddress(env, dadObj);
+	UCHAR *sad = (UCHAR*) GetTypeAddress(env, sadObj);
+	USHORT lenc = (USHORT) GetTypeSize(env, commandObj);
+	UCHAR *command = (UCHAR*) GetTypeAddress(env, commandObj);
+	USHORT *lenr = (USHORT*) GetTypeAddress(env, lenrObj);
+	UCHAR *response = (UCHAR*) GetTypeAddress(env, responseObj);
+	CHAR rc = CT_data(ctn, dad, sad, lenc, command, lenr, response);
 	return rc;
 }
 
 /*
  * Class:     at_o2xfs_ctapi_CTAPI
  * Method:    close0
- * Signature: (JLjava/nio/ByteBuffer;)I
+ * Signature: (Lat/o2xfs/win32/Pointer;Lat/o2xfs/win32/USHORT;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_close0(JNIEnv *env, jobject obj, jlong addr, jobject ctn) {
-	CT_CLOSE CT_close = (CT_CLOSE) addr;
-	return CT_close((*(PUSHORT) env->GetDirectBufferAddress(ctn)));
+JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_close0(JNIEnv *env, jobject obj, jobject addrObj, jobject ctnObj) {
+	CT_CLOSE CT_close = (CT_CLOSE) GetTypeAddress(env, addrObj);
+	USHORT ctn = (*(PUSHORT) GetTypeAddress(env, ctnObj));
+	return CT_close(ctn);
+}
+
+/*
+ * Class:     at_o2xfs_ctapi_CTAPI
+ * Method:    freeLibrary0
+ * Signature: (Lat/o2xfs/win32/Pointer;)V
+ */
+JNIEXPORT void JNICALL Java_at_o2xfs_ctapi_CTAPI_freeLibrary0(JNIEnv *env, jobject obj, jobject hLib) {
+	if(FreeLibrary((HMODULE) GetTypeAddress(env, hLib)) == 0) {
+		ThrowLastError(env);
+	}
 }
