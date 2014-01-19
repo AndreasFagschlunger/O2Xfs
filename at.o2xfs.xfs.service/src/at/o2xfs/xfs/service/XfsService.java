@@ -138,7 +138,7 @@ public abstract class XfsService implements XfsStatusNotification {
 		switch (systemEvent) {
 			case WFS_SYSE_DEVICE_STATUS:
 				final WFSDEVSTATUS status = new WFSDEVSTATUS(
-						wfsResult.getBuffer());
+						wfsResult.getResults());
 				if (LOG.isInfoEnabled()) {
 					LOG.info(method, "status=" + status);
 				}
@@ -147,7 +147,7 @@ public abstract class XfsService implements XfsStatusNotification {
 			case WFS_SYSE_SOFTWARE_ERROR:
 			case WFS_SYSE_USER_ERROR:
 				final WFSHWERROR hwError = new WFSHWERROR(getXfsVersion(),
-						wfsResult.getBuffer());
+						wfsResult.getResults());
 				if (LOG.isInfoEnabled()) {
 					LOG.info(method, "WFSHWERROR: " + hwError);
 				}

@@ -56,7 +56,7 @@ public class RetainCardCallable implements Callable<WFSIDCRETAINCARD>,
 			throw new IllegalArgumentException("cardReader must not be null");
 		}
 		retainCardCommand = new XfsExecuteCommand(cardReader,
-				IDCExecuteCommand.WFS_CMD_IDC_RETAIN_CARD);
+				IDCExecuteCommand.RETAIN_CARD);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class RetainCardCallable implements Callable<WFSIDCRETAINCARD>,
 		try {
 			XfsException.throwFor(wfsResult.getResult());
 			final WFSIDCRETAINCARD retainCard = new WFSIDCRETAINCARD(
-					wfsResult.getBuffer());
+					wfsResult.getResults());
 			return new WFSIDCRETAINCARD(retainCard);
 		} finally {
 			XfsServiceManager.getInstance().free(wfsResult);
@@ -89,7 +89,7 @@ public class RetainCardCallable implements Callable<WFSIDCRETAINCARD>,
 	@Override
 	public void fireIntermediateEvent(final WFSResult wfsResult) {
 		try {
-			if (LOG.isInfoEnabled()) {
+			if (LOG.isDebugEnabled()) {
 				final String method = "fireIntermediateEvent(WFSResult)";
 				LOG.debug(method, "Intermediate event: " + wfsResult);
 			}
@@ -108,7 +108,7 @@ public class RetainCardCallable implements Callable<WFSIDCRETAINCARD>,
 		}
 		final IDCExecuteCommand commandCode = wfsResult
 				.getCommandCode(IDCExecuteCommand.class);
-		if (IDCExecuteCommand.WFS_CMD_IDC_RETAIN_CARD.equals(commandCode)) {
+		if (IDCExecuteCommand.RETAIN_CARD.equals(commandCode)) {
 			synchronized (this) {
 				this.wfsResult = wfsResult;
 				notifyAll();

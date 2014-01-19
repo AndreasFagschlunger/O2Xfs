@@ -30,9 +30,9 @@ package at.o2xfs.xfs.service.cmd;
 
 public interface IAsyncCommandListener {
 
-	public void commandSuccessful();
-
 	public void commandCancelled();
 
 	public void commandFailed(final Exception e);
+
+	public void commandSuccessful();
 }

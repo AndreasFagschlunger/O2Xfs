@@ -60,7 +60,7 @@ public class RetainCardCommand extends
 	public RetainCardCommand(final IDCService idcService) {
 		this.idcService = idcService;
 		retainCardCommand = new XfsExecuteCommand(idcService,
-				IDCExecuteCommand.WFS_CMD_IDC_RETAIN_CARD);
+				IDCExecuteCommand.RETAIN_CARD);
 	}
 
 	private void notifyCardRetained() {
@@ -70,8 +70,8 @@ public class RetainCardCommand extends
 	}
 
 	@Override
-	protected void executeInternal() {
-		final String method = "executeInternal()";
+	protected void doExecute() {
+		final String method = "doExecute()";
 		try {
 			final WFSIDCSTATUS idcStatus = new IDCStatusCallable(idcService)
 					.call();
@@ -135,7 +135,7 @@ public class RetainCardCommand extends
 		try {
 			XfsException.throwFor(wfsResult.getResult());
 			final WFSIDCRETAINCARD retainCard = new WFSIDCRETAINCARD(
-					wfsResult.getBuffer());
+					wfsResult.getResults());
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, retainCard);
 			}

@@ -66,8 +66,8 @@ public class IDCResetCommand extends
 	}
 
 	@Override
-	protected void executeInternal() {
-		final String method = "executeInternal()";
+	protected void doExecute() {
+		final String method = "doExecute()";
 		synchronized (this) {
 			if (resetCommand != null) {
 				throw new IllegalStateException("Already executed");
@@ -98,7 +98,7 @@ public class IDCResetCommand extends
 			resetIn = new DWORD(cardFoundAction.getValue());
 		}
 		resetCommand = new XfsExecuteCommand(idcService,
-				IDCExecuteCommand.WFS_CMD_IDC_RESET, resetIn);
+				IDCExecuteCommand.RESET, resetIn);
 	}
 
 	@Override

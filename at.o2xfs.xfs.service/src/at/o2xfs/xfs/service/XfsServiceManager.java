@@ -54,6 +54,7 @@ import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 import at.o2xfs.xfs.service.cmd.XfsOpenCommand;
 import at.o2xfs.xfs.service.cmd.XfsRegisterCommand;
+import at.o2xfs.xfs.service.config.XfsServiceConfig;
 import at.o2xfs.xfs.service.events.XfsEventNotification;
 import at.o2xfs.xfs.type.HAPP;
 import at.o2xfs.xfs.type.HSERVICE;
@@ -92,6 +93,8 @@ public class XfsServiceManager implements IXfsCallback {
 	private List<WFSResult> wfsResults = null;
 
 	private List<XfsServiceListener> serviceListeners = null;
+
+	private final XfsServiceConfig config = XfsServiceConfig.getInstance();
 
 	private XfsServiceManager() {
 		xfsAPI = XfsAPI.getInstance();
@@ -141,6 +144,8 @@ public class XfsServiceManager implements IXfsCallback {
 			}
 			throw new XfsServiceManagerException(e);
 		}
+
+		new OpenServiceHandler();
 	}
 
 	public <E extends XfsService> E openAndRegister(final String logicalName,
@@ -188,13 +193,14 @@ public class XfsServiceManager implements IXfsCallback {
 		return services;
 	}
 
-	public <E extends XfsService> E getService(final Class<E> serviceClass) {
+	public <E extends XfsService> E getService(final Class<E> serviceClass)
+			throws ServiceNotFoundException {
 		for (final XfsService xfsService : xfsServices) {
 			if (serviceClass.isInstance(xfsService)) {
 				return serviceClass.cast(xfsService);
 			}
 		}
-		return null;
+		throw new ServiceNotFoundException(serviceClass);
 	}
 
 	public List<XfsService> getServices() {
@@ -433,7 +439,6 @@ public class XfsServiceManager implements IXfsCallback {
 		synchronized (wfsResults) {
 			wfsResults.remove(wfsResult);
 		}
-		wfsResult.free();
 	}
 
 	private void closeServices() {
@@ -478,11 +483,11 @@ public class XfsServiceManager implements IXfsCallback {
 						+ hApp, e);
 			}
 		}
-		try {
-			xfsAPI.wfsCleanUp();
-		} catch (XfsException e) {
-			LOG.error(method, "Error cleaning up XFS", e);
-		}
+		// try {
+		// xfsAPI.wfsCleanUp();
+		// } catch (XfsException e) {
+		// LOG.error(method, "Error cleaning up XFS", e);
+		// }
 		messageHandler.close();
 	}
 

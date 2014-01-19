@@ -61,7 +61,7 @@ public class IDCStatusCommand implements IXfsCommand<WFSIDCSTATUS> {
 		WFSResult wfsResult = infoCommand.call();
 		try {
 			final WFSIDCSTATUS idcStatus = new WFSIDCSTATUS(
-					idcService.getXfsVersion(), wfsResult.getBuffer());
+					idcService.getXfsVersion(), wfsResult.getResults());
 			return new WFSIDCSTATUS(idcService.getXfsVersion(), idcStatus);
 		} finally {
 			XfsServiceManager.getInstance().free(wfsResult);

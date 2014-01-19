@@ -34,9 +34,9 @@ import at.o2xfs.xfs.XfsCancelledException;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.pin.PINExecuteCommand;
 import at.o2xfs.xfs.pin.PINMessage;
-import at.o2xfs.xfs.pin.WFSPINDATA;
-import at.o2xfs.xfs.pin.WFSPINGETDATA;
-import at.o2xfs.xfs.pin.WFSPINKEY;
+import at.o2xfs.xfs.pin.WfsPINGetData;
+import at.o2xfs.xfs.pin.WfsPINData;
+import at.o2xfs.xfs.pin.WfsPINKey;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
@@ -50,31 +50,31 @@ public class PINGetDataCommand extends AbstractAsyncCommand<PINDataListener>
 	private final static Logger LOG = LoggerFactory
 			.getLogger(PINGetDataCommand.class);
 
-	private PINService pinService = null;
+	private final PINService pinService;
+
+	private final WfsPINGetData pinGetData;
 
 	private XfsCommand xfsCommand = null;
 
-	private WFSPINGETDATA pinGetData = null;
-
-	public PINGetDataCommand(final PINService pinService) {
+	public PINGetDataCommand(final PINService pinService,
+			WfsPINGetData pinGetData) {
 		this.pinService = pinService;
-		pinGetData = new WFSPINGETDATA();
-		pinGetData.allocate();
+		this.pinGetData = pinGetData;
 	}
 
-	private void notifyKeyPressed(final WFSPINKEY pinKey) {
+	private void notifyKeyPressed(final WfsPINKey pinKey) {
 		for (final PINDataListener listener : commandListeners) {
-			listener.keyPressed(new WFSPINKEY(pinKey));
+			listener.keyPressed(new WfsPINKey(pinKey));
 		}
 	}
 
 	@Override
-	protected void executeInternal() {
-		final String method = "executeInternal()";
+	protected void doExecute() {
+		final String method = "doExecute()";
 		try {
 			synchronized (this) {
 				xfsCommand = new XfsExecuteCommand(pinService,
-						PINExecuteCommand.WFS_CMD_PIN_GET_DATA, pinGetData);
+						PINExecuteCommand.GET_DATA, pinGetData);
 				xfsCommand.execute(this);
 			}
 		} catch (XfsException e) {
@@ -115,8 +115,8 @@ public class PINGetDataCommand extends AbstractAsyncCommand<PINDataListener>
 					.getEventID(PINMessage.class);
 			switch (pinMessage) {
 				case WFS_EXEE_PIN_KEY:
-					final WFSPINKEY pinKey = new WFSPINKEY(
-							wfsResult.getBuffer());
+					final WfsPINKey pinKey = new WfsPINKey(
+							wfsResult.getResults());
 					if (LOG.isInfoEnabled()) {
 						LOG.info(method, "pinKey=" + pinKey);
 					}
@@ -137,8 +137,8 @@ public class PINGetDataCommand extends AbstractAsyncCommand<PINDataListener>
 			}
 			try {
 				XfsException.throwFor(wfsResult.getResult());
-				final WFSPINDATA pinData = new WFSPINDATA(
-						pinService.getXfsVersion(), wfsResult.getBuffer());
+				final WfsPINData pinData = new WfsPINData(
+						pinService.getXfsVersion(), wfsResult.getResults());
 				if (LOG.isInfoEnabled()) {
 					LOG.info(method, "pinData=" + pinData);
 				}
@@ -158,9 +158,4 @@ public class PINGetDataCommand extends AbstractAsyncCommand<PINDataListener>
 			XfsServiceManager.getInstance().free(wfsResult);
 		}
 	}
-
-	public WFSPINGETDATA getPinGetData() {
-		return pinGetData;
-	}
-
 }

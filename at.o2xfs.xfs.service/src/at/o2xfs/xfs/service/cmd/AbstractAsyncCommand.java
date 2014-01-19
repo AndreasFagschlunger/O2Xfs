@@ -50,25 +50,15 @@ public abstract class AbstractAsyncCommand<E extends IAsyncCommandListener>
 
 			@Override
 			public void run() {
-				executeInternal();
+				doExecute();
 			}
 		};
 		new Thread(runnable, getClass().getSimpleName()).start();
 	}
 
-	abstract protected void executeInternal();
+	abstract protected void doExecute();
 
 	public abstract void cancel();
-
-	protected void notifyCommandSuccessful() {
-		final String method = "notifyCommandSuccessful()";
-		if (LOG.isDebugEnabled()) {
-			LOG.debug(method, "");
-		}
-		for (final E listener : commandListeners) {
-			listener.commandSuccessful();
-		}
-	}
 
 	protected void notifyCommandCancelled() {
 		final String method = "notifyCommandCancelled()";
@@ -83,6 +73,12 @@ public abstract class AbstractAsyncCommand<E extends IAsyncCommandListener>
 	protected void notifyCommandFailed(final Exception e) {
 		for (final E listener : commandListeners) {
 			listener.commandFailed(e);
+		}
+	}
+
+	protected void notifyCommandSuccessful() {
+		for (final E l : commandListeners) {
+			l.commandSuccessful();
 		}
 	}
 

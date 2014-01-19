@@ -83,7 +83,7 @@ public class IDCService extends XfsService {
 	private void fireCardActionEvent(final WFSResult wfsResult) {
 		final String method = "fireCardActionEvent(WFSResult)";
 		final WFSIDCCARDACT cardAction = new WFSIDCCARDACT(
-				wfsResult.getBuffer());
+				wfsResult.getResults());
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, "WFSIDCCARDACT: " + cardAction);
 		}

@@ -71,7 +71,7 @@ public class SIUEnableEventsCommand extends
 	}
 
 	@Override
-	protected void executeInternal() {
+	protected void doExecute() {
 		try {
 			final SIUCapabilities caps = new SIUCapabilitiesCallable(siuService)
 					.call();
@@ -122,7 +122,7 @@ public class SIUEnableEventsCommand extends
 			switch (message) {
 				case PORT_ERROR:
 					final SIUPortError portError = new SIUPortError(
-							wfsResult.getBuffer());
+							wfsResult.getResults());
 					if (LOG.isInfoEnabled()) {
 						LOG.info(method, portError);
 					}

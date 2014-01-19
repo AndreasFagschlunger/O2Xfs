@@ -70,7 +70,7 @@ public class SIUService extends XfsService {
 		switch (eventID) {
 			case PORT_STATUS:
 				final SIUPortEvent portEvent = new SIUPortEvent(
-						wfsResult.getBuffer());
+						wfsResult.getResults());
 				if (LOG.isInfoEnabled()) {
 					LOG.info(method, portEvent);
 				}

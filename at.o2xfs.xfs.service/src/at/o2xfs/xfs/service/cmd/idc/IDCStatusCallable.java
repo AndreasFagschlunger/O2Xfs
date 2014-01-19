@@ -64,7 +64,7 @@ public class IDCStatusCallable implements Callable<WFSIDCSTATUS> {
 		final WFSResult wfsResult = new XfsCallable(statusCommand).call();
 		try {
 			final WFSIDCSTATUS idcStatus = new WFSIDCSTATUS(
-					idcService.getXfsVersion(), wfsResult.getBuffer());
+					idcService.getXfsVersion(), wfsResult.getResults());
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, "WFSIDCSTATUS: " + idcStatus);
 			}

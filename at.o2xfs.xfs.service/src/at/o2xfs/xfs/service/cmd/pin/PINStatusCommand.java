@@ -58,7 +58,7 @@ public class PINStatusCommand implements IXfsCommand<WFSPINSTATUS> {
 		try {
 			wfsResult = infoCommand.call();
 			final WFSPINSTATUS pinStatus = new WFSPINSTATUS(
-					pinService.getXfsVersion(), wfsResult.getBuffer());
+					pinService.getXfsVersion(), wfsResult.getResults());
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, "pinStatus=" + pinStatus);
 			}
