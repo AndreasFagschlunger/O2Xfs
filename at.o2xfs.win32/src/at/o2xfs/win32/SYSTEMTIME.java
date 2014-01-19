@@ -34,16 +34,16 @@ package at.o2xfs.win32;
  * 
  * @author Andreas Fagschlunger
  */
-public class SYSTEMTIME extends Structure {
+public class SYSTEMTIME extends Struct {
 
-	private WORD year = new WORD();
-	private WORD month = new WORD();
-	private WORD dayOfWeek = new WORD();
-	private WORD day = new WORD();
-	private WORD hour = new WORD();
-	private WORD minute = new WORD();
-	private WORD second = new WORD();
-	private WORD milliseconds = new WORD();
+	private final WORD year = new WORD();
+	private final WORD month = new WORD();
+	private final WORD dayOfWeek = new WORD();
+	private final WORD day = new WORD();
+	private final WORD hour = new WORD();
+	private final WORD minute = new WORD();
+	private final WORD second = new WORD();
+	private final WORD milliseconds = new WORD();
 
 	public SYSTEMTIME() {
 		add(year);
@@ -54,5 +54,37 @@ public class SYSTEMTIME extends Structure {
 		add(minute);
 		add(second);
 		add(milliseconds);
+	}
+
+	public WORD getYear() {
+		return year;
+	}
+
+	public WORD getMonth() {
+		return month;
+	}
+
+	public WORD getDayOfWeek() {
+		return dayOfWeek;
+	}
+
+	public WORD getDay() {
+		return day;
+	}
+
+	public WORD getHour() {
+		return hour;
+	}
+
+	public WORD getMinute() {
+		return minute;
+	}
+
+	public WORD getSecond() {
+		return second;
+	}
+
+	public WORD getMilliseconds() {
+		return milliseconds;
 	}
 }

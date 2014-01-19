@@ -27,8 +27,6 @@
 
 package at.o2xfs.win32;
 
-import java.nio.ByteBuffer;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -94,10 +92,10 @@ public class Union extends Type {
 	}
 
 	@Override
-	public void useBuffer(final ByteBuffer buffer, final int offset) {
-		super.useBuffer(buffer, offset);
-		for (final Field field : fields) {
-			field.getType().useBuffer(buffer, offset);
+	protected void assignBuffer(Buffer buffer) {
+		super.assignBuffer(buffer);
+		for (Field each : fields) {
+			each.type.assignBuffer(buffer);
 		}
 	}
 

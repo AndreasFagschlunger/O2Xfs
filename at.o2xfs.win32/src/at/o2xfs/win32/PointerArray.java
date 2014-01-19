@@ -56,7 +56,6 @@ public class PointerArray extends Array<Pointer> {
 			throw new IllegalArgumentException("Invalid length: " + length
 					+ ", length must be at least 1");
 		}
-		useBuffer(p);
+		assignBuffer(p.buffer(p.getSize() * length));
 	}
-
 }

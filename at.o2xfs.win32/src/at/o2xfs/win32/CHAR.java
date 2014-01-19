@@ -34,15 +34,17 @@ package at.o2xfs.win32;
  * 
  * @author Andreas Fagschlunger
  */
-public class CHAR extends Type {
+public class CHAR extends BaseType {
 
-	private final static int SIZE = 1;
+	public CHAR() {
+		super(1);
+	}
 
 	/**
 	 * @return the primitive <code>char</code> value represented by this object.
 	 */
-	public char charValue() {
-		return (char) buffer().get(getOffset());
+	public char getChar() {
+		return (char) get()[0];
 	}
 
 	/**
@@ -51,12 +53,7 @@ public class CHAR extends Type {
 	 * @param value
 	 *            a <code>char</code> value
 	 */
-	public void set(char value) {
-		buffer().putChar(getOffset(), value);
-	}
-
-	@Override
-	public int getSize() {
-		return SIZE;
+	public void putChar(char value) {
+		put(new byte[] { (byte) value });
 	}
 }

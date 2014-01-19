@@ -27,46 +27,37 @@
 
 package at.o2xfs.win32;
 
+
 /**
  * A <code>UINT8</code> 8-bit unsigned integer.
  * 
  * @author Andreas Fagschlunger
  */
-public class UINT8 extends Type implements IntegerType {
+public class UINT8 extends NumberType {
 
 	public static final int MIN_VALUE = 0;
 
 	public static final int MAX_VALUE = 255;
 
 	public UINT8() {
-		super();
+		super(1);
 	}
 
 	public UINT8(final int value) {
+		this();
 		allocate();
-		putInt(value);
+		put(value);
 	}
 
-	@Override
-	protected int getSize() {
-		return 1;
-	}
-
-	public void putInt(final int value) {
-		if (value < UINT8.MIN_VALUE || value > UINT8.MAX_VALUE) {
+	public void put(int value) {
+		if (value < MIN_VALUE || value > MAX_VALUE) {
 			throw new IllegalArgumentException("Illegal value: " + value);
 		}
-		buffer().put(getOffset(), (byte) value);
+		put(BitConverter.getBytes(getSize(), value));
 	}
 
-	@Override
 	public int intValue() {
-		return buffer().get(getOffset()) & 0xFF;
-	}
-
-	@Override
-	public long longValue() {
-		return intValue();
+		return BitConverter.toInt(get());
 	}
 
 	@Override

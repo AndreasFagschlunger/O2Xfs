@@ -51,22 +51,15 @@ public class ZSTR extends CharArray implements ASCII {
 
 	public ZSTR(final String s) {
 		this(s.length() + 1, true);
-		byte[] bytes = (s + NUL).getBytes(US_ASCII);
-		for (int i = 0; i < bytes.length; i++) {
-			buffer().put(getOffset() + i, bytes[i]);
-		}
+		put((s + NUL).getBytes(US_ASCII));
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder s = new StringBuilder();
-		for (int i = 0; i < array.length; i++) {
-			char c = (char) buffer().get(getOffset() + i);
-			if (c == NUL) {
-				break;
-			}
-			s.append(c);
+		String result = new String(get(), US_ASCII);
+		if (result.indexOf(NUL) != -1) {
+			result = result.substring(0, result.indexOf(NUL));
 		}
-		return s.toString();
+		return result;
 	}
 }

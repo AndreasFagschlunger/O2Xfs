@@ -34,7 +34,7 @@ package at.o2xfs.win32;
  * 
  * @author Andreas Fagschlunger
  */
-public class BYTE extends Type {
+public class BYTE extends CHAR {
 
 	/**
 	 * Set the specified value.
@@ -42,8 +42,8 @@ public class BYTE extends Type {
 	 * @param b
 	 *            the byte to set
 	 */
-	public void set(byte b) {
-		buffer().put(getOffset(), b);
+	public void put(byte b) {
+		put(new byte[] { b });
 	}
 
 	/**
@@ -51,12 +51,7 @@ public class BYTE extends Type {
 	 * 
 	 * @return the <code>byte</code> value
 	 */
-	public byte get() {
-		return buffer().get(getOffset());
-	}
-
-	@Override
-	public int getSize() {
-		return 1;
+	public byte getByte() {
+		return get()[0];
 	}
 }

@@ -27,7 +27,6 @@
 
 package at.o2xfs.win32;
 
-import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -48,47 +47,32 @@ public abstract class Array<E extends Type> extends Type implements Iterable<E> 
 	 */
 	public final int length;
 
-	protected Array(final E[] structArray) {
-		this.array = structArray;
-		this.length = structArray.length;
+	protected Array(final E[] array) {
+		this.array = array;
+		this.length = array.length;
 	}
 
 	@Override
-	public void allocate() {
-		super.allocate();
-		assignBuffer();
+	protected final void assignBuffer(Buffer buffer) {
+		super.assignBuffer(buffer);
+		assignBufferToElements(buffer);
 	}
 
-	@Override
-	public void useBuffer(final ByteBuffer buffer, final int offset) {
-		super.useBuffer(buffer, offset);
-		assignBuffer();
-	}
-
-	private void assignBuffer() {
-		int offset = getOffset();
-		for (E e : array) {
-			e.useBuffer(buffer(), offset);
-			offset += e.getSize();
+	private void assignBufferToElements(Buffer buffer) {
+		int index = 0;
+		for (E each : array) {
+			each.assignBuffer(buffer.subBuffer(index, each.getSize()));
+			index += each.getSize();
 		}
 	}
 
 	@Override
-	public int getSize() {
-		int size = 0;
+	public final int getSize() {
+		int result = 0;
 		for (E e : array) {
-			size += e.getSize();
+			result += e.getSize();
 		}
-		return size;
-	}
-
-	/**
-	 * @return the length of the array
-	 * @deprecated {@link #length}
-	 */
-	@Deprecated
-	public int getLength() {
-		return array.length;
+		return result;
 	}
 
 	/**
@@ -125,5 +109,4 @@ public abstract class Array<E extends Type> extends Type implements Iterable<E> 
 	public String toString() {
 		return Arrays.toString(array);
 	}
-
 }

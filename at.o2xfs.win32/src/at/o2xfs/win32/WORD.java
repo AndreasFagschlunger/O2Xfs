@@ -40,7 +40,6 @@ public class WORD extends USHORT {
 
 	public WORD(final int value) {
 		super();
-		allocate();
 		put(value);
 	}
 

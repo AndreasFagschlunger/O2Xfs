@@ -34,39 +34,22 @@ package at.o2xfs.win32;
  * 
  * @author Andreas Fagschlunger
  */
-public class INT extends Type implements IntegerType {
+public class INT extends NumberType {
 
-	private final static int SIZE = 4;
-
-	@Override
-	public int getSize() {
-		return SIZE;
+	public INT() {
+		super(4);
 	}
 
-	public void put(final int value) {
-		buffer().putInt(getOffset(), value);
-	}
-
-	public void put(final IntegerType value) {
+	public void put(INT value) {
 		put(value.intValue());
 	}
 
-	/**
-	 * @return the primitive <code>int</code> value represented by this object.
-	 */
-	@Override
-	public int intValue() {
-		return buffer().getInt(getOffset());
-	}
-
-	@Override
-	public long longValue() {
-		return intValue();
+	public void put(int value) {
+		put(BitConverter.getBytes(getSize(), value));
 	}
 
 	@Override
 	public String toString() {
 		return Integer.toString(intValue());
 	}
-
 }

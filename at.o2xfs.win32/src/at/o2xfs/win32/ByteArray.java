@@ -34,13 +34,20 @@ package at.o2xfs.win32;
  */
 public class ByteArray extends Array<BYTE> {
 
+	public ByteArray(int length) {
+		this(new byte[length]);
+	}
+
 	public ByteArray(final byte[] src) {
 		super(new BYTE[src.length]);
 		for (int i = 0; i < array.length; i++) {
 			array[i] = new BYTE();
 		}
 		allocate();
-		buffer().put(src);
+		put(src);
 	}
 
+	public byte[] toByteArray() {
+		return get();
+	}
 }

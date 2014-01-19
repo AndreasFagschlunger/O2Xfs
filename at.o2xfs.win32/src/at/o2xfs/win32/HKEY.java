@@ -42,6 +42,6 @@ public class HKEY extends HANDLE {
 
 	public HKEY(final long value) {
 		this();
-		buffer().putInt(getOffset(), (int) value);
+		put(value);
 	}
 }

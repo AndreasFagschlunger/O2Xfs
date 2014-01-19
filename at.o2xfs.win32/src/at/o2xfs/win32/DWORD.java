@@ -58,9 +58,10 @@ public class DWORD extends UINT {
 	}
 
 	@Override
-	public void allocate() {
-		super.allocate();
-		lowWord.useBuffer(buffer(), getOffset());
-		highWord.useBuffer(buffer(), getOffset() + highWord.getSize());
+	protected void assignBuffer(Buffer buffer) {
+		super.assignBuffer(buffer);
+		highWord.assignBuffer(buffer.subBuffer(highWord.getSize(),
+				highWord.getSize()));
+		lowWord.assignBuffer(buffer.subBuffer(0, lowWord.getSize()));
 	}
 }
