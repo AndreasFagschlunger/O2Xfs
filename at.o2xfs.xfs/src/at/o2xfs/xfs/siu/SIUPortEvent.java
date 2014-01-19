@@ -33,13 +33,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class SIUPortEvent extends Structure {
+public class SIUPortEvent extends Struct {
 
 	private final WORD portType = new WORD();
 	private final WORD portIndex = new WORD();
@@ -64,7 +64,7 @@ public class SIUPortEvent extends Structure {
 
 	public SIUPortEvent(final Pointer p) {
 		this();
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	public SIUPortType getPortType() {

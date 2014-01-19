@@ -41,7 +41,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.win32.WORDArray;
 import at.o2xfs.xfs.XfsServiceClass;
@@ -50,7 +50,7 @@ import at.o2xfs.xfs.util.Bitmask;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class SIUCapabilities extends Structure {
+public class SIUCapabilities extends Struct {
 
 	private WORD serviceClass = new WORD();
 	private final WORD type = new WORD();
@@ -89,7 +89,7 @@ public class SIUCapabilities extends Structure {
 
 	public SIUCapabilities(final XfsVersion version, final Pointer p) {
 		this(version);
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	public SIUCapabilities(final XfsVersion version,
@@ -114,7 +114,7 @@ public class SIUCapabilities extends Structure {
 			guidLights.get(i).put(capabilities.guidLights.get(i));
 		}
 		setExtra(capabilities.getExtra());
-		powerSaveControl.set(capabilities.isPowerSaveControl());
+		powerSaveControl.put(capabilities.isPowerSaveControl());
 		autoStartupMode.put(capabilities.autoStartupMode);
 		setAntiFraudModule(capabilities.isAntiFraudModule());
 	}
@@ -185,7 +185,7 @@ public class SIUCapabilities extends Structure {
 	}
 
 	public void setPowerSaveControl(final boolean powerSaveControl) {
-		this.powerSaveControl.set(powerSaveControl);
+		this.powerSaveControl.put(powerSaveControl);
 	}
 
 	public Set<SIUAutoStartupMode> getAutoStartupMode() {
@@ -201,7 +201,7 @@ public class SIUCapabilities extends Structure {
 	}
 
 	public void setAntiFraudModule(final boolean antiFraudModule) {
-		this.antiFraudModule.set(antiFraudModule);
+		this.antiFraudModule.put(antiFraudModule);
 	}
 
 	@Override

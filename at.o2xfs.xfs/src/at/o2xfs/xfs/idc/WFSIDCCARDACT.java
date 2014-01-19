@@ -30,11 +30,11 @@ package at.o2xfs.xfs.idc;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSIDCCARDACT extends Structure {
+public class WFSIDCCARDACT extends Struct {
 
 	/**
 	 * Specifies which action has been performed with the card. Possible values
@@ -59,7 +59,7 @@ public class WFSIDCCARDACT extends Structure {
 
 	public WFSIDCCARDACT(final Pointer p) {
 		this();
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	public WFSIDCCARDACT(final WFSIDCCARDACT cardAction) {

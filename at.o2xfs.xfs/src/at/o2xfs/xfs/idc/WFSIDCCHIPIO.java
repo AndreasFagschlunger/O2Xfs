@@ -27,16 +27,14 @@
 
 package at.o2xfs.xfs.idc;
 
-import java.nio.ByteBuffer;
-
 import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSIDCCHIPIO extends Structure {
+public class WFSIDCCHIPIO extends Struct {
 	private WORD chipProtocol = new WORD();
 	private ULONG chipDataLength = new ULONG();
 	private Pointer chipData = new Pointer();
@@ -49,7 +47,7 @@ public class WFSIDCCHIPIO extends Structure {
 
 	public WFSIDCCHIPIO(final Pointer p) {
 		this();
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	public WFSIDCCHIPIO(final WFSIDCCHIPIO chipIO) {
@@ -81,13 +79,11 @@ public class WFSIDCCHIPIO extends Structure {
 	}
 
 	public byte[] getChipData() {
-		if (Pointer.NULL.equals(chipData)) {
-			return null;
+		byte[] result = null;
+		if (!Pointer.NULL.equals(chipData)) {
+			result = chipData.buffer((int) getChipDataLength()).get();
 		}
-		final ByteBuffer buffer = chipData.get((int) getChipDataLength());
-		final byte[] data = new byte[buffer.capacity()];
-		buffer.get(data);
-		return data;
+		return result;
 	}
 
 	public void setChipData(final byte[] chipData) {

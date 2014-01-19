@@ -31,12 +31,12 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPTRRAWDATA extends Structure {
+public class WFSPTRRAWDATA extends Struct {
 
 	private final WORD inputData = new WORD();
 	private final ULONG size = new ULONG();
@@ -57,12 +57,11 @@ public class WFSPTRRAWDATA extends Structure {
 	}
 
 	public byte[] getData() {
-		if (size.longValue() > 0) {
-			final byte[] b = new byte[(int) size.longValue()];
-			data.get(b.length).get(b);
-			return b;
+		byte[] result = null;
+		if (!Pointer.NULL.equals(data)) {
+			result = data.buffer((int) size.longValue()).get();
 		}
-		return null;
+		return result;
 	}
 
 	public void setData(final byte[] data) {

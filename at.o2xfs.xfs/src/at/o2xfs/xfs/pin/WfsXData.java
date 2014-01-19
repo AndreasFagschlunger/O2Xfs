@@ -31,10 +31,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class WFSXDATA extends Structure {
+public class WfsXData extends Struct {
 
 	/**
 	 * @since 3.10
@@ -46,20 +46,26 @@ public class WFSXDATA extends Structure {
 	 */
 	private final Pointer data = new Pointer();
 
-	public WFSXDATA() {
+	public WfsXData() {
 		add(length);
 		add(data);
 	}
 
-	public WFSXDATA(final Pointer p) {
+	public WfsXData(final Pointer p) {
 		this();
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
-	public WFSXDATA(final WFSXDATA xData) {
+	public WfsXData(final WfsXData xData) {
 		this();
 		allocate();
 		setData(xData.getData());
+	}
+
+	public WfsXData(final byte[] xData) {
+		this();
+		allocate();
+		setData(xData);
 	}
 
 	/**
@@ -80,12 +86,11 @@ public class WFSXDATA extends Structure {
 	 * {@link #data}
 	 */
 	public byte[] getData() {
-		if (Pointer.NULL.equals(data)) {
-			return null;
+		byte[] result = null;
+		if (!Pointer.NULL.equals(data)) {
+			data.buffer(getLength()).get();
 		}
-		final byte[] b = new byte[getLength()];
-		data.get(b.length).get(b);
-		return b;
+		return result;
 	}
 
 	/**

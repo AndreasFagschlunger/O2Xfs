@@ -33,13 +33,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.PointerArray;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.util.Bitmask;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPINFUNCKEYDETAIL extends Structure {
+public class WFSPINFUNCKEYDETAIL extends Struct {
 
 	/**
 	 * Specifies the function keys available for this physical device as a
@@ -71,7 +71,7 @@ public class WFSPINFUNCKEYDETAIL extends Structure {
 	 */
 	public WFSPINFUNCKEYDETAIL(final Pointer p) {
 		this();
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	/**

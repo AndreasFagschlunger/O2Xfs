@@ -39,7 +39,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.win32.WORDArray;
@@ -47,7 +47,7 @@ import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class SIUStatus extends Structure {
+public class SIUStatus extends Struct {
 
 	private WORD device = new WORD();
 	private final WORDArray sensors = new WORDArray(SENSORS_SIZE);
@@ -81,7 +81,7 @@ public class SIUStatus extends Structure {
 
 	public SIUStatus(final XfsVersion version, final Pointer p) {
 		this(version);
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	public SIUStatus(final XfsVersion version, final SIUStatus status) {

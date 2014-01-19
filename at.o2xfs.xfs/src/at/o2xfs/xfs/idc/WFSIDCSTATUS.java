@@ -34,7 +34,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import at.o2xfs.win32.DWORDArray;
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsVersion;
@@ -45,7 +45,7 @@ import at.o2xfs.xfs.util.XfsConstants;
  * @author Andreas Fagschlunger
  * 
  */
-public class WFSIDCSTATUS extends Structure {
+public class WFSIDCSTATUS extends Struct {
 	/**
 	 * 
 	 */
@@ -213,7 +213,7 @@ public class WFSIDCSTATUS extends Structure {
 
 	public WFSIDCSTATUS(final XfsVersion xfsVersion, final Pointer pStatus) {
 		this(xfsVersion);
-		useBuffer(pStatus);
+		assignBuffer(pStatus);
 	}
 
 	public WFSIDCSTATUS(final XfsVersion xfsVersion,

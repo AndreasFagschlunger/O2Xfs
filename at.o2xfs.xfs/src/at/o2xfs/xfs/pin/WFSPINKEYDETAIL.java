@@ -34,12 +34,12 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPINKEYDETAIL extends Structure {
+public class WFSPINKEYDETAIL extends Struct {
 
 	/**
 	 * Specifies the name of the key.
@@ -87,7 +87,7 @@ public class WFSPINKEYDETAIL extends Structure {
 	 */
 	public WFSPINKEYDETAIL(final XfsVersion xfsVersion, final Pointer pKeyDetail) {
 		this(xfsVersion);
-		useBuffer(pKeyDetail);
+		assignBuffer(pKeyDetail);
 	}
 
 	/**
@@ -114,17 +114,17 @@ public class WFSPINKEYDETAIL extends Structure {
 	/**
 	 * {@link #xKeyBlockHeader}
 	 */
-	public WFSXDATA getXKeyBlockHeader() {
+	public WfsXData getXKeyBlockHeader() {
 		if (Pointer.NULL.equals(xKeyBlockHeader)) {
 			return null;
 		}
-		return new WFSXDATA(xKeyBlockHeader);
+		return new WfsXData(xKeyBlockHeader);
 	}
 
 	/**
 	 * {@link #xKeyBlockHeader}
 	 */
-	public void setXKeyBlockHeader(final WFSXDATA xData) {
+	public void setXKeyBlockHeader(final WfsXData xData) {
 		this.xKeyBlockHeader.pointTo(xData);
 	}
 

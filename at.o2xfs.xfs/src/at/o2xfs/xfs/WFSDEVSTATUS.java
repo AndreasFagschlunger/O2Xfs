@@ -32,14 +32,14 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ZSTR;
 import at.o2xfs.xfs.util.XfsConstants;
 
 /**
  * @author Andreas Fagschlunger
  */
-public class WFSDEVSTATUS extends Structure {
+public class WFSDEVSTATUS extends Struct {
 
 	/**
 	 * Pointer to the physical service name of the service that changed its
@@ -67,7 +67,7 @@ public class WFSDEVSTATUS extends Structure {
 
 	public WFSDEVSTATUS(final Pointer p) {
 		this();
-		useBuffer(p);
+		assignBuffer(p.buffer(getSize()));
 	}
 
 	public String getPhysicalName() {

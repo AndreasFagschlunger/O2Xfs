@@ -39,7 +39,7 @@ import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.USHORTArray;
 import at.o2xfs.win32.WORD;
@@ -49,7 +49,7 @@ import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPTRCAPS extends Structure {
+public class WFSPTRCAPS extends Struct {
 
 	private final WORD clazz = new WORD();
 	private final WORD type = new WORD();
@@ -162,7 +162,7 @@ public class WFSPTRCAPS extends Structure {
 
 	public WFSPTRCAPS(final Pointer p, final XfsVersion version) {
 		this(version);
-		useBuffer(p);
+		assignBuffer(p);
 	}
 
 	public WFSPTRCAPS(final WFSPTRCAPS caps, final XfsVersion version) {
@@ -170,7 +170,7 @@ public class WFSPTRCAPS extends Structure {
 		allocate();
 		clazz.put(caps.clazz);
 		type.put(caps.type);
-		compound.set(caps.isCompound());
+		compound.put(caps.isCompound());
 		resolution.put(caps.resolution);
 		readForm.put(caps.readForm);
 		writeForm.put(caps.writeForm);
@@ -180,10 +180,10 @@ public class WFSPTRCAPS extends Structure {
 			maxRetract.put(caps.maxRetract);
 		}
 		maxMediaOnStacker.put(caps.maxMediaOnStacker);
-		acceptMedia.set(caps.isAcceptMedia());
-		multiPage.set(caps.isMultiPage());
+		acceptMedia.put(caps.isAcceptMedia());
+		multiPage.put(caps.isMultiPage());
 		paperSources.put(caps.paperSources);
-		mediaTaken.set(caps.isMediaTaken());
+		mediaTaken.put(caps.isMediaTaken());
 		retractBins.put(caps.retractBins);
 		if (getRetractBins() > 0) {
 			final List<Integer> retractCounts = caps.getMaxRetracts();
@@ -203,20 +203,20 @@ public class WFSPTRCAPS extends Structure {
 		codelineFormat.put(caps.codelineFormat);
 		imageSource.put(caps.imageSource);
 		charSupport.put(caps.charSupport);
-		dispensePaper.set(caps.isDispensePaper());
+		dispensePaper.put(caps.isDispensePaper());
 		extra.pointTo(KeyValueMap.toZZString(caps.getExtra()));
 		// TODO: guidLights
 		if (caps.getWindowsPrinter() != null) {
 			windowsPrinter.pointTo(new ZSTR(caps.getWindowsPrinter()));
 		}
-		mediaPresented.set(caps.isMediaPresented());
+		mediaPresented.put(caps.isMediaPresented());
 		autoRetractPeriod.put(caps.autoRetractPeriod);
-		retractToTransport.set(caps.isRetractToTransport());
-		powerSaveControl.set(caps.isPowerSaveControl());
+		retractToTransport.put(caps.isRetractToTransport());
+		powerSaveControl.put(caps.isPowerSaveControl());
 		coercivityType.put(caps.coercivityType);
 		controlPassbook.put(caps.controlPassbook);
 		printSides.put(caps.printSides);
-		antiFraudModule.set(caps.isAntiFraudModule());
+		antiFraudModule.put(caps.isAntiFraudModule());
 	}
 
 	/**

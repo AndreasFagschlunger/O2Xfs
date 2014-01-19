@@ -43,7 +43,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * the results of a security check via a security module (i.e., MM, CIM86)
 	 * are specified and added to the track data.
 	 */
-	WFS_CMD_IDC_READ_TRACK(201L),
+	READ_TRACK(201L),
 
 	/**
 	 * For motor-driven card readers, the ID card unit checks whether a card has
@@ -57,7 +57,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * description of the forms mechanism). This procedure is followed by data
 	 * verification.
 	 */
-	WFS_CMD_IDC_WRITE_TRACK(202L),
+	WRITE_TRACK(202L),
 
 	/**
 	 * The card is driven to the exit slot from where the user can remove it;
@@ -67,7 +67,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * withdrawal until either it is taken or the application sends a
 	 * WFS_CMD_IDC_RETAIN command to retain the card internally.
 	 */
-	WFS_CMD_IDC_EJECT_CARD(203L),
+	EJECT_CARD(203L),
 
 	/**
 	 * The card is removed from its present position (card inserted into device,
@@ -81,7 +81,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * during the execution, the total number of cards retained does not include
 	 * the current card.
 	 */
-	WFS_CMD_IDC_RETAIN_CARD(204L),
+	RETAIN_CARD(204L),
 
 	/**
 	 * This function resets the present value for number of cards retained to
@@ -89,14 +89,14 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * number of cards retained is controlled by the service and can be
 	 * requested before resetting via the WFS_INF_IDC_STATUS.
 	 */
-	WFS_CMD_IDC_RESET_COUNT(205L),
+	RESET_COUNT(205L),
 
 	/**
 	 * This command is used for setting the DES key that is necessary for
 	 * operating a CIM86 module. The command must be executed before the first
 	 * read command is issued to the card reader.
 	 */
-	WFS_CMD_IDC_SETKEY(206L),
+	SETKEY(206L),
 
 	/**
 	 * For motor driven card readers, the ID card unit checks whether a card has
@@ -118,7 +118,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * 
 	 * @see WFSIDCCARDDATA
 	 */
-	WFS_CMD_IDC_READ_RAW_DATA(207L),
+	READ_RAW_DATA(207L),
 
 	/**
 	 * For motor-driven card readers, the ID card unit checks whether a card has
@@ -132,7 +132,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * 
 	 * @see WFSIDCCARDDATA
 	 */
-	WFS_CMD_IDC_WRITE_RAW_DATA(208L),
+	WRITE_RAW_DATA(208L),
 
 	/**
 	 * This command is used to communicate with the chip. Transparent data is
@@ -142,7 +142,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * 
 	 * @see WFSIDCCHIPIO
 	 */
-	WFS_CMD_IDC_CHIP_IO(209L),
+	CHIP_IO(209L),
 
 	/**
 	 * This command is used by the application to perform a hardware reset which
@@ -160,7 +160,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * 
 	 * @since 3.00
 	 */
-	WFS_CMD_IDC_RESET(210L),
+	RESET(210L),
 
 	/**
 	 * This command handles the power actions that can be done on the chip. This
@@ -169,7 +169,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * 
 	 * @since 3.00
 	 */
-	WFS_CMD_IDC_CHIP_POWER(211L),
+	CHIP_POWER(211L),
 
 	/**
 	 * This command takes form name and the output of a successful
@@ -177,17 +177,17 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * 
 	 * @since 3.00
 	 */
-	WFS_CMD_IDC_PARSE_DATA(212L),
+	PARSE_DATA(212L),
 
 	/**
 	 * @since 3.10
 	 */
-	WFS_CMD_IDC_SET_GUIDANCE_LIGHT(213L),
+	SET_GUIDANCE_LIGHT(213L),
 
 	/**
 	 * @since 3.10
 	 */
-	WFS_CMD_IDC_POWER_SAVE_CONTROL(214L);
+	POWER_SAVE_CONTROL(214L);
 
 	private final long value;
 

@@ -100,6 +100,16 @@ public class XfsVersion implements Comparable<XfsVersion> {
 	}
 
 	/**
+	 * Greater than
+	 * 
+	 * @param version
+	 * @return
+	 */
+	public boolean isGT(final XfsVersion version) {
+		return compareTo(version) > 0;
+	}
+
+	/**
 	 * @param version
 	 *            the version to be compared.
 	 * @return true as this version is less than the specified version.

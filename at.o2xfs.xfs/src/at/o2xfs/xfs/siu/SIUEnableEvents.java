@@ -28,11 +28,11 @@
 package at.o2xfs.xfs.siu;
 
 import at.o2xfs.win32.LPZZSTR;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.win32.WORDArray;
 
-public class SIUEnableEvents extends Structure {
+public class SIUEnableEvents extends Struct {
 
 	public class SIUEnable {
 

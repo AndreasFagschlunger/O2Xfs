@@ -30,12 +30,12 @@ package at.o2xfs.xfs.pin;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPINFDK extends Structure {
+public class WFSPINFDK extends Struct {
 
 	/**
 	 * Specifies the code returned by this FDK, defined as one of the following
@@ -63,7 +63,7 @@ public class WFSPINFDK extends Structure {
 
 	public WFSPINFDK(final Pointer pFDK) {
 		this();
-		useBuffer(pFDK);
+		assignBuffer(pFDK);
 	}
 
 	/**

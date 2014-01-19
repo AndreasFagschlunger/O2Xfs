@@ -27,15 +27,13 @@
 
 package at.o2xfs.xfs;
 
-import java.nio.ByteBuffer;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.INT;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.SYSTEMTIME;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.Union;
 import at.o2xfs.win32.Union.Field;
 import at.o2xfs.xfs.type.HSERVICE;
@@ -45,7 +43,7 @@ import at.o2xfs.xfs.util.XfsConstants;
 /**
  * @author Andreas Fagschlunger
  */
-public class WFSResult extends Structure {
+public class WFSResult extends Struct {
 
 	private final static String COMMANDCODE = "commandCode";
 	private final static String EVENTID = "eventID";
@@ -101,16 +99,7 @@ public class WFSResult extends Structure {
 
 	public WFSResult(final Pointer pResult) {
 		this();
-		this.useBuffer(pResult);
-	}
-
-	public WFSResult(ByteBuffer byteBuffer) {
-		this(byteBuffer, 0);
-	}
-
-	public WFSResult(ByteBuffer byteBuffer, int offset) {
-		this();
-		useBuffer(byteBuffer, offset);
+		assignBuffer(pResult.buffer(getSize()));
 	}
 
 	public REQUESTID getRequestID() {
@@ -141,7 +130,7 @@ public class WFSResult extends Structure {
 		return XfsConstants.valueOf(value, enumType);
 	}
 
-	public Pointer getBuffer() {
+	public Pointer getResults() {
 		return buffer;
 	}
 

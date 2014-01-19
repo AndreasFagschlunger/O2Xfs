@@ -31,10 +31,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Structure;
+import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 
-public class WFSPTRRAWDATAIN extends Structure {
+public class WFSPTRRAWDATAIN extends Struct {
 
 	private ULONG size = new ULONG();
 	private Pointer data = new Pointer();
@@ -45,9 +45,11 @@ public class WFSPTRRAWDATAIN extends Structure {
 	}
 
 	public byte[] getData() {
-		final byte[] data = new byte[(int) size.longValue()];
-		this.data.get(data.length).get(data);
-		return data;
+		byte[] result = null;
+		if (!Pointer.NULL.equals(data)) {
+			result = data.buffer((int) size.longValue()).get();
+		}
+		return result;
 	}
 
 	public void setData(final byte[] data) {
