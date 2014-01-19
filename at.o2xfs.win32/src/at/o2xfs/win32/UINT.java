@@ -27,7 +27,6 @@
 
 package at.o2xfs.win32;
 
-import java.nio.ByteBuffer;
 
 /**
  * An unsigned INT. The range is 0 through 4294967295 decimal.
@@ -36,53 +35,25 @@ import java.nio.ByteBuffer;
  * 
  * @author Andreas Fagschlunger
  */
-public class UINT extends Type implements IntegerType {
+public class UINT extends NumberType {
 
 	public static final long MIN_VALUE = 0;
 
 	public static final long MAX_VALUE = 4294967295L;
 
-	private static final int SIZE = 4;
-
-	public UINT() {
-		super();
+	protected UINT() {
+		super(1 << 2);
 	}
 
-	public UINT(final ByteBuffer buffer, final int offset) {
-		super(buffer, offset);
-	}
-
-	public UINT(final ByteBuffer buffer) {
-		super(buffer);
-	}
-
-	@Override
-	public int getSize() {
-		return SIZE;
-	}
-
-	public void put(final UINT value) {
+	public void put(UINT value) {
 		put(value.longValue());
 	}
 
 	public void put(final long value) throws IllegalArgumentException {
 		if (value < MIN_VALUE || value > MAX_VALUE) {
-			throw new IllegalArgumentException("Illegal value: " + value);
+			throw new IllegalArgumentException("Value out of range: " + value);
 		}
-		buffer().putInt(getOffset(), (int) value);
-	}
-
-	@Override
-	public int intValue() {
-		return (int) longValue();
-	}
-
-	/**
-	 * @return the primitive <code>long</code> value represented by this object.
-	 */
-	@Override
-	public long longValue() {
-		return buffer().getInt(getOffset()) & 0xFFFFFFFFL;
+		put(BitConverter.getBytes(getSize(), value));
 	}
 
 	@Override

@@ -34,34 +34,24 @@ package at.o2xfs.win32;
  * 
  * @author Andreas Fagschlunger
  */
-public class USHORT extends Type implements IntegerType {
+public class USHORT extends NumberType {
 
 	public static final int MIN_VALUE = 0;
 
 	public static final int MAX_VALUE = 65535;
 
-	private final static int SIZE = 2;
-
 	public USHORT() {
-		super();
+		super(2);
 	}
 
 	public USHORT(final int value) {
+		this();
 		allocate();
 		put(value);
 	}
 
-	@Override
-	public int getSize() {
-		return SIZE;
-	}
-
-	public void put(final IntegerType value) {
-		put(value.intValue());
-	}
-
-	public void put(final short value) {
-		put(value & 0xFFFF);
+	public void put(USHORT value) {
+		put(BitConverter.getBytes(value));
 	}
 
 	public void put(final int value) throws IllegalArgumentException {
@@ -72,21 +62,11 @@ public class USHORT extends Type implements IntegerType {
 			throw new IllegalArgumentException("Illegal value: " + value
 					+ ", value must be <= " + MAX_VALUE);
 		}
-		buffer().putShort(getOffset(), (short) value);
+		put(BitConverter.getBytes(getSize(), value));
 	}
 
-	public void put(final long value) {
+	public void put(long value) {
 		put((int) value);
-	}
-
-	@Override
-	public int intValue() {
-		return (int) (buffer().getShort(getOffset()) & 0xFFFFL);
-	}
-
-	@Override
-	public long longValue() {
-		return intValue();
 	}
 
 	@Override

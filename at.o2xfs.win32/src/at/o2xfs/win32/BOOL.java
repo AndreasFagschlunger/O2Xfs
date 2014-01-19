@@ -34,28 +34,30 @@ package at.o2xfs.win32;
  * 
  * @author Andreas Fagschlunger
  */
-public class BOOL extends Type {
-
-	private final static int SIZE = 4;
+public class BOOL extends INT {
 
 	private final static int TRUE = 1;
 
 	private final static int FALSE = 0;
 
-	@Override
-	protected int getSize() {
-		return SIZE;
+	public BOOL() {
+		super();
 	}
 
-	public void set(final boolean value) {
-		buffer().putInt(getOffset(), value ? TRUE : FALSE);
+	public BOOL(boolean value) {
+		allocate();
+		put(value);
+	}
+
+	public void put(final boolean value) {
+		put(value ? TRUE : FALSE);
 	}
 
 	/**
 	 * @return the primitive <code>boolean</code> value of this object.
 	 */
 	public boolean booleanValue() {
-		return buffer().getInt(getOffset()) == TRUE;
+		return intValue() == TRUE;
 	}
 
 	@Override

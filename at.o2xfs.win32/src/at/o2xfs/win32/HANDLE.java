@@ -27,9 +27,7 @@
 
 package at.o2xfs.win32;
 
-import java.nio.ByteBuffer;
-
-import org.apache.commons.codec.binary.Hex;
+import at.o2xfs.common.Hex;
 
 /**
  * A handle to an object.
@@ -38,35 +36,18 @@ import org.apache.commons.codec.binary.Hex;
  * 
  * @author Andreas Fagschlunger
  */
-public class HANDLE extends Type {
-
-	private final static int SIZE = 4;
+public class HANDLE extends NumberType {
 
 	public HANDLE() {
-		super();
+		super(1 << 2);
 	}
 
-	public HANDLE(final ByteBuffer buffer, final int offset) {
-		super(buffer, offset);
-	}
-
-	public HANDLE(ByteBuffer buffer) {
-		super(buffer);
-	}
-
-	@Override
-	public int getSize() {
-		return SIZE;
+	public void put(long value) {
+		put(BitConverter.getBytes(getSize(), value));
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder("0x");
-		final byte[] data = new byte[getSize()];
-		for (int i = 0; i < getSize(); i++) {
-			data[i] = buffer().get(i);
-		}
-		sb.append(Hex.encodeHex(data, false));
-		return sb.toString();
+		return Hex.encode(get());
 	}
 }

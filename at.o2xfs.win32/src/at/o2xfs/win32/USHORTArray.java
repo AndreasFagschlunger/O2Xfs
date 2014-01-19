@@ -43,6 +43,5 @@ public class USHORTArray extends Array<USHORT> {
 
 	public USHORTArray(final Pointer p, final int length) {
 		this(length);
-		useBuffer(p);
 	}
 }

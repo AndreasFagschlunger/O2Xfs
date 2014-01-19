@@ -57,15 +57,12 @@ public class LPSTR extends Pointer implements ASCII {
 	}
 
 	private void pointToNULL() {
-		for (int i = 0; i < SIZE; i++) {
-			buffer().put(getOffset() + i, (byte) 0x00);
-		}
+		put(new byte[getSize()]);
 	}
 
-	private String get() {
+	private String value() {
 		for (int length = 1;; length++) {
-			byte[] bytes = new byte[length];
-			get(length).get(bytes);
+			byte[] bytes = buffer(length).get();
 			if (bytes[length - 1] == NUL) {
 				return new String(bytes, 0, length - 1, US_ASCII);
 			}
@@ -75,7 +72,7 @@ public class LPSTR extends Pointer implements ASCII {
 	@Override
 	public String toString() {
 		if (!NULL.equals(this)) {
-			return get();
+			return value();
 		}
 		return "";
 	}

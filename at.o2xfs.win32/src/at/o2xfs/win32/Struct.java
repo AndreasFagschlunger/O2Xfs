@@ -27,15 +27,74 @@
 
 package at.o2xfs.win32;
 
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.Test;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class DWORDTest {
+/**
+ * Base class for all <code>struct</code>-Types.
+ * 
+ * @author Andreas Fagschlunger
+ */
+public class Struct extends Type {
 
-	@Test
-	public void putMaxValue() {
-		final DWORD maxValue = new DWORD(0xFFFFFFFFL);
-		assertEquals(DWORD.MAX_VALUE, maxValue.longValue());
+	public class Appender {
+
+		private final Struct struct;
+
+		private Appender(Struct struct) {
+			this.struct = struct;
+		}
+
+		public Appender add(Type type) {
+			struct.add(type);
+			return this;
+		}
+	}
+
+	private final List<Type> types;
+
+	protected Struct() {
+		types = new ArrayList<Type>();
+	}
+
+	protected Appender add(Type type) {
+		types.add(type);
+		return new Appender(this);
+	}
+
+	@Override
+	protected void assignBuffer(Buffer buffer) {
+		super.assignBuffer(buffer);
+		int index = 0;
+		for (Type type : types) {
+			type.assignBuffer(buffer.subBuffer(index, type.getSize()));
+			index += type.getSize();
+		}
+	}
+
+	@Override
+	public int getSize() {
+		int result = 0;
+		for (Type type : types) {
+			result += type.getSize();
+		}
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Struct) {
+			final Struct s = (Struct) obj;
+			return types.equals(s.types);
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).appendSuper(super.toString())
+				.append("types", types).toString();
 	}
 }

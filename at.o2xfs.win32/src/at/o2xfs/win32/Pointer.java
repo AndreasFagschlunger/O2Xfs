@@ -27,18 +27,14 @@
 
 package at.o2xfs.win32;
 
-import java.nio.ByteBuffer;
-
-import org.apache.commons.codec.binary.Hex;
+import at.o2xfs.common.Hex;
 
 /**
  * A Pointer type.
  * 
  * @author Andreas Fagschlunger
  */
-public class Pointer extends Type {
-
-	protected final static int SIZE = 4;
+public class Pointer extends BaseType {
 
 	/**
 	 * NULL Pointer
@@ -51,7 +47,12 @@ public class Pointer extends Type {
 	private Type reference = null;
 
 	public Pointer() {
-		super();
+		super(1 << 2);
+	}
+
+	public Pointer(Buffer buffer) {
+		this();
+		assignBuffer(buffer);
 	}
 
 	public Pointer(final Type type) {
@@ -60,45 +61,39 @@ public class Pointer extends Type {
 	}
 
 	private Pointer(boolean allocate) {
-		super();
-		allocate();
-	}
-
-	@Override
-	public int getSize() {
-		return SIZE;
+		this();
+		if (allocate) {
+			allocate();
+		}
 	}
 
 	/**
-	 * @param capacity
+	 * @param size
 	 *            The buffer's capacity, in bytes
-	 * @return ByteBuffer for the memory this Pointer points to
+	 * @return Buffer for the memory this Pointer points to
 	 * @throws NullPointerException
 	 *             if this Pointer points to NULL
 	 */
-	public ByteBuffer get(final int capacity) throws NullPointerException {
-		if (NULL.equals(this)) {
+	public Buffer buffer(final int size) throws NullPointerException {
+		if (Pointer.NULL.equals(this)) {
 			throw new NullPointerException("Pointer points to NULL");
 		}
-		return get(buffer().getInt(getOffset()), capacity);
+		return BufferFactory.getInstance().createBuffer(get(), size);
 	}
 
 	/**
 	 * Lets this Pointer point to the specified {@link Type}.
 	 * 
-	 * @param type
+	 * @param reference
 	 *            the Type this Pointer should point to
 	 */
-	public void pointTo(final Type type) {
-		this.reference = type;
-		long address = type.address();
-		for (int i = 0; i < SIZE; i++) {
-			buffer().put(getOffset() + i, (byte) (address & 0xFF));
-			address >>>= 8;
+	public void pointTo(final Type reference) {
+		if (this == NULL) {
+			throw new NullPointerException("Could not reassign NULL");
 		}
+		this.reference = reference;
+		put(reference.getBuffer().getAddress());
 	}
-
-	private native ByteBuffer get(int address, int capacity);
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -115,11 +110,7 @@ public class Pointer extends Type {
 
 	@Override
 	public String toString() {
-		byte[] value = new byte[SIZE];
-		for (int i = 0; i < value.length; i++) {
-			value[i] = buffer().get(getOffset() + i);
-		}
-		return Long.toHexString(address()) + ","
-				+ new String(Hex.encodeHex(value));
+		return "Address: " + Hex.encode(getBuffer().getAddress()) + ", Value: "
+				+ Hex.encode(get());
 	}
 }

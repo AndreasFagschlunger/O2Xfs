@@ -34,26 +34,19 @@ package at.o2xfs.win32;
  * 
  * @author Andreas Fagschlunger
  */
-public class SHORT extends Type {
+public class SHORT extends NumberType {
 
-	private final static int SIZE = 2;
+	public SHORT() {
+		super(1 << 1);
+	}
 
 	public SHORT(final short s) {
+		this();
 		allocate();
-		put(s);
+		putShort(s);
 	}
 
-	public void put(final short value) {
-		buffer().putShort(getOffset(), value);
+	public void putShort(final short value) {
+		put(BitConverter.getBytes(getSize(), value));
 	}
-
-	public short shortValue() {
-		return buffer().getShort(getOffset());
-	}
-
-	@Override
-	public int getSize() {
-		return SIZE;
-	}
-
 }

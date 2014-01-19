@@ -27,8 +27,6 @@
 
 package at.o2xfs.win32;
 
-import java.nio.ByteBuffer;
-
 /**
  * A handle to a window.
  * 
@@ -39,10 +37,10 @@ import java.nio.ByteBuffer;
 public class HWND extends HANDLE {
 
 	public HWND() {
-		super();
+		allocate();
 	}
 
-	public HWND(ByteBuffer byteBuffer) {
-		super(byteBuffer);
+	public HWND(Buffer buffer) {
+		assignBuffer(buffer);
 	}
 }

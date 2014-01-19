@@ -40,56 +40,35 @@ import java.util.List;
  */
 public class ZList extends Type implements Iterable<Pointer> {
 
-	private List<Pointer> pointers = null;
+	private final List<Pointer> pointers = new ArrayList<Pointer>();
 
-	private List<? extends Type> types = null;
-
-	public ZList(List<? extends Type> types) {
-		this.types = types;
-		createPointerList();
+	public <T extends Type> ZList(List<T> types) {
+		for (int i = 0; i < types.size(); i++) {
+			pointers.add(new Pointer());
+		}
 		allocate();
-		setAddresses();
+		int offset = 0;
+		for (int i = 0; i < types.size(); i++) {
+			Pointer p = pointers.get(i);
+			p.assignBuffer(getBuffer().subBuffer(offset, p.getSize()));
+			p.pointTo(types.get(i));
+			offset += p.getSize();
+		}
 	}
 
 	public ZList(Pointer pointer) {
-		pointers = new ArrayList<Pointer>();
-		Pointer p = null;
-		int capacity = 0;
+		int offset = 0;
+		Buffer buffer = null;
 		while (true) {
-			p = new Pointer();
-			capacity += p.getSize();
-			p.useBuffer(pointer.get(capacity), capacity - p.getSize());
+			buffer = pointer.buffer(offset + pointer.getSize());
+			Pointer p = new Pointer(buffer.subBuffer(offset, pointer.getSize()));
 			if (Pointer.NULL.equals(p)) {
 				break;
 			}
 			pointers.add(p);
-		}
-	}
-
-	private void createPointerList() {
-		pointers = new ArrayList<Pointer>(types.size());
-		for (int i = 0; i < types.size(); i++) {
-			pointers.add(new Pointer());
-		}
-	}
-
-	private void setAddresses() {
-		for (int i = 0; i < types.size(); i++) {
-			Pointer p = pointers.get(i);
-			p.pointTo(types.get(i));
-		}
-	}
-
-	@Override
-	public void allocate() {
-		super.allocate();
-		int offset = getOffset();
-		for (int i = 0; i < pointers.size(); i++) {
-			Pointer p = pointers.get(i);
-			p.useBuffer(buffer(), offset);
 			offset += p.getSize();
 		}
-		pointers.get(pointers.size() - 1).useBuffer(buffer(), offset);
+		assignBuffer(buffer);
 	}
 
 	@Override
@@ -105,5 +84,4 @@ public class ZList extends Type implements Iterable<Pointer> {
 	public Iterator<Pointer> iterator() {
 		return pointers.iterator();
 	}
-
 }

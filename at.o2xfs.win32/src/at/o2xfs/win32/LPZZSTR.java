@@ -27,6 +27,8 @@
 
 package at.o2xfs.win32;
 
+import java.util.Arrays;
+
 /**
  * Pointer class for a double-null-terminated string.
  * 
@@ -36,6 +38,10 @@ public class LPZZSTR extends Pointer implements ASCII {
 
 	public LPZZSTR() {
 		super();
+	}
+
+	public LPZZSTR(Pointer p) {
+		super(p.getBuffer());
 	}
 
 	public String[] values() {
@@ -48,8 +54,7 @@ public class LPZZSTR extends Pointer implements ASCII {
 			return null;
 		}
 		for (int length = 2;; length++) {
-			byte[] bytes = new byte[length];
-			get(length).get(bytes);
+			byte[] bytes = buffer(length).get();
 			if (bytes[bytes.length - 1] == NUL
 					&& bytes[bytes.length - 2] == NUL) {
 				return new String(bytes, US_ASCII);
@@ -62,25 +67,6 @@ public class LPZZSTR extends Pointer implements ASCII {
 		if (NULL.equals(this)) {
 			return "";
 		}
-		return readZZString();
-	}
-
-	/**
-	 * Wraps a Pointer into an LPZZSTR pointer.
-	 * 
-	 * @param p
-	 *            the Pointer to be wrapped.
-	 * @return a LPZZSTR pointer
-	 */
-	public static LPZZSTR wrap(final Pointer p) {
-		final LPZZSTR pzzStr = new LPZZSTR();
-		pzzStr.allocate();
-		final byte[] address = new byte[pzzStr.getSize()];
-		for (int i = 0; i < pzzStr.getSize(); i++) {
-			byte b = p.buffer().get(p.getOffset() + i);
-			address[i] = b;
-			pzzStr.buffer().put(pzzStr.getOffset() + i, b);
-		}
-		return pzzStr;
+		return Arrays.toString(values());
 	}
 }
