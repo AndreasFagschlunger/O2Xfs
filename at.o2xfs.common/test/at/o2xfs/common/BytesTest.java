@@ -27,6 +27,8 @@
 
 package at.o2xfs.common;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -71,6 +73,13 @@ public class BytesTest {
 	}
 
 	@Test
+	public final void leftPadEmptyBytesWith0xFF() {
+		byte[] expecteds = Hex.decode("FFFFFFFFFF");
+		byte[] actuals = Bytes.leftPad(Bytes.EMPTY, 5, 0xFF);
+		Assert.assertArrayEquals(expecteds, actuals);
+	}
+
+	@Test
 	public final void simpleRightPad() {
 		byte[] expecteds = Hex.decode("123400");
 		byte[] actuals = Bytes.rightPad(Hex.decode("1234"), 3);
@@ -96,5 +105,34 @@ public class BytesTest {
 		byte[] expecteds = Hex.decode("123456");
 		byte[] actuals = Bytes.mid(expecteds, 0, expecteds.length);
 		Assert.assertArrayEquals(expecteds, actuals);
+	}
+
+	@Test
+	public final void fromZeroToFFBinaryString() {
+		for (int i = 0; i <= 255; i++) {
+			String expected = leftPad(Integer.toBinaryString(i), 8, '0');
+			String actual = Bytes.toBinaryString(new byte[] { (byte) i });
+			Assert.assertEquals(expected, actual);
+		}
+	}
+
+	@Test
+	public final void binaryStringWithSeparator() {
+		byte[] bytes = Hex.decode("1234");
+		String expected = "00010010 00110100";
+		String actual = Bytes.toBinaryString(bytes, ' ');
+		Assert.assertEquals(expected, actual);
+	}
+
+	private String leftPad(String value, int length, char padChar) {
+		char[] oldChars = value.toCharArray();
+		if (oldChars.length >= length) {
+			return value;
+		}
+		char[] newChars = new char[length];
+		Arrays.fill(newChars, padChar);
+		System.arraycopy(oldChars, 0, newChars, newChars.length
+				- oldChars.length, oldChars.length);
+		return new String(newChars);
 	}
 }
