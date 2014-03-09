@@ -27,62 +27,38 @@
 
 package at.o2xfs.common;
 
-public final class Bit {
+import junit.framework.Assert;
 
-	/**
-	 * Bitmask for the first bit
-	 */
-	public static final int B1 = 1;
+import org.junit.Test;
 
-	/**
-	 * Bitmask for the second bit
-	 */
-	public static final int B2 = 2;
+import at.o2xfs.common.Bit;
+import at.o2xfs.common.Hex;
 
-	/**
-	 * Bitmask for the third bit
-	 */
-	public static final int B3 = 4;
+public class BitTest {
 
-	/**
-	 * Bitmask for the forth bit
-	 */
-	public static final int B4 = 8;
-
-	/**
-	 * Bitmask for the fifth bit
-	 */
-	public static final int B5 = 16;
-
-	/**
-	 * Bitmask for the sixth bit
-	 */
-	public static final int B6 = 32;
-
-	/**
-	 * Bitmask for the seventh bit
-	 */
-	public static final int B7 = 64;
-
-	/**
-	 * Bitmask for the eighth bit
-	 */
-	public static final int B8 = 128;
-
-	private Bit() {
-		throw new AssertionError();
+	@Test
+	public final void testAllBitsSet() {
+		final byte b = Hex.decode("ff")[0];
+		Assert.assertTrue(Bit.isSet(b, Bit.B1));
+		Assert.assertTrue(Bit.isSet(b, Bit.B2));
+		Assert.assertTrue(Bit.isSet(b, Bit.B3));
+		Assert.assertTrue(Bit.isSet(b, Bit.B4));
+		Assert.assertTrue(Bit.isSet(b, Bit.B5));
+		Assert.assertTrue(Bit.isSet(b, Bit.B6));
+		Assert.assertTrue(Bit.isSet(b, Bit.B7));
+		Assert.assertTrue(Bit.isSet(b, Bit.B8));
 	}
 
-	/**
-	 * Checks if the specified byte matches the specified mask.
-	 * 
-	 * @param b
-	 *            the <code>byte</code> to check
-	 * @param mask
-	 *            the mask to which <code>b</code> is matched
-	 * @return true if <code>b</code> matches the given mask
-	 */
-	public static final boolean isSet(byte b, int mask) {
-		return (b & mask) == mask;
+	@Test
+	public final void testBit1() {
+		Assert.assertTrue(Bit.isSet((byte) 1, Bit.B1));
+		Assert.assertFalse(Bit.isSet((byte) 0, Bit.B1));
 	}
+
+	@Test
+	public final void testBit8() {
+		final byte b = Hex.decode("f0")[0];
+		Assert.assertTrue(Bit.isSet(b, Bit.B8));
+	}
+
 }

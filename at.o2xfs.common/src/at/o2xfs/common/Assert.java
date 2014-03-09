@@ -27,62 +27,21 @@
 
 package at.o2xfs.common;
 
-public final class Bit {
+public final class Assert {
 
-	/**
-	 * Bitmask for the first bit
-	 */
-	public static final int B1 = 1;
-
-	/**
-	 * Bitmask for the second bit
-	 */
-	public static final int B2 = 2;
-
-	/**
-	 * Bitmask for the third bit
-	 */
-	public static final int B3 = 4;
-
-	/**
-	 * Bitmask for the forth bit
-	 */
-	public static final int B4 = 8;
-
-	/**
-	 * Bitmask for the fifth bit
-	 */
-	public static final int B5 = 16;
-
-	/**
-	 * Bitmask for the sixth bit
-	 */
-	public static final int B6 = 32;
-
-	/**
-	 * Bitmask for the seventh bit
-	 */
-	public static final int B7 = 64;
-
-	/**
-	 * Bitmask for the eighth bit
-	 */
-	public static final int B8 = 128;
-
-	private Bit() {
+	private Assert() {
 		throw new AssertionError();
 	}
 
-	/**
-	 * Checks if the specified byte matches the specified mask.
-	 * 
-	 * @param b
-	 *            the <code>byte</code> to check
-	 * @param mask
-	 *            the mask to which <code>b</code> is matched
-	 * @return true if <code>b</code> matches the given mask
-	 */
-	public static final boolean isSet(byte b, int mask) {
-		return (b & mask) == mask;
+	public static final void notNull(Object o) {
+		if (o == null) {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	public static final void assertTrue(boolean b) {
+		if (!b) {
+			throw new AssertionError();
+		}
 	}
 }

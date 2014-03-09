@@ -1,0 +1,26 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="at.o2xfs.common" basedir="." default="dist">
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="lib.dir" value="${build.dir}/lib" />
+
+	<target name="init" depends="clean">
+		<mkdir dir="${build.dir}" />
+		<ivy:retrieve />
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" />
+	</target>
+
+	<target name="dist" depends="compile">
+		<mkdir dir="${lib.dir}" />
+		<jar destfile="${lib.dir}/${ant.project.name}.jar" basedir="${classes.dir}" />
+		<ivy:publish artifactspattern="${lib.dir}/${ant.project.name}.[ext]" resolver="local" />
+	</target>
+</project>
