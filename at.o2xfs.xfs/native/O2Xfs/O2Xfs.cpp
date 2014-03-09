@@ -70,7 +70,7 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsCleanUp0(JNIEnv *env, jobject
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncClose0(JNIEnv *env, jobject obj, jobject hServiceObj, jobject hWndObj, jobject requestIDObj) {
-	HSERVICE hService = (*(LPREQUESTID) GetTypeAddress(env, hServiceObj));
+	HSERVICE hService = (*(LPHSERVICE) GetTypeAddress(env, hServiceObj));
 	HWND hWnd = (HWND) (*(LPHANDLE) GetTypeAddress(env, hWndObj));
 	LPREQUESTID lpRequestID = (LPREQUESTID) GetTypeAddress(env, requestIDObj);
 	printf("WFSAsyncClose: hService=%d, hWnd=%X, requestID=%d\n", hService, hWnd, *lpRequestID);
@@ -207,6 +207,7 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncOpen0(JNIEnv *env, jobje
 	LPWFSVERSION lpSrvcVersion = (LPWFSVERSION) GetTypeAddress(env, srvcVersionObj);
 	LPWFSVERSION lpSPIVersion = (LPWFSVERSION) GetTypeAddress(env, spiVersionObj);
 	LPREQUESTID lpRequestID = (LPREQUESTID) GetTypeAddress(env, requestIDObj);
+	printf("WFSAsyncOpen: lpszLogicalName=%s,hApp=%p,lpszAppID=%s,dwTraceLevel=%i,dwTimeOut=%i,lphService=%p,hWnd=%p,dwSrvcVersionsRequired=%p,lpSPIVersion=%p,lpRequestID=%p\n", lpszLogicalName, hApp, lpszAppID, dwTraceLevel, dwTimeOut, lphService, hWnd, dwSrvcVersionsRequired, lpSrvcVersion, lpSPIVersion, lpRequestID);
 	return WFSAsyncOpen(lpszLogicalName, hApp, lpszAppID, dwTraceLevel, dwTimeOut, lphService, hWnd, dwSrvcVersionsRequired, lpSrvcVersion, lpSPIVersion, lpRequestID);
 }
 

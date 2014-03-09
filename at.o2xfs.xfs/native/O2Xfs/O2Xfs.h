@@ -29,7 +29,7 @@
 #define _O2XFS_
 
 #include <Windows.h>
-#include <XFSAPI.H>
+#include "XFSAPI.H"
 #include "JNIUtil.h"
 #include "O2XfsWIN32.h"
 
