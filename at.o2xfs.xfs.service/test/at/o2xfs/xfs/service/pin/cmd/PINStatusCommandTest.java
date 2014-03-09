@@ -25,35 +25,23 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package at.o2xfs.xfs.service.ttu;
+package at.o2xfs.xfs.service.pin.cmd;
 
 import org.junit.Test;
 
-import at.o2xfs.xfs.WFSResult;
+import at.o2xfs.xfs.pin.WFSPINSTATUS;
 import at.o2xfs.xfs.service.XfsCommandTest;
-import at.o2xfs.xfs.service.XfsService;
-import at.o2xfs.xfs.service.cmd.XfsCommand;
-import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
-import at.o2xfs.xfs.ttu.TTUInfoCommand;
-import at.o2xfs.xfs.ttu.WFSTTUSTATUS;
+import at.o2xfs.xfs.service.pin.PINService;
 
-public class TTUServiceTest extends XfsCommandTest {
-
-	private XfsService ttuService = null; // FIXME
+public class PINStatusCommandTest extends XfsCommandTest {
 
 	@Test
-	public void status() throws Exception {
-		XfsCommand xfsCommand = new XfsInfoCommand(ttuService,
-				TTUInfoCommand.WFS_INF_TTU_STATUS);
-		WFSResult wfsResult = null;
-		try {
-			wfsResult = xfsCommand.call();
-			WFSTTUSTATUS ttuStatus = new WFSTTUSTATUS(wfsResult.getResults());
-			System.out.println(ttuStatus);
-		} finally {
-			if (wfsResult != null) {
-				xfsServiceManager.free(wfsResult);
-			}
+	public void execute() throws Exception {
+		for (final PINService pinService : xfsServiceManager
+				.getServices(PINService.class)) {
+			final WFSPINSTATUS pinStatus = new PINStatusCommand(pinService)
+					.call();
+			System.out.println(pinStatus);
 		}
 	}
 }
