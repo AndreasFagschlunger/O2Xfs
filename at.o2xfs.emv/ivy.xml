@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info
+        organisation="at.o2xfs"
+        module="at.o2xfs.emv"
+        status="integration">
+	</info>
+	<publications>
+		<artifact name="at.o2xfs.emv" type="jar" />
+	</publications>
+	<dependencies>
+		<dependency name="at.o2xfs.common" rev="latest.integration" />
+		<dependency name="at.o2xfs.log" rev="latest.integration" />
+		<dependency org="org.apache.commons" name="commons-lang3" rev="3.3" />
+	</dependencies>
+</ivy-module>

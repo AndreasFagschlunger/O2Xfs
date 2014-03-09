@@ -1,0 +1,132 @@
+/*
+ * Copyright (c) 2013, Andreas Fagschlunger. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *   - Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package at.o2xfs.emv;
+
+import at.o2xfs.emv.cvm.CVMResults;
+import at.o2xfs.emv.cvm.CardholderVerification;
+import at.o2xfs.emv.icc.ICReader;
+import at.o2xfs.emv.pinpad.PINPad;
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
+
+public class EMVKernel {
+
+	private static final Logger LOG = LoggerFactory.getLogger(EMVKernel.class);
+
+	private final Terminal terminal;
+
+	private final TransactionType transactionType;
+
+	private final ICReader icReader;
+
+	private final PINPad pinPad;
+
+	public EMVKernel(final Terminal terminal, final ICReader icReader) {
+		this.terminal = terminal;
+		this.icReader = icReader;
+		this.transactionType = null;
+		this.pinPad = null;
+	}
+
+	public EMVKernel(final Terminal terminal,
+			final TransactionType transactionType, final ICReader icReader,
+			final PINPad pinPad) {
+		this.terminal = terminal;
+		this.transactionType = transactionType;
+		this.icReader = icReader;
+		this.pinPad = pinPad;
+	}
+
+	// private void select1(final Candidate candidate) throws IOException,
+	// TerminateSessionException {
+	// // Chain of responsibility?
+	// final String method = "select(Candidate)";
+	// byte[] fileName = candidate.getDFName();
+	// try {
+	// CAPDU selectCommand = SelectCommand.selectByName(fileName);
+	// final TLV fileTag = TLV.parse(icReader.transmit(selectCommand)
+	// .getData());
+	// final ADF file = new ADF(fileTag);
+	// if (!Arrays.equals(fileName, file.getDFName())) {
+	// return; // TODO: Check workflow
+	// }
+	// final ProcessingOptions processingOptions = new ProcessingOptions(
+	// icReader);
+	// processingOptions.execute(candidate);
+	// if (LOG.isInfoEnabled()) {
+	// LOG.info(method, "AIP: " + processingOptions.getAIP());
+	// }
+	// final ReadApplicationData readApplicationData = new ReadApplicationData(
+	// icReader);
+	// ApplicationData applicationData = readApplicationData
+	// .readData(processingOptions.getAFL());
+	// EMVTransaction transaction = new EMVTransaction(terminal,
+	// transactionType, processingOptions.getAIP(),
+	// applicationData, candidate, icReader, pinPad);
+	// checkMandatoryDataObjects(transaction);
+	// new OfflineDataAuthentication(transaction).perform();
+	// new ProcessingRestrictions(transaction).perform();
+	// performCardholderVerification(transaction);
+	// new TerminalRiskManagement(transaction).perform();
+	// CryptogramType cryptogramType = new TerminalActionAnalysis(
+	// transaction).doPerform(false);
+	// new CardActionAnalysis(transaction).perform(cryptogramType);
+	// } catch (ProcessingStateException e) {
+	// e.printStackTrace();
+	// } catch (TLVConstraintViolationException e) {
+	// if (LOG.isErrorEnabled()) {
+	// LOG.error(method, "Error selecting Candidate: " + candidate, e);
+	// }
+	// }
+	// }
+
+	private void checkMandatoryDataObjects(EMVTransaction transaction)
+			throws TerminateSessionException {
+		try {
+			MandatoryData mandatoryData = new MandatoryData(transaction);
+			mandatoryData.assertPresent(EMVTag.APPLICATION_EXPIRATION_DATE);
+			mandatoryData
+					.assertPresent(EMVTag.APPLICATION_PRIMARY_ACCOUNT_NUMBER);
+			mandatoryData
+					.assertPresent(EMVTag.CARD_RISK_MANAGEMENT_DATA_OBJECT_LIST_1);
+			mandatoryData
+					.assertPresent(EMVTag.CARD_RISK_MANAGEMENT_DATA_OBJECT_LIST_2);
+		} catch (MissingMandatoryDataException e) {
+			throw new TerminateSessionException(e);
+		}
+	}
+
+	private void performCardholderVerification(EMVTransaction transaction)
+			throws TerminateSessionException {
+		CardholderVerification cardholderVerification = new CardholderVerification(
+				transaction);
+		CVMResults cvmResults = cardholderVerification.perform();
+		transaction.putData(EMVTag.CARDHOLDER_VERIFICATION_METHOD_RESULTS,
+				cvmResults.getBytes());
+	}
+}
