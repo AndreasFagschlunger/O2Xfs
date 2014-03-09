@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.ui.swing;
 
@@ -34,7 +34,6 @@ import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -42,11 +41,13 @@ import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.O2XfsOperator;
 import at.o2xfs.operator.task.TaskCommand;
+import at.o2xfs.operator.ui.UIContent;
 import at.o2xfs.operator.ui.input.InputDevice;
 import at.o2xfs.operator.ui.input.InputDeviceListener;
 import at.o2xfs.operator.ui.input.VirtualKey;
@@ -153,12 +154,12 @@ public class UIFrame implements SwingUIConfigKey, InputDeviceListener {
 		return buttons;
 	}
 
-	protected void clearContents() {
+	void clearContents() {
 		menuActions.clear();
 		for (final MenuButton button : buttons) {
 			button.removeMenuAction();
 		}
-		setContents(Collections.emptyList());
+		contentPanel.removeAll();
 	}
 
 	protected void setBackCommand(final TaskCommand backCommand) {
@@ -212,8 +213,8 @@ public class UIFrame implements SwingUIConfigKey, InputDeviceListener {
 		}
 	}
 
-	protected void setContents(final List<Object> contents) {
-		contentPanel.setContents(contents);
+	protected void setContent(final UIContent content) {
+		contentPanel.setContent(content);
 	}
 
 	public void dispose() {
@@ -238,9 +239,15 @@ public class UIFrame implements SwingUIConfigKey, InputDeviceListener {
 
 	@Override
 	public void keyPressed(final VirtualKey key) {
-		for (final MenuButton button : buttons) {
-			button.keyPressed(key);
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				for (MenuButton button : buttons) {
+					button.keyPressed(key);
+				}
+			}
+		});
 	}
 
 	private void initInputDevices() {
@@ -269,6 +276,16 @@ public class UIFrame implements SwingUIConfigKey, InputDeviceListener {
 
 	@Override
 	public void supportedKeysChange() {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				updateSupportedKeys();
+			}
+		});
+	}
+
+	private void updateSupportedKeys() {
 		for (final InputDevice inputDevice : inputDevices) {
 			final Set<VirtualKey> supportedKeys = inputDevice
 					.getSupportedKeys();
@@ -283,15 +300,14 @@ public class UIFrame implements SwingUIConfigKey, InputDeviceListener {
 		}
 	}
 
-	public List<InputDevice> getInputDevices() {
+	List<InputDevice> getInputDevices() {
 		return inputDevices;
 	}
 
-	public void closeInputDevices() {
+	void closeInputDevices() {
 		for (final InputDevice inputDevice : inputDevices) {
 			inputDevice.removeInputDeviceListener(this);
 			inputDevice.stop();
 		}
 	}
-
 }

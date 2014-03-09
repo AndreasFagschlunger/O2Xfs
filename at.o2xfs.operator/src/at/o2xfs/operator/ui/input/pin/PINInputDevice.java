@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.ui.input.pin;
 
@@ -39,19 +39,20 @@ import at.o2xfs.operator.task.xfs.pin.PINKeyUtil;
 import at.o2xfs.operator.ui.input.AbstractInputDevice;
 import at.o2xfs.operator.ui.input.VirtualKey;
 import at.o2xfs.operator.ui.input.XfsInputDevice;
+import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.pin.PINFDK;
 import at.o2xfs.xfs.pin.PINFK;
 import at.o2xfs.xfs.pin.WFSPINFDK;
 import at.o2xfs.xfs.pin.WFSPINFUNCKEYDETAIL;
-import at.o2xfs.xfs.pin.WFSPINGETDATA;
-import at.o2xfs.xfs.pin.WFSPINKEY;
+import at.o2xfs.xfs.pin.WfsPINGetData;
+import at.o2xfs.xfs.pin.WfsPINKey;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.XfsServiceListener;
 import at.o2xfs.xfs.service.XfsServiceManager;
-import at.o2xfs.xfs.service.cmd.pin.PINDataListener;
-import at.o2xfs.xfs.service.cmd.pin.PINFunctionKeysCommand;
-import at.o2xfs.xfs.service.cmd.pin.PINGetDataCommand;
 import at.o2xfs.xfs.service.pin.PINService;
+import at.o2xfs.xfs.service.pin.cmd.PINDataListener;
+import at.o2xfs.xfs.service.pin.cmd.PINFunctionKeysCommand;
+import at.o2xfs.xfs.service.pin.cmd.PINGetDataCommand;
 
 public class PINInputDevice extends AbstractInputDevice implements
 		XfsInputDevice, XfsServiceListener, PINDataListener {
@@ -101,6 +102,7 @@ public class PINInputDevice extends AbstractInputDevice implements
 
 	@Override
 	public void start() {
+		final String method = "";
 		synchronized (this) {
 			if (command != null) {
 				return;
@@ -113,10 +115,14 @@ public class PINInputDevice extends AbstractInputDevice implements
 				pinService = determinePINService();
 			}
 			if (pinService != null) {
-				if (supportedKeys.isEmpty()) {
-					initSupportedKeys();
+				try {
+					if (supportedKeys.isEmpty()) {
+						initSupportedKeys();
+					}
+					executePINGetDataCommand();
+				} catch (XfsException e) {
+					LOG.error(method, "Error starting PINInputDevice", e);
 				}
-				executePINGetDataCommand();
 			}
 		}
 	}
@@ -153,24 +159,18 @@ public class PINInputDevice extends AbstractInputDevice implements
 		return supportedKeys;
 	}
 
-	private void initSupportedKeys() {
+	private void initSupportedKeys() throws XfsException {
 		final String method = "initSupportedKeys()";
-		try {
-			funcKeyDetail = new PINFunctionKeysCommand(pinService).execute();
-			if (LOG.isDebugEnabled()) {
-				LOG.debug(method, "funcKeyDetail=" + funcKeyDetail);
-			}
-			addFunctionKeys(funcKeyDetail.getFunctionKeys());
-			for (final WFSPINFDK pinFDK : funcKeyDetail.getFDKs()) {
-				addFDK(pinFDK.getFDK());
-				supportedFDKs.add(pinFDK.getFDK());
-			}
-			notifySupportedKeysChange();
-		} catch (final Exception e) {
-			if (LOG.isErrorEnabled()) {
-				LOG.error(method, "Error getting function key information", e);
-			}
+		funcKeyDetail = new PINFunctionKeysCommand(pinService).call();
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(method, "funcKeyDetail=" + funcKeyDetail);
 		}
+		addFunctionKeys(funcKeyDetail.getFunctionKeys());
+		for (final WFSPINFDK pinFDK : funcKeyDetail.getFDKs()) {
+			addFDK(pinFDK.getFDK());
+			supportedFDKs.add(pinFDK.getFDK());
+		}
+		notifySupportedKeysChange();
 	}
 
 	private void addFunctionKeys(final Set<PINFK> functionKeys) {
@@ -208,12 +208,12 @@ public class PINInputDevice extends AbstractInputDevice implements
 	}
 
 	private void executePINGetDataCommand() {
-		command = new PINGetDataCommand(pinService);
-		final WFSPINGETDATA pinGetData = command.getPinGetData();
-		pinGetData.setAutoEnd(true);
-		pinGetData.setMaxLen(4);
+		final WfsPINGetData pinGetData = new WfsPINGetData();
+		pinGetData.allocate();
+		pinGetData.setAutoEnd(false);
 		pinGetData.setActiveKeys(funcKeyDetail.getFunctionKeys());
 		pinGetData.setActiveFDKs(supportedFDKs);
+		command = new PINGetDataCommand(pinService, pinGetData);
 		command.addCommandListener(this);
 		command.execute();
 	}
@@ -244,7 +244,7 @@ public class PINInputDevice extends AbstractInputDevice implements
 	}
 
 	@Override
-	public void keyPressed(final WFSPINKEY pinKey) {
+	public void keyPressed(final WfsPINKey pinKey) {
 		final String method = "keyPressed(WFSPINKEY)";
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "pinKey=" + pinKey);
@@ -293,5 +293,4 @@ public class PINInputDevice extends AbstractInputDevice implements
 			notify();
 		}
 	}
-
 }

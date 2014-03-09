@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,74 +23,108 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.status;
 
-import at.o2xfs.operator.task.ExecuteTaskCommand;
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
+import at.o2xfs.operator.task.ExecuteSubTaskCommand;
 import at.o2xfs.operator.task.Task;
-import at.o2xfs.operator.task.TaskCommand;
 import at.o2xfs.operator.task.xfs.idc.IDCStatusTask;
 import at.o2xfs.operator.task.xfs.pin.PINStatusTask;
+import at.o2xfs.operator.task.xfs.ptr.PTRStatusTask;
+import at.o2xfs.operator.task.xfs.siu.SIUStatusTask;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.xfs.XfsException;
+import at.o2xfs.xfs.idc.WfsIDCStatus;
+import at.o2xfs.xfs.pin.WFSPINSTATUS;
+import at.o2xfs.xfs.ptr.WFSPTRSTATUS;
 import at.o2xfs.xfs.service.XfsServiceManager;
-import at.o2xfs.xfs.service.cmd.idc.IDCStatusCommand;
-import at.o2xfs.xfs.service.cmd.pin.PINStatusCommand;
 import at.o2xfs.xfs.service.idc.IDCService;
+import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 import at.o2xfs.xfs.service.pin.PINService;
+import at.o2xfs.xfs.service.pin.cmd.PINStatusCommand;
+import at.o2xfs.xfs.service.ptr.PTRService;
+import at.o2xfs.xfs.service.ptr.PTRStatusCallable;
+import at.o2xfs.xfs.service.siu.SIUService;
+import at.o2xfs.xfs.service.siu.SIUStatusCallable;
+import at.o2xfs.xfs.siu.SIUStatus;
 
 public class DeviceStatusTask extends Task {
 
+	private static final Logger LOG = LoggerFactory
+			.getLogger(DeviceStatusTask.class);
+
 	private Table table = null;
 
-	private void addIDCService(final IDCService idcService)
-			throws InterruptedException {
-		Object idcStatus = null;
+	private void addIDCService(final IDCService idcService) {
 		try {
-			idcStatus = new IDCStatusCommand(idcService).execute().getDevice();
+			WfsIDCStatus status = new IDCStatusCommand(idcService).call();
+			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager,
+					new IDCStatusTask(idcService)), idcService, status
+					.getDevice());
 		} catch (XfsException e) {
-			idcStatus = e.getError();
+			table.addRow(idcService, e.getError());
 		}
-		final IDCStatusTask idcStatusTask = new IDCStatusTask(idcService);
-		idcStatusTask.setParent(this);
-		final TaskCommand command = new ExecuteTaskCommand(idcStatusTask,
-				taskManager);
-		table.addRowWithCommand(command, idcService, idcStatus);
 	}
 
-	private void addPINService(final PINService pinService)
-			throws InterruptedException {
-		Object pinStatus = null;
+	private void addPINService(final PINService pinService) {
 		try {
-			pinStatus = new PINStatusCommand(pinService).execute().getDevice();
+			WFSPINSTATUS status = new PINStatusCommand(pinService).call();
+			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager,
+					new PINStatusTask(pinService)), pinService, status
+					.getDevice());
 		} catch (XfsException e) {
-			pinStatus = e.getError();
+			table.addRow(pinService, e.getError());
 		}
+	}
 
-		final PINStatusTask pinStatusTask = new PINStatusTask(pinService);
-		pinStatusTask.setParent(this);
-		final TaskCommand command = new ExecuteTaskCommand(pinStatusTask,
-				taskManager);
-		table.addRowWithCommand(command, pinService, pinStatus);
+	private void addPTRService(final PTRService service) {
+		try {
+			WFSPTRSTATUS status = new PTRStatusCallable(service).call();
+			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager,
+					new PTRStatusTask(service)), service, status.getDevice());
+		} catch (XfsException e) {
+			table.addRow(service, e.getError());
+		}
+	}
+
+	private void addSIUService(final SIUService service) {
+		try {
+			SIUStatus status = new SIUStatusCallable(service).call();
+			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager,
+					new SIUStatusTask(service)), service, status.getDevice());
+		} catch (XfsException e) {
+			table.addRow(service, e.getError());
+		}
 	}
 
 	@Override
-	public void execute() throws Exception {
+	public void doExecute() {
+		final String method = "doExecute()";
 		table = new Table(getClass(), "Device", "Status");
+		getContent().setUIElement(table);
 		final XfsServiceManager manager = XfsServiceManager.getInstance();
 		for (final IDCService idcService : manager
 				.getServices(IDCService.class)) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(method, "idcService=" + idcService);
+			}
 			addIDCService(idcService);
 		}
 		for (final PINService pinService : manager
 				.getServices(PINService.class)) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(method, "pinService=" + pinService);
+			}
 			addPINService(pinService);
 		}
-		taskManager.setContent(table);
-		if (hasParent()) {
-			taskManager.setBackCommand(new ExecuteTaskCommand(getParent(),
-					taskManager));
+		for (final PTRService service : manager.getServices(PTRService.class)) {
+			addPTRService(service);
+		}
+		for (final SIUService service : manager.getServices(SIUService.class)) {
+			addSIUService(service);
 		}
 	}
 }

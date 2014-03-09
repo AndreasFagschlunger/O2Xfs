@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.siu;
 
@@ -33,16 +33,12 @@ import java.util.Map;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
-import at.o2xfs.operator.task.ExecuteTaskCommand;
-import at.o2xfs.operator.task.Task;
-import at.o2xfs.operator.task.TaskCommand;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.service.siu.SIUService;
 import at.o2xfs.xfs.service.siu.SIUServiceListener;
 import at.o2xfs.xfs.service.siu.SIUStatusCallable;
-import at.o2xfs.xfs.service.util.ExceptionUtil;
 import at.o2xfs.xfs.siu.SIUAuxiliary;
 import at.o2xfs.xfs.siu.SIUDoor;
 import at.o2xfs.xfs.siu.SIUGuidLight;
@@ -53,26 +49,27 @@ import at.o2xfs.xfs.siu.SIUPortType;
 import at.o2xfs.xfs.siu.SIUSensor;
 import at.o2xfs.xfs.siu.SIUStatus;
 
-public class SIUStatusTask extends Task implements SIUServiceListener {
+public class SIUStatusTask extends SIUServiceTask implements SIUServiceListener {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(SIUStatusTask.class);
 
 	private static final int STATUS_COLUMN = 1;
 
-	private final SIUService siuService;
+	private final Map<SIUPortType, Map<Enum<?>, Integer>> indexes;
+
+	private SIUService service = null;
 
 	private Table table = null;
 
-	private Map<SIUPortType, Map<Enum<?>, Integer>> indexes = null;
-
 	private SIUStatus siuStatus = null;
 
-	public SIUStatusTask(final SIUService siuService) {
-		if (siuService == null) {
-			ExceptionUtil.nullArgument("siuService");
-		}
-		this.siuService = siuService;
+	public SIUStatusTask() {
+		this(null);
+	}
+
+	public SIUStatusTask(final SIUService service) {
+		super(service);
 		indexes = new EnumMap<SIUPortType, Map<Enum<?>, Integer>>(
 				SIUPortType.class);
 		for (final SIUPortType portType : SIUPortType.values()) {
@@ -81,9 +78,11 @@ public class SIUStatusTask extends Task implements SIUServiceListener {
 	}
 
 	@Override
-	protected void execute() throws Exception {
+	protected void doExecute(SIUService service) {
+		final String method = "doExecute(SIUService)";
 		try {
-			siuStatus = new SIUStatusCallable(siuService).call();
+			this.service = service;
+			siuStatus = new SIUStatusCallable(service).call();
 			table = new Table(getClass(), "Component", "Status");
 			addRow("Device", siuStatus.getDevice());
 			addSensors();
@@ -91,26 +90,19 @@ public class SIUStatusTask extends Task implements SIUServiceListener {
 			addIndicators();
 			addAuxiliaries();
 			addGuidLights();
-			taskManager.setContent(table);
-			siuService.addServiceListener(this);
+			getContent().setUIElement(table);
+			service.addServiceListener(this);
 		} catch (final XfsException e) {
-			showError(e);
-		}
-		final TaskCommand backCommand = new ExecuteTaskCommand(getParent(),
-				taskManager) {
-
-			@Override
-			public void execute() {
-				finish();
-				super.execute();
+			if (LOG.isErrorEnabled()) {
+				LOG.error(method, "Error getting SIU status", e);
 			}
-
-		};
-		taskManager.setBackCommand(backCommand);
+			showException(e);
+		}
 	}
 
-	private void finish() {
-		siuService.removeServiceListener(this);
+	@Override
+	protected void close() {
+		service.removeServiceListener(this);
 	}
 
 	private void addSensors() {
@@ -226,7 +218,7 @@ public class SIUStatusTask extends Task implements SIUServiceListener {
 	}
 
 	private void addRow(final String label, final Object data) {
-		table.addRow(new Label(getClass(), label), data);
+		table.addRow(new Label(getClass().getSimpleName(), label), data);
 	}
 
 	@Override
@@ -332,5 +324,4 @@ public class SIUStatusTask extends Task implements SIUServiceListener {
 		}
 		table.setValueAt(newState, index, STATUS_COLUMN);
 	}
-
 }

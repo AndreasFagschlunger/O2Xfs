@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.idc;
 
@@ -32,8 +32,6 @@ import java.util.List;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.task.ExecuteTaskCommand;
-import at.o2xfs.operator.task.Task;
-import at.o2xfs.operator.task.TaskCommand;
 import at.o2xfs.operator.task.xfs.CancelCommand;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.xfs.XfsException;
@@ -41,29 +39,21 @@ import at.o2xfs.xfs.idc.IDCSecType;
 import at.o2xfs.xfs.idc.IDCTrack;
 import at.o2xfs.xfs.idc.WFSIDCCAPS;
 import at.o2xfs.xfs.idc.WFSIDCCARDDATA;
-import at.o2xfs.xfs.idc.WFSIDCSTATUS;
-import at.o2xfs.xfs.service.cmd.idc.IDCCapabilitiesCommand;
-import at.o2xfs.xfs.service.cmd.idc.IDCStatusCommand;
-import at.o2xfs.xfs.service.cmd.idc.ReadCardCommand;
-import at.o2xfs.xfs.service.cmd.idc.ReadCardListener;
+import at.o2xfs.xfs.idc.WfsIDCStatus;
 import at.o2xfs.xfs.service.idc.IDCService;
+import at.o2xfs.xfs.service.idc.cmd.IDCCapabilitiesCommand;
+import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
+import at.o2xfs.xfs.service.idc.cmd.ReadCardCommand;
+import at.o2xfs.xfs.service.idc.cmd.ReadCardListener;
 
-public class IDCReadTask extends Task implements ReadCardListener {
+public class IDCReadTask extends IDCTask implements ReadCardListener {
 
 	private final static Logger LOG = LoggerFactory
 			.getLogger(IDCReadTask.class);
 
-	private IDCService idcService = null;
+	private IDCService service = null;
 
 	private ReadCardCommand command = null;
-
-	/**
-	 * @param taskManager
-	 * @param previousTask
-	 */
-	public IDCReadTask(final IDCService idcService) {
-		this.idcService = idcService;
-	}
 
 	private void createTable(final List<WFSIDCCARDDATA> cardDataList) {
 		final Table table = new Table(getClass(), "DataSource", "Status",
@@ -71,7 +61,7 @@ public class IDCReadTask extends Task implements ReadCardListener {
 		for (WFSIDCCARDDATA cardData : cardDataList) {
 			table.addRow(createRow(cardData));
 		}
-		taskManager.setContent(table);
+		getContent().setUIElement(table);
 	}
 
 	private Object[] createRow(final WFSIDCCARDDATA cardData) {
@@ -83,30 +73,38 @@ public class IDCReadTask extends Task implements ReadCardListener {
 	}
 
 	@Override
-	public void execute() throws Exception {
-		final String method = "execute()";
-		command = new ReadCardCommand(idcService);
+	protected boolean setCloseCommandPerDefault() {
+		return false;
+	}
+
+	@Override
+	protected void doExecute(IDCService service) {
+		final String method = "doExecute(IDCService)";
+		this.service = service;
+		command = new ReadCardCommand(service);
 		WFSIDCCAPS caps;
 		try {
-			caps = new IDCCapabilitiesCommand(idcService).execute();
-		} catch (final Exception e) {
+			caps = new IDCCapabilitiesCommand(service).call();
+		} catch (final XfsException e) {
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Error getting IDC capabilities", e);
 			}
-			throw e;
+			showException(e);
+			setCloseCommand();
+			return;
 		}
 		for (final IDCTrack track : caps.getReadTracks()) {
 			command.addReadData(track);
 		}
 		if (!caps.getChipProtocols().isEmpty()) {
-			command.addReadData(IDCTrack.WFS_IDC_CHIP);
+			command.addReadData(IDCTrack.CHIP);
 		}
 		if (!IDCSecType.WFS_IDC_SECNOTSUPP.equals(caps.getSecType())) {
-			command.addReadData(IDCTrack.WFS_IDC_SECURITY);
+			command.addReadData(IDCTrack.SECURITY);
 		}
 		command.addCommandListener(this);
 		command.execute();
-		taskManager.addTaskCommand(new CancelCommand(getClass(), command));
+		getCommands().addCommand(new CancelCommand(getClass(), command));
 		showMessage("InsertCard");
 	}
 
@@ -128,8 +126,7 @@ public class IDCReadTask extends Task implements ReadCardListener {
 	private boolean isCardPresent() {
 		final String method = "isCardPresent()";
 		try {
-			final WFSIDCSTATUS status = new IDCStatusCommand(idcService)
-					.execute();
+			final WfsIDCStatus status = new IDCStatusCommand(service).call();
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "status=" + status);
 			}
@@ -142,25 +139,19 @@ public class IDCReadTask extends Task implements ReadCardListener {
 			}
 		} catch (final XfsException e) {
 			LOG.error(method, "Error retrieving status", e);
-		} catch (final InterruptedException e) {
-			// TODO: ?
 		}
 		return false;
 	}
 
 	private void finishTask() {
 		command.removeCommandListener(this);
-		taskManager.clearCommands();
-		TaskCommand nextCommand = null;
+		getCommands().clear();
 		if (isCardPresent()) {
-			final EjectCardTask ejectCardTask = new EjectCardTask(idcService);
-			ejectCardTask.setParent(getParent());
-			nextCommand = new ExecuteTaskCommand(ejectCardTask, taskManager);
-		} else if (hasParent()) {
-			nextCommand = new ExecuteTaskCommand(getParent(), taskManager);
-		}
-		if (nextCommand != null) {
-			taskManager.setNextCommand(nextCommand);
+			getCommands().setNextCommand(
+					new ExecuteTaskCommand(taskManager, new EjectCardTask(
+							service)));
+		} else {
+			setCloseCommand();
 		}
 	}
 
@@ -182,8 +173,7 @@ public class IDCReadTask extends Task implements ReadCardListener {
 		if (LOG.isErrorEnabled()) {
 			LOG.error(method, "ReadCardCommand failed", e);
 		}
-		showError(e);
+		showException(e);
 		finishTask();
 	}
-
 }

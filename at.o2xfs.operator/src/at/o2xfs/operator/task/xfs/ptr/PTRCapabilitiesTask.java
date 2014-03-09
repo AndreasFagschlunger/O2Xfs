@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,44 +23,39 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.ptr;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
-import at.o2xfs.operator.task.ExecuteTaskCommand;
-import at.o2xfs.operator.task.Task;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.ptr.WFSPTRCAPS;
 import at.o2xfs.xfs.service.ptr.PTRCapabilitiesCallable;
 import at.o2xfs.xfs.service.ptr.PTRService;
-import at.o2xfs.xfs.service.util.ExceptionUtil;
 
-public class PTRCapabilitiesTask extends Task {
+public class PTRCapabilitiesTask extends PTRServiceTask {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(PTRCapabilitiesTask.class);
 
-	private final PTRService ptrService;
-
 	private Table table = null;
 
-	public PTRCapabilitiesTask(final PTRService ptrService) {
-		if (ptrService == null) {
-			ExceptionUtil.nullArgument("ptrService");
-		}
-		this.ptrService = ptrService;
+	public PTRCapabilitiesTask() {
+		super();
+	}
+
+	public PTRCapabilitiesTask(PTRService service) {
+		super(service);
 	}
 
 	@Override
-	protected void execute() throws Exception {
-		final String method = "execute()";
+	protected void doExecute(PTRService service) {
+		final String method = "doExecute(PTRService)";
 		try {
-			final WFSPTRCAPS caps = new PTRCapabilitiesCallable(ptrService)
-					.call();
+			final WFSPTRCAPS caps = new PTRCapabilitiesCallable(service).call();
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "caps=" + caps);
 			}
@@ -95,16 +90,13 @@ public class PTRCapabilitiesTask extends Task {
 			addRow("PowerSaveControl", caps.isPowerSaveControl());
 			addRow("CoercivityType", caps.getCoercivityType());
 			addRow("ControlPassbook", caps.getControlPassbook());
-			taskManager.setContent(table);
+			getContent().setUIElement(table);
 		} catch (final XfsException e) {
-			showError(e);
+			showException(e);
 		}
-		taskManager.setBackCommand(new ExecuteTaskCommand(getParent(),
-				taskManager));
 	}
 
 	private void addRow(final String label, final Object value) {
 		table.addRow(new Label(getClass(), label), value);
 	}
-
 }

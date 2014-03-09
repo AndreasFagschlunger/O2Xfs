@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.pin;
 
@@ -33,47 +33,51 @@ import at.o2xfs.operator.ui.input.VirtualKey;
 import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.pin.PINFDK;
 import at.o2xfs.xfs.pin.PINFK;
-import at.o2xfs.xfs.pin.WFSPINKEY;
+import at.o2xfs.xfs.pin.WfsPINKey;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class PINKeyUtil {
+public final class PINKeyUtil {
 
 	private final static Logger LOG = LoggerFactory.getLogger(PINKeyUtil.class);
 
-	public final static VirtualKey getVirtualKey(final WFSPINKEY pinKey,
+	private PINKeyUtil() {
+		throw new AssertionError();
+	}
+
+	public final static VirtualKey getVirtualKey(final WfsPINKey pinKey,
 			final XfsVersion xfsVersion) {
 		final String method = "getVirtualKey(WFSPINKEY, XfsVersion)";
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "pinKey=" + pinKey + ",xfsVersion=" + xfsVersion);
 		}
 		switch (pinKey.getCompletion()) {
-			case WFS_PIN_COMPBACKSPACE:
+			case BACKSPACE:
 				return VirtualKey.VK_BACK;
-			case WFS_PIN_COMPCANCEL:
+			case CANCEL:
 				return VirtualKey.VK_CANCEL;
-			case WFS_PIN_COMPCLEAR:
+			case CLEAR:
 				return VirtualKey.VK_CLEAR;
-			case WFS_PIN_COMPENTER:
+			case ENTER:
 				return VirtualKey.VK_RETURN;
-			case WFS_PIN_COMPHELP:
+			case HELP:
 				return VirtualKey.VK_HELP;
-			case WFS_PIN_COMPCONTFDK:
-			case WFS_PIN_COMPFDK:
+			case CONTFDK:
+			case FDK:
 				if (xfsVersion.isGE(XfsVersion.V3_00)) {
 					final PINFDK fdk = XfsConstants.valueOf(pinKey.getDigit(),
 							PINFDK.class);
 					return getVirtualKey(fdk);
 				}
 				return VirtualKey.getForKeyCode((int) pinKey.getDigit());
-			case WFS_PIN_COMPFK:
-			case WFS_PIN_COMPCONTINUE:
+			case FK:
+			case CONTINUE:
 				if (xfsVersion.isGE(XfsVersion.V3_00)) {
 					final PINFK fk = XfsConstants.valueOf(pinKey.getDigit(),
 							PINFK.class);
 					return getVirtualKey(fk);
 				}
 				return VirtualKey.getForChar((char) pinKey.getDigit());
-			case WFS_PIN_COMPAUTO:
+			case AUTO:
 				if (xfsVersion.isLT(XfsVersion.V3_00)) {
 					return VirtualKey.getForChar((char) pinKey.getDigit());
 				}
@@ -146,37 +150,37 @@ public class PINKeyUtil {
 
 	public final static VirtualKey getVirtualKey(final PINFK fk) {
 		switch (fk) {
-			case WFS_PIN_FK_0:
+			case FK_0:
 				return VirtualKey.VK_0;
-			case WFS_PIN_FK_1:
+			case FK_1:
 				return VirtualKey.VK_1;
-			case WFS_PIN_FK_2:
+			case FK_2:
 				return VirtualKey.VK_2;
-			case WFS_PIN_FK_3:
+			case FK_3:
 				return VirtualKey.VK_3;
-			case WFS_PIN_FK_4:
+			case FK_4:
 				return VirtualKey.VK_4;
-			case WFS_PIN_FK_5:
+			case FK_5:
 				return VirtualKey.VK_5;
-			case WFS_PIN_FK_6:
+			case FK_6:
 				return VirtualKey.VK_6;
-			case WFS_PIN_FK_7:
+			case FK_7:
 				return VirtualKey.VK_7;
-			case WFS_PIN_FK_8:
+			case FK_8:
 				return VirtualKey.VK_8;
-			case WFS_PIN_FK_9:
+			case FK_9:
 				return VirtualKey.VK_9;
-			case WFS_PIN_FK_BACKSPACE:
+			case FK_BACKSPACE:
 				return VirtualKey.VK_BACK;
-			case WFS_PIN_FK_CANCEL:
+			case FK_CANCEL:
 				return VirtualKey.VK_CANCEL;
-			case WFS_PIN_FK_CLEAR:
+			case FK_CLEAR:
 				return VirtualKey.VK_CLEAR;
-			case WFS_PIN_FK_DECPOINT:
+			case FK_DECPOINT:
 				return VirtualKey.VK_DECIMAL;
-			case WFS_PIN_FK_ENTER:
+			case FK_ENTER:
 				return VirtualKey.VK_RETURN;
-			case WFS_PIN_FK_HELP:
+			case FK_HELP:
 				return VirtualKey.VK_HELP;
 			default:
 				if (LOG.isErrorEnabled()) {

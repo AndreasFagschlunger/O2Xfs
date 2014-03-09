@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.ui.swing;
 
@@ -33,7 +33,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -44,9 +43,12 @@ import javax.swing.SwingConstants;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
+import at.o2xfs.operator.ui.UIContent;
+import at.o2xfs.operator.ui.UIElement;
 import at.o2xfs.operator.ui.content.table.Table;
-import at.o2xfs.operator.ui.content.text.ErrorMessage;
+import at.o2xfs.operator.ui.content.text.ExceptionMessage;
 import at.o2xfs.operator.ui.content.text.Label;
+import at.o2xfs.operator.ui.content.text.Text;
 import at.o2xfs.operator.ui.content.text.TextChangedListener;
 import at.o2xfs.operator.ui.content.text.TextInput;
 import at.o2xfs.operator.ui.content.text.WarningLabel;
@@ -93,7 +95,7 @@ public class ContentPanel extends JPanel {
 		addComponent(warningPanel);
 	}
 
-	private void addError(final ErrorMessage error) {
+	private void addError(final ExceptionMessage error) {
 		final MessagePanel errorPanel = MessagePanel.createErrorPanel();
 		errorPanel.setText(Messages.getMessage(error));
 		addComponent(errorPanel);
@@ -102,10 +104,8 @@ public class ContentPanel extends JPanel {
 	private void addTable(final Table table) {
 		final JTable jTable = new SwingUITable(uiFrame.getConfig(), table);
 		new TableAdjuster(jTable).adjust();
-		if (table.hasCommands()) {
-			new RowSelector(jTable, table, uiFrame.getUpButton(),
-					uiFrame.getDownButton(), uiFrame.getNextButton());
-		}
+		new RowSelector(jTable, table, uiFrame.getUpButton(),
+				uiFrame.getDownButton(), uiFrame.getNextButton());
 		addComponent(jTable.getTableHeader());
 		addComponent(jTable);
 	}
@@ -123,6 +123,15 @@ public class ContentPanel extends JPanel {
 		addComponent(textField);
 	}
 
+	private void setTitle(Text title) {
+		StringBuilder text = new StringBuilder();
+		for (Label label : title.getText()) {
+			text.append(Messages.getText(label));
+		}
+		JLabel titleLabel = new JLabel(SwingUtil.textToHTML(text.toString()));
+		addComponent(titleLabel);
+	}
+
 	private void addText(final Label label) {
 		final String text = Messages.getText(label);
 		final JPanel panel = new JPanel(new BorderLayout());
@@ -134,19 +143,20 @@ public class ContentPanel extends JPanel {
 		addComponent(panel);
 	}
 
-	void setContents(final List<Object> contents) {
+	void setContent(final UIContent content) {
 		removeAll();
-		for (final Object content : contents) {
-			if (content instanceof WarningLabel) {
-				addWarning((Label) content);
-			} else if (content instanceof Label) {
-				addText((Label) content);
-			} else if (content instanceof ErrorMessage) {
-				addError((ErrorMessage) content);
-			} else if (content instanceof Table) {
-				addTable((Table) content);
-			} else if (content instanceof TextInput) {
-				addTextField((TextInput) content);
+		setTitle(content.getTitle());
+		for (final UIElement element : content.getUIElements()) {
+			if (element instanceof WarningLabel) {
+				addWarning((Label) element);
+			} else if (element instanceof Label) {
+				addText((Label) element);
+			} else if (element instanceof ExceptionMessage) {
+				addError((ExceptionMessage) element);
+			} else if (element instanceof Table) {
+				addTable((Table) element);
+			} else if (element instanceof TextInput) {
+				addTextField((TextInput) element);
 			}
 		}
 		revalidate();

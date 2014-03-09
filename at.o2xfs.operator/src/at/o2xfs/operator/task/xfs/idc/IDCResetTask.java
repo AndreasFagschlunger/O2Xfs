@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,31 +23,24 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.idc;
 
-import at.o2xfs.operator.task.ExecuteTaskCommand;
-import at.o2xfs.operator.task.Task;
 import at.o2xfs.xfs.service.cmd.IAsyncCommandListener;
-import at.o2xfs.xfs.service.cmd.idc.IDCResetCommand;
 import at.o2xfs.xfs.service.idc.IDCService;
-import at.o2xfs.xfs.service.util.ExceptionUtil;
+import at.o2xfs.xfs.service.idc.cmd.IDCResetCommand;
 
-public class IDCResetTask extends Task implements IAsyncCommandListener {
+public class IDCResetTask extends IDCTask implements IAsyncCommandListener {
 
-	private IDCService idcService = null;
-
-	public IDCResetTask(final IDCService idcService) {
-		if (idcService == null) {
-			ExceptionUtil.nullArgument("idcService");
-		}
-		this.idcService = idcService;
+	@Override
+	protected boolean setCloseCommandPerDefault() {
+		return false;
 	}
 
 	@Override
-	protected void execute() {
-		final IDCResetCommand resetCommand = new IDCResetCommand(idcService);
+	protected void doExecute(IDCService service) {
+		final IDCResetCommand resetCommand = new IDCResetCommand(service);
 		resetCommand.addCommandListener(this);
 		resetCommand.execute();
 	}
@@ -64,14 +57,11 @@ public class IDCResetTask extends Task implements IAsyncCommandListener {
 
 	@Override
 	public void commandFailed(final Exception e) {
-		showError(e);
+		showException(e);
 		finishTask();
 	}
 
 	private void finishTask() {
-		if (hasParent()) {
-			taskManager.setNextCommand(new ExecuteTaskCommand(getParent(),
-					taskManager));
-		}
+		setCloseCommand();
 	}
 }

@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,18 +23,24 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.ui.content.table;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import at.o2xfs.common.Assert;
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.task.Task;
 import at.o2xfs.operator.task.TaskCommand;
+import at.o2xfs.operator.ui.UIElement;
 import at.o2xfs.operator.ui.content.text.Label;
 
-public class Table {
+public class Table implements UIElement {
+
+	private static final Logger LOG = LoggerFactory.getLogger(Table.class);
 
 	private String taskName = null;
 
@@ -56,13 +62,24 @@ public class Table {
 	}
 
 	public void fireTableChanged() {
+		final String method = "fireTableChanged()";
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(method, "tableListeners.size()=" + tableListeners.size());
+		}
 		for (final TableListener listener : tableListeners) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(method, "listener=" + listener);
+			}
 			listener.tableChanged();
 		}
 	}
 
-	public void addTableListener(final TableListener e) {
-		tableListeners.add(e);
+	public void addTableListener(final TableListener listener) {
+		final String method = "addTableListener(TableListener)";
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(method, "listener=" + listener);
+		}
+		tableListeners.add(listener);
 	}
 
 	public void removeTableListener(final TableListener e) {
@@ -100,14 +117,22 @@ public class Table {
 	}
 
 	public void addRow(final Object... rowData) {
+		if (rowData.length != getColumnCount()) {
+			throw new IllegalArgumentException(
+					"Illegal number of columns in row: " + rowData.length
+							+ ", expected: " + getColumnCount());
+		}
 		rows.add(new Row(rowData));
 		fireTableChanged();
 	}
 
 	public void addRowWithCommand(final TaskCommand command,
 			final Object... rowData) {
-		if (command == null) {
-			throw new IllegalArgumentException("TaskCommand must not be null");
+		Assert.notNull(command);
+		if (rowData.length != getColumnCount()) {
+			throw new IllegalArgumentException(
+					"Illegal number of columns in row: " + rowData.length
+							+ ", expected: " + getColumnCount());
 		}
 		rows.add(new Row(command, rowData));
 		fireTableChanged();
@@ -119,6 +144,11 @@ public class Table {
 	}
 
 	public Object getValueAt(final int row, final int column) {
-		return rows.get(row).getRowData(column);
+		try {
+			return rows.get(row).getRowData(column);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.err.println("Column: " + column + ", Row: " + rows.get(row));
+		}
+		return null;
 	}
 }

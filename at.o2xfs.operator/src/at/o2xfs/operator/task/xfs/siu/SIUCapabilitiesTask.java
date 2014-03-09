@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,20 +23,17 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.siu;
 
 import java.util.Map;
 
-import at.o2xfs.operator.task.ExecuteTaskCommand;
-import at.o2xfs.operator.task.Task;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.service.siu.SIUCapabilitiesCallable;
 import at.o2xfs.xfs.service.siu.SIUService;
-import at.o2xfs.xfs.service.util.ExceptionUtil;
 import at.o2xfs.xfs.siu.SIUAuxiliariesCapabilities;
 import at.o2xfs.xfs.siu.SIUCapabilities;
 import at.o2xfs.xfs.siu.SIUDoorCapabilities;
@@ -44,24 +41,23 @@ import at.o2xfs.xfs.siu.SIUGuidLightCapabilities;
 import at.o2xfs.xfs.siu.SIUIndicatorCapabilities;
 import at.o2xfs.xfs.siu.SIUSensorCapabilities;
 
-public class SIUCapabilitiesTask extends Task {
-
-	private final SIUService siuService;
+public class SIUCapabilitiesTask extends SIUServiceTask {
 
 	private Table table = null;
 
-	public SIUCapabilitiesTask(final SIUService siuService) {
-		if (siuService == null) {
-			ExceptionUtil.nullArgument("siuService");
-		}
-		this.siuService = siuService;
+	public SIUCapabilitiesTask() {
+		super();
+	}
+
+	public SIUCapabilitiesTask(SIUService service) {
+		super(service);
 	}
 
 	@Override
-	protected void execute() throws Exception {
+	protected void doExecute(SIUService service) {
 		try {
 			final SIUCapabilities capabilities = new SIUCapabilitiesCallable(
-					siuService).call();
+					service).call();
 			table = new Table(getClass(), "Capability", "Value");
 			addRow("ServiceClass", capabilities.getServiceClass());
 			addRow("Type", capabilities.getType());
@@ -132,12 +128,10 @@ public class SIUCapabilitiesTask extends Task {
 					.getExtra().entrySet()) {
 				table.addRow(entry.getKey(), entry.getValue());
 			}
-			taskManager.setContent(table);
+			getContent().setUIElement(table);
 		} catch (final XfsException e) {
-			showError(e);
+			showException(e);
 		}
-		taskManager.setBackCommand(new ExecuteTaskCommand(getParent(),
-				taskManager));
 	}
 
 	private void addRow(final String label, final Object value) {

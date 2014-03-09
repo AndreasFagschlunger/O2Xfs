@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,15 +23,15 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.idc;
 
-import at.o2xfs.operator.task.ExecuteTaskCommand;
+import at.o2xfs.operator.task.CloseTaskCommand;
 import at.o2xfs.operator.task.Task;
-import at.o2xfs.xfs.service.cmd.idc.EjectCardCommand;
-import at.o2xfs.xfs.service.cmd.idc.EjectCardListener;
 import at.o2xfs.xfs.service.idc.IDCService;
+import at.o2xfs.xfs.service.idc.cmd.EjectCardCommand;
+import at.o2xfs.xfs.service.idc.cmd.EjectCardListener;
 
 public class EjectCardTask extends Task implements EjectCardListener {
 
@@ -44,13 +44,14 @@ public class EjectCardTask extends Task implements EjectCardListener {
 	}
 
 	@Override
-	public void execute() {
-		synchronized (this) {
-			if (ejectCardCommand == null) {
-				ejectCardCommand = new EjectCardCommand(idcService);
-				ejectCardCommand.addCommandListener(this);
-			}
-		}
+	protected boolean setCloseCommandPerDefault() {
+		return false;
+	}
+
+	@Override
+	protected void doExecute() {
+		ejectCardCommand = new EjectCardCommand(idcService);
+		ejectCardCommand.addCommandListener(this);
 		ejectCardCommand.execute();
 	}
 
@@ -86,22 +87,18 @@ public class EjectCardTask extends Task implements EjectCardListener {
 
 	@Override
 	public void commandFailed(final Exception e) {
-		showError(e);
+		showException(e);
 		finishTask();
 	}
 
 	private void finishTask() {
 		resetEjectCardCommand();
-		taskManager.clearCommands();
-		if (hasParent()) {
-			taskManager.setNextCommand(new ExecuteTaskCommand(getParent(),
-					taskManager));
-		}
+		getCommands().clear();
+		getCommands().setNextCommand(new CloseTaskCommand(taskManager));
 	}
 
 	private void resetEjectCardCommand() {
 		ejectCardCommand.removeCommandListener(this);
 		ejectCardCommand = null;
 	}
-
 }
