@@ -40,6 +40,12 @@ public class INT extends NumberType {
 		super(4);
 	}
 
+	public INT(int value) {
+		this();
+		allocate();
+		put(value);
+	}
+
 	public void put(INT value) {
 		put(value.intValue());
 	}
