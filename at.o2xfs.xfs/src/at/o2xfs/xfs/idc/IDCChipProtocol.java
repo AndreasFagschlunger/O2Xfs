@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.xfs.idc;
 
@@ -34,42 +34,42 @@ public enum IDCChipProtocol implements XfsConstant {
 	/**
 	 * The ID card unit can handle the T=0 protocol.
 	 */
-	WFS_IDC_CHIPT0(0x0001L),
+	T0(0x0001L),
 
 	/**
 	 * The ID card unit can handle the T=1 protocol.
 	 */
-	WFS_IDC_CHIPT1(0x0002L),
+	T1(0x0002L),
 
 	/**
 	 * The ID card unit is capable of communicating with a chip card without
 	 * requiring the application to specify any protocol.
 	 */
-	WFS_IDC_CHIP_PROTOCOL_NOT_REQUIRED(0x0004L),
+	PROTOCOL_NOT_REQUIRED(0x0004L),
 
 	/**
 	 * The ID card unit can handle the ISO 14443 (Part3) Type A contactless chip
 	 * card protocol.
 	 */
-	WFS_IDC_CHIPTYPEA_PART3(0x0008L),
+	TYPEA_PART3(0x0008L),
 
 	/**
 	 * The ID card unit can handle the ISO 14443 (Part4) Type A contactless chip
 	 * card protocol.
 	 */
-	WFS_IDC_CHIPTYPEA_PART4(0x0010L),
+	TYPEA_PART4(0x0010L),
 
 	/**
 	 * The ID card unit can handle the ISO 14443 Type B contactless chip card
 	 * protocol.
 	 */
-	WFS_IDC_CHIPTYPEB(0x0020L),
+	TYPEB(0x0020L),
 
 	/**
 	 * The ID card unit can handle the ISO 18092 (106/212/424kbps) contactless
 	 * chip card protocol.
 	 */
-	WFS_IDC_CHIPNFC(0x0040L);
+	NFC(0x0040L);
 
 	private final long value;
 
