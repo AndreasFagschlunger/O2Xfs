@@ -1,39 +1,34 @@
-<project name="at.o2xfs.xfs.service" basedir="." default="jar" >
-	<property name="src.dir" value="src" />
-	<property name="build.home" value="target"/>
-	<property name="lib.dir" value="${build.home}/lib"/>
-	
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="at.o2xfs.xfs.service" basedir="." default="dist" >
+	<property file="${basedir}/build.properties" />
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="lib.dir" value="${build.dir}/lib" />
+	<property name="bin.dir" value="${build.dir}/bin" />
+
+	<property name="javac.version" value="1.6" />
+
 	<target name="init" depends="clean">
-		<mkdir dir="${build.home}"/>
+		<mkdir dir="${build.dir}"/>
 	</target>
-	
+
 	<target name="clean">
-		<delete dir="${build.home}"/>
+		<delete dir="${build.dir}"/>
 	</target>
-	
+
 	<target name="compile" depends="init">
-		<mkdir dir="${build.home}/classes" />
-		<subant target="jar">
-			<fileset dir="../at.o2xfs.log" includes="build.xml"/>
-			<fileset dir="../at.o2xfs.win32" includes="build.xml"/>
-			<fileset dir="../at.o2xfs.xfs" includes="build.xml"/>
-		</subant>
-		<copy todir="${lib.dir}" flatten="true">
-			<fileset dir="C:/Programme/Java">
-				<include name="commons-lang-2.5/commons-lang-2.5.jar" />
-			</fileset>
-		</copy>
-		<javac srcdir="${src.dir}" destdir="${build.home}/classes">
+		<mkdir dir="${build.classes}" />
+		<ivy:retrieve type="jar" pattern="${lib.dir}/[artifact]-[revision].[ext]" pathId="classpath" />
+		<javac encoding="UTF-8" source="${javac.version}" target="${javac.version}" srcdir="${src.dir}" destdir="${build.classes}" includeantruntime="false">
 			<classpath>
-				<pathelement location="../at.o2xfs.xfs/target/at.o2xfs.xfs.jar" />
-				<pathelement location="../at.o2xfs.log/target/at.o2xfs.log.jar" />
-				<pathelement location="../at.o2xfs.win32/target/at.o2xfs.win32.jar" />
-				<pathelement location="${lib.dir}/commons-lang-2.5.jar" />
+				<path refid="classpath" />
 			</classpath>
-		</javac>		
+		</javac>
 	</target>
-	
-	<target name="jar" depends="compile">
-		<jar destfile="${build.home}/at.o2xfs.xfs.service.jar" basedir="${build.home}/classes" />
+
+	<target name="dist" depends="compile">
+		<ivy:retrieve type="native" pattern="${bin.dir}/[artifact].[ext]" />
+		<jar destfile="${lib.dir}/${ant.project.name}.jar" basedir="${build.classes}" />
+		<ivy:publish artifactspattern="${lib.dir}/${ant.project.name}.[ext]" resolver="local" overwrite="true" />
 	</target>
 </project>
