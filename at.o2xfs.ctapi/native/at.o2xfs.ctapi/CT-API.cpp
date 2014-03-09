@@ -85,7 +85,7 @@ JNIEXPORT jobject JNICALL Java_at_o2xfs_ctapi_CTAPI_getFunctionAddress0(JNIEnv *
 	if(procAddress == NULL) {
 		ThrowLastError(env);
 	}
-	return NewBuffer(env, procAddress, sizeof(procAddress));
+	return NewBuffer(env, (LPVOID) procAddress, sizeof(procAddress));
 }
 
 /*
