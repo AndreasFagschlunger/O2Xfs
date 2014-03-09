@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,12 +23,13 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.xfs.service.cmd;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import at.o2xfs.common.Assert;
 import at.o2xfs.win32.Type;
 import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.service.XfsService;
@@ -39,20 +40,25 @@ import at.o2xfs.xfs.service.XfsService;
  */
 public class XfsInfoCommand extends XfsCommand {
 
-	private final XfsConstant category;
+	private final Enum<? extends XfsConstant> category;
 
 	private final Type queryDetails;
 
-	public XfsInfoCommand(XfsService xfsService, XfsConstant category) {
+	public XfsInfoCommand(XfsService xfsService,
+			Enum<? extends XfsConstant> category) {
 		this(xfsService, category, null);
 	}
 
-	public XfsInfoCommand(XfsService xfsDevice, XfsConstant category,
-			Type queryDetails) {
-		super(xfsDevice);
-		if (category == null) {
-			throw new IllegalArgumentException("category must not be null");
-		}
+	public XfsInfoCommand(XfsService xfsService,
+			Enum<? extends XfsConstant> category, Type queryDetails) {
+		this(xfsService, category, queryDetails, null);
+	}
+
+	public XfsInfoCommand(XfsService xfsService,
+			Enum<? extends XfsConstant> category, Type queryDetails,
+			Long timeOut) {
+		super(xfsService, timeOut);
+		Assert.notNull(category);
 		this.category = category;
 		this.queryDetails = queryDetails;
 	}
@@ -60,7 +66,7 @@ public class XfsInfoCommand extends XfsCommand {
 	/**
 	 * @return the category
 	 */
-	public XfsConstant getCategory() {
+	public Enum<? extends XfsConstant> getCategory() {
 		return category;
 	}
 

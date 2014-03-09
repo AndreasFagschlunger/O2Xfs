@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,56 +23,86 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
-package at.o2xfs.xfs.service.cmd.idc;
+package at.o2xfs.xfs.service.idc.cmd;
 
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
+import at.o2xfs.win32.DWORD;
 import at.o2xfs.xfs.WFSResult;
-import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.IDCExecuteCommand;
-import at.o2xfs.xfs.idc.WFSIDCCHIPIO;
+import at.o2xfs.xfs.idc.IDCPowerOption;
 import at.o2xfs.xfs.service.XfsServiceManager;
-import at.o2xfs.xfs.service.cmd.IXfsCommand;
+import at.o2xfs.xfs.service.cmd.AbstractAsyncCommand;
+import at.o2xfs.xfs.service.cmd.IAsyncCommandListener;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.util.ExceptionUtil;
 
-/**
- * This command is used to communicate with the chip.
- * 
- * @author Andreas Fagschlunger
- */
-public class ChipIOCommand implements IXfsCommand<WFSIDCCHIPIO> {
+public class IDCResetCommand extends
+		AbstractAsyncCommand<IAsyncCommandListener> {
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(IDCResetCommand.class);
 
 	private IDCService idcService = null;
 
-	private WFSIDCCHIPIO chipIoIn = null;
+	private IDCPowerOption cardFoundAction = null;
 
-	public ChipIOCommand(final IDCService idcService,
-			final WFSIDCCHIPIO chipIoIn) {
+	private XfsCommand resetCommand = null;
+
+	public IDCResetCommand(final IDCService idcService) {
 		if (idcService == null) {
 			ExceptionUtil.nullArgument("idcService");
 		}
 		this.idcService = idcService;
-		this.chipIoIn = chipIoIn;
+	}
+
+	public void setCardFoundAction(final IDCPowerOption cardFoundAction)
+			throws IllegalArgumentException {
+		this.cardFoundAction = cardFoundAction;
 	}
 
 	@Override
-	public WFSIDCCHIPIO execute() throws InterruptedException, XfsException {
-		XfsCommand xfsCommand = new XfsExecuteCommand(idcService,
-				IDCExecuteCommand.CHIP_IO, chipIoIn);
-		WFSResult wfsResult = null;
-		try {
-			wfsResult = xfsCommand.call();
-			final WFSIDCCHIPIO chipIoOut = new WFSIDCCHIPIO(
-					wfsResult.getResults());
-			return new WFSIDCCHIPIO(chipIoOut);
-		} finally {
-			if (wfsResult != null) {
-				XfsServiceManager.getInstance().free(wfsResult);
+	protected void doExecute() {
+		final String method = "doExecute()";
+		synchronized (this) {
+			if (resetCommand != null) {
+				throw new IllegalStateException("Already executed");
 			}
+			createResetCommand();
+			WFSResult wfsResult = null;
+			try {
+				wfsResult = resetCommand.call();
+				notifyCommandSuccessful();
+			} catch (final Exception e) {
+				if (LOG.isErrorEnabled()) {
+					LOG.error(method, "Error executing XfsCommand: "
+							+ resetCommand, e);
+				}
+				notifyCommandFailed(e);
+			} finally {
+				if (wfsResult != null) {
+					XfsServiceManager.getInstance().free(wfsResult);
+				}
+			}
+			resetCommand = null;
 		}
+	}
+
+	private void createResetCommand() {
+		DWORD resetIn = null;
+		if (cardFoundAction != null) {
+			resetIn = new DWORD(cardFoundAction.getValue());
+		}
+		resetCommand = new XfsExecuteCommand(idcService,
+				IDCExecuteCommand.RESET, resetIn);
+	}
+
+	@Override
+	public void cancel() {
 	}
 
 }

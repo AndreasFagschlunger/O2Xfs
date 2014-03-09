@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.xfs.service.cmd;
 
@@ -53,22 +53,25 @@ public class XfsCallable implements Callable<WFSResult>, XfsEventNotification {
 	}
 
 	@Override
-	public WFSResult call() throws InterruptedException, XfsException {
+	public WFSResult call() throws XfsException {
 		final String method = "call()";
-		synchronized (this) {
-			xfsCommand.execute(this);
-			while (wfsResult == null) {
-				if (LOG.isDebugEnabled()) {
-					LOG.debug(method, "Waiting ...");
-				}
-				wait();
-			}
-		}
 		try {
+			synchronized (this) {
+				xfsCommand.execute(this);
+				while (wfsResult == null) {
+					if (LOG.isDebugEnabled()) {
+						LOG.debug(method, "Waiting ...");
+					}
+					wait();
+				}
+			}
 			XfsException.throwFor(wfsResult.getResult());
 		} catch (final XfsException e) {
 			XfsServiceManager.getInstance().free(wfsResult);
 			throw e;
+		} catch (InterruptedException e) {
+			LOG.error(method, "Interrupted while waiting", e);
+			throw new RuntimeException(e);
 		}
 		return wfsResult;
 	}
@@ -97,5 +100,4 @@ public class XfsCallable implements Callable<WFSResult>, XfsEventNotification {
 			notifyAll();
 		}
 	}
-
 }
