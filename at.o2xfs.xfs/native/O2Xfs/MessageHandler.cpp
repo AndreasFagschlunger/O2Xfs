@@ -53,23 +53,23 @@ JNIEXPORT void JNICALL Java_at_o2xfs_xfs_util_MessageHandler_run0(JNIEnv *env, j
 	static TCHAR szAppName[] = TEXT("XFSWrapper");
     WNDCLASS wndclass;
 	MSG msg;
-	wndclass.style = CS_HREDRAW | CS_VREDRAW ;
-	wndclass.lpfnWndProc = WndProc ;
+	wndclass.style = 0;
+	wndclass.lpfnWndProc = WndProc;
 	wndclass.cbClsExtra = 0;
 	wndclass.cbWndExtra = 0;
 	wndclass.hInstance = hInstance;
-	wndclass.hIcon = LoadIcon (NULL, IDI_APPLICATION);
-	wndclass.hCursor = LoadCursor (NULL, IDC_ARROW);
+	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wndclass.hCursor = NULL;
 	wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH);
 	wndclass.lpszMenuName = NULL;
 	wndclass.lpszClassName = szAppName;
 
 	if (!RegisterClass(&wndclass)) {
-		MessageBox(NULL, TEXT ("Program requires Windows NT!"), szAppName, MB_ICONERROR);
+		MessageBox(NULL, TEXT("Program requires Windows NT!"), szAppName, MB_ICONERROR);
 		return;
 	}
 
-	HWND hWnd = CreateWindow(szAppName, TEXT("TITLE"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
+	HWND hWnd = CreateWindow(szAppName, TEXT("O2Xfs"), WS_DISABLED, -1, -1, 0, 0, NULL, NULL, hInstance, NULL);
 	jmethodID methodID = GetMethodID(env, env->GetObjectClass(obj), "hWnd", "()V");	
 	memcpy(GetTypeAddress(env, hWndBuf), &hWnd, sizeof(HWND));
 	env->CallVoidMethod(obj, methodID);
@@ -77,7 +77,6 @@ JNIEXPORT void JNICALL Java_at_o2xfs_xfs_util_MessageHandler_run0(JNIEnv *env, j
 
 	g_pEnv = env;
 
-	ShowWindow(hWnd, SW_SHOWMINIMIZED);
 	UpdateWindow(hWnd);
 	printf("MSG LOOP - START\n");
 	while (GetMessage(&msg, NULL, 0, 0) > 0) {
