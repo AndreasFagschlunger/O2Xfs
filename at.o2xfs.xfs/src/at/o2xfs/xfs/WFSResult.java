@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.xfs;
 
@@ -37,7 +37,7 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.Union;
 import at.o2xfs.win32.Union.Field;
 import at.o2xfs.xfs.type.HSERVICE;
-import at.o2xfs.xfs.type.REQUESTID;
+import at.o2xfs.xfs.type.RequestId;
 import at.o2xfs.xfs.util.XfsConstants;
 
 /**
@@ -52,7 +52,7 @@ public class WFSResult extends Struct {
 	 * Request ID of the completed command; not used for event notifications
 	 * other than Execute events.
 	 */
-	private final REQUESTID requestID = new REQUESTID();
+	private final RequestId requestID = new RequestId();
 
 	/**
 	 * Service handle identifying the session that created the result, i.e. the
@@ -97,12 +97,22 @@ public class WFSResult extends Struct {
 		add(buffer);
 	}
 
+	public WFSResult(RequestId requestID, HSERVICE hService, INT result,
+			DWORD commandCode) {
+		this();
+		allocate();
+		this.requestID.put(requestID);
+		this.service.put(hService);
+		this.result.put(result);
+		this.u.get(COMMANDCODE, DWORD.class).put(commandCode);
+	}
+
 	public WFSResult(final Pointer pResult) {
 		this();
 		assignBuffer(pResult.buffer(getSize()));
 	}
 
-	public REQUESTID getRequestID() {
+	public RequestId getRequestID() {
 		return requestID;
 	}
 

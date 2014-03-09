@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.xfs.pin;
 
@@ -32,23 +32,22 @@ import at.o2xfs.xfs.XfsConstant;
 public enum PINInfoCommand implements XfsConstant {
 
 	/**
-	 * The WFS_INF_PIN_STATUS command returns several kinds of status
-	 * information.
+	 * The STATUS command returns several kinds of status information.
 	 */
-	WFS_INF_PIN_STATUS(401L),
+	STATUS(401L),
 
 	/**
 	 * This command is used to retrieve the capabilities of the PIN pad.
 	 * 
 	 * @see WFSPINCAPS
 	 */
-	WFS_INF_PIN_CAPABILITIES(402L),
+	CAPABILITIES(402L),
 
 	/**
 	 * This command returns detailed information about the keys in the
 	 * encryption module.
 	 */
-	WFS_INF_PIN_KEY_DETAIL(404L),
+	KEY_DETAIL(404L),
 
 	/**
 	 * This command returns information about the names of the Function Keys
@@ -56,27 +55,27 @@ public enum PINInfoCommand implements XfsConstant {
 	 * supported FDKs (Function Descriptor Keys) or Touch Screen Pads if this
 	 * XFS interface is used for Touch Screen input.
 	 */
-	WFS_INF_PIN_FUNCKEY_DETAIL(405L),
+	FUNCKEY_DETAIL(405L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_INF_PIN_HSM_TDATA(406L),
+	HSM_TDATA(406L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_INF_PIN_KEY_DETAIL_EX(407L),
+	KEY_DETAIL_EX(407L),
 
 	/**
 	 * @since 3.00
 	 */
-	WFS_INF_PIN_SECUREKEY_DETAIL(408L),
+	SECUREKEY_DETAIL(408L),
 
 	/**
 	 * @since 3.10
 	 */
-	WFS_INF_PIN_QUERY_LOGICAL_HSM_DETAIL(409L);
+	QUERY_LOGICAL_HSM_DETAIL(409L);
 
 	private final long value;
 
