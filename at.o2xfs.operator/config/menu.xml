@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Menu>
+	<TaskCommand>
+		<Class>at.o2xfs.operator.task.xfs.status.DeviceStatusTask</Class>
+	</TaskCommand>
+	<MenuCommand>
+		<Label>HardwareComponents</Label>
+		<MenuCommand>
+			<Label>Card Reader</Label>
+			<TaskCommand>
+				<Label>Status</Label>
+				<Class>at.o2xfs.operator.task.xfs.idc.IDCStatusTask</Class>
+			</TaskCommand>
+			<TaskCommand>
+				<Label>Capabilities</Label>
+				<Class>at.o2xfs.operator.task.xfs.idc.IDCCapabilities</Class>
+			</TaskCommand>
+			<TaskCommand>
+				<Label>Read card</Label>
+				<Class>at.o2xfs.operator.task.xfs.idc.IDCReadTask</Class>
+			</TaskCommand>
+			<TaskCommand>
+				<Label>ResetCount</Label>
+				<Class>at.o2xfs.operator.task.xfs.idc.IDCResetCountTask</Class>
+			</TaskCommand>
+			<TaskCommand>
+				<Label>Reset</Label>
+				<Class>at.o2xfs.operator.task.xfs.idc.IDCResetTask</Class>
+			</TaskCommand>
+		</MenuCommand>
+		<MenuCommand>
+			<Label>PIN Pad</Label>
+			<TaskCommand>
+				<Label>Status</Label>
+				<Class>at.o2xfs.operator.task.xfs.pin.PINStatusTask</Class>
+			</TaskCommand>
+			<TaskCommand>
+				<Label>Capabilities</Label>
+				<Class>at.o2xfs.operator.task.xfs.pin.PINCapabilitiesTask</Class>
+			</TaskCommand>
+			<TaskCommand>
+				<Label>Test</Label>
+				<Class>at.o2xfs.operator.task.xfs.pin.PINGetDataTask</Class>
+			</TaskCommand>
+		</MenuCommand>
+		<MenuCommand>
+			<Label>Printer</Label>
+			<TaskCommand>
+				<Label>Status</Label>
+				<Class>at.o2xfs.operator.task.xfs.ptr.PTRStatusTask</Class>
+			</TaskCommand>
+			<TaskCommand>
+				<Label>Capabilities</Label>
+				<Class>at.o2xfs.operator.task.xfs.ptr.PTRCapabilitiesTask</Class>
+			</TaskCommand>
+			<TaskCommand>
+				<Label>PrintRawData</Label>
+				<Class>at.o2xfs.operator.task.xfs.ptr.PTRRawDataTask</Class>
+			</TaskCommand>
+		</MenuCommand>
+		<MenuCommand>
+			<Label>SIU</Label>
+			<TaskCommand>
+				<Label>Status</Label>
+				<Class>at.o2xfs.operator.task.xfs.siu.SIUStatusTask</Class>
+			</TaskCommand>
+			<TaskCommand>
+				<Label>Capabilities</Label>
+				<Class>at.o2xfs.operator.task.xfs.siu.SIUCapabilitiesTask</Class>
+			</TaskCommand>
+		</MenuCommand>
+	</MenuCommand>
+	<TaskCommand>
+		<Label>Shutdown</Label>
+		<Class>at.o2xfs.operator.task.menu.ShutdownTask</Class>
+	</TaskCommand>
+</Menu>
