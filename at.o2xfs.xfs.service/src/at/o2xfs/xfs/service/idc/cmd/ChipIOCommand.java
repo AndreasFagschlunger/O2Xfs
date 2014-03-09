@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,46 +23,59 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
-package at.o2xfs.xfs.service.cmd.pin;
+package at.o2xfs.xfs.service.idc.cmd;
 
+import java.util.concurrent.Callable;
+
+import at.o2xfs.common.Assert;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.pin.PINInfoCommand;
-import at.o2xfs.xfs.pin.WFSPINSTATUS;
+import at.o2xfs.xfs.idc.ChipIOStruct;
+import at.o2xfs.xfs.idc.IDCExecuteCommand;
 import at.o2xfs.xfs.service.XfsServiceManager;
-import at.o2xfs.xfs.service.cmd.IXfsCommand;
-import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
-import at.o2xfs.xfs.service.pin.PINService;
+import at.o2xfs.xfs.service.cmd.XfsCommand;
+import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
+import at.o2xfs.xfs.service.idc.IDCService;
 
-public class PINStatusCommand implements IXfsCommand<WFSPINSTATUS> {
+/**
+ * This command is used to communicate with the chip.
+ * 
+ * @author Andreas Fagschlunger
+ */
+public class ChipIOCommand implements Callable<ChipIOStruct> {
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(PINStatusCommand.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ChipIOCommand.class);
 
-	private PINService pinService = null;
+	private final IDCService service;
 
-	public PINStatusCommand(final PINService pinService) {
-		this.pinService = pinService;
+	private final ChipIOStruct chipIoIn;
+
+	public ChipIOCommand(final IDCService service, final ChipIOStruct chipIoIn) {
+		Assert.notNull(service);
+		Assert.notNull(chipIoIn);
+		this.service = service;
+		this.chipIoIn = chipIoIn;
 	}
 
 	@Override
-	public WFSPINSTATUS execute() throws InterruptedException, XfsException {
-		final String method = "execute()";
-		final XfsInfoCommand infoCommand = new XfsInfoCommand(pinService,
-				PINInfoCommand.WFS_INF_PIN_STATUS);
+	public ChipIOStruct call() throws XfsException {
+		final String method = "call()";
+		XfsCommand xfsCommand = new XfsExecuteCommand(service,
+				IDCExecuteCommand.CHIP_IO, chipIoIn);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = infoCommand.call();
-			final WFSPINSTATUS pinStatus = new WFSPINSTATUS(
-					pinService.getXfsVersion(), wfsResult.getResults());
-			if (LOG.isInfoEnabled()) {
-				LOG.info(method, "pinStatus=" + pinStatus);
+			wfsResult = xfsCommand.call();
+			final ChipIOStruct chipIoOut = new ChipIOStruct(
+					wfsResult.getResults());
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(method, "chipIoOut=" + chipIoOut);
 			}
-			return new WFSPINSTATUS(pinService.getXfsVersion(), pinStatus);
+			return new ChipIOStruct(chipIoOut);
 		} finally {
 			if (wfsResult != null) {
 				XfsServiceManager.getInstance().free(wfsResult);
