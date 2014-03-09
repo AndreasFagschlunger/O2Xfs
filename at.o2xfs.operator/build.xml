@@ -1,0 +1,52 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="at.o2xfs.operator" basedir="." default="dist">
+	<property file="${basedir}/build.properties" />
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="bin.dir" value="${build.dir}/bin" />
+	<property name="lib.dir" value="${build.dir}/lib" />
+
+	<property name="javac.version" value="1.6" />
+
+	<target name="init" depends="clean">
+		<mkdir dir="${build.dir}" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" failonerror="true" />
+	</target>
+
+	<target name="compile" depends="init">
+		<mkdir dir="${build.classes}" />
+		<ivy:retrieve type="jar,bundle" pattern="${lib.dir}/[artifact]-[revision].[ext]" pathId="classpath" />
+		<javac encoding="UTF-8" source="${javac.version}" target="${javac.version}" srcdir="${src.dir}" destdir="${build.classes}" includeantruntime="false">
+			<classpath>
+				<path refid="classpath" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile">
+		<manifestclasspath property="jar.classpath" jarfile="${lib.dir}/${ant.project.name}.jar">
+			<classpath refid="classpath" />
+		</manifestclasspath>
+		<ivy:retrieve type="native" pattern="${bin.dir}/[artifact].[ext]" />
+		<jar destfile="${lib.dir}/${ant.project.name}.jar" basedir="${build.classes}">
+			<manifest>
+				<attribute name="Main-Class" value="at.o2xfs.operator.O2XfsOperator" />
+				<attribute name="Class-Path" value="${jar.classpath}" />
+			</manifest>
+			<fileset dir="${src.dir}">
+				<include name="**/*.properties" />
+			</fileset>
+		</jar>
+		<zip destfile="${build.dir}/${ant.project.name}.zip">
+			<zipfileset prefix="lib" dir="${lib.dir}" excludes="**/*.xml" />
+			<zipfileset prefix="bin" dir="${bin.dir}" />
+			<zipfileset prefix="config" dir="${basedir}/config" />
+			<fileset dir="${basedir}">
+				<include name="*.cmd" />
+			</fileset>
+		</zip>
+	</target>
+</project>
