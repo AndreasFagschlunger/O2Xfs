@@ -1,32 +1,32 @@
-<project name="at.o2xfs.log" basedir="." default="jar">
-	<property name="src.dir" value="src" />
-	<property name="build.home" value="target"/>
-	<property name="lib.dir" value="${build.home}/lib"/>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="at.o2xfs.log" basedir="." default="dist">
+	<property file="${basedir}/build.properties" />
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="lib.dir" value="${build.dir}/lib" />
 	
+	<property name="javac.version" value="1.6" />
+
 	<target name="init" depends="clean">
-		<mkdir dir="${build.home}"/>
+		<mkdir dir="${build.dir}" />
 	</target>
-	
+
 	<target name="clean">
-		<delete dir="${build.home}"/>
+		<delete dir="${build.dir}" />
 	</target>
-	
+
 	<target name="compile" depends="init">
-		<mkdir dir="${build.home}/classes" />
-		<copy todir="${lib.dir}" flatten="true">
-			<fileset dir="C:/Programme/Java">
-				<include name="slf4j-1.6.1/slf4j-api-1.6.1.jar" />
-			</fileset>
-		</copy>
-		<javac srcdir="${src.dir}" destdir="${build.home}/classes">
-			<classpath>				
-				<pathelement location="${lib.dir}/slf4j-api-1.6.1.jar" />
+		<mkdir dir="${build.classes}" />
+		<ivy:retrieve type="jar,bundle" pattern="${lib.dir}/[artifact]-[revision].[ext]" pathId="classpath" />
+		<javac encoding="UTF-8" source="${javac.version}" target="${javac.version}" srcdir="${src.dir}" destdir="${build.classes}" includeantruntime="false">
+			<classpath>
+				<path refid="classpath" />
 			</classpath>
 		</javac>
-		
 	</target>
-	
-	<target name="jar" depends="compile">
-		<jar destfile="${build.home}/at.o2xfs.log.jar" basedir="${build.home}/classes" />
+
+	<target name="dist" depends="compile">
+		<jar destfile="${lib.dir}/${ant.project.name}.jar" basedir="${build.classes}" />
+		<ivy:publish artifactspattern="${lib.dir}/${ant.project.name}.[ext]" resolver="local" />
 	</target>
 </project>
