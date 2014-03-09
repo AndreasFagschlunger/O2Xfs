@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,81 +23,72 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-
+import at.o2xfs.operator.ui.UIContent;
 import at.o2xfs.operator.ui.content.text.ErrorMessage;
+import at.o2xfs.operator.ui.content.text.ExceptionMessage;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.operator.ui.content.text.WarningLabel;
 
 public abstract class Task {
 
-	private Task parent = null;
+	private final TaskCommands taskCommands;
 
-	private List<Task> children = null;
+	private final UIContent content;
 
 	protected TaskManager taskManager = null;
 
 	public Task() {
-		children = new ArrayList<Task>();
+		taskCommands = new TaskCommands();
+		content = new UIContent(new Label(getClass().getSimpleName()));
 	}
 
-	protected void setTaskManager(TaskManager taskManager) {
+	protected TaskCommands getCommands() {
+		return taskCommands;
+	}
+
+	protected UIContent getContent() {
+		return content;
+	}
+
+	protected void showMessage(String label) {
+		content.setUIElement(new Label(getClass(), label));
+	}
+
+	protected void showWarning(String label) {
+		content.setUIElement(new WarningLabel(getClass(), label));
+	}
+
+	protected void showError(String label) {
+		content.setUIElement(new ErrorMessage(getClass(), label));
+	}
+
+	protected void showException(Exception cause) {
+		content.setUIElement(new ExceptionMessage(getClass(), cause));
+	}
+
+	protected boolean setCloseCommandPerDefault() {
+		return true;
+	}
+
+	protected void setCloseCommand() {
+		taskCommands.setBackCommand(new CloseTaskCommand(taskManager));
+	}
+
+	final void execute(TaskManager taskManager) {
 		this.taskManager = taskManager;
+		if (setCloseCommandPerDefault()) {
+			setCloseCommand();
+		}
+		doExecute();
 	}
 
-	abstract protected void execute() throws Exception;
+	abstract protected void doExecute();
 
-	protected Task getParent() {
-		return parent;
-	}
+	protected void close() {
 
-	public void setParent(Task parent) {
-		this.parent = parent;
-	}
-
-	public boolean hasParent() {
-		return parent != null;
-	}
-
-	public void appendChild(final Task newChild) {
-		newChild.parent = this;
-		children.add(newChild);
-	}
-
-	protected boolean hasChildNodes() {
-		return !children.isEmpty();
-	}
-
-	protected Task getChildAt(final int childIndex) {
-		return children.get(childIndex);
-	}
-
-	protected List<Task> getChildren() {
-		return children;
-	}
-
-	protected void showMessage(final String label) {
-		taskManager.setContent(new Label(getClass()).append(label));
-	}
-
-	protected void showWarning(final String label) {
-		taskManager.setContent(new WarningLabel(getClass(), label));
-	}
-
-	protected void showError(final Throwable cause) {
-		taskManager.setContent(new ErrorMessage(getClass(), cause));
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append("parent", parent)
-				.append("children", children).toString();
 	}
 }

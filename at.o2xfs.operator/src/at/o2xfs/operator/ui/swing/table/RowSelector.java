@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.ui.swing.table;
 
@@ -34,12 +34,13 @@ import javax.swing.event.ListSelectionListener;
 
 import at.o2xfs.operator.task.TaskCommand;
 import at.o2xfs.operator.ui.content.table.Table;
+import at.o2xfs.operator.ui.content.table.TableListener;
 import at.o2xfs.operator.ui.swing.i18n.Messages;
 import at.o2xfs.operator.ui.swing.menu.MenuAction;
 import at.o2xfs.operator.ui.swing.menu.MenuButton;
 import at.o2xfs.operator.ui.swing.menu.TaskMenuAction;
 
-public class RowSelector implements ListSelectionListener {
+public class RowSelector implements ListSelectionListener, TableListener {
 
 	private JTable table = null;
 
@@ -85,16 +86,35 @@ public class RowSelector implements ListSelectionListener {
 		this.upButton = upButton;
 		this.downButton = downButton;
 		this.confirmButton = confirmButton;
+		this.model.addTableListener(this);
 		initComponents();
+		updateCommands();
 	}
 
 	private void initComponents() {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getSelectionModel().addListSelectionListener(this);
-		table.setRowSelectionAllowed(true);
-		upButton.setMenuAction(new UpAction());
-		downButton.setMenuAction(new DownAction());
-		selectRow(0);
+	}
+
+	private void updateCommands() {
+		table.setRowSelectionAllowed(model.hasCommands());
+		if (model.hasCommands()) {
+			if (table.getSelectedRow() == -1) {
+				selectRow(0);
+			}
+			int selectedRow = table.getSelectedRow();
+			upButton.setMenuAction(new UpAction());
+			downButton.setMenuAction(new DownAction());
+			upButton.setEnabled(selectedRow >= 1);
+			downButton.setEnabled(selectedRow < table.getRowCount() - 1);
+			TaskCommand taskCommand = model.getCommand(selectedRow);
+			if (taskCommand != null) {
+				confirmButton.setMenuAction(new TaskMenuAction(model
+						.getCommand(selectedRow)));
+			} else {
+				confirmButton.removeMenuAction();
+			}
+		}
 	}
 
 	private void selectRow(final int index) {
@@ -102,19 +122,15 @@ public class RowSelector implements ListSelectionListener {
 	}
 
 	@Override
+	public void tableChanged() {
+		updateCommands();
+	}
+
+	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting()) {
 			return;
 		}
-		final int index = table.getSelectedRow();
-		upButton.setEnabled(index != 0);
-		downButton.setEnabled(index < table.getRowCount() - 1);
-		final TaskCommand command = model.getCommand(index);
-		if (command != null) {
-			confirmButton.setMenuAction(new TaskMenuAction(command));
-		} else {
-			confirmButton.removeMenuAction();
-		}
+		updateCommands();
 	}
-
 }

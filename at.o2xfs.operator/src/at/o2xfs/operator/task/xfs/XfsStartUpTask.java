@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,13 +23,13 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs;
 
 import java.util.Map;
 
-import at.o2xfs.operator.task.ExecuteTaskCommand;
+import at.o2xfs.operator.task.DefaultTaskCommand;
 import at.o2xfs.operator.task.Task;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
@@ -38,9 +38,10 @@ import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.XfsServiceManager;
+import at.o2xfs.xfs.service.XfsServiceManagerException;
 import at.o2xfs.xfs.service.idc.IDCService;
-import at.o2xfs.xfs.service.lookup.RegistryServiceLookup;
 import at.o2xfs.xfs.service.pin.PINService;
+import at.o2xfs.xfs.service.ptr.PTRService;
 import at.o2xfs.xfs.service.siu.SIUEnableEventsCommand;
 import at.o2xfs.xfs.service.siu.SIUService;
 
@@ -48,12 +49,26 @@ public class XfsStartUpTask extends Task {
 
 	private final int STATUS_COLUMN = 1;
 
-	public void execute() throws Exception {
-		final XfsServiceManager xfsServiceManager = XfsServiceManager
+	@Override
+	protected boolean setCloseCommandPerDefault() {
+		return false;
+	}
+
+	@Override
+	protected void doExecute() {
+		getCommands().clear();
+		final XfsServiceManager serviceManager = XfsServiceManager
 				.getInstance();
+		try {
+			serviceManager.initialize();
+		} catch (XfsServiceManagerException e) {
+			showException(e);
+			setDefaultTaskCommand();
+			return;
+		}
 		final Table table = new Table(getClass(), "Service", "Status");
-		taskManager.setContent(table);
-		final Map<String, XfsServiceClass> services = new RegistryServiceLookup()
+		getContent().setUIElement(table);
+		final Map<String, XfsServiceClass> services = new PropertiesServiceLookup()
 				.lookup();
 		int row = 0;
 		for (Map.Entry<String, XfsServiceClass> service : services.entrySet()) {
@@ -63,12 +78,12 @@ public class XfsStartUpTask extends Task {
 			if (serviceClass == null) {
 				continue;
 			}
-			table.addRow(new Object[] { logicalName,
-					new Label(getClass()).append("Initiate") });
+			table.addRow(logicalName, new Label(getClass().getSimpleName(),
+					"Initiate"));
 			Object status = null;
 			try {
-				final XfsService xfsService = xfsServiceManager
-						.openAndRegister(logicalName, serviceClass);
+				final XfsService xfsService = serviceManager.openAndRegister(
+						logicalName, serviceClass);
 				status = XfsError.WFS_SUCCESS;
 				if (XfsServiceClass.SIU.equals(service.getValue())) {
 					new SIUEnableEventsCommand((SIUService) xfsService)
@@ -79,12 +94,11 @@ public class XfsStartUpTask extends Task {
 			}
 			table.setValueAt(status, row++, STATUS_COLUMN);
 		}
-		if (hasChildNodes()) {
-			final Task task = getChildAt(0);
-			task.setParent(null);
-			taskManager
-					.setNextCommand(new ExecuteTaskCommand(task, taskManager));
-		}
+		setDefaultTaskCommand();
+	}
+
+	private void setDefaultTaskCommand() {
+		getCommands().setNextCommand(new DefaultTaskCommand(taskManager));
 	}
 
 	private Class<? extends XfsService> map(final XfsServiceClass serviceClass) {
@@ -94,8 +108,7 @@ public class XfsStartUpTask extends Task {
 			case PIN:
 				return PINService.class;
 			case PTR:
-				// return PTRService.class;
-				return null;
+				return PTRService.class;
 			case SIU:
 				return SIUService.class;
 				// case TTU:

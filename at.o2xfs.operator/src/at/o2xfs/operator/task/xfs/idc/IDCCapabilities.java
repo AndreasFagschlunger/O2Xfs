@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,57 +23,40 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.idc;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
-import at.o2xfs.operator.task.ExecuteTaskCommand;
-import at.o2xfs.operator.task.Task;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.WFSIDCCAPS;
-import at.o2xfs.xfs.service.cmd.idc.IDCCapabilitiesCommand;
 import at.o2xfs.xfs.service.idc.IDCService;
-import at.o2xfs.xfs.service.util.ExceptionUtil;
+import at.o2xfs.xfs.service.idc.cmd.IDCCapabilitiesCommand;
 
-public class IDCCapabilities extends Task {
+public class IDCCapabilities extends IDCTask {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(IDCCapabilities.class);
 
-	private IDCService idcService = null;
-
 	private Table table = null;
 
-	public IDCCapabilities(final IDCService idcService) {
-		if (idcService == null) {
-			ExceptionUtil.nullArgument("idcService");
-		}
-		this.idcService = idcService;
-	}
-
 	@Override
-	protected void execute() {
+	protected void doExecute(IDCService service) {
 		final IDCCapabilitiesCommand command = new IDCCapabilitiesCommand(
-				idcService);
+				service);
 		try {
-			final WFSIDCCAPS capabilities = command.execute();
+			final WFSIDCCAPS capabilities = command.call();
 			createTable(capabilities);
 		} catch (final XfsException e) {
 			final String method = "execute()";
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Error getting capabilities", e);
 			}
-			showError(e);
-		} catch (final InterruptedException e) {
-			Thread.currentThread().interrupt();
-			return;
+			showException(e);
 		}
-		taskManager.setNextCommand(new ExecuteTaskCommand(getParent(),
-				taskManager));
 	}
 
 	private void createTable(final WFSIDCCAPS caps) {
@@ -100,7 +83,7 @@ public class IDCCapabilities extends Task {
 		addRow("PowerSaveControl", caps.isPowerSaveControl());
 		addRow("ParkingStations", caps.getParkingStations());
 		addRow("AntiFraudModule", caps.isAntiFraudModule());
-		taskManager.setContent(table);
+		getContent().setUIElement(table);
 	}
 
 	private void addRow(final String label, final Object value) {

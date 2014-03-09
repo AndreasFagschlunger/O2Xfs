@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.ui.content.text;
 
@@ -31,16 +31,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.o2xfs.operator.task.Task;
+import at.o2xfs.operator.ui.UIElement;
 
-public class Label {
+public class Label implements UIElement {
 
-	private List<String> label = null;
+	private final List<String> label;
 
 	private Object[] arguments = null;
 
 	public Label(final Class<? extends Task> taskClass, final String... labels) {
-		label = new ArrayList<String>();
-		append(taskClass.getSimpleName());
+		this(taskClass.getSimpleName(), labels);
+	}
+
+	public Label(final String label, final String... labels) {
+		this.label = new ArrayList<String>();
+		append(label);
 		for (final String l : labels) {
 			append(l);
 		}

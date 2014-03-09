@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,12 +23,10 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.ptr;
 
-import at.o2xfs.operator.task.ExecuteTaskCommand;
-import at.o2xfs.operator.task.Task;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
@@ -36,27 +34,24 @@ import at.o2xfs.xfs.ptr.PTRPaper;
 import at.o2xfs.xfs.ptr.WFSPTRSTATUS;
 import at.o2xfs.xfs.service.ptr.PTRService;
 import at.o2xfs.xfs.service.ptr.PTRStatusCallable;
-import at.o2xfs.xfs.service.util.ExceptionUtil;
 
-public class PTRStatusTask extends Task {
-
-	private final PTRService ptrService;
+public class PTRStatusTask extends PTRServiceTask {
 
 	private Table table = null;
 
-	protected PTRStatusTask(final PTRService ptrService) {
-		if (ptrService == null) {
-			ExceptionUtil.nullArgument("ptrService");
-		}
-		this.ptrService = ptrService;
+	public PTRStatusTask() {
+		super();
+	}
+
+	public PTRStatusTask(PTRService service) {
+		super(service);
 	}
 
 	@Override
-	protected void execute() throws Exception {
+	protected void doExecute(PTRService service) {
 		table = new Table(getClass(), "Component", "Value");
 		try {
-			final WFSPTRSTATUS status = new PTRStatusCallable(ptrService)
-					.call();
+			final WFSPTRSTATUS status = new PTRStatusCallable(service).call();
 			addRow("Device", status.getDevice());
 			addRow("Media", status.getMedia());
 			addPaperSupplyStates(status.getPaper());
@@ -71,12 +66,10 @@ public class PTRStatusTask extends Task {
 			addRow("PowerSaveRecoveryTime", status.getPowerSaveRecoveryTime());
 			addRow("PaperType", status.getPaperType());
 			addRow("AntiFraudModule", status.getAntiFraudModule());
-			taskManager.setContent(table);
+			getContent().setUIElement(table);
 		} catch (final XfsException e) {
-			showError(e);
+			showException(e);
 		}
-		taskManager.setBackCommand(new ExecuteTaskCommand(getParent(),
-				taskManager));
 	}
 
 	private void addPaperSupplyStates(final PTRPaper[] paperStates) {
@@ -91,5 +84,4 @@ public class PTRStatusTask extends Task {
 	private void addRow(final String label, final Object value) {
 		table.addRow(new Label(getClass(), label), value);
 	}
-
 }

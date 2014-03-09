@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator;
 
@@ -35,9 +35,8 @@ import java.util.List;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.config.O2XfsOperatorConfig;
-import at.o2xfs.operator.task.Task;
+import at.o2xfs.operator.menu.MenuTask;
 import at.o2xfs.operator.task.TaskManager;
-import at.o2xfs.operator.task.menu.MainMenu;
 import at.o2xfs.operator.task.xfs.XfsStartUpTask;
 import at.o2xfs.operator.ui.UIFactory;
 import at.o2xfs.operator.ui.UserInterface;
@@ -46,7 +45,6 @@ import at.o2xfs.operator.ui.input.XfsInputDevice;
 import at.o2xfs.operator.util.ListUtil;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.XfsServiceManager;
-import at.o2xfs.xfs.service.XfsServiceManagerException;
 
 public class O2XfsOperator implements IController {
 
@@ -59,7 +57,7 @@ public class O2XfsOperator implements IController {
 
 	private O2XfsOperatorConfig config = null;
 
-	private TaskManager taskManager = null;
+	private final TaskManager taskManager;
 
 	private O2XfsOperator() {
 		userInterfaces = new ArrayList<UserInterface>();
@@ -69,25 +67,9 @@ public class O2XfsOperator implements IController {
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
-		try {
-			XfsServiceManager.getInstance().initialize();
-		} catch (final XfsServiceManagerException e) {
-			e.printStackTrace();
-			return;
-		}
-		createTaskManager();
+		taskManager = new TaskManager(new MenuTask());
 		createUIs();
-		if (userInterfaces.isEmpty()) {
-			shutdown();
-			return;
-		}
-		final Task task = new XfsStartUpTask();
-		task.appendChild(new MainMenu());
-		taskManager.execute(task);
-	}
-
-	private void createTaskManager() {
-		taskManager = new TaskManager();
+		taskManager.execute(new XfsStartUpTask());
 	}
 
 	private void createUIs() {
@@ -113,6 +95,11 @@ public class O2XfsOperator implements IController {
 		}
 	}
 
+	@Override
+	public TaskManager getTaskManager() {
+		return taskManager;
+	}
+
 	public static O2XfsOperator getInstance() {
 		if (instance == null) {
 			synchronized (O2XfsOperator.class) {
@@ -122,11 +109,6 @@ public class O2XfsOperator implements IController {
 			}
 		}
 		return instance;
-	}
-
-	@Override
-	public TaskManager getTaskManager() {
-		return taskManager;
 	}
 
 	public XfsInputDevice getXfsInputDevice(final XfsService xfsService) {

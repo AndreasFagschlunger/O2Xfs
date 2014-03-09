@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.ui.swing;
 
@@ -42,13 +42,14 @@ import at.o2xfs.operator.config.Config;
 import at.o2xfs.operator.task.xfs.pin.PINKeyUtil;
 import at.o2xfs.operator.ui.input.VirtualKey;
 import at.o2xfs.operator.ui.swing.menu.MenuButton;
+import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.pin.WFSPINFDK;
 import at.o2xfs.xfs.pin.WFSPINFUNCKEYDETAIL;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.XfsServiceListener;
 import at.o2xfs.xfs.service.XfsServiceManager;
-import at.o2xfs.xfs.service.cmd.pin.PINFunctionKeysCommand;
 import at.o2xfs.xfs.service.pin.PINService;
+import at.o2xfs.xfs.service.pin.cmd.PINFunctionKeysCommand;
 
 public class UILayout implements XfsServiceListener {
 
@@ -192,8 +193,8 @@ public class UILayout implements XfsServiceListener {
 		final String method = "initXfsLayout(PINService)";
 		WFSPINFUNCKEYDETAIL funcKeyDetail = null;
 		try {
-			funcKeyDetail = new PINFunctionKeysCommand(pinService).execute();
-		} catch (final Exception e) {
+			funcKeyDetail = new PINFunctionKeysCommand(pinService).call();
+		} catch (final XfsException e) {
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Error getting function key information", e);
 			}

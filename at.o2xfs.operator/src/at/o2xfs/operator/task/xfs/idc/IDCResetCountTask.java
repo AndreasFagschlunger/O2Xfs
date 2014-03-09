@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,67 +23,49 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.task.xfs.idc;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
-import at.o2xfs.operator.task.ExecuteTaskCommand;
-import at.o2xfs.operator.task.Task;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.IDCExecuteCommand;
-import at.o2xfs.xfs.idc.WFSIDCSTATUS;
+import at.o2xfs.xfs.idc.WfsIDCStatus;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
-import at.o2xfs.xfs.service.cmd.idc.IDCStatusCallable;
 import at.o2xfs.xfs.service.idc.IDCService;
-import at.o2xfs.xfs.service.util.ExceptionUtil;
+import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 
-public class IDCResetCountTask extends Task {
+public class IDCResetCountTask extends IDCTask {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(IDCResetCountTask.class);
 
-	private IDCService idcService = null;
-
-	public IDCResetCountTask(final IDCService idcService) {
-		if (idcService == null) {
-			ExceptionUtil.nullArgument("idcService");
-		}
-		this.idcService = idcService;
-	}
-
 	@Override
-	protected void execute() throws Exception {
-		final String method = "execute()";
-		final XfsCommand resetCountCommand = new XfsExecuteCommand(idcService,
-				IDCExecuteCommand.WFS_CMD_IDC_RESET_COUNT);
+	protected void doExecute(IDCService service) {
+		final String method = "doExecute(IDCService)";
+		final XfsCommand resetCountCommand = new XfsExecuteCommand(service,
+				IDCExecuteCommand.RESET_COUNT);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = resetCountCommand.call();
-			final WFSIDCSTATUS status = new IDCStatusCallable(idcService)
-					.call();
+			final WfsIDCStatus status = new IDCStatusCommand(service).call();
 			final Label label = new Label(getClass(), "CardsRetained");
 			label.setArguments(status.getCards());
-			taskManager.setContent(label);
+			getContent().setUIElement(label);
 		} catch (final XfsException e) {
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Error resetting count", e);
 			}
-			showError(e);
+			showException(e);
 		} finally {
 			if (wfsResult != null) {
 				XfsServiceManager.getInstance().free(wfsResult);
 			}
 		}
-		if (hasParent()) {
-			taskManager.setNextCommand(new ExecuteTaskCommand(getParent(),
-					taskManager));
-		}
 	}
-
 }

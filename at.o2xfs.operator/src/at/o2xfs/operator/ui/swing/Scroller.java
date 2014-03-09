@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
- *
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 package at.o2xfs.operator.ui.swing;
 
@@ -60,7 +60,7 @@ public class Scroller implements ComponentListener, AdjustmentListener {
 	}
 
 	private void scrollUp() {
-		final int unitIncrement = getUnitIncrement();
+		final int unitIncrement = scrollBar.getUnitIncrement();
 		final int value = scrollBar.getValue();
 		int newValue = value - unitIncrement;
 		if (newValue <= 0) {
@@ -70,7 +70,7 @@ public class Scroller implements ComponentListener, AdjustmentListener {
 	}
 
 	private void scrollDown() {
-		final int unitIncrement = getUnitIncrement();
+		final int unitIncrement = scrollBar.getUnitIncrement();
 		final int value = scrollBar.getValue();
 		final int maxValue = scrollBar.getMaximum()
 				- scrollBar.getVisibleAmount();
@@ -81,11 +81,6 @@ public class Scroller implements ComponentListener, AdjustmentListener {
 		scrollBar.setValue(newValue);
 	}
 
-	private int getUnitIncrement() {
-		final int max = scrollBar.getMaximum();
-		return (max / 100) * 10;
-	}
-
 	@Override
 	public void adjustmentValueChanged(final AdjustmentEvent e) {
 		if (e.getValueIsAdjusting()) {
@@ -93,6 +88,7 @@ public class Scroller implements ComponentListener, AdjustmentListener {
 		} else if (upButton == null || downButton == null) {
 			return;
 		}
+		System.err.println(e);
 		enableOrDisableButtons();
 	}
 
@@ -106,7 +102,9 @@ public class Scroller implements ComponentListener, AdjustmentListener {
 
 	@Override
 	public void componentResized(final ComponentEvent e) {
-		return;
+		final int max = scrollBar.getMaximum();
+		final int unitIncrement = (max / 100) * 3;
+		scrollBar.setUnitIncrement(unitIncrement);
 	}
 
 	@Override
