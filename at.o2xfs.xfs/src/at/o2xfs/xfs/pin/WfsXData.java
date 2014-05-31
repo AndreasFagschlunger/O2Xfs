@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.pin;
 
@@ -88,7 +88,7 @@ public class WfsXData extends Struct {
 	public byte[] getData() {
 		byte[] result = null;
 		if (!Pointer.NULL.equals(data)) {
-			data.buffer(getLength()).get();
+			result = data.buffer(getLength()).get();
 		}
 		return result;
 	}
