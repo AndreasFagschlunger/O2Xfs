@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv.pinpad;
 
@@ -51,5 +51,5 @@ public interface PINPad {
 
 	public byte[] getEncipheredPIN(byte[] challenge) throws PINPadException;
 
-	public byte[] getOnlinePIN() throws PINPadException;
+	public void getOnlinePIN() throws PINPadException;
 }
