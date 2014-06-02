@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv.tlv;
 
@@ -54,9 +54,9 @@ public final class TLV {
 			throw new TLVParseException("Unexpected end of TLV: "
 					+ Hex.encode(tlv) + ", Offset: " + offset);
 		}
-		this.tlv = new byte[tlv.length - offset];
-		System.arraycopy(tlv, offset, this.tlv, 0, this.tlv.length);
 		parse(tlv, offset);
+		this.tlv = Bytes.mid(tlv, offset, tag.size() + lengthSize
+				+ value.length);
 	}
 
 	private void parse(byte[] tlv, int offset) {
