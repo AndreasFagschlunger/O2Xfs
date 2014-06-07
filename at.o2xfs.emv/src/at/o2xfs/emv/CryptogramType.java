@@ -23,10 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv;
-
 
 enum CryptogramType {
 
@@ -36,14 +35,14 @@ enum CryptogramType {
 	AAC(0),
 
 	/**
-	 * Authorisation Request Cryptogram
-	 */
-	ARQC(1 << 7),
-
-	/**
 	 * Transaction Certificate
 	 */
-	TC(1 << 8);
+	TC(64),
+
+	/**
+	 * Authorisation Request Cryptogram
+	 */
+	ARQC(128);
 
 	private final int value;
 
@@ -55,8 +54,7 @@ enum CryptogramType {
 		return value;
 	}
 
-	public static CryptogramType valueOf(int type)
-			throws IllegalArgumentException {
+	public static CryptogramType valueOf(int type) throws IllegalArgumentException {
 		for (CryptogramType t : values()) {
 			if ((type & 0xC0) == t.value) {
 				return t;
