@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.ctapi;
 
@@ -45,7 +45,7 @@ public final class CTAPI {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CTAPI.class);
 
-	private String fileName = "CT32.dll";
+	private static final String DEFAULT_LIBRARY = "CT32.dll";
 
 	private Pointer moduleHandle = null;
 
@@ -56,6 +56,10 @@ public final class CTAPI {
 	private Pointer closeFunctionAddress = null;
 
 	public CTAPI() {
+		this(DEFAULT_LIBRARY);
+	}
+
+	public CTAPI(String fileName) {
 		loadLibrary(fileName);
 		addShutdownHook();
 	}
@@ -132,6 +136,7 @@ public final class CTAPI {
 	private void addShutdownHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 
+			@Override
 			public void run() {
 				if (moduleHandle != null) {
 					try {
