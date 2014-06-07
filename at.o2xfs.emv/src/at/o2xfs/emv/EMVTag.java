@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv;
 
@@ -40,6 +40,11 @@ public enum EMVTag {
 	 * Application Label
 	 */
 	APPLICATION_LABEL(0x50, Format.ALPHANUMERIC_SPECIAL),
+
+	/**
+	 * Track 2 Equivalent Data
+	 */
+	TRACK_2_EQUIVALENT_DATA(0x57, Format.BINARY),
 
 	/**
 	 * Application Primary Account Number (PAN)
