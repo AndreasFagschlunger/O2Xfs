@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.pin;
 
@@ -34,52 +34,52 @@ public enum PINAlgorithm implements XfsConstant {
 	/**
 	 * Electronic Code Book
 	 */
-	WFS_PIN_CRYPTDESECB(0x0001L),
+	DESECB(0x0001L),
 
 	/**
 	 * Cipher Block Chaining
 	 */
-	WFS_PIN_CRYPTDESCBC(0x0002L),
+	DESCBC(0x0002L),
 
 	/**
 	 * Cipher Feed Back
 	 */
-	WFS_PIN_CRYPTDESCFB(0x0004L),
+	DESCFB(0x0004L),
 
 	/**
 	 * RSA Encryption
 	 */
-	WFS_PIN_CRYPTRSA(0x0008L),
+	RSA(0x0008L),
 
 	/**
 	 * ECMA Encryption
 	 */
-	WFS_PIN_CRYPTECMA(0x0010L),
+	ECMA(0x0010L),
 
 	/**
 	 * MAC calculation using CBC
 	 */
-	WFS_PIN_CRYPTDESMAC(0x0020L),
+	DESMAC(0x0020L),
 
 	/**
 	 * Triple DES with Electronic Code Book
 	 */
-	WFS_PIN_CRYPTTRIDESECB(0x0040L),
+	TRIDESECB(0x0040L),
 
 	/**
 	 * Triple DES with Cipher Block Chaining
 	 */
-	WFS_PIN_CRYPTTRIDESCBC(0x0080L),
+	TRIDESCBC(0x0080L),
 
 	/**
 	 * Triple DES with Cipher Feed Back
 	 */
-	WFS_PIN_CRYPTTRIDESCFB(0x0100L),
+	TRIDESCFB(0x0100L),
 
 	/**
 	 * Triple DES MAC calculation using CBC
 	 */
-	WFS_PIN_CRYPTTRIDESMAC(0x0200L);
+	TRIDESMAC(0x0200L);
 
 	private final long value;
 
