@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv;
 
@@ -39,15 +39,13 @@ import at.o2xfs.log.LoggerFactory;
 
 class InitiateApplicationProcessing {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(InitiateApplicationProcessing.class);
+	private static final Logger LOG = LoggerFactory.getLogger(InitiateApplicationProcessing.class);
 
 	private final EMVTransaction transaction;
 
 	private final Candidate candidate;
 
-	public InitiateApplicationProcessing(EMVTransaction transaction,
-			Candidate candidate) {
+	public InitiateApplicationProcessing(EMVTransaction transaction, Candidate candidate) {
 		this.transaction = transaction;
 		if (candidate == null) {
 			throw new NullPointerException("Candidate must not be null");
@@ -57,8 +55,7 @@ class InitiateApplicationProcessing {
 
 	public boolean perform() throws IOException, TerminateSessionException {
 		if (selectCandidate(candidate)) {
-			ProcessingOptions processingOptions = new ProcessingOptions(
-					transaction);
+			ProcessingOptions processingOptions = new ProcessingOptions(transaction);
 			return processingOptions.execute(candidate);
 		}
 		return false;
@@ -72,22 +69,15 @@ class InitiateApplicationProcessing {
 			new ProcessingState(response.getSW()).assertSuccessful();
 			ADF file = new ADF(TLV.parse(response.getData()));
 			if (Arrays.equals(candidate.getDFName(), file.getDFName())) {
+				transaction.putData(EMVTag.DEDICATED_FILE_NAME, file.getDFName());
 				return true;
 			}
 			if (LOG.isErrorEnabled()) {
-				LOG.error(
-						method,
-						"DF Name returned by ICC ("
-								+ Hex.encode(file.getDFName())
-								+ " does not match AID ("
-								+ Hex.encode(candidate.getDFName()) + ")");
+				LOG.error(method, "DF Name returned by ICC (" + Hex.encode(file.getDFName()) + " does not match AID (" + Hex.encode(candidate.getDFName()) + ")");
 			}
 		} catch (ProcessingStateException e) {
 			if (LOG.isErrorEnabled()) {
-				LOG.error(
-						method,
-						"Error selecting Candidate: "
-								+ Hex.encode(candidate.getDFName()), e);
+				LOG.error(method, "Error selecting Candidate: " + Hex.encode(candidate.getDFName()), e);
 			}
 		} catch (TLVConstraintViolationException e) {
 			if (LOG.isErrorEnabled()) {
