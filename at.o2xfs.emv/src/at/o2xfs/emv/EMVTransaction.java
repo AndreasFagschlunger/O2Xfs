@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv;
 
@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import at.o2xfs.common.ByteArrayBuilder;
 import at.o2xfs.common.Bytes;
 import at.o2xfs.common.Hex;
 import at.o2xfs.emv.cvm.CardholderVerification;
@@ -43,14 +44,12 @@ import at.o2xfs.emv.icc.ICReader;
 import at.o2xfs.emv.pinpad.PINPad;
 import at.o2xfs.emv.tlv.TLV;
 import at.o2xfs.emv.tlv.Tag;
-import at.o2xfs.emv.util.MapUtil;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 
 public final class EMVTransaction {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(EMVTransaction.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EMVTransaction.class);
 
 	private static final String DATE_PATTERN = "yyMMdd";
 
@@ -70,9 +69,9 @@ public final class EMVTransaction {
 
 	private Candidate candidate = null;
 
-	public EMVTransaction(Terminal terminal,
-			EMVTransactionCallback transactionCallback, ICReader icReader,
-			PINPad pinPad) {
+	private byte[] issuerScriptResults = null;
+
+	public EMVTransaction(Terminal terminal, EMVTransactionCallback transactionCallback, ICReader icReader, PINPad pinPad) {
 		this.terminal = terminal;
 		this.transactionCallback = transactionCallback;
 		this.icReader = icReader;
@@ -81,18 +80,14 @@ public final class EMVTransaction {
 		dataAuthenticationRecords = new ArrayList<DataAuthenticationRecord>();
 	}
 
-	public List<Candidate> buildCandidateList()
-			throws TerminateSessionException, IOException {
+	public List<Candidate> buildCandidateList() throws TerminateSessionException, IOException {
 		return new CandidateList(terminal, icReader).build();
 	}
 
-	public boolean processTransaction(Candidate candidate,
-			TransactionData transactionData) throws TerminateSessionException,
-			IOException {
+	public boolean processTransaction(Candidate candidate, TransactionData transactionData) throws TerminateSessionException, IOException {
 		this.candidate = candidate;
 		resetTransaction(transactionData);
-		InitiateApplicationProcessing initiateApplicationProcessing = new InitiateApplicationProcessing(
-				this, candidate);
+		InitiateApplicationProcessing initiateApplicationProcessing = new InitiateApplicationProcessing(this, candidate);
 		if (!initiateApplicationProcessing.perform()) {
 			return false;
 		}
@@ -102,10 +97,8 @@ public final class EMVTransaction {
 		new ProcessingRestrictions(this).perform();
 		new CardholderVerification(this).perform();
 		new TerminalRiskManagement(this).perform();
-		CryptogramType cryptogramType = new TerminalActionAnalysis(this)
-				.perform(false);
-		CryptogramInformationData cid = new CardActionAnalysis(this)
-				.firstGenerateAC(cryptogramType);
+		CryptogramType cryptogramType = new TerminalActionAnalysis(this).perform(false);
+		CryptogramInformationData cid = new CardActionAnalysis(this).firstGenerateAC(cryptogramType);
 		switch (cid.getCryptogramType()) {
 			case AAC:
 				transactionCallback.onTransactionDeclined(cid);
@@ -120,48 +113,37 @@ public final class EMVTransaction {
 		return true;
 	}
 
-	private void performOnlineProcessing() throws TerminateSessionException,
-			IOException {
+	private void performOnlineProcessing() throws TerminateSessionException, IOException {
 		final String method = "performOnlineProcessing()";
 		CryptogramType cryptogramType = null;
-		List<byte[]> issuerScriptResults = new ArrayList<byte[]>();
+		ByteArrayBuilder issuerScriptResultsBuilder = new ByteArrayBuilder();
 		TLV issuerScriptTemplate = null;
 		try {
 			resetAuthorisationResponseCode();
-			AuthorisationResponse authorisationResponse = transactionCallback
-					.doSendAuthorisationRequest(MapUtil.copy(dataObjects));
-
+			AuthorisationResponse authorisationResponse = transactionCallback.doSendAuthorisationRequest();
 			if (authorisationResponse.getICCSystemRelatedData().length != 0) {
-				Template template = new Template(
-						TLV.parse(authorisationResponse
-								.getICCSystemRelatedData()));
+				Template template = new Template(TLV.parse(authorisationResponse.getICCSystemRelatedData()));
 				if (template.containsTag(EMVTag.ISSUER_AUTHENTICATION_DATA)) {
-					new IssuerAuthentication(this).perform(template
-							.getValue(EMVTag.ISSUER_AUTHENTICATION_DATA));
+					putData(EMVTag.ISSUER_AUTHENTICATION_DATA, template.getValue(EMVTag.ISSUER_AUTHENTICATION_DATA));
+					new IssuerAuthentication(this).perform(template.getValue(EMVTag.ISSUER_AUTHENTICATION_DATA));
 				}
 				if (template.containsTag(EMVTag.ISSUER_SCRIPT_TEMPLATE_1)) {
-					issuerScriptResults.add(new IssuerToCardScriptProcessing(
-							icReader, getTVR(), getTSI()).process(template
-							.findTag(EMVTag.ISSUER_SCRIPT_TEMPLATE_1)));
+					issuerScriptResultsBuilder.append(new IssuerToCardScriptProcessing(icReader, getTVR(), getTSI()).process(template.findTag(EMVTag.ISSUER_SCRIPT_TEMPLATE_1)));
 				}
-				issuerScriptTemplate = template
-						.findTag(EMVTag.ISSUER_SCRIPT_TEMPLATE_2);
+				issuerScriptTemplate = template.findTag(EMVTag.ISSUER_SCRIPT_TEMPLATE_2);
 			}
-			cryptogramType = authorisationResponse.isOnlineApproved() ? CryptogramType.TC
-					: CryptogramType.AAC;
+			cryptogramType = authorisationResponse.isOnlineApproved() ? CryptogramType.TC : CryptogramType.AAC;
 		} catch (UnableToGoOnlineException e) {
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, "Unable to Go Online", e);
 			}
 			cryptogramType = new TerminalActionAnalysis(this).perform(true);
 		}
-		cryptogramType = CryptogramType.TC;
-		CryptogramInformationData cid = new CardActionAnalysis(this)
-				.secondGenerateAC(cryptogramType);
+		CryptogramInformationData cid = new CardActionAnalysis(this).secondGenerateAC(cryptogramType);
 		if (issuerScriptTemplate != null) {
-			issuerScriptResults.add(new IssuerToCardScriptProcessing(icReader,
-					getTVR(), getTSI()).process(issuerScriptTemplate));
+			issuerScriptResultsBuilder.append(new IssuerToCardScriptProcessing(icReader, getTVR(), getTSI()).process(issuerScriptTemplate));
 		}
+		issuerScriptResults = issuerScriptResultsBuilder.build();
 		switch (cid.getCryptogramType()) {
 			case AAC:
 				transactionCallback.onTransactionDeclined(cid);
@@ -180,8 +162,7 @@ public final class EMVTransaction {
 			}
 			return;
 		}
-		byte[] arpc = dataObjects.remove(EMVTag.AUTHORISATION_RESPONSE_CODE
-				.getTag());
+		byte[] arpc = dataObjects.remove(EMVTag.AUTHORISATION_RESPONSE_CODE.getTag());
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "Removed ARPC: " + new String(arpc));
 		}
@@ -190,15 +171,12 @@ public final class EMVTransaction {
 	private void resetTransaction(TransactionData transactionData) {
 		dataObjects.clear();
 		dataAuthenticationRecords.clear();
+		issuerScriptResults = null;
 		putData(EMVTag.TERMINAL_TYPE, terminal.getTerminalType().getBytes());
-		putData(EMVTag.TERMINAL_CAPABILITIES, terminal
-				.getTerminalCapabilities().getBytes());
-		putData(EMVTag.ADDITIONAL_TERMINAL_CAPABILITIES, terminal
-				.getAdditionalCapabilities().getBytes());
-		putData(EMVTag.TERMINAL_COUNTRY_CODE, terminal.getCountryCode()
-				.getCode());
-		putData(EMVTag.MERCHANT_IDENTIFIER, terminal.getMerchantIdentifier()
-				.getBytes());
+		putData(EMVTag.TERMINAL_CAPABILITIES, terminal.getTerminalCapabilities().getBytes());
+		putData(EMVTag.ADDITIONAL_TERMINAL_CAPABILITIES, terminal.getAdditionalCapabilities().getBytes());
+		putData(EMVTag.TERMINAL_COUNTRY_CODE, terminal.getCountryCode().getCode());
+		putData(EMVTag.MERCHANT_IDENTIFIER, terminal.getMerchantIdentifier().getBytes());
 		putData(EMVTag.TERMINAL_VERIFICATION_RESULTS, new byte[TVR.LENGTH]);
 		putData(EMVTag.APPLICATION_IDENTIFIER_TERMINAL, candidate.getDFName());
 		putData(EMVTag.TERMINAL_FLOOR_LIMIT, getApplication().getFloorLimit());
@@ -207,23 +185,15 @@ public final class EMVTransaction {
 		putData(EMVTag.TRANSACTION_DATE, newTransactionDate());
 		putData(EMVTag.TRANSACTION_STATUS_INFORMATION, new byte[TSI.TSI_LENGTH]);
 		putData(EMVTag.TRANSACTION_TIME, newTransactionTime());
-		putData(EMVTag.TERMINAL_IDENTIFICATION, terminal
-				.getTerminalIdentification().getTerminalIdentification());
-		putData(EMVTag.TRANSACTION_TYPE, transactionData.getTransactionType()
-				.getTransactionType());
-		putData(EMVTag.TRANSACTION_CURRENCY_CODE, transactionData.getCurrency()
-				.getCode());
-		putData(EMVTag.TRANSACTION_CURRENCY_EXPONENT, transactionData
-				.getCurrency().getExponent());
-		putData(EMVTag.AMOUNT_AUTHORISED_BINARY, transactionData
-				.getAmountAuthorised().toBinary());
-		putData(EMVTag.AMOUNT_AUTHORISED_NUMERIC, transactionData
-				.getAmountAuthorised().toNumeric());
+		putData(EMVTag.TERMINAL_IDENTIFICATION, terminal.getTerminalIdentification().getTerminalIdentification());
+		putData(EMVTag.TRANSACTION_TYPE, transactionData.getTransactionType().getTransactionType());
+		putData(EMVTag.TRANSACTION_CURRENCY_CODE, transactionData.getCurrency().getCode());
+		putData(EMVTag.TRANSACTION_CURRENCY_EXPONENT, transactionData.getCurrency().getExponent());
+		putData(EMVTag.AMOUNT_AUTHORISED_BINARY, transactionData.getAmountAuthorised().toBinary());
+		putData(EMVTag.AMOUNT_AUTHORISED_NUMERIC, transactionData.getAmountAuthorised().toNumeric());
 		if (transactionData.getAmountOther() != null) {
-			putData(EMVTag.AMOUNT_OTHER_BINARY, transactionData
-					.getAmountOther().toBinary());
-			putData(EMVTag.AMOUNT_OTHER_NUMERIC, transactionData
-					.getAmountOther().toNumeric());
+			putData(EMVTag.AMOUNT_OTHER_BINARY, transactionData.getAmountOther().toBinary());
+			putData(EMVTag.AMOUNT_OTHER_NUMERIC, transactionData.getAmountOther().toNumeric());
 		}
 	}
 
@@ -254,32 +224,24 @@ public final class EMVTransaction {
 				return application;
 			}
 		}
-		throw new RuntimeException("Unsupported Application: "
-				+ Hex.encode(aid));
+		throw new RuntimeException("Unsupported Application: " + Hex.encode(aid));
 	}
 
-	private void readApplicationData() throws TerminateSessionException,
-			IOException {
-		ApplicationData applicationData = new ReadApplicationData(this)
-				.perform();
-		for (Map.Entry<Tag, byte[]> data : applicationData.getDataObjects()
-				.entrySet()) {
+	private void readApplicationData() throws TerminateSessionException, IOException {
+		ApplicationData applicationData = new ReadApplicationData(this).perform();
+		for (Map.Entry<Tag, byte[]> data : applicationData.getDataObjects().entrySet()) {
 			dataObjects.put(data.getKey(), data.getValue());
 		}
-		dataAuthenticationRecords.addAll(applicationData
-				.getDataAuthenticationRecords());
+		dataAuthenticationRecords.addAll(applicationData.getDataAuthenticationRecords());
 	}
 
 	private void checkMandatoryDataObjects() throws TerminateSessionException {
 		try {
 			MandatoryData mandatoryData = new MandatoryData(this);
 			mandatoryData.assertPresent(EMVTag.APPLICATION_EXPIRATION_DATE);
-			mandatoryData
-					.assertPresent(EMVTag.APPLICATION_PRIMARY_ACCOUNT_NUMBER);
-			mandatoryData
-					.assertPresent(EMVTag.CARD_RISK_MANAGEMENT_DATA_OBJECT_LIST_1);
-			mandatoryData
-					.assertPresent(EMVTag.CARD_RISK_MANAGEMENT_DATA_OBJECT_LIST_2);
+			mandatoryData.assertPresent(EMVTag.APPLICATION_PRIMARY_ACCOUNT_NUMBER);
+			mandatoryData.assertPresent(EMVTag.CARD_RISK_MANAGEMENT_DATA_OBJECT_LIST_1);
+			mandatoryData.assertPresent(EMVTag.CARD_RISK_MANAGEMENT_DATA_OBJECT_LIST_2);
 		} catch (MissingMandatoryDataException e) {
 			throw new TerminateSessionException(e);
 		}
@@ -290,8 +252,7 @@ public final class EMVTransaction {
 	}
 
 	public TVR getTVR() {
-		return new TVR(dataObjects.get(EMVTag.TERMINAL_VERIFICATION_RESULTS
-				.getTag()));
+		return new TVR(dataObjects.get(EMVTag.TERMINAL_VERIFICATION_RESULTS.getTag()));
 	}
 
 	/**
@@ -300,8 +261,7 @@ public final class EMVTransaction {
 	 * @return the Transaction Status Information
 	 */
 	public TSI getTSI() {
-		return new TSI(dataObjects.get(EMVTag.TRANSACTION_STATUS_INFORMATION
-				.getTag()));
+		return new TSI(dataObjects.get(EMVTag.TRANSACTION_STATUS_INFORMATION.getTag()));
 	}
 
 	public ICReader getICReader() {
@@ -313,8 +273,7 @@ public final class EMVTransaction {
 	}
 
 	public List<DataAuthenticationRecord> getDataAuthenticationRecords() {
-		return new ArrayList<DataAuthenticationRecord>(
-				dataAuthenticationRecords);
+		return new ArrayList<DataAuthenticationRecord>(dataAuthenticationRecords);
 	}
 
 	public Terminal getTerminal() {
@@ -323,6 +282,10 @@ public final class EMVTransaction {
 
 	public AIP getAIP() {
 		return new AIP(getMandatoryData(EMVTag.APPLICATION_INTERCHANGE_PROFILE));
+	}
+
+	public byte[] getIssuerScriptResults() {
+		return issuerScriptResults;
 	}
 
 	public void putData(EMVTag emvTag, byte[] value) {
