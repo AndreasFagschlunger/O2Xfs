@@ -23,18 +23,14 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv;
 
-import java.util.Map;
-
-import at.o2xfs.emv.tlv.Tag;
 
 public interface EMVTransactionCallback {
 
-	public AuthorisationResponse doSendAuthorisationRequest(
-			Map<Tag, byte[]> dataObjects) throws UnableToGoOnlineException;
+	public AuthorisationResponse doSendAuthorisationRequest() throws UnableToGoOnlineException;
 
 	public void onTransactionDeclined(CryptogramInformationData cid);
 
