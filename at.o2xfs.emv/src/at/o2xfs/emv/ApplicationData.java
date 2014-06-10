@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv;
 
@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import at.o2xfs.common.Hex;
 import at.o2xfs.emv.tlv.TLV;
 import at.o2xfs.emv.tlv.Tag;
 
@@ -59,14 +58,11 @@ final class ApplicationData {
 					throw new DuplicatePrimitiveDataException(tlv.getTag());
 				}
 				dataObjects.put(tlv.getTag(), tlv.getValue());
-				System.out.println(tlv.getTag() + " "
-						+ Hex.encode(tlv.getValue()));
 			}
 		}
 
 		public void addAuthenticationData(int sfi, int recordNumber, TLV tlv) {
-			dataAuthenticationRecords.add(new DataAuthenticationRecord(sfi,
-					recordNumber, tlv));
+			dataAuthenticationRecords.add(new DataAuthenticationRecord(sfi, recordNumber, tlv));
 		}
 
 		public ApplicationData build() {
@@ -80,13 +76,11 @@ final class ApplicationData {
 
 	private ApplicationData(ApplicationDataBuilder builder) {
 		dataObjects = new HashMap<Tag, byte[]>(builder.dataObjects);
-		dataAuthenticationRecords = new ArrayList<DataAuthenticationRecord>(
-				builder.dataAuthenticationRecords);
+		dataAuthenticationRecords = new ArrayList<DataAuthenticationRecord>(builder.dataAuthenticationRecords);
 	}
 
 	List<DataAuthenticationRecord> getDataAuthenticationRecords() {
-		return new ArrayList<DataAuthenticationRecord>(
-				dataAuthenticationRecords);
+		return new ArrayList<DataAuthenticationRecord>(dataAuthenticationRecords);
 	}
 
 	Map<Tag, byte[]> getDataObjects() {
