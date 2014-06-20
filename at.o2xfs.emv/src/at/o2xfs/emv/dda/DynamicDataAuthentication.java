@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv.dda;
 
@@ -80,29 +80,28 @@ public class DynamicDataAuthentication extends OfflineDynamicDataAuthentication 
 
 	private void processDDOL() throws DDAFailedException {
 		try {
-			byte[] ddol = transaction
-					.getData(EMVTag.DYNAMIC_DATA_AUTHENTICATION_DATA_OBJECT_LIST);
+			byte[] ddol = transaction.getData(EMVTag.DYNAMIC_DATA_AUTHENTICATION_DATA_OBJECT_LIST);
 			DOL objectList = new DOL(ddol);
-			objectList.put(EMVTag.UNPREDICTABLE_NUMBER,
-					transaction.getMandatoryData(EMVTag.UNPREDICTABLE_NUMBER));
+			objectList.put(EMVTag.UNPREDICTABLE_NUMBER, transaction.getMandatoryData(EMVTag.UNPREDICTABLE_NUMBER));
 			authenticationData = objectList.construct();
 		} catch (NoSuchEntryException e) {
-			throw new DDAFailedException(
-					"DDOL does not include the Unpredictable Number");
+			throw new DDAFailedException("DDOL does not include the Unpredictable Number");
 		} catch (DataNotFoundException e) {
 			// TODO: default DDOL
 			throw new DDAFailedException("ICC does not contain a DDOL");
 		}
 	}
 
-	private byte[] internalAuthenticate() throws DDAFailedException,
-			TerminateSessionException {
+	private byte[] internalAuthenticate() throws DDAFailedException, TerminateSessionException {
 		try {
 			CAPDU command = new InternalAuthenticate(authenticationData);
 			RAPDU response = transaction.getICReader().transmit(command);
 			new ProcessingState(response.getSW()).assertSuccessful();
-			return new Template(TLV.parse(response.getData()))
-					.getMandatoryValue(EMVTag.SIGNED_DYNAMIC_APPLICATION_DATA);
+			TLV tlv = TLV.parse(response.getData());
+			if (EMVTag.RESPONSE_MESSAGE_TEMPLATE_FORMAT_1.getTag().equals(tlv.getTag())) {
+				return tlv.getValue();
+			}
+			return new Template(TLV.parse(response.getData())).getMandatoryValue(EMVTag.SIGNED_DYNAMIC_APPLICATION_DATA);
 		} catch (IOException e) {
 			throw new DDAFailedException(e);
 		} catch (ProcessingStateException e) {
@@ -112,17 +111,14 @@ public class DynamicDataAuthentication extends OfflineDynamicDataAuthentication 
 		}
 	}
 
-	private void checkHashResult()
-			throws OfflineDynamicDataAuthenticationFailedException {
+	private void checkHashResult() throws OfflineDynamicDataAuthenticationFailedException {
 		byte[] hashInput = createHashInput();
 		try {
 			CryptoFactory cryptoFactory = CryptoFactory.getInstance();
 			Crypto crypto = cryptoFactory.newCrypto();
-			byte[] hashResult = crypto.digest(
-					recoveredData.get(HASH_ALGORITHM_INDICATOR), hashInput);
+			byte[] hashResult = crypto.digest(recoveredData.get(HASH_ALGORITHM_INDICATOR), hashInput);
 			if (!Arrays.equals(hashResult, recoveredData.get(HASH_RESULT))) {
-				throw new OfflineDynamicDataAuthenticationFailedException(
-						"Hash mismatch");
+				throw new OfflineDynamicDataAuthenticationFailedException("Hash mismatch");
 			}
 		} catch (CryptoException e) {
 			throw new OfflineDynamicDataAuthenticationFailedException(e);
@@ -130,8 +126,7 @@ public class DynamicDataAuthentication extends OfflineDynamicDataAuthentication 
 	}
 
 	private byte[] createHashInput() {
-		byte[] dataElements = recoveredData.concatenate(SIGNED_DATA_FORMAT,
-				PAD_PATTERN);
+		byte[] dataElements = recoveredData.concatenate(SIGNED_DATA_FORMAT, PAD_PATTERN);
 		return Bytes.concat(dataElements, authenticationData);
 	}
 
