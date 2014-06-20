@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv;
 
@@ -62,9 +62,7 @@ public final class IssuerPublicKey {
 
 	private PublicKey issuerPublicKey = null;
 
-	public IssuerPublicKey(
-			IssuerPublicKeyCertificate issuerPublicKeyCertificate,
-			CAPublicKey caPublicKey) {
+	public IssuerPublicKey(IssuerPublicKeyCertificate issuerPublicKeyCertificate, CAPublicKey caPublicKey) {
 		this.issuerPublicKeyCertificate = issuerPublicKeyCertificate;
 		this.caPublicKey = caPublicKey;
 	}
@@ -89,17 +87,13 @@ public final class IssuerPublicKey {
 		builder.addField(RecoveredIssuerData.CERTIFICATE_EXPIRATION_DATE, 2);
 		builder.addField(RecoveredIssuerData.CERTIFICATE_SERIAL_NUMBER, 3);
 		builder.addField(RecoveredIssuerData.HASH_ALGORITHM_INDICATOR, 1);
-		builder.addField(
-				RecoveredIssuerData.ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR, 1);
+		builder.addField(RecoveredIssuerData.ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR, 1);
 		builder.addField(RecoveredIssuerData.ISSUER_PUBLIC_KEY_LENGTH, 1);
-		builder.addField(RecoveredIssuerData.ISSUER_PUBLIC_KEY_EXPONENT_LENGTH,
-				1);
-		builder.addField(RecoveredIssuerData.ISSUER_PUBLIC_KEY,
-				caPublicKey.getModulus().length - 36);
+		builder.addField(RecoveredIssuerData.ISSUER_PUBLIC_KEY_EXPONENT_LENGTH, 1);
+		builder.addField(RecoveredIssuerData.ISSUER_PUBLIC_KEY, caPublicKey.getModulus().length - 36);
 		builder.addField(RecoveredIssuerData.HASH_RESULT, 20);
 		builder.addField(RecoveredIssuerData.DATA_TRAILER, 1);
-		issuerData = new RecoveredData<RecoveredIssuerData>(builder,
-				recoveredData);
+		issuerData = new RecoveredData<RecoveredIssuerData>(builder, recoveredData);
 	}
 
 	private void checkRecoveredData() throws IssuerPublicKeyException {
@@ -113,23 +107,24 @@ public final class IssuerPublicKey {
 		checkExpirationDate();
 		// TODO: Certification Revocation List
 		checkIssuerPublicKeyAlgorithmIndicator();
-		byte[] modulus = Bytes.concat(issuerData.get(ISSUER_PUBLIC_KEY),
-				remainder);
-		issuerPublicKey = new PublicKey(
-				issuerData.get(ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR), modulus,
-				exponent);
+		int nCA = caPublicKey.getModulus().length;
+		int nI = Bytes.toInt(issuerData.get(ISSUER_PUBLIC_KEY_LENGTH)[0]);
+		byte[] modulus;
+		if (nI <= nCA - 36) {
+			modulus = Bytes.left(issuerData.get(ISSUER_PUBLIC_KEY), nI);
+		} else {
+			modulus = Bytes.concat(issuerData.get(ISSUER_PUBLIC_KEY), remainder);
+		}
+		issuerPublicKey = new PublicKey(issuerData.get(ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR), modulus, exponent);
 	}
 
-	private void checkHashResult(byte[] remainder, byte[] exponent)
-			throws IssuerPublicKeyException {
-		byte[] hashInput = issuerData.concatenate(CERTIFICATE_FORMAT,
-				ISSUER_PUBLIC_KEY);
+	private void checkHashResult(byte[] remainder, byte[] exponent) throws IssuerPublicKeyException {
+		byte[] hashInput = issuerData.concatenate(CERTIFICATE_FORMAT, ISSUER_PUBLIC_KEY);
 		hashInput = Bytes.concat(hashInput, remainder, exponent);
 		try {
 			CryptoFactory cryptoFactory = CryptoFactory.getInstance();
 			Crypto crypto = cryptoFactory.newCrypto();
-			byte[] hashResult = crypto.digest(
-					issuerData.get(HASH_ALGORITHM_INDICATOR), hashInput);
+			byte[] hashResult = crypto.digest(issuerData.get(HASH_ALGORITHM_INDICATOR), hashInput);
 			if (!Arrays.equals(hashResult, issuerData.get(HASH_RESULT))) {
 				throw new IssuerPublicKeyException("Hash mismatch");
 			}
@@ -138,12 +133,10 @@ public final class IssuerPublicKey {
 		}
 	}
 
-	private byte[] getIssuerPublicKeyRemainder()
-			throws IssuerPublicKeyRemainderNotPresentException {
+	private byte[] getIssuerPublicKeyRemainder() throws IssuerPublicKeyRemainderNotPresentException {
 		int nCA = caPublicKey.getModulus().length;
-		int issuerPublicKeyLength = Bytes.toInt(issuerData
-				.get(ISSUER_PUBLIC_KEY_LENGTH)[0]);
-		if (issuerPublicKeyLength > (nCA - 36)) {
+		int issuerPublicKeyLength = Bytes.toInt(issuerData.get(ISSUER_PUBLIC_KEY_LENGTH)[0]);
+		if (issuerPublicKeyLength > nCA - 36) {
 			byte[] remainder = issuerPublicKeyCertificate.getRemainder();
 			if (remainder.length == 0) {
 				throw new IssuerPublicKeyRemainderNotPresentException();
@@ -155,21 +148,18 @@ public final class IssuerPublicKey {
 
 	private void checkDataTrailer() throws IssuerPublicKeyException {
 		if (!Arrays.equals(issuerData.get(DATA_TRAILER), Hex.decode("BC"))) {
-			throw new IssuerPublicKeyException(
-					"The Recovered Data Trailer is not equal to 0xBC");
+			throw new IssuerPublicKeyException("The Recovered Data Trailer is not equal to 0xBC");
 		}
 	}
 
 	private void checkDataHeader() throws IssuerPublicKeyException {
 		if (!Arrays.equals(issuerData.get(DATA_HEADER), Hex.decode("6A"))) {
-			throw new IssuerPublicKeyException(
-					"The Recovered Data Header is not equal to 0x6A");
+			throw new IssuerPublicKeyException("The Recovered Data Header is not equal to 0x6A");
 		}
 	}
 
 	private void checkCertificateFormat() throws IssuerPublicKeyException {
-		if (!Arrays
-				.equals(issuerData.get(CERTIFICATE_FORMAT), Hex.decode("02"))) {
+		if (!Arrays.equals(issuerData.get(CERTIFICATE_FORMAT), Hex.decode("02"))) {
 			throw new IssuerPublicKeyException("Certificate Format is not 0x02");
 		}
 	}
@@ -177,37 +167,28 @@ public final class IssuerPublicKey {
 	private byte[] recoverData() throws CryptoException {
 		CryptoFactory cryptoFactory = CryptoFactory.getInstance();
 		Crypto crypto = cryptoFactory.newCrypto();
-		PublicKey publicKey = new PublicKey(
-				caPublicKey.getPublicKeyAlgorithm(), caPublicKey.getModulus(),
-				caPublicKey.getExponent());
-		byte[] recoveredData = crypto.decrypt(publicKey,
-				issuerPublicKeyCertificate.getCertificate());
+		PublicKey publicKey = new PublicKey(caPublicKey.getPublicKeyAlgorithm(), caPublicKey.getModulus(), caPublicKey.getExponent());
+		byte[] recoveredData = crypto.decrypt(publicKey, issuerPublicKeyCertificate.getCertificate());
 		return recoveredData;
 	}
 
 	private void checkLength() throws IssuerPublicKeyException {
-		if (issuerPublicKeyCertificate.getCertificate().length != caPublicKey
-				.getModulus().length) {
-			throw new IssuerPublicKeyException(
-					"Issuer Public Key Certificate has a length different from the length of the Certification Authority Public Key Modulus");
+		if (issuerPublicKeyCertificate.getCertificate().length != caPublicKey.getModulus().length) {
+			throw new IssuerPublicKeyException("Issuer Public Key Certificate has a length different from the length of the Certification Authority Public Key Modulus");
 		}
 	}
 
 	private void checkIssuerIdentifier() throws IssuerPublicKeyException {
-		String pan = CompressedNumeric.toString(issuerPublicKeyCertificate
-				.getPAN());
-		String issuerIdentifier = CompressedNumeric.toString(issuerData
-				.get(ISSUER_IDENTIFIER));
+		String pan = CompressedNumeric.toString(issuerPublicKeyCertificate.getPAN());
+		String issuerIdentifier = CompressedNumeric.toString(issuerData.get(ISSUER_IDENTIFIER));
 		if (issuerIdentifier.length() < 3 || !pan.startsWith(issuerIdentifier)) {
-			throw new IssuerPublicKeyException(
-					"Issuer Identifier does not match");
+			throw new IssuerPublicKeyException("Issuer Identifier does not match");
 		}
 	}
 
 	private void checkExpirationDate() throws IssuerPublicKeyException {
 		try {
-			final ExpirationDate expirationDate = new ExpirationDate(
-					issuerData.get(CERTIFICATE_EXPIRATION_DATE));
+			final ExpirationDate expirationDate = new ExpirationDate(issuerData.get(CERTIFICATE_EXPIRATION_DATE));
 			if (expirationDate.hasExpired()) {
 				throw new IssuerPublicKeyException("Certificate has expired");
 			}
@@ -216,15 +197,9 @@ public final class IssuerPublicKey {
 		}
 	}
 
-	private void checkIssuerPublicKeyAlgorithmIndicator()
-			throws IssuerPublicKeyException {
-		if (!Arrays.equals(
-				issuerData.get(ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR),
-				AsymmetricAlgorithm.RSA.getAlgorithmIndicator())) {
-			throw new IssuerPublicKeyException(
-					"Unrecognised Issuer Public Key Algorithm Indicator: "
-							+ Hex.encode(issuerData
-									.get(ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR)));
+	private void checkIssuerPublicKeyAlgorithmIndicator() throws IssuerPublicKeyException {
+		if (!Arrays.equals(issuerData.get(ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR), AsymmetricAlgorithm.RSA.getAlgorithmIndicator())) {
+			throw new IssuerPublicKeyException("Unrecognised Issuer Public Key Algorithm Indicator: " + Hex.encode(issuerData.get(ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR)));
 		}
 	}
 }
