@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv;
 
@@ -51,6 +51,7 @@ import at.o2xfs.emv.crypto.Crypto;
 import at.o2xfs.emv.crypto.CryptoException;
 import at.o2xfs.emv.crypto.CryptoFactory;
 import at.o2xfs.emv.crypto.PublicKey;
+import at.o2xfs.emv.util.CompressedNumeric;
 
 public abstract class AbstractICCPublicKey {
 
@@ -60,12 +61,9 @@ public abstract class AbstractICCPublicKey {
 
 	private RecoveredData<RecoveredICCData> recoveredData = null;
 
-	public AbstractICCPublicKey(
-			AbstractPublicKeyCertificate iccPublicKeyCertificate,
-			PublicKey issuerPublicKey) {
+	public AbstractICCPublicKey(AbstractPublicKeyCertificate iccPublicKeyCertificate, PublicKey issuerPublicKey) {
 		if (iccPublicKeyCertificate == null) {
-			throw new NullPointerException(
-					"ICC Public Key Certificate must not be null");
+			throw new NullPointerException("ICC Public Key Certificate must not be null");
 		}
 		this.iccPublicKeyCertificate = iccPublicKeyCertificate;
 		if (issuerPublicKey == null) {
@@ -84,27 +82,22 @@ public abstract class AbstractICCPublicKey {
 		checkPAN();
 		checkCertificateExpirationDate();
 		checkICCPublicKeyAlgorithmIndicator();
-		byte[] algorithm = recoveredData
-				.get(ICC_PUBLIC_KEY_ALGORITHM_INDICATOR);
-		byte[] modulus = Bytes.concat(recoveredData.get(ICC_PUBLIC_KEY),
-				getPublicKeyRemainder());
+		byte[] algorithm = recoveredData.get(ICC_PUBLIC_KEY_ALGORITHM_INDICATOR);
+		byte[] modulus = Bytes.concat(recoveredData.get(ICC_PUBLIC_KEY), getPublicKeyRemainder());
 		byte[] exponent = iccPublicKeyCertificate.getExponent();
 		return new PublicKey(algorithm, modulus, exponent);
 	}
 
 	private void checkLength() throws ICCPublicKeyException {
-		if (iccPublicKeyCertificate.getCertificate().length != issuerPublicKey
-				.getModulusLength()) {
-			throw new ICCPublicKeyException(
-					"ICC Public Key Certificate has a length  different from the length of the Issuer Public Key Modulus");
+		if (iccPublicKeyCertificate.getCertificate().length != issuerPublicKey.getModulusLength()) {
+			throw new ICCPublicKeyException("ICC Public Key Certificate has a length  different from the length of the Issuer Public Key Modulus");
 		}
 	}
 
 	private void recoverData() throws ICCPublicKeyException {
 		Crypto crypto = CryptoFactory.getInstance().newCrypto();
 		try {
-			byte[] decrypted = crypto.decrypt(issuerPublicKey,
-					iccPublicKeyCertificate.getCertificate());
+			byte[] decrypted = crypto.decrypt(issuerPublicKey, iccPublicKeyCertificate.getCertificate());
 			buildRecoveredData(decrypted);
 		} catch (CryptoException e) {
 			throw new ICCPublicKeyException(e);
@@ -122,8 +115,7 @@ public abstract class AbstractICCPublicKey {
 		builder.addField(ICC_PUBLIC_KEY_ALGORITHM_INDICATOR, 1);
 		builder.addField(ICC_PUBLIC_KEY_LENGTH, 1);
 		builder.addField(ICC_PUBLIC_KEY_EXPONENT_LENGTH, 1);
-		builder.addField(ICC_PUBLIC_KEY,
-				issuerPublicKey.getModulusLength() - 42);
+		builder.addField(ICC_PUBLIC_KEY, issuerPublicKey.getModulusLength() - 42);
 		builder.addField(HASH_RESULT, 20);
 		builder.addField(DATA_TRAILER, 1);
 		recoveredData = new RecoveredData<RecoveredICCData>(builder, data);
@@ -132,24 +124,21 @@ public abstract class AbstractICCPublicKey {
 	private void checkDataTrailer() throws ICCPublicKeyException {
 		byte[] dataTrailer = recoveredData.get(DATA_TRAILER);
 		if (!Arrays.equals(dataTrailer, Hex.decode("BC"))) {
-			throw new ICCPublicKeyException("Illegal Data Trailer: "
-					+ Hex.encode(dataTrailer));
+			throw new ICCPublicKeyException("Illegal Data Trailer: " + Hex.encode(dataTrailer));
 		}
 	}
 
 	private void checkDataHeader() throws ICCPublicKeyException {
 		byte[] dataHeader = recoveredData.get(DATA_HEADER);
 		if (!Arrays.equals(dataHeader, Hex.decode("6A"))) {
-			throw new ICCPublicKeyException("Illegal Data Header: "
-					+ Hex.encode(dataHeader));
+			throw new ICCPublicKeyException("Illegal Data Header: " + Hex.encode(dataHeader));
 		}
 	}
 
 	private void checkCertificateFormat() throws ICCPublicKeyException {
 		byte[] certificateFormat = recoveredData.get(CERTIFICATE_FORMAT);
 		if (!Arrays.equals(certificateFormat, Hex.decode("04"))) {
-			throw new ICCPublicKeyException("Illegal Certificate Format: "
-					+ Hex.encode(certificateFormat));
+			throw new ICCPublicKeyException("Illegal Certificate Format: " + Hex.encode(certificateFormat));
 		}
 	}
 
@@ -157,8 +146,7 @@ public abstract class AbstractICCPublicKey {
 		try {
 			byte[] hashInput = createHashInput();
 			Crypto crypto = CryptoFactory.getInstance().newCrypto();
-			byte[] hashResult = crypto.digest(
-					recoveredData.get(HASH_ALGORITHM_INDICATOR), hashInput);
+			byte[] hashResult = crypto.digest(recoveredData.get(HASH_ALGORITHM_INDICATOR), hashInput);
 			if (!Arrays.equals(hashResult, recoveredData.get(HASH_RESULT))) {
 				throw new ICCPublicKeyException("Hash mismatch");
 			}
@@ -168,23 +156,20 @@ public abstract class AbstractICCPublicKey {
 	}
 
 	private byte[] createHashInput() throws ICCPublicKeyException {
-		byte[] concatenated = recoveredData.concatenate(CERTIFICATE_FORMAT,
-				ICC_PUBLIC_KEY);
+		byte[] concatenated = recoveredData.concatenate(CERTIFICATE_FORMAT, ICC_PUBLIC_KEY);
 		byte[] publicKeyRemainder = getPublicKeyRemainder();
 		byte[] publicKeyExponent = iccPublicKeyCertificate.getExponent();
 		byte[] staticAuthenticationData = getStaticAuthenticationData();
-		return Bytes.concat(concatenated, publicKeyRemainder,
-				publicKeyExponent, staticAuthenticationData);
+		return Bytes.concat(concatenated, publicKeyRemainder, publicKeyExponent, staticAuthenticationData);
 	}
 
 	protected abstract byte[] getStaticAuthenticationData();
 
 	private void checkPAN() throws ICCPublicKeyException {
-		byte[] iccPAN = iccPublicKeyCertificate.getPAN();
-		byte[] recoveredPAN = recoveredData.get(APPLICATION_PAN);
-		if (!Arrays.equals(iccPAN, recoveredPAN)) {
-			throw new ICCPublicKeyException(
-					"Recovered PAN does not match the Application PAN read from the ICC");
+		String iccPAN = CompressedNumeric.toString(iccPublicKeyCertificate.getPAN());
+		String recoveredPAN = CompressedNumeric.toString(recoveredData.get(APPLICATION_PAN));
+		if (!iccPAN.equals(recoveredPAN)) {
+			throw new ICCPublicKeyException("Recovered PAN does not match the Application PAN read from the ICC");
 		}
 	}
 
@@ -192,33 +177,25 @@ public abstract class AbstractICCPublicKey {
 		byte[] expirationDate = recoveredData.get(CERTIFICATE_EXPIRATION_DATE);
 		try {
 			if (new ExpirationDate(expirationDate).hasExpired()) {
-				throw new ICCPublicKeyException("Certificate has expired: "
-						+ Hex.encode(expirationDate));
+				throw new ICCPublicKeyException("Certificate has expired: " + Hex.encode(expirationDate));
 			}
 		} catch (ExpirationDateException e) {
 			throw new ICCPublicKeyException(e);
 		}
 	}
 
-	private void checkICCPublicKeyAlgorithmIndicator()
-			throws ICCPublicKeyException {
-		byte[] algorithmIndicator = recoveredData
-				.get(ICC_PUBLIC_KEY_ALGORITHM_INDICATOR);
+	private void checkICCPublicKeyAlgorithmIndicator() throws ICCPublicKeyException {
+		byte[] algorithmIndicator = recoveredData.get(ICC_PUBLIC_KEY_ALGORITHM_INDICATOR);
 		for (AsymmetricAlgorithm algorithm : AsymmetricAlgorithm.values()) {
-			if (Arrays.equals(algorithmIndicator,
-					algorithm.getAlgorithmIndicator())) {
+			if (Arrays.equals(algorithmIndicator, algorithm.getAlgorithmIndicator())) {
 				return;
 			}
 		}
-		throw new ICCPublicKeyException(
-				"Unrecognised ICC Public Key Algorithm: "
-						+ Hex.encode(algorithmIndicator));
+		throw new ICCPublicKeyException("Unrecognised ICC Public Key Algorithm: " + Hex.encode(algorithmIndicator));
 	}
 
-	private byte[] getPublicKeyRemainder()
-			throws ICCPublicKeyRemainderNotPresentException {
-		int publicKeyLength = Bytes.toInt(recoveredData
-				.get(ICC_PUBLIC_KEY_LENGTH)[0]);
+	private byte[] getPublicKeyRemainder() throws ICCPublicKeyRemainderNotPresentException {
+		int publicKeyLength = Bytes.toInt(recoveredData.get(ICC_PUBLIC_KEY_LENGTH)[0]);
 		if (publicKeyLength > issuerPublicKey.getModulusLength() - 42) {
 			byte[] remainder = iccPublicKeyCertificate.getRemainder();
 			if (remainder.length == 0) {
