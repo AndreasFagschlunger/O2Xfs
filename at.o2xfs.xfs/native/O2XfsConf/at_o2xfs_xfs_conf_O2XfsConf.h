@@ -11,42 +11,42 @@ extern "C" {
 #define at_o2xfs_xfs_conf_O2XfsConf_SIZE_LIMIT 256L
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmCloseKey
- * Signature: (Ljava/nio/ByteBuffer;)I
+ * Method:    wfmCloseKey0
+ * Signature: (Lat/o2xfs/win32/Type;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmCloseKey
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmCloseKey0
   (JNIEnv *, jobject, jobject);
 
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmOpenKey
- * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
+ * Method:    wfmOpenKey0
+ * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmOpenKey
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmOpenKey0
   (JNIEnv *, jobject, jobject, jobject, jobject);
 
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmQueryValue
- * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
+ * Method:    wfmQueryValue0
+ * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmQueryValue
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmQueryValue0
   (JNIEnv *, jobject, jobject, jobject, jobject);
 
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmEnumKey
- * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
+ * Method:    wfmEnumKey0
+ * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumKey
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumKey0
   (JNIEnv *, jobject, jobject, jobject, jobject);
 
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmEnumValue
- * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
+ * Method:    wfmEnumValue0
+ * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumValue
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumValue0
   (JNIEnv *, jobject, jobject, jobject, jobject, jobject);
 
 #ifdef __cplusplus
