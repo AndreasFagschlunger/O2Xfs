@@ -69,12 +69,19 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 	private XfsCommand xfsCommand = null;
 
 	private final EventQueue eventQueue;
-
+	
+	private Long timeout;
+	
 	public ReadCardCommand(final IDCService idcService) {
+		this(idcService, null);
+	}
+
+	public ReadCardCommand(final IDCService idcService, Long timeout) {
 		if (idcService == null) {
 			throw new IllegalArgumentException("idcService must not be null");
 		}
 		this.idcService = idcService;
+		this.timeout = timeout;
 		eventQueue = new EventQueue(this);
 		readData = EnumSet.noneOf(IDCTrack.class);
 	}
@@ -107,7 +114,7 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 		final String method = "doExecute()";
 		xfsCommand = new XfsExecuteCommand(idcService,
 				IDCExecuteCommand.READ_RAW_DATA,
-				new DWORD(Bitmask.of(readData)));
+				new DWORD(Bitmask.of(readData)), timeout);
 		try {
 			xfsCommand.execute(eventQueue);
 		} catch (final XfsException e) {
