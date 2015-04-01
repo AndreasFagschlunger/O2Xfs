@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,13 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.conf;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -39,6 +35,10 @@ import at.o2xfs.win32.Type;
 import at.o2xfs.win32.ZSTR;
 import at.o2xfs.xfs.XfsException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Andreas Fagschlunger
  */
@@ -46,7 +46,8 @@ public class O2XfsConf {
 
 	private final static Logger LOG = LoggerFactory.getLogger(O2XfsConf.class);
 
-	private class ValuePair implements Map.Entry<String, String> {
+	private class ValuePair
+			implements Map.Entry<String, String> {
 
 		private String name = null;
 
@@ -127,11 +128,9 @@ public class O2XfsConf {
 	/**
 	 * Opens the specified key.
 	 */
-	public HKEY wfmOpenKey(final HKEY hKey, final String subKey)
-			throws XfsException {
+	public HKEY wfmOpenKey(final HKEY hKey, final String subKey) throws XfsException {
 		HKEY hkResult = new HKEY();
-		final int errorCode = wfmOpenKey0(hKey, (subKey == null ? null
-				: new ZSTR(subKey)), hkResult);
+		final int errorCode = wfmOpenKey0(hKey, (subKey == null ? null : new ZSTR(subKey)), hkResult);
 		XfsException.throwFor(errorCode);
 		synchronized (openKeys) {
 			openKeys.add(hkResult);
@@ -145,16 +144,14 @@ public class O2XfsConf {
 	 * Retrieves the data for the value with the specified name, within the
 	 * specified open key.
 	 */
-	public String wfmQueryValue(final HKEY hKey, final String valueName)
-			throws XfsException {
+	public String wfmQueryValue(final HKEY hKey, final String valueName) throws XfsException {
 		final ZSTR data = new ZSTR(SIZE_LIMIT, true);
 		final int errorCode = wfmQueryValue0(hKey, new ZSTR(valueName), data);
 		XfsException.throwFor(errorCode);
 		return data.toString();
 	}
 
-	private native int wfmQueryValue0(Type hKey, Type lpszValueName,
-			Type lpszData);
+	private native int wfmQueryValue0(Type hKey, Type lpszValueName, Type lpszData);
 
 	/**
 	 * Enumerates the subkeys of the specified open key. Retrieves information
@@ -165,8 +162,7 @@ public class O2XfsConf {
 	 *            value: {@link #WFS_CFG_HKEY_XFS_ROOT}
 	 * @return the name of the subkey
 	 */
-	public String wfmEnumKey(final HKEY key, final DWORD iSubKey)
-			throws XfsException {
+	public String wfmEnumKey(final HKEY key, final DWORD iSubKey) throws XfsException {
 		final ZSTR name = new ZSTR(SIZE_LIMIT, true);
 		final int errorCode = wfmEnumKey0(key, iSubKey, name);
 		XfsException.throwFor(errorCode);
@@ -179,8 +175,7 @@ public class O2XfsConf {
 	 * Enumerates the values of the specified open key. Retrieves the name and
 	 * data for one value each time it is called.
 	 */
-	public Map.Entry<String, String> wfmEnumValue(final HKEY hKey,
-			final DWORD iValue) throws XfsException {
+	public Map.Entry<String, String> wfmEnumValue(final HKEY hKey, final DWORD iValue) throws XfsException {
 		ZSTR value = new ZSTR(SIZE_LIMIT, true);
 		ZSTR data = new ZSTR(SIZE_LIMIT, true);
 		final int errorCode = wfmEnumValue0(hKey, iValue, value, data);
@@ -188,8 +183,7 @@ public class O2XfsConf {
 		return new ValuePair(value.toString(), data.toString());
 	}
 
-	private native int wfmEnumValue0(Type hKey, Type iValue, Type lpszValue,
-			Type lpszData);
+	private native int wfmEnumValue0(Type hKey, Type iValue, Type lpszValue, Type lpszData);
 
 	@Override
 	protected void finalize() throws Throwable {
@@ -198,8 +192,7 @@ public class O2XfsConf {
 		synchronized (openKeys) {
 			if (openKeys.size() > 0) {
 				if (LOG.isWarnEnabled()) {
-					LOG.warn(method, "Closing " + openKeys.size()
-							+ " open key(s)");
+					LOG.warn(method, "Closing " + openKeys.size() + " open key(s)");
 				}
 			}
 			while (openKeys.size() > 0) {
