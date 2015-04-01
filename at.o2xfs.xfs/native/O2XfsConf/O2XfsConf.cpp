@@ -28,7 +28,6 @@
 #include <windows.h>
 #include <jni.h>
 #include "xfsconf.h"
-#include "O2XfsWIN32.h"
 #include "at_o2xfs_xfs_conf_O2XfsConf.h"
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
@@ -46,8 +45,8 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
  * Method:    wfmCloseKey
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmCloseKey0(JNIEnv *env, jobject obj, jobject hKey) {
-	return WFMCloseKey((*(PHKEY) GetTypeAddress(env, hKey)));
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmCloseKey(JNIEnv *env, jobject obj, jobject hKey) {
+	return WFMCloseKey((*(PHKEY) env->GetDirectBufferAddress(hKey)));
 }
 
 /*
@@ -55,8 +54,8 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmCloseKey0(JNIEnv *env
  * Method:    wfmOpenKey
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmOpenKey0(JNIEnv *env, jobject obj, jobject hKey, jobject lpszSubKey, jobject phkResult) {
-	return WFMOpenKey((*(PHKEY) GetTypeAddress(env, hKey)), (lpszSubKey == NULL ? NULL : (LPSTR) GetTypeAddress(env, lpszSubKey)), (PHKEY) GetTypeAddress(env, phkResult));
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmOpenKey(JNIEnv *env, jobject obj, jobject hKey, jobject lpszSubKey, jobject phkResult) {
+	return WFMOpenKey((*(PHKEY) env->GetDirectBufferAddress(hKey)), (lpszSubKey == NULL ? NULL : (LPSTR) env->GetDirectBufferAddress(lpszSubKey)), (PHKEY) env->GetDirectBufferAddress(phkResult));
 }
 
 /*
@@ -64,9 +63,9 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmOpenKey0(JNIEnv *env,
  * Method:    wfmQueryValue
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmQueryValue0(JNIEnv *env, jobject obj, jobject phkKey, jobject lpszValueName, jobject lpszData) {
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmQueryValue(JNIEnv *env, jobject obj, jobject phkKey, jobject lpszValueName, jobject lpszData) {
 	DWORD cchData = env->GetDirectBufferCapacity(lpszData);
-	return WFMQueryValue((*(PHKEY) GetTypeAddress(env, phkKey)), (LPSTR) GetTypeAddress(env, lpszValueName), (LPSTR) GetTypeAddress(env, lpszData), &cchData);
+	return WFMQueryValue((*(PHKEY) env->GetDirectBufferAddress(phkKey)), (LPSTR) env->GetDirectBufferAddress(lpszValueName), (LPSTR) env->GetDirectBufferAddress(lpszData), &cchData);
 }
 
 /*
@@ -74,14 +73,14 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmQueryValue0(JNIEnv *e
  * Method:    wfmEnumKey
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumKey0(JNIEnv *env, jobject obj, jobject hKey, jobject iSubKey, jobject lpszName) {
-	DWORD cchName = GetTypeSize(env, lpszName);
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumKey(JNIEnv *env, jobject obj, jobject hKey, jobject iSubKey, jobject lpszName) {
+	DWORD cchName = env->GetDirectBufferCapacity(lpszName);
 	FILETIME lastWrite;	
-	return WFMEnumKey((*(PHKEY) GetTypeAddress(env, hKey)), (*(LPDWORD) GetTypeAddress(env, iSubKey)), (LPSTR) GetTypeAddress(env, lpszName),  (LPDWORD) &cchName, &lastWrite);
+	return WFMEnumKey((*(PHKEY) env->GetDirectBufferAddress(hKey)), (*(LPDWORD) env->GetDirectBufferAddress(iSubKey)), (LPSTR) env->GetDirectBufferAddress(lpszName),  (LPDWORD) &cchName, &lastWrite);
 }
 
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumValue0(JNIEnv *env, jobject obj, jobject hKey, jobject iValue, jobject lpszValue, jobject lpszData) {
-	DWORD cchValue = GetTypeSize(env, lpszValue);
-	DWORD cchData = GetTypeSize(env, lpszData);
-	return WFMEnumValue((*(PHKEY) GetTypeAddress(env, hKey)), (*(LPDWORD) GetTypeAddress(env, iValue)), (LPSTR) GetTypeAddress(env, lpszValue), &cchValue, (LPSTR) GetTypeAddress(env, lpszData), &cchData);
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumValue(JNIEnv *env, jobject obj, jobject hKey, jobject iValue, jobject lpszValue, jobject lpszData) {
+	DWORD cchValue = env->GetDirectBufferCapacity(lpszValue);
+	DWORD cchData = env->GetDirectBufferCapacity(lpszData);
+	return WFMEnumValue((*(PHKEY) env->GetDirectBufferAddress(hKey)), (*(LPDWORD) env->GetDirectBufferAddress(iValue)), (LPSTR) env->GetDirectBufferAddress(lpszValue), &cchValue, (LPSTR) env->GetDirectBufferAddress(lpszData), &cchData);
 }

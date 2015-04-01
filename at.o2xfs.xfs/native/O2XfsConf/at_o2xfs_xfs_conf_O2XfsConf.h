@@ -11,42 +11,42 @@ extern "C" {
 #define at_o2xfs_xfs_conf_O2XfsConf_SIZE_LIMIT 256L
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmCloseKey0
- * Signature: (Lat/o2xfs/win32/Type;)I
+ * Method:    wfmCloseKey
+ * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmCloseKey0
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmCloseKey
   (JNIEnv *, jobject, jobject);
 
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmOpenKey0
- * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
+ * Method:    wfmOpenKey
+ * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmOpenKey0
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmOpenKey
   (JNIEnv *, jobject, jobject, jobject, jobject);
 
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmQueryValue0
- * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
+ * Method:    wfmQueryValue
+ * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmQueryValue0
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmQueryValue
   (JNIEnv *, jobject, jobject, jobject, jobject);
 
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmEnumKey0
- * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
+ * Method:    wfmEnumKey
+ * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumKey0
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumKey
   (JNIEnv *, jobject, jobject, jobject, jobject);
 
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmEnumValue0
- * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
+ * Method:    wfmEnumValue
+ * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumValue0
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumValue
   (JNIEnv *, jobject, jobject, jobject, jobject, jobject);
 
 #ifdef __cplusplus
