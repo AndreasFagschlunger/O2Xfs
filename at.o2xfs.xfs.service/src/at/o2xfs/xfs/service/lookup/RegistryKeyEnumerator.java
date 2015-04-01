@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,12 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.service.lookup;
-
-import java.util.Enumeration;
-import java.util.NoSuchElementException;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -38,10 +35,13 @@ import at.o2xfs.xfs.XfsError;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.conf.O2XfsConf;
 
-public class RegistryKeyEnumerator implements Enumeration<String> {
+import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(RegistryKeyEnumerator.class);
+public class RegistryKeyEnumerator
+		implements Enumeration<String> {
+
+	private final static Logger LOG = LoggerFactory.getLogger(RegistryKeyEnumerator.class);
 
 	private O2XfsConf xfsConf = null;
 
@@ -67,13 +67,11 @@ public class RegistryKeyEnumerator implements Enumeration<String> {
 			switch ((XfsError) e.getError()) {
 				case WFS_ERR_CFG_NO_MORE_ITEMS:
 					if (LOG.isDebugEnabled()) {
-						LOG.debug(method, "No more Items: hKey=" + hKey
-								+ ", iSubKey=" + iSubKey, e);
+						LOG.debug(method, "No more Items: hKey=" + hKey + ", iSubKey=" + iSubKey, e);
 					}
 					break;
 				default:
-					LOG.error(method, "Error enumerating subkey: hKey=" + hKey
-							+ ", iSubKey=" + iSubKey, e);
+					LOG.error(method, "Error enumerating subkey: hKey=" + hKey + ", iSubKey=" + iSubKey, e);
 			}
 		}
 		return false;
@@ -84,7 +82,7 @@ public class RegistryKeyEnumerator implements Enumeration<String> {
 		if (name == null) {
 			throw new NoSuchElementException();
 		}
-		iSubKey.put(iSubKey.longValue() + 1);
+		iSubKey.set(iSubKey.longValue() + 1);
 		return name;
 	}
 

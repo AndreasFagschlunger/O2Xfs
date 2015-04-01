@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,11 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.service.pin.cmd;
-
-import java.util.concurrent.Callable;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -40,10 +38,12 @@ import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.pin.PINService;
 
-public class GetPINBlockCallable implements Callable<WfsXData> {
+import java.util.concurrent.Callable;
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(GetPINBlockCallable.class);
+public class GetPINBlockCallable
+		implements Callable<WfsXData> {
+
+	private static final Logger LOG = LoggerFactory.getLogger(GetPINBlockCallable.class);
 
 	private final PINService pinService;
 
@@ -68,12 +68,11 @@ public class GetPINBlockCallable implements Callable<WfsXData> {
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "pinBlock=" + pinBlock);
 			}
-			XfsCommand xfsCommand = new XfsExecuteCommand(pinService,
-					PINExecuteCommand.GET_PINBLOCK, pinBlock);
+			XfsCommand xfsCommand = new XfsExecuteCommand(pinService, PINExecuteCommand.GET_PINBLOCK, pinBlock);
 			wfsResult = xfsCommand.call();
 			WfsXData xData = new WfsXData(wfsResult.getResults());
 			if (LOG.isInfoEnabled()) {
-				LOG.info(method, "WfsXData: " + xData.getData());
+				LOG.info(method, "WfsXData: " + xData);
 			}
 			return new WfsXData(xData);
 		} finally {
