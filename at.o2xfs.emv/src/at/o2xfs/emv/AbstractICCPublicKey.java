@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -40,8 +40,6 @@ import static at.o2xfs.emv.RecoveredICCData.ICC_PUBLIC_KEY_ALGORITHM_INDICATOR;
 import static at.o2xfs.emv.RecoveredICCData.ICC_PUBLIC_KEY_EXPONENT_LENGTH;
 import static at.o2xfs.emv.RecoveredICCData.ICC_PUBLIC_KEY_LENGTH;
 
-import java.util.Arrays;
-
 import at.o2xfs.common.Bytes;
 import at.o2xfs.common.Hex;
 import at.o2xfs.emv.ExpirationDate.ExpirationDateException;
@@ -52,6 +50,8 @@ import at.o2xfs.emv.crypto.CryptoException;
 import at.o2xfs.emv.crypto.CryptoFactory;
 import at.o2xfs.emv.crypto.PublicKey;
 import at.o2xfs.emv.util.CompressedNumeric;
+
+import java.util.Arrays;
 
 public abstract class AbstractICCPublicKey {
 
@@ -83,14 +83,24 @@ public abstract class AbstractICCPublicKey {
 		checkCertificateExpirationDate();
 		checkICCPublicKeyAlgorithmIndicator();
 		byte[] algorithm = recoveredData.get(ICC_PUBLIC_KEY_ALGORITHM_INDICATOR);
-		byte[] modulus = Bytes.concat(recoveredData.get(ICC_PUBLIC_KEY), getPublicKeyRemainder());
+		byte[] modulus;
+		int nI = issuerPublicKey.getModulusLength();
+		int nIC = Bytes.toInt(recoveredData.get(ICC_PUBLIC_KEY_LENGTH)[0]);
+		if (nIC <= (nI - 42)) {
+			modulus = Bytes.left(recoveredData.get(ICC_PUBLIC_KEY), nIC);
+		} else {
+			modulus = Bytes.concat(recoveredData.get(ICC_PUBLIC_KEY), getPublicKeyRemainder());
+		}
 		byte[] exponent = iccPublicKeyCertificate.getExponent();
 		return new PublicKey(algorithm, modulus, exponent);
 	}
 
 	private void checkLength() throws ICCPublicKeyException {
 		if (iccPublicKeyCertificate.getCertificate().length != issuerPublicKey.getModulusLength()) {
-			throw new ICCPublicKeyException("ICC Public Key Certificate has a length  different from the length of the Issuer Public Key Modulus");
+			throw new ICCPublicKeyException("ICC Public Key Certificate has a length (" + iccPublicKeyCertificate.getCertificate().length
+											+ ") different from the length ("
+											+ issuerPublicKey.getModulusLength()
+											+ ") of the Issuer Public Key Modulus");
 		}
 	}
 
@@ -169,7 +179,10 @@ public abstract class AbstractICCPublicKey {
 		String iccPAN = CompressedNumeric.toString(iccPublicKeyCertificate.getPAN());
 		String recoveredPAN = CompressedNumeric.toString(recoveredData.get(APPLICATION_PAN));
 		if (!iccPAN.equals(recoveredPAN)) {
-			throw new ICCPublicKeyException("Recovered PAN does not match the Application PAN read from the ICC");
+			throw new ICCPublicKeyException("Recovered PAN (" + recoveredPAN
+											+ ") does not match the Application PAN read from the ICC ("
+											+ iccPAN
+											+ ")");
 		}
 	}
 
@@ -195,8 +208,9 @@ public abstract class AbstractICCPublicKey {
 	}
 
 	private byte[] getPublicKeyRemainder() throws ICCPublicKeyRemainderNotPresentException {
-		int publicKeyLength = Bytes.toInt(recoveredData.get(ICC_PUBLIC_KEY_LENGTH)[0]);
-		if (publicKeyLength > issuerPublicKey.getModulusLength() - 42) {
+		final int nIC = Bytes.toInt(recoveredData.get(ICC_PUBLIC_KEY_LENGTH)[0]);
+		final int nI = issuerPublicKey.getModulusLength();
+		if (nIC > nI - 42) {
 			byte[] remainder = iccPublicKeyCertificate.getRemainder();
 			if (remainder.length == 0) {
 				throw new ICCPublicKeyRemainderNotPresentException();

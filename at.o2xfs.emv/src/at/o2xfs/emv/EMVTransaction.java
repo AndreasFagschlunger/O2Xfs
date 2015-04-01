@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -27,15 +27,6 @@
 
 package at.o2xfs.emv;
 
-import java.io.IOException;
-import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import at.o2xfs.common.ByteArrayBuilder;
 import at.o2xfs.common.Bytes;
 import at.o2xfs.common.Hex;
@@ -46,6 +37,15 @@ import at.o2xfs.emv.tlv.TLV;
 import at.o2xfs.emv.tlv.Tag;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
+
+import java.io.IOException;
+import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class EMVTransaction {
 
@@ -67,11 +67,14 @@ public final class EMVTransaction {
 
 	private final List<DataAuthenticationRecord> dataAuthenticationRecords;
 
-	private Candidate candidate = null;
-
 	private byte[] issuerScriptResults = null;
 
-	public EMVTransaction(Terminal terminal, EMVTransactionCallback transactionCallback, ICReader icReader, PINPad pinPad) {
+	private Candidate candidate = null;
+
+	public EMVTransaction(	Terminal terminal,
+							EMVTransactionCallback transactionCallback,
+							ICReader icReader,
+							PINPad pinPad) {
 		this.terminal = terminal;
 		this.transactionCallback = transactionCallback;
 		this.icReader = icReader;
@@ -84,8 +87,9 @@ public final class EMVTransaction {
 		return new CandidateList(terminal, icReader).build();
 	}
 
-	public boolean processTransaction(Candidate candidate, TransactionData transactionData) throws TerminateSessionException, IOException {
-		this.candidate = candidate;
+	public boolean processTransaction(Candidate aCandidate, TransactionData transactionData) throws TerminateSessionException,
+																							IOException {
+		this.candidate = aCandidate;
 		resetTransaction(transactionData);
 		InitiateApplicationProcessing initiateApplicationProcessing = new InitiateApplicationProcessing(this, candidate);
 		if (!initiateApplicationProcessing.perform()) {
@@ -116,11 +120,12 @@ public final class EMVTransaction {
 	private void performOnlineProcessing() throws TerminateSessionException, IOException {
 		final String method = "performOnlineProcessing()";
 		CryptogramType cryptogramType = null;
-		ByteArrayBuilder issuerScriptResultsBuilder = new ByteArrayBuilder();
 		TLV issuerScriptTemplate = null;
+		ByteArrayBuilder issuerScriptResultBuilder = new ByteArrayBuilder();
 		try {
 			resetAuthorisationResponseCode();
 			AuthorisationResponse authorisationResponse = transactionCallback.doSendAuthorisationRequest();
+			putData(EMVTag.AUTHORISATION_RESPONSE_CODE, authorisationResponse.getAuthorisationResponseCode());
 			if (authorisationResponse.getICCSystemRelatedData().length != 0) {
 				Template template = new Template(TLV.parse(authorisationResponse.getICCSystemRelatedData()));
 				if (template.containsTag(EMVTag.ISSUER_AUTHENTICATION_DATA)) {
@@ -128,7 +133,7 @@ public final class EMVTransaction {
 					new IssuerAuthentication(this).perform(template.getValue(EMVTag.ISSUER_AUTHENTICATION_DATA));
 				}
 				if (template.containsTag(EMVTag.ISSUER_SCRIPT_TEMPLATE_1)) {
-					issuerScriptResultsBuilder.append(new IssuerToCardScriptProcessing(icReader, getTVR(), getTSI()).process(template.findTag(EMVTag.ISSUER_SCRIPT_TEMPLATE_1)));
+					issuerScriptResultBuilder.append((new IssuerToCardScriptProcessing(icReader, getTVR(), getTSI()).process(template.findTag(EMVTag.ISSUER_SCRIPT_TEMPLATE_1))));
 				}
 				issuerScriptTemplate = template.findTag(EMVTag.ISSUER_SCRIPT_TEMPLATE_2);
 			}
@@ -141,9 +146,9 @@ public final class EMVTransaction {
 		}
 		CryptogramInformationData cid = new CardActionAnalysis(this).secondGenerateAC(cryptogramType);
 		if (issuerScriptTemplate != null) {
-			issuerScriptResultsBuilder.append(new IssuerToCardScriptProcessing(icReader, getTVR(), getTSI()).process(issuerScriptTemplate));
+			issuerScriptResultBuilder.append((new IssuerToCardScriptProcessing(icReader, getTVR(), getTSI()).process(issuerScriptTemplate)));
 		}
-		issuerScriptResults = issuerScriptResultsBuilder.build();
+		issuerScriptResults = issuerScriptResultBuilder.build();
 		switch (cid.getCryptogramType()) {
 			case AAC:
 				transactionCallback.onTransactionDeclined(cid);
@@ -257,7 +262,7 @@ public final class EMVTransaction {
 
 	/**
 	 * Transaction Status Information
-	 * 
+	 *
 	 * @return the Transaction Status Information
 	 */
 	public TSI getTSI() {
@@ -285,7 +290,10 @@ public final class EMVTransaction {
 	}
 
 	public byte[] getIssuerScriptResults() {
-		return issuerScriptResults;
+		if (issuerScriptResults != null) {
+			return Bytes.copy(issuerScriptResults);
+		}
+		return null;
 	}
 
 	public void putData(EMVTag emvTag, byte[] value) {
