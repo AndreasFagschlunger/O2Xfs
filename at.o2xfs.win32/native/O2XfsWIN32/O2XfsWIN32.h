@@ -20,6 +20,8 @@ O2XFSWIN32_API jlong GetTypeSize(JNIEnv *env, jobject type);
 
 O2XFSWIN32_API jobject NewBuffer(JNIEnv *env, LPVOID address, jint size);
 
+O2XFSWIN32_API LPVOID GetBufferAddress(JNIEnv* env, jobject buf);
+
 #ifdef __cplusplus
 }
 #endif

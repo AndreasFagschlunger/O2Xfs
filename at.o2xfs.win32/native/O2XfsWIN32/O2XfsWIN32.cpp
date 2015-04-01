@@ -33,18 +33,28 @@
 #include "at_o2xfs_win32_Type.h"
 #include "at_o2xfs_win32_impl_Win32Buffer.h"
 
-static jclass typeClass;
-static jclass bufferClass;
-static jfieldID bufferFID;
-static jfieldID addressFID;
-static jfieldID sizeFID;
+static jclass typeClass    = NULL;
+static jclass bufferClass  = NULL;
+static jfieldID bufferFID  = NULL;
+static jfieldID addressFID = NULL;
+static jfieldID sizeFID    = NULL;
 
-JNIEXPORT void JNICALL Java_at_o2xfs_win32_Type_init(JNIEnv *env, jclass clazz) {
-	typeClass = (jclass) env->NewGlobalRef(clazz);
+static bool initializedBufferSupport = false;
+
+
+static bool initializeBufferSupport(JNIEnv *env) {
+	if(initializedBufferSupport) {
+		return true;
+	}
+	typeClass = (jclass) env->NewGlobalRef(env->FindClass("at/o2xfs/win32/Type"));
 	bufferClass = (jclass) env->NewGlobalRef(env->FindClass("at/o2xfs/win32/Buffer"));
-	bufferFID = env->GetFieldID(typeClass, "buffer", "Lat/o2xfs/win32/Buffer;");
-	addressFID = env->GetFieldID(bufferClass, "address", "[B");
-	sizeFID = env->GetFieldID(bufferClass, "size", "I");
+	if(typeClass != NULL && bufferClass != NULL) {
+		bufferFID = env->GetFieldID(typeClass, "buffer", "Lat/o2xfs/win32/Buffer;");
+		addressFID = env->GetFieldID(bufferClass, "address", "[B");
+		sizeFID = env->GetFieldID(bufferClass, "size", "I");
+		initializedBufferSupport = bufferFID != NULL && addressFID != NULL && sizeFID != NULL;
+	}
+	return initializedBufferSupport;
 }
 
 LPVOID ToPointer(JNIEnv *env, jbyteArray buf) {
@@ -55,8 +65,11 @@ LPVOID ToPointer(JNIEnv *env, jbyteArray buf) {
 
 O2XFSWIN32_API jobject NewBuffer(JNIEnv *env, LPVOID address, jint size) {
 	jobject result = NULL;
+	if(!initializeBufferSupport(env)) {
+		return NULL;
+	}
 	jclass factoryClass = env->FindClass("at/o2xfs/win32/BufferFactory");
-	jmethodID getInstanceMethod = env->GetStaticMethodID(factoryClass, "getInstance", "()Lat/o2xfs/win32/BufferFactory;");	
+	jmethodID getInstanceMethod = env->GetStaticMethodID(factoryClass, "getInstance", "()Lat/o2xfs/win32/BufferFactory;");
 	jmethodID createBufferMethod = env->GetMethodID(factoryClass, "createBuffer", "([BI)Lat/o2xfs/win32/Buffer;");
 	jobject factoryObj = env->CallStaticObjectMethod(factoryClass, getInstanceMethod);	
 	jbyteArray addressArray = env->NewByteArray(sizeof(address));
@@ -66,18 +79,29 @@ O2XFSWIN32_API jobject NewBuffer(JNIEnv *env, LPVOID address, jint size) {
 	return result;
 }
 
+O2XFSWIN32_API jlong GetTypeSize(JNIEnv *env, jobject type) {
+	if(initializeBufferSupport(env) && type != NULL && env->IsInstanceOf(type, typeClass)) {
+		jobject buf = env->GetObjectField(type, bufferFID);
+		return env->GetIntField(buf, sizeFID);
+	}
+	return (jlong) -1;
+}
+
 O2XFSWIN32_API LPVOID GetTypeAddress(JNIEnv *env, jobject obj) {
 	LPVOID result = NULL;
-	if(obj != NULL) {		
+	if(initializeBufferSupport(env) && obj != NULL && env->IsInstanceOf(obj, typeClass)) {
 		jobject buf = env->GetObjectField(obj, bufferFID);
-		result = (LPVOID*) ToPointer(env, (jbyteArray) env->GetObjectField(buf, addressFID));
+		result = GetBufferAddress(env, buf);
 	}
 	return result;
 }
 
-O2XFSWIN32_API jlong GetTypeSize(JNIEnv *env, jobject type) {
-	jobject buf = env->GetObjectField(type, bufferFID);
-	return env->GetIntField(buf, sizeFID);
+O2XFSWIN32_API void* GetBufferAddress(JNIEnv* env, jobject buf) {
+	void* result = NULL;
+	if(initializeBufferSupport(env) && buf != NULL && env->IsInstanceOf(buf, bufferClass)) {
+		result = (void*) ToPointer(env, (jbyteArray) env->GetObjectField(buf, addressFID));
+	}
+	return result;
 }
 
 /*
@@ -88,7 +112,6 @@ O2XFSWIN32_API jlong GetTypeSize(JNIEnv *env, jobject type) {
 JNIEXPORT jbyteArray JNICALL Java_at_o2xfs_win32_impl_Win32Buffer_allocate0(JNIEnv *env, jobject obj, jint size) {
 	void* p = malloc(size);
 	memset(p, 0, size);
-	_tprintf(TEXT("malloc: 0x%X\n"), p);
 	jbyteArray result = env->NewByteArray(sizeof(p));
 	if(result != NULL) {
 		env->SetByteArrayRegion(result, 0, env->GetArrayLength(result), (jbyte*) &p);
@@ -134,6 +157,5 @@ JNIEXPORT jobject JNICALL Java_at_o2xfs_win32_impl_Win32Buffer_subBuffer0(JNIEnv
  */
 JNIEXPORT void JNICALL Java_at_o2xfs_win32_impl_Win32Buffer_free0(JNIEnv *env, jobject obj, jbyteArray buf) {
 	LPVOID p = ToPointer(env, buf);
-	_tprintf(TEXT("free: 0x%X\n"), p);
 	free(p);
 }
