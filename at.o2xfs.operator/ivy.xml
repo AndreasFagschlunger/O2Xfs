@@ -6,10 +6,5 @@
 	</info>
 	<dependencies defaultconf="default">
 		<dependency name="at.o2xfs.xfs.service" rev="latest.integration" />
-		<dependency org="commons-codec" name="commons-codec" rev="1.4" />
-		<dependency org="commons-lang" name="commons-lang" rev="2.5" />
-		<dependency org="log4j" name="log4j" rev="1.2.17">
-			<exclude conf="optional" />		
-		</dependency>
 	</dependencies>
 </ivy-module>

@@ -32,7 +32,5 @@
 	<dependencies>
 		<dependency name="at.o2xfs.win32" rev="latest.integration" />
 		<dependency name="at.o2xfs.log" rev="latest.integration" />
-		<dependency org="commons-codec" name="commons-codec" rev="1.4" />
-		<dependency org="commons-lang" name="commons-lang" rev="2.5" />	
 	</dependencies>
 </ivy-module>

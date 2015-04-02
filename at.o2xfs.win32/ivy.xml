@@ -30,7 +30,7 @@
 	</publications>
 	<dependencies>
 		<dependency name="at.o2xfs.common" rev="latest.integration" />
-		<dependency org="commons-codec" name="commons-codec" rev="1.4" />
-		<dependency org="commons-lang" name="commons-lang" rev="2.5" />
+		<dependency org="commons-codec" name="commons-codec" rev="${commons-codec.version}" />
+		<dependency org="commons-lang" name="commons-lang" rev="${commons-lang.version}" />
 	</dependencies>
 </ivy-module>

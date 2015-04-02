@@ -10,8 +10,7 @@
 		<artifact name="at.o2xfs.log" type="jar" />
 	</publications>
 	<dependencies>
-		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.6" />
-		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.6" />
-		<dependency org="log4j" name="log4j" rev="1.2.17" conf="default" />
+		<dependency org="org.slf4j" name="slf4j-api" rev="${slf4j-api.version}" />
+		<dependency org="log4j" name="log4j" rev="${log4j.version}" />
 	</dependencies>
 </ivy-module>

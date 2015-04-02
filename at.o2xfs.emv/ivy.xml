@@ -12,6 +12,6 @@
 	<dependencies>
 		<dependency name="at.o2xfs.common" rev="latest.integration" />
 		<dependency name="at.o2xfs.log" rev="latest.integration" />
-		<dependency org="org.apache.commons" name="commons-lang3" rev="3.3" />
+		<dependency org="org.apache.commons" name="commons-lang3" rev="${commons-lang3.version}" />
 	</dependencies>
 </ivy-module>

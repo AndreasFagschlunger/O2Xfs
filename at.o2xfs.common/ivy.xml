@@ -28,6 +28,6 @@
 		<artifact name="at.o2xfs.common" type="jar" />
 	</publications>
 	<dependencies>
-		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.6" />		
+		<dependency org="junit" name="junit" rev="${junit.version}" />
 	</dependencies>
 </ivy-module>
