@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,11 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.operator.task.xfs.idc;
-
-import java.util.List;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -46,18 +44,20 @@ import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 import at.o2xfs.xfs.service.idc.cmd.ReadCardCommand;
 import at.o2xfs.xfs.service.idc.cmd.ReadCardListener;
 
-public class IDCReadTask extends IDCTask implements ReadCardListener {
+import java.util.List;
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(IDCReadTask.class);
+public class IDCReadTask
+		extends IDCTask
+		implements ReadCardListener {
+
+	private final static Logger LOG = LoggerFactory.getLogger(IDCReadTask.class);
 
 	private IDCService service = null;
 
 	private ReadCardCommand command = null;
 
 	private void createTable(final List<WFSIDCCARDDATA> cardDataList) {
-		final Table table = new Table(getClass(), "DataSource", "Status",
-				"Data");
+		final Table table = new Table(getClass(), "DataSource", "Status", "Data");
 		for (WFSIDCCARDDATA cardData : cardDataList) {
 			table.addRow(createRow(cardData));
 		}
@@ -99,7 +99,7 @@ public class IDCReadTask extends IDCTask implements ReadCardListener {
 		if (!caps.getChipProtocols().isEmpty()) {
 			command.addReadData(IDCTrack.CHIP);
 		}
-		if (!IDCSecType.WFS_IDC_SECNOTSUPP.equals(caps.getSecType())) {
+		if (!IDCSecType.NOTSUPP.equals(caps.getSecType())) {
 			command.addReadData(IDCTrack.SECURITY);
 		}
 		command.addCommandListener(this);
@@ -131,8 +131,8 @@ public class IDCReadTask extends IDCTask implements ReadCardListener {
 				LOG.debug(method, "status=" + status);
 			}
 			switch (status.getMedia()) {
-				case WFS_IDC_MEDIAJAMMED:
-				case WFS_IDC_MEDIAPRESENT:
+				case JAMMED:
+				case PRESENT:
 					return true;
 				default:
 					return false;
@@ -147,9 +147,7 @@ public class IDCReadTask extends IDCTask implements ReadCardListener {
 		command.removeCommandListener(this);
 		getCommands().clear();
 		if (isCardPresent()) {
-			getCommands().setNextCommand(
-					new ExecuteTaskCommand(taskManager, new EjectCardTask(
-							service)));
+			getCommands().setNextCommand(new ExecuteTaskCommand(taskManager, new EjectCardTask(service)));
 		} else {
 			setCloseCommand();
 		}
