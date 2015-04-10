@@ -201,7 +201,7 @@ public class XfsPINPadImpl
 	}
 
 	@Override
-	public byte[] getOnlinePIN() throws PINPadException {
+	public void getOnlinePIN() throws PINPadException {
 		PINCommand pinCommand = new PINCommand(pinService);
 		pinCommand.execute();
 		WfsPINBlock pinBlock = new WfsPINBlock();
@@ -213,7 +213,6 @@ public class XfsPINPadImpl
 		pinBlock.setKey("PEK");
 		pinBlock.setPadding((byte) 0);
 		this.pinBlock = getPINBlock(pinBlock);
-		return null;
 	}
 
 	private byte[] getPINBlock(WfsPINBlock pinBlock) throws PINPadException {
