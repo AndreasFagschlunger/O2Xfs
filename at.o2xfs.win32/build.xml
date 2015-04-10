@@ -1,0 +1,117 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="at.o2xfs.win32" basedir="." default="dist">
+	<property file="${user.home}/o2xfs.build.properties"/>
+	<property file="${user.home}/build.properties"/>
+	<property file="${basedir}/build.properties"/>
+	<property name="src.dir" value="${basedir}/src"/>
+	
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="build.classes" value="${build.dir}/classes"/>
+
+	<property name="test.src.dir" value="${basedir}/test"/>
+	<property name="test.build.dir" value="${build.dir}/test"/>
+	<property name="test.build.classes" value="${test.build.dir}/classes"/>
+
+	<property name="native.src.dir" value="${basedir}/native"/>
+	<property name="native.build.dir" value="${build.dir}/native" />
+
+	<property name="dist.dir" location="${build.dir}/dist"/>
+
+	<property name="ivy.dir" location="../ivy"/>
+	<loadproperties srcfile="${ivy.dir}/libraries.properties"/>
+	<property name="ivysettings.xml" location="${ivy.dir}/ivysettings.xml"/>
+	<property name="build.ivy.dir" location="${build.dir}/ivy"/>
+	<property name="build.ivy.lib.dir" location="${build.ivy.dir}/lib"/>
+
+	<condition property="windows">
+		<os family="windows" />
+	</condition>
+
+	<path id="classpath">
+		<pathelement location="${build.classes}"/>
+		<path refid="ivy-common.classpath"/>
+	</path>
+
+	<target name="init" depends="clean">
+		<mkdir dir="${build.dir}"/>
+		<ivy:configure settingsid="${ant.project.name}.ivy.settings" file="${ivysettings.xml}"/>
+		<ivy:resolve settingsRef="${ant.project.name}.ivy.settings"/>
+		<ivy:cachepath pathid="ivy-common.classpath" conf="compile"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<mkdir dir="${build.classes}"/>
+		<pathconvert refid="classpath" property="classpath.log"/>
+		<echo level="info" message="classpath ${classpath.log}"/>
+		<javac srcdir="${src.dir}" destdir="${build.classes}" includeantruntime="false">
+			<classpath refid="classpath"/>
+		</javac>
+	</target>
+
+	<target name="compile-native" depends="compile-native-windows">
+	</target>
+
+	<target name="compile-native-windows" if="windows">
+		<mkdir dir="${native.build.dir}"/>
+		<copy todir="${native.build.dir}">
+			<fileset dir="${native.src.dir}"/>
+		</copy>
+		<pathconvert property="win.native.build.dir">
+			<path location="${native.build.dir}" />
+		</pathconvert>
+		<dirname file="${java.home}" property="java.home.parent" />
+		<exec dir="${native.build.dir}" executable="${native.build.dir}/build.cmd" failonerror="true">
+			<env key="JAVA_HOME" value="${java.home.parent}"/>
+			<env key="OUTPUT_DIR" value="${win.native.build.dir}"/>
+		</exec>
+	</target>
+
+	<target name="test" depends="compile-test">
+		<junit printsummary="yes" fork="yes" haltonerror="true" errorProperty="tests.failed" failureProperty="tests.failed">
+			<sysproperty key="java.library.path" value="${native.build.dir}"/>
+			<classpath refid="test.classpath"/>
+			<formatter type="plain"/>
+			<batchtest todir="${test.build.dir}">
+				<fileset dir="${test.src.dir}">
+					<include name="**/Test*.java"/>
+					<include name="**/*Test.java"/>
+					<include name="**/*TestCase.java"/>
+					<exclude name="**/*Suite*.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+		<fail if="tests.failed">Tests failed!</fail>
+	</target>
+
+	<target name="test-init" depends="compile">
+		<ivy:cachepath pathid="junit.classpath" conf="test"/>
+		<path id="test.classpath">
+			<path refid="classpath"/>
+			<path refid="junit.classpath"/>
+			<pathelement location="${test.build.classes}"/>
+		</path>
+	</target>
+
+	<target name="compile-test" depends="test-init">
+		<mkdir dir="${test.build.classes}"/>
+		<pathconvert refid="test.classpath" property="test.classpath.log"/>
+		<echo level="info" message="test.classpath ${test.classpath.log}"/>
+		<javac srcdir="${test.src.dir}" destdir="${test.build.classes}" includeantruntime="false">
+			<classpath refid="test.classpath"/>
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile, compile-native, test">
+		<mkdir dir="${dist.dir}"/>
+		<jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.classes}"/>
+		<copy todir="${dist.dir}">
+			<fileset dir="${build.dir}/native">
+				<include name="*.dll" />
+			</fileset>
+		</copy>
+		<ivy:publish artifactspattern="${dist.dir}/${ant.project.name}.[ext]" resolver="local"/>
+	</target>
+</project>

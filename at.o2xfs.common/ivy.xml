@@ -24,10 +24,17 @@
         module="at.o2xfs.common"
         status="integration">
 	</info>
+	<configurations defaultconfmapping="default">
+		<conf name="default" extends="master,runtime" />
+		<conf name="master" description="contains the artifact but no dependencies" />
+		<conf name="runtime" description="runtime but not the artifact" />
+		<conf name="common" visibility="private" extends="runtime" />
+		<conf name="test" visibility="private" extends="common" />
+	</configurations>
 	<publications>
 		<artifact name="at.o2xfs.common" type="jar" />
 	</publications>
 	<dependencies>
-		<dependency org="junit" name="junit" rev="${junit.version}" />
+		<dependency org="junit" name="junit" rev="${junit.version}" conf="common->default" />
 	</dependencies>
 </ivy-module>
