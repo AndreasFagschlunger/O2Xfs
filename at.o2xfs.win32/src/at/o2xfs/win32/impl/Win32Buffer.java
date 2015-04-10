@@ -32,8 +32,12 @@ import at.o2xfs.win32.BufferOverflowException;
 
 import java.util.Arrays;
 
-public final class Win32Buffer
+final class Win32Buffer
 		extends Buffer {
+
+	static {
+		System.loadLibrary("at.o2xfs.win32");
+	}
 
 	private static final byte[] NULL = new byte[4];
 
