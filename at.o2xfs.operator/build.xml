@@ -1,37 +1,95 @@
 <project xmlns:ivy="antlib:org.apache.ivy.ant" name="at.o2xfs.operator" basedir="." default="dist">
-	<property file="${basedir}/build.properties" />
-	<property name="src.dir" value="${basedir}/src" />
-	<property name="build.dir" value="${basedir}/build" />
-	<property name="build.classes" value="${build.dir}/classes" />
-	<property name="bin.dir" value="${build.dir}/bin" />
-	<property name="lib.dir" value="${build.dir}/lib" />
+	<property file="${user.home}/o2xfs.build.properties"/>
+	<property file="${user.home}/build.properties"/>
+	<property file="${basedir}/build.properties"/>
+	<property name="src.dir" value="${basedir}/src"/>
+	
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="build.classes" value="${build.dir}/classes"/>
+	<property name="build.lib.dir" value="${build.dir}/lib"/>
 
-	<property name="javac.version" value="1.6" />
+	<property name="test.src.dir" value="${basedir}/test"/>
+	<property name="test.build.dir" value="${build.dir}/test"/>
+	<property name="test.build.classes" value="${test.build.dir}/classes"/>
+
+	<property name="dist.dir" location="${build.dir}/dist"/>
+	<property name="dist.lib.dir" location="${dist.dir}/lib"/>
+	<property name="dist.bin.dir" location="${dist.dir}/bin"/>
+
+	<property name="ivy.dir" location="../ivy"/>
+	<loadproperties srcfile="${ivy.dir}/libraries.properties"/>
+	<property name="ivysettings.xml" location="${ivy.dir}/ivysettings.xml"/>
+
+	<path id="classpath">
+		<pathelement location="${build.classes}"/>
+		<path refid="ivy-common.classpath"/>
+	</path>
 
 	<target name="init" depends="clean">
-		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir}"/>
+		<ivy:configure settingsid="${ant.project.name}.ivy.settings" file="${ivysettings.xml}"/>
+		<ivy:resolve settingsRef="${ant.project.name}.ivy.settings"/>
+		<ivy:retrieve settingsRef="${ant.project.name}.ivy.settings" pattern="${build.lib.dir}/[artifact].[ext]" type="native" conf="compile"/>
+		<ivy:cachepath pathid="ivy-common.classpath" conf="compile" type="jar,bundle"/>
 	</target>
 
 	<target name="clean">
-		<delete dir="${build.dir}" failonerror="true" />
+		<delete dir="${build.dir}"/>
 	</target>
 
 	<target name="compile" depends="init">
-		<mkdir dir="${build.classes}" />
-		<ivy:retrieve type="jar,bundle" pattern="${lib.dir}/[artifact]-[revision].[ext]" pathId="classpath" />
-		<javac encoding="UTF-8" source="${javac.version}" target="${javac.version}" srcdir="${src.dir}" destdir="${build.classes}" includeantruntime="false">
-			<classpath>
-				<path refid="classpath" />
-			</classpath>
+		<mkdir dir="${build.classes}"/>
+		<pathconvert refid="classpath" property="classpath.log"/>
+		<echo level="info" message="classpath ${classpath.log}"/>
+		<javac srcdir="${src.dir}" destdir="${build.classes}" includeantruntime="false">
+			<classpath refid="classpath"/>
 		</javac>
 	</target>
 
-	<target name="dist" depends="compile">
-		<manifestclasspath property="jar.classpath" jarfile="${lib.dir}/${ant.project.name}.jar">
+	<target name="test" depends="compile-test">
+		<junit printsummary="yes" fork="yes" haltonerror="true" errorProperty="tests.failed" failureProperty="tests.failed">
+			<sysproperty key="java.library.path" value="${build.lib.dir};${native.build.dir}"/>
+			<classpath refid="test.classpath"/>
+			<formatter type="plain"/>
+			<batchtest todir="${test.build.dir}">
+				<fileset dir="${test.src.dir}">
+					<include name="**/Test*.java"/>
+					<include name="**/*Test.java"/>
+					<include name="**/*TestCase.java"/>
+					<exclude name="**/*Suite*.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+		<fail if="tests.failed">Tests failed!</fail>
+	</target>
+
+	<target name="test-init" depends="compile">
+		<ivy:cachepath pathid="junit.classpath" conf="test"/>
+		<path id="test.classpath">
+			<path refid="classpath"/>
+			<path refid="junit.classpath"/>
+			<pathelement location="${test.src.dir}"/>
+			<pathelement location="${test.build.classes}"/>
+		</path>
+	</target>
+
+	<target name="compile-test" depends="test-init">
+		<mkdir dir="${test.build.classes}"/>
+		<pathconvert refid="test.classpath" property="test.classpath.log"/>
+		<echo level="info" message="test.classpath ${test.classpath.log}"/>
+		<javac srcdir="${test.src.dir}" destdir="${test.build.classes}" includeantruntime="false">
+			<classpath refid="test.classpath"/>
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile, test">
+		<mkdir dir="${dist.dir}"/>
+		<ivy:retrieve settingsRef="${ant.project.name}.ivy.settings" pattern="${dist.lib.dir}/[artifact].[ext]" conf="runtime" type="jar, bundle" pathId="classpath"/>
+		<ivy:retrieve settingsRef="${ant.project.name}.ivy.settings" pattern="${dist.bin.dir}/[artifact].[ext]" conf="runtime" type="native"/>
+		<manifestclasspath property="jar.classpath" jarfile="${dist.lib.dir}/${ant.project.name}.jar">
 			<classpath refid="classpath" />
 		</manifestclasspath>
-		<ivy:retrieve type="native" pattern="${bin.dir}/[artifact].[ext]" />
-		<jar destfile="${lib.dir}/${ant.project.name}.jar" basedir="${build.classes}">
+		<jar destfile="${dist.lib.dir}/${ant.project.name}.jar" basedir="${build.classes}">
 			<manifest>
 				<attribute name="Main-Class" value="at.o2xfs.operator.O2XfsOperator" />
 				<attribute name="Class-Path" value="${jar.classpath}" />
@@ -40,13 +98,14 @@
 				<include name="**/*.properties" />
 			</fileset>
 		</jar>
-		<zip destfile="${build.dir}/${ant.project.name}.zip">
-			<zipfileset prefix="lib" dir="${lib.dir}" excludes="**/*.xml" />
-			<zipfileset prefix="bin" dir="${bin.dir}" />
-			<zipfileset prefix="config" dir="${basedir}/config" />
+		<zip destfile="${dist.dir}/${ant.project.name}.zip">
+			<zipfileset dir="${dist.lib.dir}" prefix="lib"/>
+			<zipfileset dir="${dist.bin.dir}" prefix="bin"/>
+			<zipfileset prefix="config" dir="${basedir}/config" />			
 			<fileset dir="${basedir}">
 				<include name="*.cmd" />
 			</fileset>
 		</zip>
+		<!-- <ivy:publish artifactspattern="${dist.dir}/${ant.project.name}.[ext]" resolver="local"/> -->
 	</target>
 </project>

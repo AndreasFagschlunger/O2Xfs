@@ -12,15 +12,13 @@
 	<property name="test.build.classes" value="${test.build.dir}/classes"/>
 
 	<property name="native.src.dir" value="${basedir}/native"/>
-	<property name="native.build.dir" value="${build.dir}/native" />
+	<property name="native.build.dir" value="${native.src.dir}/Release" />
 
 	<property name="dist.dir" location="${build.dir}/dist"/>
 
 	<property name="ivy.dir" location="../ivy"/>
 	<loadproperties srcfile="${ivy.dir}/libraries.properties"/>
 	<property name="ivysettings.xml" location="${ivy.dir}/ivysettings.xml"/>
-	<property name="build.ivy.dir" location="${build.dir}/ivy"/>
-	<property name="build.ivy.lib.dir" location="${build.ivy.dir}/lib"/>
 
 	<condition property="windows">
 		<os family="windows" />
@@ -56,14 +54,11 @@
 
 	<target name="compile-native-windows" if="windows">
 		<mkdir dir="${native.build.dir}"/>
-		<copy todir="${native.build.dir}">
-			<fileset dir="${native.src.dir}"/>
-		</copy>
 		<pathconvert property="win.native.build.dir">
 			<path location="${native.build.dir}" />
 		</pathconvert>
 		<dirname file="${java.home}" property="java.home.parent" />
-		<exec dir="${native.build.dir}" executable="${native.build.dir}/build.cmd" failonerror="true">
+		<exec dir="${native.src.dir}" executable="${native.src.dir}/build.cmd" failonerror="true">
 			<env key="JAVA_HOME" value="${java.home.parent}"/>
 			<env key="OUTPUT_DIR" value="${win.native.build.dir}"/>
 		</exec>
@@ -107,9 +102,13 @@
 	<target name="dist" depends="compile, compile-native, test">
 		<mkdir dir="${dist.dir}"/>
 		<jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.classes}"/>
-		<copy todir="${dist.dir}">
-			<fileset dir="${build.dir}/native">
-				<include name="*.dll" />
+		<copy todir="${dist.dir}" flatten="true">
+			<fileset dir="${native.src.dir}">
+				<include name="at.o2xfs.win32/at.o2xfs.win32.h"/>
+			</fileset>
+			<fileset dir="${native.build.dir}">
+				<include name="at.o2xfs.win32.dll" />
+				<include name="at.o2xfs.win32.lib"/>
 			</fileset>
 		</copy>
 		<ivy:publish artifactspattern="${dist.dir}/${ant.project.name}.[ext]" resolver="local"/>

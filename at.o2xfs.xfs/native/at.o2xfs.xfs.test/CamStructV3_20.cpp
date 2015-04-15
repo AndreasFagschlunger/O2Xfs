@@ -1,8 +1,8 @@
 #include "at_o2xfs_xfs_cam_v320_CamStructV3_20Test.h"
 
-#include "Windows.h"
-#include "XFSCAM.H"
-#include "O2XfsWIN32.h"
+#include <Windows.h>
+#include <XFSCAM.H>
+#include "at.o2xfs.win32.h"
 
 static WFSCAMSTATUS status;
 static WFSCAMCAPS caps;
