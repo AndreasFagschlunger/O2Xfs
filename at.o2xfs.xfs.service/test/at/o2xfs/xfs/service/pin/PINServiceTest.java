@@ -47,8 +47,8 @@ public class PINServiceTest
 
 	@Test
 	public void pinStatus() throws Exception {
-		for (final PINService pinService : xfsServiceManager.getServices(PINService.class)) {
-			XfsCommand xfsCommand = new XfsInfoCommand(pinService, PINInfoCommand.STATUS);
+		for (final PINService pinService : serviceManager.getServices(PINService.class)) {
+			XfsCommand xfsCommand = new XfsInfoCommand<PINInfoCommand>(pinService, PINInfoCommand.STATUS);
 			WFSResult wfsResult = null;
 			try {
 				wfsResult = xfsCommand.call();
@@ -56,7 +56,7 @@ public class PINServiceTest
 				System.out.println(pinStatus);
 			} finally {
 				if (wfsResult != null) {
-					xfsServiceManager.free(wfsResult);
+					serviceManager.free(wfsResult);
 				}
 			}
 		}
@@ -64,8 +64,8 @@ public class PINServiceTest
 
 	@Test
 	public void pinCapabilities() throws Exception {
-		for (final PINService pinService : xfsServiceManager.getServices(PINService.class)) {
-			XfsCommand xfsCommand = new XfsInfoCommand(pinService, PINInfoCommand.CAPABILITIES);
+		for (final PINService pinService : serviceManager.getServices(PINService.class)) {
+			XfsCommand xfsCommand = new XfsInfoCommand<PINInfoCommand>(pinService, PINInfoCommand.CAPABILITIES);
 			WFSResult wfsResult = null;
 			try {
 				wfsResult = xfsCommand.call();
@@ -73,7 +73,7 @@ public class PINServiceTest
 				System.out.println(wfspincaps);
 			} finally {
 				if (wfsResult != null) {
-					xfsServiceManager.free(wfsResult);
+					serviceManager.free(wfsResult);
 				}
 			}
 		}
@@ -81,8 +81,8 @@ public class PINServiceTest
 
 	@Test
 	public void keyDetail() throws Exception {
-		for (final PINService pinService : xfsServiceManager.getServices(PINService.class)) {
-			final XfsCommand xfsCommand = new XfsInfoCommand(pinService, PINInfoCommand.KEY_DETAIL);
+		for (final PINService pinService : serviceManager.getServices(PINService.class)) {
+			final XfsCommand xfsCommand = new XfsInfoCommand<PINInfoCommand>(pinService, PINInfoCommand.KEY_DETAIL);
 			WFSResult wfsResult = null;
 			try {
 				wfsResult = xfsCommand.call();
@@ -93,7 +93,7 @@ public class PINServiceTest
 				}
 			} finally {
 				if (wfsResult != null) {
-					xfsServiceManager.free(wfsResult);
+					serviceManager.free(wfsResult);
 				}
 			}
 		}
@@ -101,10 +101,12 @@ public class PINServiceTest
 
 	@Test
 	public void funcKeyDetail() throws Exception {
-		for (final PINService pinService : xfsServiceManager.getServices(PINService.class)) {
+		for (final PINService pinService : serviceManager.getServices(PINService.class)) {
 			final ULONG fdkMask = new ULONG();
 			fdkMask.set(0xFFFFFFFFL);
-			XfsCommand xfsCommand = new XfsInfoCommand(pinService, PINInfoCommand.FUNCKEY_DETAIL, fdkMask);
+			XfsCommand xfsCommand = new XfsInfoCommand<PINInfoCommand>(	pinService,
+																		PINInfoCommand.FUNCKEY_DETAIL,
+																		fdkMask);
 			WFSResult wfsResult = null;
 			try {
 				wfsResult = xfsCommand.call();
@@ -112,7 +114,7 @@ public class PINServiceTest
 				System.out.println(funcKeyDetail);
 			} finally {
 				if (wfsResult != null) {
-					xfsServiceManager.free(wfsResult);
+					serviceManager.free(wfsResult);
 				}
 			}
 		}

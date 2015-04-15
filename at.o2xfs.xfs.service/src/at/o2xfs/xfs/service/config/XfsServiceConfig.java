@@ -1,21 +1,21 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- * 
+ *
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,14 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.service.config;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -38,15 +33,17 @@ import at.o2xfs.xfs.XfsAPI;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 public final class XfsServiceConfig {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(XfsServiceConfig.class);
+	private static final Logger LOG = LoggerFactory.getLogger(XfsServiceConfig.class);
 
-	private static final ConfigKey KEY_TIMEOUT_WFSGETINFO = new ConfigKey(
-			"WFSGetInfo", "TimeOut");
-	private static final ConfigKey KEY_TIMEOUT_WFSEXECUTE = new ConfigKey(
-			"WFSExecute", "TimeOut");
+	private static final ConfigKey KEY_TIMEOUT_WFSGETINFO = new ConfigKey("WFSGetInfo", "TimeOut");
+	private static final ConfigKey KEY_TIMEOUT_WFSEXECUTE = new ConfigKey("WFSExecute", "TimeOut");
 
 	private static XfsServiceConfig instance = null;
 
@@ -66,9 +63,7 @@ public final class XfsServiceConfig {
 			properties.load(inStream);
 		} catch (IOException e) {
 			if (LOG.isErrorEnabled()) {
-				LOG.error(method,
-						"Error loading Properties: " + file.getAbsolutePath(),
-						e);
+				LOG.error(method, "Error loading Properties: " + file.getAbsolutePath(), e);
 			}
 		} finally {
 			if (inStream != null) {
@@ -76,10 +71,7 @@ public final class XfsServiceConfig {
 					inStream.close();
 				} catch (IOException e) {
 					if (LOG.isErrorEnabled()) {
-						LOG.error(
-								method,
-								"Error closing stream: "
-										+ file.getAbsolutePath(), e);
+						LOG.error(method, "Error closing stream: " + file.getAbsolutePath(), e);
 					}
 				}
 			}
@@ -104,8 +96,7 @@ public final class XfsServiceConfig {
 				result = Integer.valueOf(value);
 			} catch (NumberFormatException e) {
 				if (LOG.isErrorEnabled()) {
-					LOG.error(method, "Error parsing Integer: key=" + key
-							+ ",value=" + value, e);
+					LOG.error(method, "Error parsing Integer: key=" + key + ",value=" + value, e);
 				}
 			}
 		}
@@ -125,8 +116,7 @@ public final class XfsServiceConfig {
 				result = Long.valueOf(value);
 			} catch (NumberFormatException e) {
 				if (LOG.isErrorEnabled()) {
-					LOG.error(method, "Error parsing Long: key=" + key
-							+ ",value=" + value, e);
+					LOG.error(method, "Error parsing Long: key=" + key + ",value=" + value, e);
 				}
 			}
 		}
@@ -134,14 +124,12 @@ public final class XfsServiceConfig {
 	}
 
 	public boolean getBoolean(ConfigKey configKey) {
-		Boolean result = null;
+		boolean result = false;
 		String s = getValue(configKey);
 		if (s != null) {
 			result = Boolean.parseBoolean(s);
-		} else {
-			result = Boolean.FALSE;
 		}
-		return result.booleanValue();
+		return result;
 	}
 
 	public Class<?> getClass(ConfigKey key) {
@@ -159,14 +147,12 @@ public final class XfsServiceConfig {
 		return null;
 	}
 
-	public Long getXfsInfoTimeout(XfsInfoCommand command) {
-		return getLong(KEY_TIMEOUT_WFSGETINFO,
-				Long.valueOf(XfsAPI.WFS_INDEFINITE_WAIT));
+	public Long getXfsInfoTimeout(XfsInfoCommand<?> command) {
+		return getLong(KEY_TIMEOUT_WFSGETINFO, Long.valueOf(XfsAPI.WFS_INDEFINITE_WAIT));
 	}
 
-	public Long getXfsExecuteTimeout(XfsExecuteCommand command) {
-		return getLong(KEY_TIMEOUT_WFSEXECUTE,
-				Long.valueOf(XfsAPI.WFS_INDEFINITE_WAIT));
+	public Long getXfsExecuteTimeout(XfsExecuteCommand<?> command) {
+		return getLong(KEY_TIMEOUT_WFSEXECUTE, Long.valueOf(XfsAPI.WFS_INDEFINITE_WAIT));
 	}
 
 	public <T> T newInstance(ConfigKey configKey, Class<T> type) {
@@ -178,9 +164,7 @@ public final class XfsServiceConfig {
 			} catch (Exception e) {
 				final String method = "newInstance(ConfigKey, Class<T>)";
 				if (LOG.isErrorEnabled()) {
-					LOG.error(method,
-							"Error creating new instance from class: "
-									+ className, e);
+					LOG.error(method, "Error creating new instance from class: " + className, e);
 				}
 			}
 		}
