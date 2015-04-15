@@ -5,14 +5,17 @@
 	<configurations defaultconfmapping="default">
 		<conf name="default" extends="master,runtime"/>
     	<conf name="master" description="contains the artifact but no dependencies"/>
-    	<conf name="runtime" description="runtime but not the artifact"/>
-    	<conf name="compile"/>
+    	<conf name="compile" visibility="private"/>
+    	<conf name="runtime" extends="compile" description="runtime but not the artifact"/>    	
+    	<conf name="test" extends="runtime" visibility="private"/>
 	</configurations>
 	<publications>
 		<artifact name="at.o2xfs.log" type="jar" conf="master" ext="jar" />
 	</publications>
 	<dependencies>
 		<dependency org="org.slf4j" name="slf4j-api" rev="${slf4j-api.version}" conf="compile->default" />
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="${slf4j-api.version}" conf="runtime->master" />
 		<dependency org="log4j" name="log4j" rev="${log4j.version}" conf="runtime->master" />
+		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default" />
 	</dependencies>
 </ivy-module>

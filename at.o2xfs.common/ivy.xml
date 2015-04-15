@@ -28,13 +28,12 @@
 		<conf name="default" extends="master,runtime" />
 		<conf name="master" description="contains the artifact but no dependencies" />
 		<conf name="runtime" description="runtime but not the artifact" />
-		<conf name="common" visibility="private" extends="runtime" />
-		<conf name="test" visibility="private" extends="common" />
+		<conf name="test" visibility="private" />
 	</configurations>
 	<publications>
 		<artifact name="at.o2xfs.common" type="jar" />
 	</publications>
 	<dependencies>
-		<dependency org="junit" name="junit" rev="${junit.version}" conf="common->default" />
+		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default" />
 	</dependencies>
 </ivy-module>
