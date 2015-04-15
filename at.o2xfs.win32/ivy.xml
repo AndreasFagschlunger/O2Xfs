@@ -28,7 +28,7 @@
 		<conf name="default" extends="master,runtime"/>
     	<conf name="master" description="contains the artifact but no dependencies"/>
     	<conf name="runtime" description="runtime but not the artifact"/>
-    	<conf name="compile" visibility="private"/>
+    	<conf name="compile" extends="master"/>
     	<conf name="test" visibility="private"/>
 	</configurations>
 	<publications>
