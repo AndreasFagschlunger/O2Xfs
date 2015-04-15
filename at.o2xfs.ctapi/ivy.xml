@@ -6,13 +6,20 @@
         module="at.o2xfs.ctapi"
         status="integration">
 	</info>
+	<configurations defaultconfmapping="default">
+		<conf name="default" extends="master,runtime"/>
+    	<conf name="master" description="contains the artifact but no dependencies"/>
+    	<conf name="runtime" extends="compile" description="runtime but not the artifact"/>
+    	<conf name="compile"  visibility="private"/>
+    	<conf name="test" visibility="private" />
+	</configurations>
 	<publications>
-		<artifact name="at.o2xfs.ctapi" type="jar" />
-		<artifact name="at.o2xfs.ctapi" type="native" ext="dll" />
+		<artifact name="at.o2xfs.ctapi" type="jar" conf="master" />
+		<artifact name="at.o2xfs.ctapi" type="native" ext="dll" conf="master" />
 	</publications>
 	<dependencies>
-		<dependency name="at.o2xfs.common" rev="latest.integration" />
-		<dependency name="at.o2xfs.log" rev="latest.integration" />
-		<dependency name="at.o2xfs.win32" rev="latest.integration" />
+		<dependency name="at.o2xfs.common" rev="latest.integration" conf="compile->default" />
+		<dependency name="at.o2xfs.log" rev="latest.integration" conf="compile->default" />
+		<dependency name="at.o2xfs.win32" rev="latest.integration" conf="compile->compile" />
 	</dependencies>
 </ivy-module>

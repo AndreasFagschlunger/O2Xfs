@@ -39,13 +39,13 @@ import at.o2xfs.win32.ZSTR;
 public final class CTAPI {
 
 	static {
-		System.loadLibrary("O2XfsWIN32");
+		System.loadLibrary("at.o2xfs.win32");
 		System.loadLibrary("at.o2xfs.ctapi");
 	}
 
 	private static final Logger LOG = LoggerFactory.getLogger(CTAPI.class);
 
-	private String fileName = "CT32.dll";
+	public static final String DEFAULT_LIBRARY = "CT32.dll";
 
 	private Pointer moduleHandle = null;
 
@@ -56,7 +56,11 @@ public final class CTAPI {
 	private Pointer closeFunctionAddress = null;
 
 	public CTAPI() {
-		loadLibrary("C:\\Program Files (x86)\\Identive\\SPR532 Driver\\CT-API Tools\\CTPCSC32.dll");
+		this(DEFAULT_LIBRARY);
+	}
+
+	public CTAPI(String fileName) {
+		loadLibrary(fileName);
 		addShutdownHook();
 	}
 
@@ -87,11 +91,11 @@ public final class CTAPI {
 		}
 	}
 
-	private native Buffer getFunctionAddress0(final Pointer moduleHandle, final ZSTR name) throws NativeException;
+	private native Buffer getFunctionAddress0(final Pointer aModuleHandle, final ZSTR name) throws NativeException;
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @param ctn
 	 *            Logical card terminal number
 	 * @param pn
@@ -149,5 +153,5 @@ public final class CTAPI {
 		});
 	}
 
-	private native void freeLibrary0(final Pointer moduleHandle) throws NativeException;
+	private native void freeLibrary0(final Pointer aModuleHandle) throws NativeException;
 }
