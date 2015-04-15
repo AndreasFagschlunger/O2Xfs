@@ -45,7 +45,7 @@ public class O2XfsConfTest {
 	}
 
 	@Test
-	public void dumpConfTree() throws Exception {
+	public void dumpConfTree() throws XfsException {
 		dump(O2XfsConf.WFS_CFG_HKEY_XFS_ROOT, "");
 	}
 

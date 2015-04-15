@@ -44,11 +44,16 @@ public class PTRImageStruct
 	private final XfsData data = new XfsData();
 
 	private PTRImageStruct(XfsVersion version) {
-		new XfsStructInit(version).addUntil(imageType, XfsVersion.V2_00)
-									.addSince(imageSource, XfsVersion.V3_00)
-									.addSince(status, XfsVersion.V3_00)
-									.add(data)
-									.init(this);
+		if (XfsVersion.V2_00.isGE(version)) {
+			add(imageType);
+			imageSource.allocate();
+			status.allocate();
+		} else {
+			imageType.allocate();
+			add(imageSource);
+			add(status);
+		}
+		add(data);
 	}
 
 	public PTRImageStruct(XfsVersion version, Pointer p) {

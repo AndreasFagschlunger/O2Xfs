@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * - Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * - Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -39,19 +39,19 @@ public class XFSUtils {
 		return versionsRequired;
 	}
 
-	public static short getVersion(String version) {
-		short s = 0;
+	public static int getVersion(String version) {
+		int result = 0;
 		int endIndex = version.indexOf('.');
 		if (endIndex >= 0) {
 			String minorVersion = version.substring(endIndex + 1);
 			if (minorVersion.length() > 0) {
 				try {
-					short minor = Short.parseShort(minorVersion);
+					int minor = Integer.parseInt(minorVersion);
 					if (minor < 0 || minor > 255) {
 						throw new IllegalArgumentException("Minor version out of range. Value:\"" + minor + "\"");
 					}
 					minor <<= 8;
-					s |= minor;
+					result |= minor;
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
 				}
@@ -61,13 +61,13 @@ public class XFSUtils {
 		}
 		String majorVersion = version.substring(0, endIndex);
 		if (majorVersion.length() > 0) {
-			short major = Short.parseShort(majorVersion);
+			int major = Integer.parseInt(majorVersion);
 			if (major < 0 || major > 255) {
 				throw new IllegalArgumentException("Major version out of range. Value:\"" + majorVersion + "\"");
 			}
-			s |= (major & 0xFF);
+			result |= (major & 0xFF);
 		}
-		return s;
+		return result;
 	}
 
 	public static String getVersionAsString(int i) {

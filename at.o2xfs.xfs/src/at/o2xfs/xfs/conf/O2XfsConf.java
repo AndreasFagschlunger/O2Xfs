@@ -30,6 +30,7 @@ package at.o2xfs.xfs.conf;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.DWORD;
+import at.o2xfs.win32.FILETIME;
 import at.o2xfs.win32.HKEY;
 import at.o2xfs.win32.Type;
 import at.o2xfs.win32.ZSTR;
@@ -43,6 +44,11 @@ import java.util.Map;
  * @author Andreas Fagschlunger
  */
 public class O2XfsConf {
+
+	static {
+		System.loadLibrary("at.o2xfs.win32");
+		System.loadLibrary("at.o2xfs.xfs.conf");
+	}
 
 	private final static Logger LOG = LoggerFactory.getLogger(O2XfsConf.class);
 
@@ -93,7 +99,6 @@ public class O2XfsConf {
 	private static O2XfsConf instance = null;
 
 	private O2XfsConf() {
-		System.loadLibrary("O2XfsConf");
 		openKeys = new ArrayList<HKEY>();
 	}
 
@@ -110,7 +115,7 @@ public class O2XfsConf {
 
 	/**
 	 * Closes the specified key.
-	 * 
+	 *
 	 * @param hKey
 	 *            Handle to the currently open key that is to be closed.
 	 * @throws XfsException
@@ -146,17 +151,18 @@ public class O2XfsConf {
 	 */
 	public String wfmQueryValue(final HKEY hKey, final String valueName) throws XfsException {
 		final ZSTR data = new ZSTR(SIZE_LIMIT, true);
-		final int errorCode = wfmQueryValue0(hKey, new ZSTR(valueName), data);
+		final DWORD cchData = new DWORD(0L);
+		final int errorCode = wfmQueryValue0(hKey, new ZSTR(valueName), data, cchData);
 		XfsException.throwFor(errorCode);
 		return data.toString();
 	}
 
-	private native int wfmQueryValue0(Type hKey, Type lpszValueName, Type lpszData);
+	private native int wfmQueryValue0(Type hKey, Type lpszValueName, Type lpszData, Type lpcchData);
 
 	/**
 	 * Enumerates the subkeys of the specified open key. Retrieves information
 	 * about one subkey each time it is called.
-	 * 
+	 *
 	 * @param hKey
 	 *            Handle to a currently open key, or the predefined handle
 	 *            value: {@link #WFS_CFG_HKEY_XFS_ROOT}
@@ -164,12 +170,14 @@ public class O2XfsConf {
 	 */
 	public String wfmEnumKey(final HKEY key, final DWORD iSubKey) throws XfsException {
 		final ZSTR name = new ZSTR(SIZE_LIMIT, true);
-		final int errorCode = wfmEnumKey0(key, iSubKey, name);
+		DWORD cchName = new DWORD(name.length);
+		FILETIME lastWrite = new FILETIME();
+		final int errorCode = wfmEnumKey0(key, iSubKey, name, cchName, lastWrite);
 		XfsException.throwFor(errorCode);
 		return name.toString();
 	}
 
-	private native int wfmEnumKey0(Type hKey, Type iSubKey, Type lpszName);
+	private native int wfmEnumKey0(Type hKey, Type iSubKey, Type lpszName, Type lpcchName, Type lpftLastWrite);
 
 	/**
 	 * Enumerates the values of the specified open key. Retrieves the name and

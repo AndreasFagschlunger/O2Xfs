@@ -51,8 +51,8 @@ public class XfsAPI {
 	private static XfsAPI instance = null;
 
 	private XfsAPI() {
-		System.loadLibrary("O2XfsWIN32");
-		System.loadLibrary("O2Xfs");
+		System.loadLibrary("at.o2xfs.win32");
+		System.loadLibrary("at.o2xfs.xfs");
 	}
 
 	public final static XfsAPI getInstance() {
@@ -79,7 +79,7 @@ public class XfsAPI {
 
 	/**
 	 * Establishes a connection between an application and the XFS Manager.
-	 * 
+	 *
 	 * @param versionsRequired
 	 * @return
 	 * @throws IllegalArgumentException
@@ -117,7 +117,7 @@ public class XfsAPI {
 	 * more service providers, then the XFS Manager will automatically issue the
 	 * close(s). Once the WFSCleanUp has been performed, subsequent attempts to
 	 * issue any XFS function other than WFSStartUp will fail.
-	 * 
+	 *
 	 * @throws XfsException
 	 */
 	public void wfsCleanUp() throws XfsException {
@@ -136,7 +136,7 @@ public class XfsAPI {
 
 	/**
 	 * Requests a new, unique application handle value.
-	 * 
+	 *
 	 * @return
 	 * @throws XfsException
 	 */
@@ -158,7 +158,7 @@ public class XfsAPI {
 	 * classes) from the specified hService, by the specified hWndReg (or all
 	 * the calling application's hWnd's). The asynchronous version of
 	 * WFSDeregister.
-	 * 
+	 *
 	 * @param hService
 	 *            Service handle returned by WFSOpen or WFSAsyncOpen. If this
 	 *            value is NULL, and dwEventClass is SYSTEM_EVENTS, the XFS
@@ -208,7 +208,7 @@ public class XfsAPI {
 
 	/**
 	 * Makes the specified application handle invalid.
-	 * 
+	 *
 	 * @param hApp
 	 *            The application handle to be made invalid.
 	 * @throws XfsException
@@ -262,7 +262,7 @@ public class XfsAPI {
 										Type requestId);
 
 	/**
-	 * 
+	 *
 	 * @param wfsResult
 	 * @throws XfsException
 	 */
@@ -307,7 +307,7 @@ public class XfsAPI {
 	/**
 	 * Retrieves information from the specified service provider. The
 	 * asynchronous version of WFSGetInfo.
-	 * 
+	 *
 	 * @param hService
 	 *            Handle to the service provider as returned by WFSOpen or
 	 *            WFSAsyncOpen.
@@ -422,7 +422,7 @@ public class XfsAPI {
 	 * window; all messages of the specified class(es) are sent to the window
 	 * specified in the hWndReg parameter. The asynchronous version of
 	 * WFSRegister.
-	 * 
+	 *
 	 * @param hService
 	 *            Handle to the service provider as returned by WFSOpen or
 	 *            WFSAsyncOpen. If this value is NULL, and dwEventClass is
