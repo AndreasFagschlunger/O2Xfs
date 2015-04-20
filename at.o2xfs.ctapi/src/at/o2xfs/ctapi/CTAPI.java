@@ -27,6 +27,7 @@
 
 package at.o2xfs.ctapi;
 
+import at.o2xfs.common.Hex;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.Buffer;
@@ -113,13 +114,20 @@ public final class CTAPI {
 	private native int init0(Pointer address, USHORT ctn, USHORT pn);
 
 	public byte[] data(int ctn, int dad, int sad, byte[] command) throws CTException {
-		final ByteArray cmdBuf = new ByteArray(command);
-		final ByteArray rspBuf = new ByteArray(258);
-		final USHORT lenr = new USHORT(rspBuf.getSize());
-		final int rc = data0(dataFunctionAddress, new USHORT(ctn), new UINT8(dad), new UINT8(sad), cmdBuf, lenr, rspBuf);
+		final String method = "data(int, int, int, byte[])";
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(method, "ctn=" + ctn + ",dad=" + dad + ",sad=" + sad + ",command=" + Hex.encode(command));
+		}
+		ByteArray cmdBuf = new ByteArray(command);
+		ByteArray rspBuf = new ByteArray(258);
+		USHORT lenr = new USHORT(rspBuf.getSize());
+		int rc = data0(dataFunctionAddress, new USHORT(ctn), new UINT8(dad), new UINT8(sad), cmdBuf, lenr, rspBuf);
 		CTException.throwFor(rc);
-		final byte[] rsp = new byte[lenr.intValue()];
+		byte[] rsp = new byte[lenr.intValue()];
 		System.arraycopy(rspBuf.toByteArray(), 0, rsp, 0, rsp.length);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(method, "rsp=" + Hex.encode(rsp));
+		}
 		return rsp;
 	}
 

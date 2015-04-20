@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -27,6 +27,13 @@
 
 package at.o2xfs.emv.demo.icc;
 
+import at.o2xfs.emv.demo.DemoException;
+import at.o2xfs.emv.icc.CAPDU;
+import at.o2xfs.emv.icc.ICReader;
+import at.o2xfs.emv.icc.RAPDU;
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -35,13 +42,6 @@ import javax.smartcardio.CardException;
 import javax.smartcardio.CardTerminal;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.TerminalFactory;
-
-import at.o2xfs.emv.demo.DemoException;
-import at.o2xfs.emv.icc.CAPDU;
-import at.o2xfs.emv.icc.ICReader;
-import at.o2xfs.emv.icc.RAPDU;
-import at.o2xfs.log.Logger;
-import at.o2xfs.log.LoggerFactory;
 
 public class SmartCardIoReader implements ICReader {
 
@@ -64,7 +64,7 @@ public class SmartCardIoReader implements ICReader {
 					}
 					continue;
 				}
-				return terminal.connect("T=1");
+				return terminal.connect("*");
 			}
 		} catch (CardException e) {
 			throw new DemoException(e);
@@ -79,13 +79,9 @@ public class SmartCardIoReader implements ICReader {
 
 	@Override
 	public RAPDU transmit(CAPDU command) throws IOException {
-		return transmit(command.getBytes());
-	}
-
-	@Override
-	public RAPDU transmit(byte[] command) throws IOException {
 		try {
-			return new RAPDU(card.getBasicChannel().transmit(new CommandAPDU(command)).getBytes());
+			byte[] response = card.getBasicChannel().transmit(new CommandAPDU(command.getBytes())).getBytes();
+			return new RAPDU(response);
 		} catch (CardException e) {
 			throw new IOException(e);
 		}

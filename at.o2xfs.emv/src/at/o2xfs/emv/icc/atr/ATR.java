@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,14 +23,14 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv.icc.atr;
 
+import at.o2xfs.common.Hex;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import at.o2xfs.common.Hex;
 
 public class ATR {
 
@@ -122,8 +122,7 @@ public class ATR {
 		return i;
 	}
 
-	private void parseInterfaceCharacter(final String key, int index)
-			throws ATRException {
+	private void parseInterfaceCharacter(final String key, int index) throws ATRException {
 		if (index >= atr.length) {
 			throw new ATRException("Expected " + key + " at position " + index);
 		}
@@ -143,7 +142,7 @@ public class ATR {
 		if (index == atr.length) {
 			return;
 		}
-		tck = atr[index];
+		tck = Byte.valueOf(atr[index]);
 
 	}
 
@@ -191,10 +190,15 @@ public class ATR {
 
 	@Override
 	public String toString() {
-		return "TS=" + Hex.encode(ts) + ",T0=" + t0 + ",interfaceCharacters="
-				+ toString(interfaceCharacters) + ",historicalBytes="
-				+ Hex.encode(historicalBytes) + ",TCK="
-				+ (tck == null ? "" : Hex.encode(tck));
+		return "TS=" + Hex.encode(ts)
+				+ ",T0="
+				+ t0
+				+ ",interfaceCharacters="
+				+ toString(interfaceCharacters)
+				+ ",historicalBytes="
+				+ Hex.encode(historicalBytes)
+				+ ",TCK="
+				+ (tck == null ? "" : Hex.encode(tck.byteValue()));
 	}
 
 	private String toString(final Map<String, Byte> map) {
@@ -202,8 +206,7 @@ public class ATR {
 		int i = 0;
 		int iMax = map.size() - 1;
 		for (Map.Entry<String, Byte> entry : map.entrySet()) {
-			str.append(entry.getKey() + "="
-					+ Hex.encode(entry.getValue().byteValue()));
+			str.append(entry.getKey() + "=" + Hex.encode(entry.getValue().byteValue()));
 			if (iMax == i) {
 				break;
 			}

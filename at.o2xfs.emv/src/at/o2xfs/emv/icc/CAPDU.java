@@ -143,15 +143,31 @@ public class CAPDU {
 	}
 
 	public byte[] getData() {
-		return data;
+		return Bytes.copy(data);
 	}
 
 	public byte[] getLe() {
-		return le;
+		return Bytes.copy(le);
+	}
+
+	public boolean isCase1() {
+		return data.length == 0 && le.length == 0;
+	}
+
+	public boolean isCase2() {
+		return data.length == 0 && le.length != 0;
+	}
+
+	public boolean isCase3() {
+		return data.length != 0 && le.length == 0;
+	}
+
+	public boolean isCase4() {
+		return data.length != 0 && le.length != 0;
 	}
 
 	public byte[] getBytes() {
-		final int size = calcSize();
+		final int size = size();
 		final byte[] capdu = new byte[size];
 		int i = 0;
 		capdu[i++] = (byte) cla;
@@ -167,13 +183,8 @@ public class CAPDU {
 		return capdu;
 	}
 
-	private int calcSize() {
-		int size = 4;
-		if (data.length > 0) {
-			size += data.length + 1;
-		}
-		size += le.length;
-		return size;
+	private int size() {
+		return 4 + (data.length > 0 ? data.length + 1 : 0) + le.length;
 	}
 
 	@Override
@@ -206,7 +217,7 @@ public class CAPDU {
 											+ ", P2: "
 											+ Hex.encode(p2));
 		if (data.length > 0) {
-			s.append(", Data: " + Hex.encode(data));
+			s.append(", Lc: " + data.length).append(", Data: " + Hex.encode(data));
 		}
 		if (le.length > 0) {
 			s.append(", Le: " + Bytes.toInt(le[0]));
