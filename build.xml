@@ -1,0 +1,11 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="at.o2xfs" basedir="." default="publish-all">
+	<target name="buildlist">
+  	<ivy:buildlist reference="build-path">
+  		<fileset dir="${basedir}" includes="at.o2xfs.*/build.xml"/>
+		</ivy:buildlist>
+	</target>
+
+	<target name="publish-all" depends="buildlist" description="compile, jar and publish all projects in the right order">
+		<subant target="dist" buildpathref="build-path" />
+	</target>
+</project>
