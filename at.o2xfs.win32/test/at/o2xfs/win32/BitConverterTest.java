@@ -27,10 +27,10 @@
 
 package at.o2xfs.win32;
 
+import at.o2xfs.common.Hex;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import at.o2xfs.common.Hex;
 
 public class BitConverterTest {
 

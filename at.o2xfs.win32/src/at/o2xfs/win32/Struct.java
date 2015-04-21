@@ -32,7 +32,7 @@ import at.o2xfs.common.Assert;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Base class for all <code>struct</code>-Types.

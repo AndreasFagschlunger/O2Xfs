@@ -39,8 +39,7 @@
 	</publications>
 	<dependencies>
 		<dependency name="at.o2xfs.common" rev="latest.integration" conf="compile->master" />
-		<dependency org="commons-codec" name="commons-codec" rev="${commons-codec.version}" />
-		<dependency org="commons-lang" name="commons-lang" rev="${commons-lang.version}" conf="compile->default" />
+		<dependency org="org.apache.commons" name="commons-lang3" rev="${commons-lang3.version}" conf="compile->default;runtime->default"/>
 		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default" />
 	</dependencies>
 </ivy-module>

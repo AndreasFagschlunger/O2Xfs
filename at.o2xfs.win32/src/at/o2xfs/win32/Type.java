@@ -29,7 +29,7 @@ package at.o2xfs.win32;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * This class is the base class for all native types.

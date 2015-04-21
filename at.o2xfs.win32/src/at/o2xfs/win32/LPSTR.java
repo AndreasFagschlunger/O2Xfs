@@ -27,8 +27,8 @@
 
 package at.o2xfs.win32;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * A pointer to a null-terminated string of 8-bit Windows (ANSI) characters.

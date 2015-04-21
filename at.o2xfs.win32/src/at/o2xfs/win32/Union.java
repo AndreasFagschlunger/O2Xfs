@@ -27,7 +27,7 @@
 
 package at.o2xfs.win32;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Base class for <code>union</code> types.
