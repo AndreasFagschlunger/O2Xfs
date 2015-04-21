@@ -17,9 +17,9 @@
 		<artifact name="at.o2xfs.emv" type="jar" conf="master"/>
 	</publications>
 	<dependencies>
-		<dependency name="at.o2xfs.common" rev="latest.integration"/>
-		<dependency name="at.o2xfs.log" rev="latest.integration"/>
-		<dependency org="org.apache.commons" name="commons-lang3" rev="${commons-lang3.version}"/>
+		<dependency name="at.o2xfs.common" rev="latest.integration" conf="compile->default"/>
+		<dependency name="at.o2xfs.log" rev="latest.integration" conf="compile->default"/>
+		<dependency org="org.apache.commons" name="commons-lang3" rev="${commons-lang3.version}" conf="compile->default"/>
 		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default"/>
 	</dependencies>
 </ivy-module>
