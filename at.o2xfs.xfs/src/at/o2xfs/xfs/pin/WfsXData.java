@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -27,14 +27,15 @@
 
 package at.o2xfs.xfs.pin;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class WfsXData extends Struct {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class WfsXData
+		extends Struct {
 
 	/**
 	 * @since 3.10
@@ -79,7 +80,7 @@ public class WfsXData extends Struct {
 	 * {@link #length}
 	 */
 	private void setLength(final int length) {
-		this.length.put(length);
+		this.length.set(length);
 	}
 
 	/**
@@ -98,12 +99,12 @@ public class WfsXData extends Struct {
 	 */
 	public void setData(final byte[] data) {
 		setLength(data.length);
-		this.data.pointTo(new ByteArray(data));
+		ByteArray array = new ByteArray(data);
+		this.data.pointTo(array);
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("length", getLength())
-				.append("data", getData()).toString();
+		return new ToStringBuilder(this).append("length", getLength()).append("data", getData()).toString();
 	}
 }

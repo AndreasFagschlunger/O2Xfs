@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,58 +23,56 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.idc;
-
-import java.util.Map;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.DWORDArray;
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
-import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsVersion;
+import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
+import java.util.Map;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * @author Andreas Fagschlunger
- * 
+ *
  */
-public class WfsIDCStatus extends Struct {
+public class WfsIDCStatus
+		extends Struct {
 
 	/**
-	 * 
+	 *
 	 */
 	private final static int WFS_IDC_GUIDLIGHTS_SIZE = 32;
 
 	/**
-	 * Specifies the state of the ID card device as one of the following flags:
-	 * {@link IDCDeviceState}
+	 * Specifies the state of the ID card device as one of the following flags: {@link IDCDeviceState}
 	 */
-	private final WORD device = new WORD();
+	private final XfsWord<IDCDeviceState> device = new XfsWord<>(IDCDeviceState.class);
 
 	/**
-	 * Specifies the state of the ID card unit as one of the following flags:
-	 * {@link IDCMedia}
+	 * Specifies the state of the ID card unit as one of the following flags: {@link IDCMedia}
 	 */
-	private final WORD media = new WORD();
+	private final XfsWord<IDCMedia> media = new XfsWord<>(IDCMedia.class);
 
 	/**
 	 * Specifies the state of the ID card unit retain bin as one of the
 	 * following flags: {@link IDCRetainBin}
 	 */
-	private final WORD retainBin = new WORD();
+	private final XfsWord<IDCRetainBin> retainBin = new XfsWord<>(IDCRetainBin.class);
 
 	/**
-	 * Specifies the state of the security unit as one of the following flags:
-	 * {@link IDCSecurity}
+	 * Specifies the state of the security unit as one of the following flags: {@link IDCSecurity}
 	 */
-	private final WORD security = new WORD();
+	private final XfsWord<IDCSecurity> security = new XfsWord<>(IDCSecurity.class);
 
 	/**
 	 * The number of cards retained; applicable only to motor driven ID card
@@ -86,10 +84,10 @@ public class WfsIDCStatus extends Struct {
 	/**
 	 * Specifies the state of the chip on the currently inserted card in the
 	 * device as one of the following flags: {@link IDCChipState}
-	 * 
+	 *
 	 * @since 3.00
 	 */
-	private final WORD chipPower = new WORD();
+	private final XfsWord<IDCChipState> chipPower = new XfsWord<>(IDCChipState.class);
 
 	/**
 	 * Points to a list of vendor-specific, or any other extended, information.
@@ -108,53 +106,52 @@ public class WfsIDCStatus extends Struct {
 	 * guidance light indicator as WFS_IDC_GUIDANCE_NOT_AVAILABLE,
 	 * WFS_IDC_GUIDANCE_OFF or a combination of the following flags consisting
 	 * of one type B, and optionally one type C.
-	 * 
+	 *
 	 * TODO: Table
-	 * 
+	 *
 	 * @since 3.10
 	 */
-	private final DWORDArray guidLights = new DWORDArray(
-			WFS_IDC_GUIDLIGHTS_SIZE);
+	private final DWORDArray guidLights = new DWORDArray(WFS_IDC_GUIDLIGHTS_SIZE);
 
 	/**
 	 * Specifies the state of the chip card module reader as one of the
 	 * following values: {@link IDCChipModule}
-	 * 
+	 *
 	 * @since 3.10
 	 */
-	private WORD chipModule = new WORD();
+	private XfsWord<IDCChipModule> chipModule = new XfsWord<>(IDCChipModule.class);
 
 	/**
 	 * Specifies the state of the magnetic card reader as one of the following
 	 * values: {@link IDCMagModule}
-	 * 
+	 *
 	 * @since 3.10
 	 */
-	private WORD magReadModule = new WORD();
+	private XfsWord<IDCMagModule> magReadModule = new XfsWord<>(IDCMagModule.class);
 
 	/**
 	 * Specifies the state of the magnetic card writer as one of the following
 	 * values: {@link IDCMagModule}
-	 * 
+	 *
 	 * @since 3.10
 	 */
-	private WORD magWriteModule = new WORD();
+	private XfsWord<IDCMagModule> magWriteModule = new XfsWord<>(IDCMagModule.class);
 
 	/**
 	 * Specifies the state of the front image reader as one of the following
 	 * values: {@link IDCImageModule}
-	 * 
+	 *
 	 * @since 3.10
 	 */
-	private WORD frontImageModule = new WORD();
+	private XfsWord<IDCImageModule> frontImageModule = new XfsWord<>(IDCImageModule.class);
 
 	/**
 	 * Specifies the state of the back image reader as one of the following
 	 * values: {@link IDCImageModule}
-	 * 
+	 *
 	 * @since 3.10
 	 */
-	private WORD backImageModule = new WORD();
+	private XfsWord<IDCImageModule> backImageModule = new XfsWord<>(IDCImageModule.class);
 
 	/**
 	 * Specifies the device position. The device position value is independent
@@ -164,17 +161,17 @@ public class WfsIDCStatus extends Struct {
 	 * is not in its normal operating position (i.e. WFS_IDC_DEVICEINPOSITION)
 	 * then media may not be presented through the normal customer interface.
 	 * This value is one of the following values: {@link IDCDevicePosition}
-	 * 
+	 *
 	 * @since 3.10
 	 */
-	private WORD devicePosition = new WORD();
+	private XfsWord<IDCDevicePosition> devicePosition = new XfsWord<>(IDCDevicePosition.class);
 
 	/**
 	 * Specifies the actual number of seconds required by the device to resume
 	 * its normal operational state from the current power saving mode. This
 	 * value is zero if either the power saving mode has not been activated or
 	 * no power save control is supported.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private USHORT powerSaveRecoveryTime = new USHORT();
@@ -217,17 +214,16 @@ public class WfsIDCStatus extends Struct {
 		assignBuffer(pStatus);
 	}
 
-	public WfsIDCStatus(final XfsVersion xfsVersion,
-			final WfsIDCStatus idcStatus) {
+	public WfsIDCStatus(final XfsVersion xfsVersion, final WfsIDCStatus idcStatus) {
 		this(xfsVersion);
 		allocate();
-		device.put(idcStatus.device);
-		media.put(idcStatus.media);
-		retainBin.put(idcStatus.retainBin);
-		security.put(idcStatus.security);
-		cards.put(idcStatus.cards);
+		device.set(idcStatus.getDevice());
+		media.set(idcStatus.getMedia());
+		retainBin.set(idcStatus.getRetainBin());
+		security.set(idcStatus.getSecurity());
+		cards.set(idcStatus.cards);
 		if (xfsVersion.isGE(XfsVersion.V2_00)) {
-			chipPower.put(idcStatus.chipPower);
+			chipPower.set(idcStatus.getChipPower());
 		}
 		extra.pointTo(KeyValueMap.toZZString(idcStatus.getExtra()));
 	}
@@ -278,7 +274,7 @@ public class WfsIDCStatus extends Struct {
 	 * @see #chipPower
 	 */
 	public void setChipPower(final IDCChipState chipPower) {
-		this.chipPower.put(chipPower.getValue());
+		this.chipPower.set(chipPower);
 	}
 
 	/**
@@ -292,84 +288,84 @@ public class WfsIDCStatus extends Struct {
 	 * @see #chipModule
 	 */
 	public IDCChipModule getChipModule() {
-		return XfsConstants.valueOf(chipModule, IDCChipModule.class);
+		return chipModule.get();
 	}
 
 	/**
 	 * @see #chipModule
 	 */
 	public void setChipModule(final IDCChipModule chipModule) {
-		this.chipModule.put(chipModule.getValue());
+		this.chipModule.set(chipModule);
 	}
 
 	/**
 	 * @see #magReadModule
 	 */
 	public IDCMagModule getMagReadModule() {
-		return XfsConstants.valueOf(magReadModule, IDCMagModule.class);
+		return magReadModule.get();
 	}
 
 	/**
 	 * @see #magReadModule
 	 */
 	public void setMagReadModule(final IDCMagModule magReadModule) {
-		this.magReadModule.put(magReadModule.getValue());
+		this.magReadModule.set(magReadModule);
 	}
 
 	/**
 	 * @see #magWriteModule
 	 */
 	public IDCMagModule getMagWriteModule() {
-		return XfsConstants.valueOf(magWriteModule, IDCMagModule.class);
+		return magWriteModule.get();
 	}
 
 	/**
 	 * @see #magWriteModule
 	 */
 	public void setMagWriteModule(final IDCMagModule magWriteModule) {
-		this.magWriteModule.put(magWriteModule.getValue());
+		this.magWriteModule.set(magWriteModule);
 	}
 
 	/**
 	 * @see #frontImageModule
 	 */
 	public IDCImageModule getFrontImageModule() {
-		return XfsConstants.valueOf(frontImageModule, IDCImageModule.class);
+		return frontImageModule.get();
 	}
 
 	/**
 	 * @see #frontImageModule
 	 */
 	public void setFrontImageModule(final IDCImageModule frontImageModule) {
-		this.frontImageModule.put(frontImageModule.getValue());
+		this.frontImageModule.set(frontImageModule);
 	}
 
 	/**
 	 * @see #backImageModule
 	 */
 	public IDCImageModule getBackImageModule() {
-		return XfsConstants.valueOf(backImageModule, IDCImageModule.class);
+		return backImageModule.get();
 	}
 
 	/**
 	 * @see #backImageModule
 	 */
 	public void setBackImageModule(final IDCImageModule backImageModule) {
-		this.backImageModule.put(backImageModule.getValue());
+		this.backImageModule.set(backImageModule);
 	}
 
 	/**
 	 * @see #devicePosition
 	 */
 	public IDCDevicePosition getDevicePosition() {
-		return XfsConstants.valueOf(devicePosition, IDCDevicePosition.class);
+		return devicePosition.get();
 	}
 
 	/**
 	 * @see #devicePosition
 	 */
 	public void setDevicePosition(final IDCDevicePosition devicePosition) {
-		this.devicePosition.put(devicePosition.getValue());
+		this.devicePosition.set(devicePosition);
 	}
 
 	/**
@@ -383,25 +379,27 @@ public class WfsIDCStatus extends Struct {
 	 * @see #powerSaveRecoveryTime
 	 */
 	public void setPowerSaveRecoveryTime(final int powerSaveRecoveryTime) {
-		this.powerSaveRecoveryTime.put(powerSaveRecoveryTime);
+		this.powerSaveRecoveryTime.set(powerSaveRecoveryTime);
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("device", getDevice())
-				.append("media", getMedia())
-				.append("retainBin", getRetainBin())
-				.append("security", getSecurity()).append("cards", getCards())
-				.append("chipPower", getChipPower())
-				.append("extra", getExtra()).append("guidLights", guidLights)
-				.append("chipModule", getChipModule())
-				.append("magReadModule", getMagReadModule())
-				.append("magWriteModule", getMagWriteModule())
-				.append("frontImageModule", getFrontImageModule())
-				.append("backImageModule", getBackImageModule())
-				.append("devicePosition", getDevicePosition())
-				.append("powerSaveRecoveryTime", getPowerSaveRecoveryTime())
-				.toString();
+										.append("media", getMedia())
+										.append("retainBin", getRetainBin())
+										.append("security", getSecurity())
+										.append("cards", getCards())
+										.append("chipPower", getChipPower())
+										.append("extra", getExtra())
+										.append("guidLights", guidLights)
+										.append("chipModule", getChipModule())
+										.append("magReadModule", getMagReadModule())
+										.append("magWriteModule", getMagWriteModule())
+										.append("frontImageModule", getFrontImageModule())
+										.append("backImageModule", getBackImageModule())
+										.append("devicePosition", getDevicePosition())
+										.append("powerSaveRecoveryTime", getPowerSaveRecoveryTime())
+										.toString();
 	}
 
 }

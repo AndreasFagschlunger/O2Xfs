@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-    <info
-        organisation="at.o2xfs"
-        module="at.o2xfs.log"
-        status="integration">
-	</info>
+    <info organisation="at.o2xfs" module="at.o2xfs.log" status="integration" />
+	<configurations defaultconfmapping="default">
+		<conf name="default" extends="master,runtime"/>
+    	<conf name="master" description="contains the artifact but no dependencies"/>
+    	<conf name="compile" visibility="private"/>
+    	<conf name="runtime" extends="compile" description="runtime but not the artifact"/>    	
+    	<conf name="test" extends="runtime" visibility="private"/>
+	</configurations>
 	<publications>
-		<artifact name="at.o2xfs.log" type="jar" />
+		<artifact name="at.o2xfs.log" type="jar" conf="master" ext="jar" />
 	</publications>
 	<dependencies>
-		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.6" />
-		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.6" />
-		<dependency org="log4j" name="log4j" rev="1.2.17" conf="default" />
+		<dependency org="org.slf4j" name="slf4j-api" rev="${slf4j-api.version}" conf="compile->default" />
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="${slf4j-api.version}" conf="runtime->master" />
+		<dependency org="log4j" name="log4j" rev="${log4j.version}" conf="runtime->master" />
+		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default" />
 	</dependencies>
 </ivy-module>

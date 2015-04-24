@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "at.o2xfs.xfs", "at.o2xfs.xfs\at.o2xfs.xfs.vcproj", "{27C55072-34C0-421F-9143-C6FB09557D65}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "at.o2xfs.xfs.conf", "at.o2xfs.xfs.conf\at.o2xfs.xfs.conf.vcproj", "{C24A40FF-9495-48FD-B6C2-0E60BF1A593C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "at.o2xfs.xfs.test", "at.o2xfs.xfs.test\at.o2xfs.xfs.test.vcproj", "{1C56A7EF-4B74-4DAA-A1DB-EAC1B534742C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27C55072-34C0-421F-9143-C6FB09557D65}.Debug|Win32.ActiveCfg = Debug|Win32
+		{27C55072-34C0-421F-9143-C6FB09557D65}.Debug|Win32.Build.0 = Debug|Win32
+		{27C55072-34C0-421F-9143-C6FB09557D65}.Release|Win32.ActiveCfg = Release|Win32
+		{27C55072-34C0-421F-9143-C6FB09557D65}.Release|Win32.Build.0 = Release|Win32
+		{C24A40FF-9495-48FD-B6C2-0E60BF1A593C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C24A40FF-9495-48FD-B6C2-0E60BF1A593C}.Debug|Win32.Build.0 = Debug|Win32
+		{C24A40FF-9495-48FD-B6C2-0E60BF1A593C}.Release|Win32.ActiveCfg = Release|Win32
+		{C24A40FF-9495-48FD-B6C2-0E60BF1A593C}.Release|Win32.Build.0 = Release|Win32
+		{1C56A7EF-4B74-4DAA-A1DB-EAC1B534742C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1C56A7EF-4B74-4DAA-A1DB-EAC1B534742C}.Debug|Win32.Build.0 = Debug|Win32
+		{1C56A7EF-4B74-4DAA-A1DB-EAC1B534742C}.Release|Win32.ActiveCfg = Release|Win32
+		{1C56A7EF-4B74-4DAA-A1DB-EAC1B534742C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

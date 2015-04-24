@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,14 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.pin;
-
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.DWORD;
@@ -47,10 +42,16 @@ import at.o2xfs.xfs.util.Bitmask;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * @author Andreas Fagschlunger
  */
-public class WFSPINCAPS extends Struct {
+public class WFSPINCAPS
+		extends Struct {
 
 	/**
 	 * Specifies the logical service class, value is: WFS_SERVICE_CLASS_PIN
@@ -76,26 +77,22 @@ public class WFSPINCAPS extends Struct {
 	private final USHORT keyNum = new USHORT();
 
 	/**
-	 * Supported encryption modes; a combination of the following flags:
-	 * {@link PINAlgorithm}
+	 * Supported encryption modes; a combination of the following flags: {@link PINAlgorithm}
 	 */
 	private final WORD algorithms = new WORD();
 
 	/**
-	 * Supported PIN formats; a combination of the following flags:
-	 * {@link PINFormat}
+	 * Supported PIN formats; a combination of the following flags: {@link PINFormat}
 	 */
 	private final WORD pinFormats = new WORD();
 
 	/**
-	 * Supported derivation algorithms; a combination of the following flags:
-	 * {@link PINDerivationAlgorithm}
+	 * Supported derivation algorithms; a combination of the following flags: {@link PINDerivationAlgorithm}
 	 */
 	private final WORD derivationAlgorithms = new WORD();
 
 	/**
-	 * Supported presentation algorithms; a combination of the following flags:
-	 * {@link PINPresentationAlgorithm}
+	 * Supported presentation algorithms; a combination of the following flags: {@link PINPresentationAlgorithm}
 	 */
 	private final WORD presentationAlgorithms = new WORD();
 
@@ -125,9 +122,8 @@ public class WFSPINCAPS extends Struct {
 
 	/**
 	 * Specifies the key check modes that are supported to check the correctness
-	 * of an imported key value; can be a combination of the following flags:
-	 * {@link PINKeyCheckMode}
-	 * 
+	 * of an imported key value; can be a combination of the following flags: {@link PINKeyCheckMode}
+	 *
 	 * @since 3.00
 	 */
 	private final WORD keyCheckModes = new WORD();
@@ -143,7 +139,7 @@ public class WFSPINCAPS extends Struct {
 
 	/**
 	 * TODO
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final DWORDArray guidLights = new DWORDArray(32);
@@ -152,18 +148,18 @@ public class WFSPINCAPS extends Struct {
 	 * Specifies whether the device can retain the PIN after a pin processing
 	 * command, e.g. WFS_CMD_PIN_GET_PINBLOCK, WFS_CMD_PIN_LOCAL_DES,
 	 * WFS_CMD_PIN_PRESENT_IDC, etc:
-	 * 
+	 *
 	 * TRUE
-	 * 
+	 *
 	 * Applications may request, through the WFS_CMD_PIN_MAINTAIN_PIN command,
 	 * that the PIN continues to be held within the device after use by a PIN
 	 * processing command.
-	 * 
+	 *
 	 * FALSE
-	 * 
+	 *
 	 * The PIN will always be cleared by the device after processing. The
 	 * WFS_CMD_PIN_MAINTAIN_PIN is not supported.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final BOOL pinCanPersistAfterUse = new BOOL();
@@ -172,7 +168,7 @@ public class WFSPINCAPS extends Struct {
 	 * Specifies whether the PIN device will emit a key beep tone on key presses
 	 * (of active keys or inactive keys), and if so, which mode it supports.
 	 * Specified as a combination of the following flags: {@link PINAutoBeep}
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final WORD autoBeep = new WORD();
@@ -182,7 +178,7 @@ public class WFSPINCAPS extends Struct {
 	 * unknown or the HSM is not supported. The following is a list of known
 	 * vendors� strings that lpsHSMVendor can contain for the support of German
 	 * HSMs: "KRONE", "ASCOM", "IBM", "NCR"
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final LPSTR hsmVendor = new LPSTR();
@@ -192,16 +188,15 @@ public class WFSPINCAPS extends Struct {
 	 * WFS_CMD_PIN_GET_JOURNAL command. The value of this parameter is either
 	 * TRUE or FALSE. TRUE means the HSM supports journaling by
 	 * WFS_CMD_GET_JOURNAL.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final BOOL hsmJournaling = new BOOL();
 
 	/**
 	 * Specifies which type(s) of Remote Key Loading/Authentication is supported
-	 * as a combination of the following flags:
-	 * {@link PINRSAAuthenticationScheme}
-	 * 
+	 * as a combination of the following flags: {@link PINRSAAuthenticationScheme}
+	 *
 	 * @since 3.10
 	 */
 	private final DWORD rsaAuthenticationSchemes = new DWORD();
@@ -209,7 +204,7 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * Specify which type(s) of RSA Signature Algorithm(s) is supported as a
 	 * combination of the following flags: {@link PINRSASignatureAlgorithm}
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final DWORD rsaSignatureAlgorithms = new DWORD();
@@ -217,16 +212,15 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * Specify which type(s) of RSA Encipherment Algorithm(s) is supported as a
 	 * combination of the following flags: {@link PINRSACryptAlgorithm}
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final DWORD rsaCryptAlgorithms = new DWORD();
 
 	/**
 	 * Specifies which algorithm/method used to generate the public key check
-	 * value/thumb print as a combination of the following flags:
-	 * {@link PINRSAKeyCheckMode}
-	 * 
+	 * value/thumb print as a combination of the following flags: {@link PINRSAKeyCheckMode}
+	 *
 	 * @since 3.10
 	 */
 	private final DWORD rsaKeyCheckModes = new DWORD();
@@ -234,7 +228,7 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * Specifies which capabilities are supported by the Signature scheme as a
 	 * combination of the following flags: {@link PINSignatureSchemes}
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final DWORD signatureSchemes = new DWORD();
@@ -245,7 +239,7 @@ public class WFSPINCAPS extends Struct {
 	 * unknown or not supported. Otherwise lpwEMVImportSchemes lists all Import
 	 * Scheme(s) supported by the PIN Service Provider from the following
 	 * possible values: {@link PINEMVImportScheme}
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final Pointer emvImportSchemes = new Pointer();
@@ -253,7 +247,7 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * Specifies which hash algorithm is supported for the calculation of the
 	 * HASH as a combination of the following flags: {@link PINEMVHashAlgorithm}
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final WORD emvHashAlgorithms = new WORD();
@@ -261,16 +255,15 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * Specifies whether the device is capable of importing keys in multiple
 	 * parts. TRUE means the device supports the key import in multiple parts.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final BOOL keyImportThroughParts = new BOOL();
 
 	/**
 	 * Specifies the ENC_IO protocols supported to communicate with the
-	 * encryption module as a combination of the following flags:
-	 * {@link PINENCIOProtocols}
-	 * 
+	 * encryption module as a combination of the following flags: {@link PINENCIOProtocols}
+	 *
 	 * @since 3.10
 	 */
 	private final WORD encIOProtocols = new WORD();
@@ -278,7 +271,7 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * Specifies whether the keypad used in the secure PIN pad module is
 	 * integrated within a generic Win32 keyboard.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final BOOL typeCombined = new BOOL();
@@ -287,15 +280,14 @@ public class WFSPINCAPS extends Struct {
 	 * Specifies whether the command WFS_CMD_PIN_SET_PINBLOCK_DATA must be
 	 * called before the PIN is entered via WFS_CMD_PIN_GET_PIN and retrieved
 	 * via WFS_CMD_PIN_GET_PINBLOCK.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final BOOL setPinblockDataRequired = new BOOL();
 
 	/**
-	 * Supported key block formats; a combination of the following flags:
-	 * {@link PINKeyBlockImportFormat}
-	 * 
+	 * Supported key block formats; a combination of the following flags: {@link PINKeyBlockImportFormat}
+	 *
 	 * @since 3.10
 	 */
 	private final WORD keyBlockImportFormats = new WORD();
@@ -303,7 +295,7 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * Specifies whether power saving control is available. This can either be
 	 * TRUE if available or FALSE if not available.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final BOOL powerSaveControl = new BOOL();
@@ -311,7 +303,7 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * Specifies whether the anti-fraud module is available. This can either be
 	 * TRUE if available or FALSE if not available.
-	 * 
+	 *
 	 * @since 3.20
 	 */
 	private BOOL antiFraudModule = new BOOL();
@@ -392,36 +384,36 @@ public class WFSPINCAPS extends Struct {
 	public WFSPINCAPS(final XfsVersion xfsVersion, final WFSPINCAPS pinCaps) {
 		this(xfsVersion);
 		allocate();
-		clazz.put(pinCaps.clazz);
-		type.put(pinCaps.type);
-		compound.put(pinCaps.isCompound());
-		keyNum.put(pinCaps.keyNum);
-		algorithms.put(pinCaps.algorithms);
-		pinFormats.put(pinCaps.pinFormats);
-		derivationAlgorithms.put(pinCaps.derivationAlgorithms);
-		presentationAlgorithms.put(pinCaps.presentationAlgorithms);
-		display.put(pinCaps.display);
-		idConnect.put(pinCaps.isIDConnect());
-		idKey.put(pinCaps.idKey);
-		validationAlgorithms.put(pinCaps.validationAlgorithms);
-		keyCheckModes.put(pinCaps.keyCheckModes);
+		clazz.set(pinCaps.clazz);
+		type.set(pinCaps.type);
+		compound.set(pinCaps.isCompound());
+		keyNum.set(pinCaps.keyNum);
+		algorithms.set(pinCaps.algorithms);
+		pinFormats.set(pinCaps.pinFormats);
+		derivationAlgorithms.set(pinCaps.derivationAlgorithms);
+		presentationAlgorithms.set(pinCaps.presentationAlgorithms);
+		display.set(pinCaps.display);
+		idConnect.set(pinCaps.isIDConnect());
+		idKey.set(pinCaps.idKey);
+		validationAlgorithms.set(pinCaps.validationAlgorithms);
+		keyCheckModes.set(pinCaps.keyCheckModes);
 		extra.pointTo(KeyValueMap.toZZString(pinCaps.getExtra()));
 		// FIXME guidLights, ...
-		autoBeep.put(pinCaps.autoBeep);
+		autoBeep.set(pinCaps.autoBeep);
 		setHSMVendor(pinCaps.getHSMVendor());
 		setHSMJournaling(pinCaps.isHSMJournaling());
-		rsaAuthenticationSchemes.put(pinCaps.rsaAuthenticationSchemes);
-		rsaSignatureAlgorithms.put(pinCaps.rsaSignatureAlgorithms);
-		rsaCryptAlgorithms.put(pinCaps.rsaCryptAlgorithms);
-		rsaKeyCheckModes.put(pinCaps.rsaKeyCheckModes);
-		signatureSchemes.put(pinCaps.signatureSchemes);
-		// FIXME emvImportSchemes.put(pinCaps.emvImportSchemes);
-		emvHashAlgorithms.put(pinCaps.emvHashAlgorithms);
+		rsaAuthenticationSchemes.set(pinCaps.rsaAuthenticationSchemes);
+		rsaSignatureAlgorithms.set(pinCaps.rsaSignatureAlgorithms);
+		rsaCryptAlgorithms.set(pinCaps.rsaCryptAlgorithms);
+		rsaKeyCheckModes.set(pinCaps.rsaKeyCheckModes);
+		signatureSchemes.set(pinCaps.signatureSchemes);
+		// FIXME emvImportSchemes.set(pinCaps.emvImportSchemes);
+		emvHashAlgorithms.set(pinCaps.emvHashAlgorithms);
 		setKeyImportThroughParts(pinCaps.isKeyImportThroughParts());
-		encIOProtocols.put(pinCaps.encIOProtocols);
+		encIOProtocols.set(pinCaps.encIOProtocols);
 		setTypeCombined(pinCaps.isTypeCombined());
 		setSetPinblockDataRequired(pinCaps.isSetPinblockDataRequired());
-		keyBlockImportFormats.put(pinCaps.keyBlockImportFormats);
+		keyBlockImportFormats.set(pinCaps.keyBlockImportFormats);
 		setPowerSaveControl(pinCaps.isPowerSaveControl());
 
 	}
@@ -465,16 +457,14 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #derivationAlgorithms}
 	 */
 	public Set<PINDerivationAlgorithm> getDerivationAlgorithms() {
-		return XfsConstants.of(derivationAlgorithms,
-				PINDerivationAlgorithm.class);
+		return XfsConstants.of(derivationAlgorithms, PINDerivationAlgorithm.class);
 	}
 
 	/**
 	 * {@link #presentationAlgorithms}
 	 */
 	public Set<PINPresentationAlgorithm> getPresentationAlgorithms() {
-		return XfsConstants.of(presentationAlgorithms,
-				PINPresentationAlgorithm.class);
+		return XfsConstants.of(presentationAlgorithms, PINPresentationAlgorithm.class);
 	}
 
 	/**
@@ -502,8 +492,7 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #validationAlgorithms}
 	 */
 	public Set<PINValidationAlgorithm> getValidationAlgorithms() {
-		return XfsConstants.of(validationAlgorithms,
-				PINValidationAlgorithm.class);
+		return XfsConstants.of(validationAlgorithms, PINValidationAlgorithm.class);
 	}
 
 	/**
@@ -517,7 +506,7 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #keyCheckModes}
 	 */
 	public void setKeyCheckModes(final Set<PINKeyCheckMode> keyCheckModes) {
-		this.keyCheckModes.put(Bitmask.of(keyCheckModes));
+		this.keyCheckModes.set((int) Bitmask.of(keyCheckModes));
 	}
 
 	/**
@@ -551,7 +540,7 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #pinCanPersistAfterUse}
 	 */
 	public void setPINCanPersistAfterUse(final boolean pinCanPersistAfterUse) {
-		this.pinCanPersistAfterUse.put(pinCanPersistAfterUse);
+		this.pinCanPersistAfterUse.set(pinCanPersistAfterUse);
 	}
 
 	/**
@@ -565,7 +554,7 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #autoBeep}
 	 */
 	public void setAutoBeep(final Set<PINAutoBeep> autoBeep) {
-		this.autoBeep.put(Bitmask.of(autoBeep));
+		this.autoBeep.set((int) Bitmask.of(autoBeep));
 	}
 
 	/**
@@ -593,39 +582,35 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #hsmJournaling}
 	 */
 	public void setHSMJournaling(final boolean hsmJournaling) {
-		this.hsmJournaling.put(hsmJournaling);
+		this.hsmJournaling.set(hsmJournaling);
 	}
 
 	/**
 	 * {@link #rsaAuthenticationSchemes}
 	 */
 	public Set<PINRSAAuthenticationScheme> getRSAAuthenticationSchemes() {
-		return XfsConstants.of(rsaAuthenticationSchemes,
-				PINRSAAuthenticationScheme.class);
+		return XfsConstants.of(rsaAuthenticationSchemes, PINRSAAuthenticationScheme.class);
 	}
 
 	/**
 	 * {@link #rsaAuthenticationSchemes}
 	 */
-	public void setRSAAuthenticationSchemes(
-			final Set<PINRSAAuthenticationScheme> rsaAuthenticationSchemes) {
-		this.rsaAuthenticationSchemes.put(Bitmask.of(rsaAuthenticationSchemes));
+	public void setRSAAuthenticationSchemes(final Set<PINRSAAuthenticationScheme> rsaAuthenticationSchemes) {
+		this.rsaAuthenticationSchemes.set((int) Bitmask.of(rsaAuthenticationSchemes));
 	}
 
 	/**
 	 * {@link #rsaSignatureAlgorithms}
 	 */
 	public Set<PINRSASignatureAlgorithm> getRSASignatureAlgorithms() {
-		return XfsConstants.of(rsaSignatureAlgorithms,
-				PINRSASignatureAlgorithm.class);
+		return XfsConstants.of(rsaSignatureAlgorithms, PINRSASignatureAlgorithm.class);
 	}
 
 	/**
 	 * {@link #rsaSignatureAlgorithms}
 	 */
-	public void setRSASignatureAlgorithms(
-			final Set<PINRSASignatureAlgorithm> rsaSignatureAlgorithms) {
-		this.rsaSignatureAlgorithms.put(Bitmask.of(rsaSignatureAlgorithms));
+	public void setRSASignatureAlgorithms(final Set<PINRSASignatureAlgorithm> rsaSignatureAlgorithms) {
+		this.rsaSignatureAlgorithms.set((int) Bitmask.of(rsaSignatureAlgorithms));
 	}
 
 	/**
@@ -638,9 +623,8 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * {@link #rsaCryptAlgorithms}
 	 */
-	public void setRSACryptAlgorithms(
-			final Set<PINRSACryptAlgorithm> rsaCryptAlgorithms) {
-		this.rsaCryptAlgorithms.put(Bitmask.of(rsaCryptAlgorithms));
+	public void setRSACryptAlgorithms(final Set<PINRSACryptAlgorithm> rsaCryptAlgorithms) {
+		this.rsaCryptAlgorithms.set((int) Bitmask.of(rsaCryptAlgorithms));
 	}
 
 	/**
@@ -653,9 +637,8 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * {@link #rsaKeyCheckModes}
 	 */
-	public void setRSAKeyCheckModes(
-			final Set<PINRSAKeyCheckMode> rsaKeyCheckModes) {
-		this.rsaKeyCheckModes.put(Bitmask.of(rsaKeyCheckModes));
+	public void setRSAKeyCheckModes(final Set<PINRSAKeyCheckMode> rsaKeyCheckModes) {
+		this.rsaKeyCheckModes.set((int) Bitmask.of(rsaKeyCheckModes));
 	}
 
 	/**
@@ -668,9 +651,8 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * {@link #signatureSchemes}
 	 */
-	public void setSignatureSchemes(
-			final Set<PINSignatureSchemes> signatureSchemes) {
-		this.signatureSchemes.put(Bitmask.of(signatureSchemes));
+	public void setSignatureSchemes(final Set<PINSignatureSchemes> signatureSchemes) {
+		this.signatureSchemes.set((int) Bitmask.of(signatureSchemes));
 	}
 
 	/**
@@ -683,8 +665,7 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * {@link #emvImportSchemes}
 	 */
-	public void setEMVImportSchemes(
-			final Set<PINEMVImportScheme> emvImportSchemes) {
+	public void setEMVImportSchemes(final Set<PINEMVImportScheme> emvImportSchemes) {
 		// FIXME
 	}
 
@@ -698,9 +679,8 @@ public class WFSPINCAPS extends Struct {
 	/**
 	 * {@link #emvHashAlgorithms}
 	 */
-	public void setEMVHashAlgorithms(
-			final Set<PINEMVHashAlgorithm> emvHashAlgorithms) {
-		this.emvHashAlgorithms.put(Bitmask.of(emvHashAlgorithms));
+	public void setEMVHashAlgorithms(final Set<PINEMVHashAlgorithm> emvHashAlgorithms) {
+		this.emvHashAlgorithms.set((int) Bitmask.of(emvHashAlgorithms));
 	}
 
 	/**
@@ -714,7 +694,7 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #keyImportThroughParts}
 	 */
 	public void setKeyImportThroughParts(boolean keyImportThroughParts) {
-		this.keyImportThroughParts.put(keyImportThroughParts);
+		this.keyImportThroughParts.set(keyImportThroughParts);
 	}
 
 	/**
@@ -728,7 +708,7 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #encIOProtocols}
 	 */
 	public void setEncIOProtocols(final Set<PINENCIOProtocols> encIOProtocols) {
-		this.encIOProtocols.put(Bitmask.of(encIOProtocols));
+		this.encIOProtocols.set((int) Bitmask.of(encIOProtocols));
 	}
 
 	/**
@@ -742,7 +722,7 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #typeCombined}
 	 */
 	public void setTypeCombined(final boolean typeCombined) {
-		this.typeCombined.put(typeCombined);
+		this.typeCombined.set(typeCombined);
 	}
 
 	/**
@@ -756,23 +736,21 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #setPinblockDataRequired}
 	 */
 	public void setSetPinblockDataRequired(boolean setPinblockDataRequired) {
-		this.setPinblockDataRequired.put(setPinblockDataRequired);
+		this.setPinblockDataRequired.set(setPinblockDataRequired);
 	}
 
 	/**
 	 * {@link #keyBlockImportFormats}
 	 */
 	public Set<PINKeyBlockImportFormat> getKeyBlockImportFormats() {
-		return XfsConstants.of(keyBlockImportFormats,
-				PINKeyBlockImportFormat.class);
+		return XfsConstants.of(keyBlockImportFormats, PINKeyBlockImportFormat.class);
 	}
 
 	/**
 	 * {@link #keyBlockImportFormats}
 	 */
-	public void setKeyBlockImportFormats(
-			final Set<PINKeyBlockImportFormat> keyBlockImportFormats) {
-		this.keyBlockImportFormats.put(Bitmask.of(keyBlockImportFormats));
+	public void setKeyBlockImportFormats(final Set<PINKeyBlockImportFormat> keyBlockImportFormats) {
+		this.keyBlockImportFormats.set((int) Bitmask.of(keyBlockImportFormats));
 	}
 
 	/**
@@ -786,7 +764,7 @@ public class WFSPINCAPS extends Struct {
 	 * {@link #powerSaveControl}
 	 */
 	public void setPowerSaveControl(final boolean powerSaveControl) {
-		this.powerSaveControl.put(powerSaveControl);
+		this.powerSaveControl.set(powerSaveControl);
 	}
 
 	public boolean isAntiFraudModule() {
@@ -794,45 +772,44 @@ public class WFSPINCAPS extends Struct {
 	}
 
 	public void setAntiFraudModule(final boolean antiFraudModule) {
-		this.antiFraudModule.put(antiFraudModule);
+		this.antiFraudModule.set(antiFraudModule);
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
-				.append("clazz", clazz)
-				.append("type", getType())
-				.append("compound", isCompound())
-				.append("keyNum", getKeyNum())
-				.append("algorithms", getAlgorithms())
-				.append("pinFormats", getPINFormats())
-				.append("derivationAlgorithms", getDerivationAlgorithms())
-				.append("presentationAlgorithms", getPresentationAlgorithms())
-				.append("display", getDisplay())
-				.append("idConnect", isIDConnect())
-				.append("idKey", getIDKey())
-				.append("validationAlgorithms", getValidationAlgorithms())
-				.append("keyCheckModes", getKeyCheckModes())
-				.append("extra", getExtra())
-				.append("guidLights", getGuidLights())
-				.append("pinCanPersistAfterUse", isPINCanPersistAfterUse())
-				.append("autoBeep", getAutoBeep())
-				.append("hsmVendor", getHSMVendor())
-				.append("hsmJournaling", isHSMJournaling())
-				.append("rsaAuthenticationSchemes",
-						getRSAAuthenticationSchemes())
-				.append("rsaSignatureAlgorithms", getRSASignatureAlgorithms())
-				.append("rsaCryptAlgorithms", getRSACryptAlgorithms())
-				.append("rsaKeyCheckModes", getRSAKeyCheckModes())
-				.append("signatureSchemes", getRSASignatureAlgorithms())
-				.append("emvImportSchemes", getEMVImportSchemes())
-				.append("emvHashAlgorithms", getEMVHashAlgorithms())
-				.append("keyImportThroughParts", isKeyImportThroughParts())
-				.append("encIOProtocols", getEncIOProtocols())
-				.append("typeCombined", isTypeCombined())
-				.append("setPinblockDataRequired", isSetPinblockDataRequired())
-				.append("keyBlockImportFormats", getKeyBlockImportFormats())
-				.append("powerSaveControl", isPowerSaveControl())
-				.append("antiFraudModule", isAntiFraudModule()).toString();
+		return new ToStringBuilder(this).append("clazz", clazz)
+										.append("type", getType())
+										.append("compound", isCompound())
+										.append("keyNum", getKeyNum())
+										.append("algorithms", getAlgorithms())
+										.append("pinFormats", getPINFormats())
+										.append("derivationAlgorithms", getDerivationAlgorithms())
+										.append("presentationAlgorithms", getPresentationAlgorithms())
+										.append("display", getDisplay())
+										.append("idConnect", isIDConnect())
+										.append("idKey", getIDKey())
+										.append("validationAlgorithms", getValidationAlgorithms())
+										.append("keyCheckModes", getKeyCheckModes())
+										.append("extra", getExtra())
+										.append("guidLights", getGuidLights())
+										.append("pinCanPersistAfterUse", isPINCanPersistAfterUse())
+										.append("autoBeep", getAutoBeep())
+										.append("hsmVendor", getHSMVendor())
+										.append("hsmJournaling", isHSMJournaling())
+										.append("rsaAuthenticationSchemes", getRSAAuthenticationSchemes())
+										.append("rsaSignatureAlgorithms", getRSASignatureAlgorithms())
+										.append("rsaCryptAlgorithms", getRSACryptAlgorithms())
+										.append("rsaKeyCheckModes", getRSAKeyCheckModes())
+										.append("signatureSchemes", getRSASignatureAlgorithms())
+										.append("emvImportSchemes", getEMVImportSchemes())
+										.append("emvHashAlgorithms", getEMVHashAlgorithms())
+										.append("keyImportThroughParts", isKeyImportThroughParts())
+										.append("encIOProtocols", getEncIOProtocols())
+										.append("typeCombined", isTypeCombined())
+										.append("setPinblockDataRequired", isSetPinblockDataRequired())
+										.append("keyBlockImportFormats", getKeyBlockImportFormats())
+										.append("powerSaveControl", isPowerSaveControl())
+										.append("antiFraudModule", isAntiFraudModule())
+										.toString();
 	}
 }

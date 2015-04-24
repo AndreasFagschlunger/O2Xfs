@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "at.o2xfs.ctapi", "at.o2xfs.ctapi\at.o2xfs.ctapi.vcproj", "{190B26F3-4872-4572-806A-C395D30C36FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{190B26F3-4872-4572-806A-C395D30C36FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{190B26F3-4872-4572-806A-C395D30C36FD}.Debug|Win32.Build.0 = Debug|Win32
+		{190B26F3-4872-4572-806A-C395D30C36FD}.Release|Win32.ActiveCfg = Release|Win32
+		{190B26F3-4872-4572-806A-C395D30C36FD}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

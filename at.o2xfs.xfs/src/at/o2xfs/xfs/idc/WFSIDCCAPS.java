@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,14 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.idc;
-
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.DWORDArray;
@@ -40,17 +35,24 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsVersion;
+import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.util.Bitmask;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
- * 
+ *
  */
-public class WFSIDCCAPS extends Struct {
+public class WFSIDCCAPS
+		extends Struct {
 
 	/**
-	 * 
+	 *
 	 */
 	private final static int WFS_IDC_GUIDLIGHTS_SIZE = 32;
 
@@ -60,10 +62,9 @@ public class WFSIDCCAPS extends Struct {
 	private final WORD clazz = new WORD();
 
 	/**
-	 * Specifies the type of the ID card unit as one of the following flags:
-	 * {@link IDCType}
+	 * Specifies the type of the ID card unit as one of the following flags: {@link IDCType}
 	 */
-	private final WORD type = new WORD();
+	private final XfsWord<IDCType> type = new XfsWord<>(IDCType.class);
 
 	/**
 	 * Specifies whether the logical device is part of a compound physical
@@ -96,8 +97,7 @@ public class WFSIDCCAPS extends Struct {
 	private final USHORT cards = new USHORT();
 
 	/**
-	 * Specifies the type of security module used as one of the following flags:
-	 * {@link IDCSecType}
+	 * Specifies the type of security module used as one of the following flags: {@link IDCSecType}
 	 */
 	private final WORD secType = new WORD();
 
@@ -118,7 +118,7 @@ public class WFSIDCCAPS extends Struct {
 	/**
 	 * Specifies whether the Flux Sensor on the card unit is programmable, this
 	 * can either be TRUE or FALSE.
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	private final BOOL fluxSensorProgrammable = new BOOL();
@@ -128,7 +128,7 @@ public class WFSIDCCAPS extends Struct {
 	 * to the exit slot with an eject command. This value is either TRUE or
 	 * FALSE. It is only TRUE if the capabilities of the device are not affected
 	 * by one of these sequences of commands.
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	private final BOOL readWriteAccessFollowingEject = new BOOL();
@@ -137,7 +137,7 @@ public class WFSIDCCAPS extends Struct {
 	 * A combination of the following flags specify the write capabilities, with
 	 * respect to whether the device can write low coercivity (loco) and/or high
 	 * coercivity (hico) magnetic stripes: {@link IDCWriteMethod}
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	private final WORD writeMode = new WORD();
@@ -146,7 +146,7 @@ public class WFSIDCCAPS extends Struct {
 	 * Specifies the capabilities of the ID card unit (in relation to the user
 	 * or permanent chip controlled by the service), for chip power management
 	 * as a combination of the following flags: {@link IDCChipPower}
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	private final WORD chipPower = new WORD();
@@ -163,7 +163,7 @@ public class WFSIDCCAPS extends Struct {
 	/**
 	 * Specifies whether data track data is read on entry or exit from the dip
 	 * card unit as one of the following flags: {@link IDCDIPMode}
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final WORD dipMode = new WORD();
@@ -172,25 +172,23 @@ public class WFSIDCCAPS extends Struct {
 	 * Pointer to a zero terminated array that specifies the memory card
 	 * protocols that are supported by the Service Provider as an array of
 	 * constants. If this parameter is NULL then the Service Provider does not
-	 * support any memory card protocols. Valid Memory Card Identifiers are:
-	 * {@link IDCMemoryChipProtocol}
-	 * 
+	 * support any memory card protocols. Valid Memory Card Identifiers are: {@link IDCMemoryChipProtocol}
+	 *
 	 * @since 3.10
 	 */
 	private final Pointer memoryChipProtocols = new Pointer();
 
 	/**
 	 * Specifies which guidance lights are available.
-	 * 
+	 *
 	 * @since 3.10
 	 */
-	private final DWORDArray guidLights = new DWORDArray(
-			WFS_IDC_GUIDLIGHTS_SIZE);
+	private final DWORDArray guidLights = new DWORDArray(WFS_IDC_GUIDLIGHTS_SIZE);
 
 	/**
 	 * Specifies the target position that is supported for the eject operation,
 	 * as a combination of the following flags: {@link IDCEjectPosition}
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final WORD ejectPosition = new WORD();
@@ -198,7 +196,7 @@ public class WFSIDCCAPS extends Struct {
 	/**
 	 * Specifies whether power saving control is available. This can either be
 	 * TRUE if available or FALSE if not available.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	private final BOOL powerSaveControl = new BOOL();
@@ -206,7 +204,7 @@ public class WFSIDCCAPS extends Struct {
 	/**
 	 * Specifies the number of supported parking stations. If a zero value is
 	 * specified there is no parking station supported.
-	 * 
+	 *
 	 * @since 3.20
 	 */
 	private final USHORT parkingStations = new USHORT();
@@ -214,7 +212,7 @@ public class WFSIDCCAPS extends Struct {
 	/**
 	 * Specifies whether the anti-fraud module is available. This can either be
 	 * TRUE if available or FALSE if not available.
-	 * 
+	 *
 	 * @since 3.20
 	 */
 	private final BOOL antiFraudModule = new BOOL();
@@ -276,29 +274,29 @@ public class WFSIDCCAPS extends Struct {
 	public WFSIDCCAPS(final XfsVersion xfsVersion, final WFSIDCCAPS caps) {
 		this(xfsVersion);
 		allocate();
-		clazz.put(caps.clazz);
-		type.put(caps.type);
-		compound.put(caps.isCompound());
-		readTracks.put(caps.readTracks);
-		writeTracks.put(caps.writeTracks);
-		chipProtocols.put(caps.chipProtocols);
-		cards.put(caps.cards);
-		secType.put(caps.secType);
-		powerOnOption.put(caps.powerOnOption);
-		powerOffOption.put(caps.powerOffOption);
+		clazz.set(caps.clazz);
+		type.set(caps.getType());
+		compound.set(caps.isCompound());
+		readTracks.set(caps.readTracks);
+		writeTracks.set(caps.writeTracks);
+		chipProtocols.set(caps.chipProtocols);
+		cards.set(caps.cards);
+		secType.set(caps.secType);
+		powerOnOption.set(caps.powerOnOption);
+		powerOffOption.set(caps.powerOffOption);
 		setFluxSensorProgrammable(caps.isFluxSensorProgrammable());
 		setReadWriteAccessFollowingEject(caps.isReadWriteAccessFollowingEject());
-		writeMode.put(caps.writeMode);
-		chipPower.put(caps.chipPower);
+		writeMode.set(caps.writeMode);
+		chipPower.set(caps.chipPower);
 		setExtra(caps.getExtra());
-		dipMode.put(caps.dipMode);
+		dipMode.set(caps.dipMode);
 		// FIXME: memoryChipProtocols
 		for (int i = 0; i < guidLights.length; i++) {
-			guidLights.get(i).put(caps.guidLights.get(i));
+			guidLights.get(i).set(caps.guidLights.get(i));
 		}
-		ejectPosition.put(caps.ejectPosition);
+		ejectPosition.set(caps.ejectPosition);
 		setPowerSaveControl(caps.isPowerSaveControl());
-		parkingStations.put(caps.parkingStations);
+		parkingStations.set(caps.parkingStations);
 		setAntiFraudModule(caps.isAntiFraudModule());
 
 	}
@@ -314,7 +312,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #type
 	 */
 	public void setType(final IDCType type) {
-		this.type.put(type.getValue());
+		this.type.set(type);
 	}
 
 	/**
@@ -328,7 +326,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #compound
 	 */
 	public void setCompound(final boolean compound) {
-		this.compound.put(compound);
+		this.compound.set(compound);
 	}
 
 	/**
@@ -342,7 +340,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #readTracks
 	 */
 	public void setReadTracks(final Set<IDCTrack> readTracks) {
-		this.readTracks.put(Bitmask.of(readTracks));
+		this.readTracks.set((int) Bitmask.of(readTracks));
 	}
 
 	/**
@@ -356,7 +354,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #writeTracks
 	 */
 	public void setWriteTracks(final Set<IDCTrack> writeTracks) {
-		this.writeTracks.put(Bitmask.of(writeTracks));
+		this.writeTracks.set((int) Bitmask.of(writeTracks));
 	}
 
 	/**
@@ -370,7 +368,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #chipProtocols
 	 */
 	public void setChipProtocols(final Set<IDCChipProtocol> chipProtocols) {
-		this.chipProtocols.put(Bitmask.of(chipProtocols));
+		this.chipProtocols.set((int) Bitmask.of(chipProtocols));
 	}
 
 	/**
@@ -384,7 +382,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #cards
 	 */
 	public void setCards(final int cards) {
-		this.cards.put(cards);
+		this.cards.set(cards);
 	}
 
 	/**
@@ -398,7 +396,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #secType
 	 */
 	public void setSecType(final IDCSecType secType) {
-		this.secType.put(secType.getValue());
+		this.secType.set((int) secType.getValue());
 	}
 
 	/**
@@ -412,7 +410,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #powerOnOption
 	 */
 	public void setPowerOnOption(final IDCPowerOption powerOnOption) {
-		this.powerOnOption.put(powerOnOption.getValue());
+		this.powerOnOption.set((int) powerOnOption.getValue());
 	}
 
 	/**
@@ -426,7 +424,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #powerOffOption
 	 */
 	public void setPowerOffOption(final IDCPowerOption powerOffOption) {
-		this.powerOffOption.put(powerOffOption.getValue());
+		this.powerOffOption.set((int) powerOffOption.getValue());
 	}
 
 	/**
@@ -440,7 +438,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #fluxSensorProgrammable
 	 */
 	public void setFluxSensorProgrammable(final boolean fluxSensorProgrammable) {
-		this.fluxSensorProgrammable.put(fluxSensorProgrammable);
+		this.fluxSensorProgrammable.set(fluxSensorProgrammable);
 	}
 
 	/**
@@ -453,9 +451,8 @@ public class WFSIDCCAPS extends Struct {
 	/**
 	 * @see #readWriteAccessFollowingEject
 	 */
-	public void setReadWriteAccessFollowingEject(
-			final boolean readWriteAccessFollowingEject) {
-		this.readWriteAccessFollowingEject.put(readWriteAccessFollowingEject);
+	public void setReadWriteAccessFollowingEject(final boolean readWriteAccessFollowingEject) {
+		this.readWriteAccessFollowingEject.set(readWriteAccessFollowingEject);
 	}
 
 	/**
@@ -469,7 +466,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #writeMode
 	 */
 	public void setWriteMode(final Set<IDCWriteMethod> writeMode) {
-		this.writeMode.put(Bitmask.of(writeMode));
+		this.writeMode.set((int) Bitmask.of(writeMode));
 	}
 
 	/**
@@ -483,7 +480,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #chipPower
 	 */
 	public void setChipPower(final Set<IDCChipPower> chipPower) {
-		this.chipPower.put(Bitmask.of(chipPower));
+		this.chipPower.set((int) Bitmask.of(chipPower));
 	}
 
 	/**
@@ -511,7 +508,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #dipMode
 	 */
 	public void setDIPMode(final IDCDIPMode dipMode) {
-		this.dipMode.put(dipMode.getValue());
+		this.dipMode.set((int) dipMode.getValue());
 	}
 
 	/**
@@ -525,8 +522,7 @@ public class WFSIDCCAPS extends Struct {
 	/**
 	 * @see #memoryChipProtocols
 	 */
-	public void setMemoryChipProtocols(
-			final Set<IDCMemoryChipProtocol> memoryChipProtocols) {
+	public void setMemoryChipProtocols(final Set<IDCMemoryChipProtocol> memoryChipProtocols) {
 		// FIXME: this.memoryChipProtocols = memoryChipProtocols;
 	}
 
@@ -545,7 +541,7 @@ public class WFSIDCCAPS extends Struct {
 	 * @see #ejectPosition
 	 */
 	public void setEjectPosition(final Set<IDCEjectPosition> ejectPosition) {
-		this.ejectPosition.put(Bitmask.of(ejectPosition));
+		this.ejectPosition.set((int) Bitmask.of(ejectPosition));
 	}
 
 	public boolean isPowerSaveControl() {
@@ -553,7 +549,7 @@ public class WFSIDCCAPS extends Struct {
 	}
 
 	public void setPowerSaveControl(final boolean powerSaveControl) {
-		this.powerSaveControl.put(powerSaveControl);
+		this.powerSaveControl.set(powerSaveControl);
 	}
 
 	public int getParkingStations() {
@@ -561,7 +557,7 @@ public class WFSIDCCAPS extends Struct {
 	}
 
 	public void setParkingStations(final int parkingStations) {
-		this.parkingStations.put(parkingStations);
+		this.parkingStations.set(parkingStations);
 	}
 
 	public boolean isAntiFraudModule() {
@@ -569,32 +565,32 @@ public class WFSIDCCAPS extends Struct {
 	}
 
 	public void setAntiFraudModule(final boolean antiFraudModule) {
-		this.antiFraudModule.put(antiFraudModule);
+		this.antiFraudModule.set(antiFraudModule);
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
-				.append("clazz", clazz)
-				.append("type", getType())
-				.append("compound", isCompound())
-				.append("readTracks", getReadTracks())
-				.append("writeTracks", getWriteTracks())
-				.append("chipProtocols", getChipProtocols())
-				.append("cards", getCards())
-				.append("secType", getSecType())
-				.append("powerOnOption", getPowerOnOption())
-				.append("powerOffOption", getPowerOffOption())
-				.append("fluxSensorProgrammable", isFluxSensorProgrammable())
-				.append("readWriteAccessFollowingEject",
-						isReadWriteAccessFollowingEject())
-				.append("writeMode", writeMode)
-				.append("chipPower", getChipPower())
-				.append("extra", getExtra()).append("dipMode", getDIPMode())
-				.append("memoryChipProtocols", getMemoryChipProtocols())
-				.append("guidLights", getGuidLights())
-				.append("ejectPosition", getEjectPosition())
-				.append("parkingStations", getParkingStations())
-				.append("antiFraudModule", isAntiFraudModule()).toString();
+		return new ToStringBuilder(this).append("clazz", clazz)
+										.append("type", getType())
+										.append("compound", isCompound())
+										.append("readTracks", getReadTracks())
+										.append("writeTracks", getWriteTracks())
+										.append("chipProtocols", getChipProtocols())
+										.append("cards", getCards())
+										.append("secType", getSecType())
+										.append("powerOnOption", getPowerOnOption())
+										.append("powerOffOption", getPowerOffOption())
+										.append("fluxSensorProgrammable", isFluxSensorProgrammable())
+										.append("readWriteAccessFollowingEject", isReadWriteAccessFollowingEject())
+										.append("writeMode", writeMode)
+										.append("chipPower", getChipPower())
+										.append("extra", getExtra())
+										.append("dipMode", getDIPMode())
+										.append("memoryChipProtocols", getMemoryChipProtocols())
+										.append("guidLights", getGuidLights())
+										.append("ejectPosition", getEjectPosition())
+										.append("parkingStations", getParkingStations())
+										.append("antiFraudModule", isAntiFraudModule())
+										.toString();
 	}
 }

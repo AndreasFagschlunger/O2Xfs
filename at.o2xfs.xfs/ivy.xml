@@ -24,15 +24,22 @@
         module="at.o2xfs.xfs"
         status="integration">
 	</info>
+	<configurations defaultconfmapping="default">
+		<conf name="default" extends="master,runtime"/>
+    	<conf name="master" description="contains the artifact but no dependencies"/>
+    	<conf name="runtime" extends="compile" description="runtime but not the artifact"/>
+    	<conf name="compile"  visibility="private"/>
+    	<conf name="test" visibility="private" />
+	</configurations>
 	<publications>
 		<artifact name="at.o2xfs.xfs" type="jar" />
-		<artifact name="O2Xfs" type="native" ext="dll" />
-		<artifact name="O2XfsConf" type="native" ext="dll" />
+		<artifact name="at.o2xfs.xfs" type="native" ext="dll" />
+		<artifact name="at.o2xfs.xfs.conf" type="native" ext="dll" />
 	</publications>
 	<dependencies>
-		<dependency name="at.o2xfs.win32" rev="latest.integration" />
-		<dependency name="at.o2xfs.log" rev="latest.integration" />
-		<dependency org="commons-codec" name="commons-codec" rev="1.4" />
-		<dependency org="commons-lang" name="commons-lang" rev="2.5" />	
+		<dependency name="at.o2xfs.common" rev="latest.integration" conf="compile->default" />
+		<dependency name="at.o2xfs.log" rev="latest.integration" conf="compile->default;test->runtime" />
+		<dependency name="at.o2xfs.win32" rev="latest.integration" conf="compile->default" />
+		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default" />
 	</dependencies>
 </ivy-module>

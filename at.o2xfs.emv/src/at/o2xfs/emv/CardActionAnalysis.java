@@ -1,21 +1,21 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- * 
+ *
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -26,8 +26,6 @@
  */
 
 package at.o2xfs.emv;
-
-import java.io.IOException;
 
 import at.o2xfs.common.Bytes;
 import at.o2xfs.common.Hex;
@@ -42,6 +40,8 @@ import at.o2xfs.emv.tlv.Tag;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 
+import java.io.IOException;
+
 final class CardActionAnalysis {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CardActionAnalysis.class);
@@ -52,7 +52,8 @@ final class CardActionAnalysis {
 		this.transaction = transaction;
 	}
 
-	CryptogramInformationData firstGenerateAC(CryptogramType cryptogramType) throws TerminateSessionException, IOException {
+	CryptogramInformationData firstGenerateAC(CryptogramType cryptogramType) throws TerminateSessionException,
+																			IOException {
 		final String method = "firstGenerateAC(CryptogramType)";
 		try {
 			if (LOG.isInfoEnabled()) {
@@ -69,9 +70,13 @@ final class CardActionAnalysis {
 			if (cdaSignature && !CryptogramType.AAC.equals(cid.getCryptogramType())) {
 				performDynamicSignatureVerification(template);
 			}
-			transaction.putData(EMVTag.CRYPTOGRAM_INFORMATION_DATA, template.getMandatoryValue(EMVTag.CRYPTOGRAM_INFORMATION_DATA));
-			transaction.putData(EMVTag.APPLICATION_TRANSACTION_COUNTER, template.getMandatoryValue(EMVTag.APPLICATION_TRANSACTION_COUNTER));
-			transaction.putData(EMVTag.APPLICATION_CRYPTOGRAM, template.getMandatoryValue(EMVTag.APPLICATION_CRYPTOGRAM));
+			transaction.putData(EMVTag.CRYPTOGRAM_INFORMATION_DATA,
+								template.getMandatoryValue(EMVTag.CRYPTOGRAM_INFORMATION_DATA));
+			transaction.putData(EMVTag.APPLICATION_TRANSACTION_COUNTER,
+								template.getMandatoryValue(EMVTag.APPLICATION_TRANSACTION_COUNTER));
+			if (template.getValue(EMVTag.APPLICATION_CRYPTOGRAM) != null) {
+				transaction.putData(EMVTag.APPLICATION_CRYPTOGRAM, template.getValue(EMVTag.APPLICATION_CRYPTOGRAM));
+			}
 			if (template.getValue(EMVTag.ISSUER_APPLICATION_DATA) != null) {
 				transaction.putData(EMVTag.ISSUER_APPLICATION_DATA, template.getValue(EMVTag.ISSUER_APPLICATION_DATA));
 			}
@@ -87,7 +92,8 @@ final class CardActionAnalysis {
 		}
 	}
 
-	CryptogramInformationData secondGenerateAC(CryptogramType cryptogramType) throws TerminateSessionException, IOException {
+	CryptogramInformationData secondGenerateAC(CryptogramType cryptogramType)	throws TerminateSessionException,
+																				IOException {
 		final String method = "secondGenerateAC(CryptogramType)";
 		try {
 			if (LOG.isInfoEnabled()) {
@@ -113,7 +119,9 @@ final class CardActionAnalysis {
 
 	private void verifyCryptogram(CryptogramType requestCryptogram, CryptogramType responseCryptogram) throws TerminateSessionException {
 		if (responseCryptogram == null || responseCryptogram.compareTo(requestCryptogram) > 0) {
-			throw new TerminateSessionException("ICC Error: requestCryptogram=" + requestCryptogram + ",responseCryptogram=" + responseCryptogram);
+			throw new TerminateSessionException("ICC Error: requestCryptogram=" + requestCryptogram
+												+ ",responseCryptogram="
+												+ responseCryptogram);
 		}
 	}
 
@@ -158,7 +166,6 @@ final class CardActionAnalysis {
 			Template template = new Template(tlv);
 			template.assertContainsTag(EMVTag.CRYPTOGRAM_INFORMATION_DATA);
 			template.assertContainsTag(EMVTag.APPLICATION_TRANSACTION_COUNTER);
-			template.assertContainsTag(EMVTag.APPLICATION_CRYPTOGRAM);
 			return template;
 		} catch (TLVConstraintViolationException e) {
 			throw new TerminateSessionException(e);
@@ -171,17 +178,17 @@ final class CardActionAnalysis {
 		for (Tag tag : objectList) {
 			EMVTag emvTag = EMVTag.getByTag(tag);
 			if (emvTag == null) {
-				if (LOG.isDebugEnabled()) {
-					LOG.debug(method, "Unkown Tag: " + tag);
-				}
+				LOG.info(method, "Unkown Tag: " + tag);
 				continue;
 			}
 			if (EMVTag.TRANSACTION_CERTIFICATE_HASH_VALUE.equals(emvTag)) {
 				objectList.put(emvTag, generateTCHashValue());
 			} else if (transaction.containsData(emvTag)) {
 				objectList.put(emvTag, transaction.getMandatoryData(emvTag));
-			} else if (LOG.isDebugEnabled()) {
-				LOG.debug(method, "No value for " + emvTag);
+			} else {
+				if (LOG.isDebugEnabled()) {
+					LOG.debug(method, "No value for " + emvTag);
+				}
 			}
 		}
 		return objectList.construct();

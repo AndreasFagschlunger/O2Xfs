@@ -24,12 +24,18 @@
         module="at.o2xfs.xfs.service"
         status="integration">
 	</info>
+	<configurations defaultconfmapping="default">
+		<conf name="default" extends="master,runtime"/>
+    	<conf name="master" description="contains the artifact but no dependencies"/>
+    	<conf name="runtime" extends="compile" description="runtime but not the artifact"/>
+    	<conf name="compile"  visibility="private"/>
+    	<conf name="test" visibility="private" />
+	</configurations>
 	<publications>
-		<artifact name="at.o2xfs.xfs.service" type="jar" />
+		<artifact name="at.o2xfs.xfs.service" type="jar" conf="master" />
 	</publications>
 	<dependencies>
-		<dependency name="at.o2xfs.xfs" rev="latest.integration" />
-		<dependency org="commons-codec" name="commons-codec" rev="1.4" />
-		<dependency org="commons-lang" name="commons-lang" rev="2.5" />	
+		<dependency name="at.o2xfs.xfs" rev="latest.integration" conf="compile->default"/>
+		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default"/>
 	</dependencies>
 </ivy-module>

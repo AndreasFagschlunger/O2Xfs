@@ -2,14 +2,16 @@
 <ivy-module version="2.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-	<info organisation="at.o2xfs" module="at.o2xfs.operator" status="integration">
-	</info>
-	<dependencies defaultconf="default">
-		<dependency name="at.o2xfs.xfs.service" rev="latest.integration" />
-		<dependency org="commons-codec" name="commons-codec" rev="1.4" />
-		<dependency org="commons-lang" name="commons-lang" rev="2.5" />
-		<dependency org="log4j" name="log4j" rev="1.2.17">
-			<exclude conf="optional" />		
-		</dependency>
+	<info organisation="at.o2xfs" module="at.o2xfs.operator" status="integration"/>
+	<configurations defaultconfmapping="default">
+		<conf name="default" extends="master,runtime"/>
+    	<conf name="master" description="contains the artifact but no dependencies"/>
+    	<conf name="runtime" extends="compile" description="runtime but not the artifact"/>
+    	<conf name="compile"  visibility="private"/>
+    	<conf name="test" visibility="private" />
+	</configurations>
+	<dependencies>
+		<dependency name="at.o2xfs.xfs.service" rev="latest.integration" conf="compile->default" />
+		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default"/>
 	</dependencies>
 </ivy-module>

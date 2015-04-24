@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,16 +23,16 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.siu;
 
-import java.util.Set;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.util.XfsConstants;
+
+import java.util.Set;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class SIUAuxiliariesCapabilities {
 
@@ -47,8 +47,7 @@ public class SIUAuxiliariesCapabilities {
 		return value == SIUConstant.AVAILABLE;
 	}
 
-	private <E extends Enum<E> & XfsConstant> Set<E> getCapabilities(
-			final SIUAuxiliary auxiliary, final Class<E> type) {
+	private <E extends Enum<E> & XfsConstant> Set<E> getCapabilities(final SIUAuxiliary auxiliary, final Class<E> type) {
 		final int value = auxiliaries[(int) auxiliary.getValue()];
 		return XfsConstants.of(value, type);
 	}
@@ -75,19 +74,17 @@ public class SIUAuxiliariesCapabilities {
 	}
 
 	public Set<SIUEnhancedAudioControl> getEnhancedAudioControl() {
-		return getCapabilities(SIUAuxiliary.ENHANCEDAUDIOCONTROL,
-				SIUEnhancedAudioControl.class);
+		return getCapabilities(SIUAuxiliary.ENHANCEDAUDIOCONTROL, SIUEnhancedAudioControl.class);
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
-				.append("volumeControl", getVolumeControl())
-				.append("upsAvailable", isUPSAvailable())
-				.append("upsCapabilities", getUPSCapabilities())
-				.append("remoteStatusMonitor", isRemoteStatusMonitor())
-				.append("audibleAlarmDevice", isAudibleAlarmDevice())
-				.append("enhancedAudioControl", getEnhancedAudioControl())
-				.toString();
+		return new ToStringBuilder(this).append("volumeControl", getVolumeControl())
+										.append("upsAvailable", isUPSAvailable())
+										.append("upsCapabilities", getUPSCapabilities())
+										.append("remoteStatusMonitor", isRemoteStatusMonitor())
+										.append("audibleAlarmDevice", isAudibleAlarmDevice())
+										.append("enhancedAudioControl", getEnhancedAudioControl())
+										.toString();
 	}
 }

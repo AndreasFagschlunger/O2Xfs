@@ -1,21 +1,21 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- * 
+ *
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,13 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.service.idc;
-
-import java.util.List;
-
-import org.junit.Test;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -46,13 +42,16 @@ import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 import at.o2xfs.xfs.service.idc.cmd.IDCCapabilitiesCommand;
 import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 
-public class IDCInfoTest extends XfsCommandTest {
+import java.util.List;
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(IDCInfoTest.class);
+import org.junit.Test;
 
-	private List<IDCService> idcServices = xfsServiceManager
-			.getServices(IDCService.class);
+public class IDCInfoTest
+		extends XfsCommandTest {
+
+	private static final Logger LOG = LoggerFactory.getLogger(IDCInfoTest.class);
+
+	private List<IDCService> idcServices = serviceManager.getServices(IDCService.class);
 
 	@Test
 	public void status() throws Exception {
@@ -74,10 +73,8 @@ public class IDCInfoTest extends XfsCommandTest {
 		}
 	}
 
-	private void executeIDCCapabilities(final IDCService idcService)
-			throws Exception {
-		final IDCCapabilitiesCommand command = new IDCCapabilitiesCommand(
-				idcService);
+	private void executeIDCCapabilities(final IDCService idcService) throws Exception {
+		final IDCCapabilitiesCommand command = new IDCCapabilitiesCommand(idcService);
 		final WFSIDCCAPS caps = command.call();
 		LOG.info("executeIDCCapabilities(IDCService)", caps);
 	}
@@ -85,8 +82,7 @@ public class IDCInfoTest extends XfsCommandTest {
 	@Test
 	public void listForms() throws Exception {
 		for (final IDCService idcService : idcServices) {
-			XfsCommand xfsCommand = new XfsInfoCommand(idcService,
-					IDCInfoCommand.FORM_LIST);
+			XfsCommand xfsCommand = new XfsInfoCommand<IDCInfoCommand>(idcService, IDCInfoCommand.FORM_LIST);
 			WFSResult wfsResult = null;
 			try {
 				wfsResult = xfsCommand.call();
@@ -96,7 +92,7 @@ public class IDCInfoTest extends XfsCommandTest {
 				}
 			} finally {
 				if (wfsResult != null) {
-					xfsServiceManager.free(wfsResult);
+					serviceManager.free(wfsResult);
 				}
 			}
 		}
@@ -105,8 +101,9 @@ public class IDCInfoTest extends XfsCommandTest {
 	private void queryForm(final String formName) throws Exception {
 		for (final IDCService idcService : idcServices) {
 			ZSTR szFormName = new ZSTR(formName);
-			XfsCommand xfsCommand = new XfsInfoCommand(idcService,
-					IDCInfoCommand.QUERY_FORM, szFormName);
+			XfsCommand xfsCommand = new XfsInfoCommand<IDCInfoCommand>(	idcService,
+																		IDCInfoCommand.QUERY_FORM,
+																		szFormName);
 			WFSResult wfsResult = null;
 			try {
 				wfsResult = xfsCommand.call();
@@ -114,7 +111,7 @@ public class IDCInfoTest extends XfsCommandTest {
 				LOG.info("queryForm(String)", form);
 			} finally {
 				if (wfsResult != null) {
-					xfsServiceManager.free(wfsResult);
+					serviceManager.free(wfsResult);
 				}
 			}
 		}

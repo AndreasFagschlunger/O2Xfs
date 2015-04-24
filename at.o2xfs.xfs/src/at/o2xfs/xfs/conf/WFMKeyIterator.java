@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,12 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.conf;
-
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -36,13 +33,16 @@ import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.HKEY;
 import at.o2xfs.xfs.XfsException;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * @author Andreas Fagschlunger
  */
-public class WFMKeyIterator implements Iterator<String>, Iterable<String> {
+public class WFMKeyIterator
+		implements Iterator<String>, Iterable<String> {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(WFMKeyIterator.class);
+	private static final Logger LOG = LoggerFactory.getLogger(WFMKeyIterator.class);
 
 	private O2XfsConf xfsConf = null;
 
@@ -70,8 +70,7 @@ public class WFMKeyIterator implements Iterator<String>, Iterable<String> {
 			}
 		} catch (final XfsException e) {
 			if (LOG.isErrorEnabled()) {
-				LOG.error(method, "Error enumerating: key=" + key + ",iSubKey="
-						+ iSubKey, e);
+				LOG.error(method, "Error enumerating: key=" + key + ",iSubKey=" + iSubKey, e);
 			}
 		}
 		return false;
@@ -82,7 +81,7 @@ public class WFMKeyIterator implements Iterator<String>, Iterable<String> {
 		if (nextKeyName == null) {
 			throw new NoSuchElementException("iSubKey: " + iSubKey);
 		}
-		iSubKey.put(iSubKey.longValue() + 1L);
+		iSubKey.set(iSubKey.longValue() + 1L);
 		try {
 			return nextKeyName;
 		} finally {

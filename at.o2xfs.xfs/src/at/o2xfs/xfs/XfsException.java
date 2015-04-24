@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,23 +23,26 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import at.o2xfs.common.Assert;
+import at.o2xfs.xfs.cam.CamExceptionFactory;
 import at.o2xfs.xfs.idc.IDCServiceExceptionFactory;
 import at.o2xfs.xfs.pin.PINServiceExceptionFactory;
 import at.o2xfs.xfs.siu.SIUServiceExceptionFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @see AbstractXfsExceptionFactory
- * 
+ *
  * @author Andreas Fagschlunger
  */
-public abstract class XfsException extends Exception {
+public abstract class XfsException
+		extends Exception {
 
 	private static List<AbstractXfsExceptionFactory> exceptionFactories = null;
 
@@ -49,20 +52,17 @@ public abstract class XfsException extends Exception {
 		exceptionFactories.add(new IDCServiceExceptionFactory());
 		exceptionFactories.add(new PINServiceExceptionFactory());
 		exceptionFactories.add(new SIUServiceExceptionFactory());
+		exceptionFactories.add(new CamExceptionFactory());
 	}
 
-	private Enum<?> error = null;
+	private final Enum<? extends XfsConstant> error;
 
-	protected XfsException(final Enum<?> error) {
-		if (!(error instanceof XfsConstant)) {
-			throw new IllegalArgumentException("Enum " + error
-					+ " must inherit " + XfsConstant.class.getName());
-		}
-
+	protected XfsException(final Enum<? extends XfsConstant> error) {
+		Assert.notNull(error);
 		this.error = error;
 	}
 
-	public Enum<?> getError() {
+	public Enum<? extends XfsConstant> getError() {
 		return error;
 	}
 

@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs;
 
@@ -51,8 +51,8 @@ public class XfsAPI {
 	private static XfsAPI instance = null;
 
 	private XfsAPI() {
-		System.loadLibrary("O2XfsWIN32");
-		System.loadLibrary("O2Xfs");
+		System.loadLibrary("at.o2xfs.win32");
+		System.loadLibrary("at.o2xfs.xfs");
 	}
 
 	public final static XfsAPI getInstance() {
@@ -66,12 +66,10 @@ public class XfsAPI {
 		return instance;
 	}
 
-	public void wfsCancelAsyncRequest(final HSERVICE hService,
-			final RequestId requestId) throws XfsException {
+	public void wfsCancelAsyncRequest(final HSERVICE hService, final RequestId requestId) throws XfsException {
 		final String method = "wfsCancelAsyncRequest(HSERVICE, REQUESTID)";
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(method, "hService=" + hService + ",requestId="
-					+ requestId);
+			LOG.debug(method, "hService=" + hService + ",requestId=" + requestId);
 		}
 		final int errorCode = (int) wfsCancelAsyncRequest0(hService, requestId);
 		XfsException.throwFor(errorCode);
@@ -81,21 +79,19 @@ public class XfsAPI {
 
 	/**
 	 * Establishes a connection between an application and the XFS Manager.
-	 * 
+	 *
 	 * @param versionsRequired
 	 * @return
 	 * @throws IllegalArgumentException
 	 * @throws WFSStartUpException
 	 */
-	public WFSVersion wfsStartUp(final DWORD versionsRequired)
-			throws IllegalArgumentException, WFSStartUpException {
+	public WFSVersion wfsStartUp(final DWORD versionsRequired) throws IllegalArgumentException, WFSStartUpException {
 		final String method = "wfsStartUp(DWORD)";
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "versionsRequired=" + versionsRequired);
 		}
 		if (versionsRequired == null) {
-			throw new IllegalArgumentException(
-					"versionsRequired cannot be null");
+			throw new IllegalArgumentException("versionsRequired cannot be null");
 		}
 		final WFSVersion wfsVersion = new WFSVersion();
 		wfsVersion.allocate();
@@ -121,7 +117,7 @@ public class XfsAPI {
 	 * more service providers, then the XFS Manager will automatically issue the
 	 * close(s). Once the WFSCleanUp has been performed, subsequent attempts to
 	 * issue any XFS function other than WFSStartUp will fail.
-	 * 
+	 *
 	 * @throws XfsException
 	 */
 	public void wfsCleanUp() throws XfsException {
@@ -140,7 +136,7 @@ public class XfsAPI {
 
 	/**
 	 * Requests a new, unique application handle value.
-	 * 
+	 *
 	 * @return
 	 * @throws XfsException
 	 */
@@ -149,8 +145,7 @@ public class XfsAPI {
 		hApp.allocate();
 		final int errorCode = wfsCreateAppHandle0(hApp);
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("wfsCreateAppHandle()", "errorCode=" + errorCode
-					+ ",hApp=" + hApp);
+			LOG.debug("wfsCreateAppHandle()", "errorCode=" + errorCode + ",hApp=" + hApp);
 		}
 		XfsException.throwFor(errorCode);
 		return hApp;
@@ -163,7 +158,7 @@ public class XfsAPI {
 	 * classes) from the specified hService, by the specified hWndReg (or all
 	 * the calling application's hWnd's). The asynchronous version of
 	 * WFSDeregister.
-	 * 
+	 *
 	 * @param hService
 	 *            Service handle returned by WFSOpen or WFSAsyncOpen. If this
 	 *            value is NULL, and dwEventClass is SYSTEM_EVENTS, the XFS
@@ -190,26 +185,30 @@ public class XfsAPI {
 	 * @throws XfsException
 	 */
 	public RequestId wfsAsyncDeregister(final HSERVICE hService,
-			final DWORD dwEventClass, final HWND hWndReg, final HWND hWnd)
-			throws XfsException {
+										final DWORD dwEventClass,
+										final HWND hWndReg,
+										final HWND hWnd) throws XfsException {
 		final String method = "wfsAsyncDeregister(HSERVICE, DWORD, HWND, HWND)";
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(method, "hService=" + hService + ",dwEventClass="
-					+ dwEventClass + ",hWndReg=" + hWndReg + ",hWnd=" + hWnd);
+			LOG.debug(method, "hService=" + hService
+								+ ",dwEventClass="
+								+ dwEventClass
+								+ ",hWndReg="
+								+ hWndReg
+								+ ",hWnd="
+								+ hWnd);
 		}
 		RequestId requestId = new RequestId();
-		final int errorCode = wfsAsyncDeregister0(hService, dwEventClass,
-				hWndReg, hWnd, requestId);
+		final int errorCode = wfsAsyncDeregister0(hService, dwEventClass, hWndReg, hWnd, requestId);
 		XfsException.throwFor(errorCode);
 		return requestId;
 	}
 
-	private native int wfsAsyncDeregister0(Type hService, Type dwEventClass,
-			Type hWndReg, Type hWnd, Type lpRequestID);
+	private native int wfsAsyncDeregister0(Type hService, Type dwEventClass, Type hWndReg, Type hWnd, Type lpRequestID);
 
 	/**
 	 * Makes the specified application handle invalid.
-	 * 
+	 *
 	 * @param hApp
 	 *            The application handle to be made invalid.
 	 * @throws XfsException
@@ -231,28 +230,39 @@ public class XfsAPI {
 
 	private native int wfsDestroyAppHandle0(Type lphApp);
 
-	public RequestId wfsAsyncExecute(final HSERVICE hService,
-			final DWORD dwCommand, final Type lpCmdData, final DWORD dwTimeOut,
-			final HWND hWnd) throws XfsException {
+	public RequestId wfsAsyncExecute(	final HSERVICE hService,
+										final DWORD dwCommand,
+										final Type lpCmdData,
+										final DWORD dwTimeOut,
+										final HWND hWnd) throws XfsException {
 		final String method = "wfsAsyncExecute(HSERVICE, DWORD, Type, DWORD, HWND)";
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(method, "hService=" + hService + ",dwCommand="
-					+ dwCommand + ",lpCmdData=" + lpCmdData + ",dwTimeOut="
-					+ dwTimeOut + ",hWnd=" + hWnd);
+			LOG.debug(method, "hService=" + hService
+								+ ",dwCommand="
+								+ dwCommand
+								+ ",lpCmdData="
+								+ lpCmdData
+								+ ",dwTimeOut="
+								+ dwTimeOut
+								+ ",hWnd="
+								+ hWnd);
 		}
 		RequestId requestId = new RequestId();
 		requestId.allocate();
-		final int errorCode = wfsAsyncExecute0(hService, dwCommand, lpCmdData,
-				dwTimeOut, hWnd, requestId);
+		final int errorCode = wfsAsyncExecute0(hService, dwCommand, lpCmdData, dwTimeOut, hWnd, requestId);
 		XfsException.throwFor(errorCode);
 		return requestId;
 	}
 
-	private native int wfsAsyncExecute0(Type hService, Type dwCommand,
-			Type lpCmdData, Type dwTimeOut, Type hWnd, Type requestId);
+	private native int wfsAsyncExecute0(Type hService,
+										Type dwCommand,
+										Type lpCmdData,
+										Type dwTimeOut,
+										Type hWnd,
+										Type requestId);
 
 	/**
-	 * 
+	 *
 	 * @param wfsResult
 	 * @throws XfsException
 	 */
@@ -267,17 +277,23 @@ public class XfsAPI {
 
 	private native int wfsFreeResult0(Type wfsResult);
 
-	public WFSResult wfsGetInfo(final HSERVICE hService, final DWORD category,
-			final Type queryDetails, final DWORD timeOut) throws XfsException {
+	public WFSResult wfsGetInfo(final HSERVICE hService,
+								final DWORD category,
+								final Type queryDetails,
+								final DWORD timeOut) throws XfsException {
 		final String method = "wfsGetInfo(HSERVICE, DWORD, Type, DWORD)";
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(method, "hService=" + hService + ",category=" + category
-					+ ",queryDetails=" + queryDetails + ",timeOut=" + timeOut);
+			LOG.debug(method, "hService=" + hService
+								+ ",category="
+								+ category
+								+ ",queryDetails="
+								+ queryDetails
+								+ ",timeOut="
+								+ timeOut);
 		}
 		final Pointer pResult = new Pointer();
 		pResult.allocate();
-		final long errorCode = wfsGetInfo0(hService, category, queryDetails,
-				timeOut, pResult);
+		final long errorCode = wfsGetInfo0(hService, category, queryDetails, timeOut, pResult);
 		XfsException.throwFor(errorCode);
 		final WFSResult wfsResult = new WFSResult(pResult);
 		if (LOG.isDebugEnabled()) {
@@ -286,13 +302,12 @@ public class XfsAPI {
 		return wfsResult;
 	}
 
-	private native long wfsGetInfo0(Type hService, Type dwCategory,
-			Type lpQueryDetails, Type dwTimeOut, Type lppResult);
+	private native long wfsGetInfo0(Type hService, Type dwCategory, Type lpQueryDetails, Type dwTimeOut, Type lppResult);
 
 	/**
 	 * Retrieves information from the specified service provider. The
 	 * asynchronous version of WFSGetInfo.
-	 * 
+	 *
 	 * @param hService
 	 *            Handle to the service provider as returned by WFSOpen or
 	 *            WFSAsyncOpen.
@@ -310,60 +325,104 @@ public class XfsAPI {
 	 * @param requestId
 	 *            The request identifier for this request (returned parameter).
 	 */
-	public RequestId wfsAsyncGetInfo(final HSERVICE hService,
-			final DWORD dwCategory, final Type queryDetails,
-			final DWORD dwTimeOut, final HWND hWnd) throws XfsException {
+	public RequestId wfsAsyncGetInfo(	final HSERVICE hService,
+										final DWORD dwCategory,
+										final Type queryDetails,
+										final DWORD dwTimeOut,
+										final HWND hWnd) throws XfsException {
 		final String method = "wfsAsyncGetInfo(HSERVICE, DWORD, Type, DWORD, HWND)";
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(method, "hService=" + hService + ",dwCategory="
-					+ dwCategory + ",queryDetails=" + queryDetails
-					+ ",dwTimeOut=" + dwTimeOut + ",hWnd=" + hWnd);
+			LOG.debug(method, "hService=" + hService
+								+ ",dwCategory="
+								+ dwCategory
+								+ ",queryDetails="
+								+ queryDetails
+								+ ",dwTimeOut="
+								+ dwTimeOut
+								+ ",hWnd="
+								+ hWnd);
 		}
 		RequestId requestId = new RequestId();
 		requestId.allocate();
-		final int errorCode = wfsAsyncGetInfo0(hService, dwCategory,
-				queryDetails, dwTimeOut, hWnd, requestId);
+		final int errorCode = wfsAsyncGetInfo0(hService, dwCategory, queryDetails, dwTimeOut, hWnd, requestId);
 		XfsException.throwFor(errorCode);
 		return requestId;
 	}
 
-	private native int wfsAsyncGetInfo0(Type hService, Type dwCategory,
-			Type lpQueryDetails, Type dwTimeOut, Type hWnd, Type lpRequestID);
+	private native int wfsAsyncGetInfo0(Type hService,
+										Type dwCategory,
+										Type lpQueryDetails,
+										Type dwTimeOut,
+										Type hWnd,
+										Type lpRequestID);
 
-	public RequestId wfsAsyncOpen(final CharArray logicalName, final HAPP hApp,
-			final CHAR lpszAppID, final DWORD dwTraceLevel,
-			final DWORD dwTimeOut, final HSERVICE lphService, final HWND hWnd,
-			final DWORD dwSrvcVersionsRequired, final WFSVersion lpSrvcVersion,
-			final WFSVersion lpSPIVersion) throws XfsException {
+	public RequestId wfsAsyncOpen(	final CharArray logicalName,
+									final HAPP hApp,
+									final CHAR lpszAppID,
+									final DWORD dwTraceLevel,
+									final DWORD dwTimeOut,
+									final HSERVICE lphService,
+									final HWND hWnd,
+									final DWORD dwSrvcVersionsRequired,
+									final WFSVersion lpSrvcVersion,
+									final WFSVersion lpSPIVersion) throws XfsException {
 		final String method = "wfsAsyncOpen(CharArray, HAPP, CHAR, DWORD, DWORD, HSERVICE, HWND, DWORD, WFSVersion, WFSVersion)";
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(method, "logicalName=" + logicalName + ",hApp=" + hApp
-					+ ",lpszAppID=" + lpszAppID + ",dwTraceLevel="
-					+ dwTraceLevel + ",dwTimeOut=" + dwTimeOut + ",lphService="
-					+ lphService + ",hWnd=" + hWnd + ",dwSrvcVersionsRequired="
-					+ dwSrvcVersionsRequired + ",lpSrvcVersion="
-					+ lpSrvcVersion + ",lpSPIVersion=" + lpSPIVersion);
+			LOG.debug(method, "logicalName=" + logicalName
+								+ ",hApp="
+								+ hApp
+								+ ",lpszAppID="
+								+ lpszAppID
+								+ ",dwTraceLevel="
+								+ dwTraceLevel
+								+ ",dwTimeOut="
+								+ dwTimeOut
+								+ ",lphService="
+								+ lphService
+								+ ",hWnd="
+								+ hWnd
+								+ ",dwSrvcVersionsRequired="
+								+ dwSrvcVersionsRequired
+								+ ",lpSrvcVersion="
+								+ lpSrvcVersion
+								+ ",lpSPIVersion="
+								+ lpSPIVersion);
 		}
 		RequestId requestId = new RequestId();
 		requestId.allocate();
-		final int errorCode = wfsAsyncOpen0(logicalName, hApp, lpszAppID,
-				dwTraceLevel, dwTimeOut, lphService, hWnd,
-				dwSrvcVersionsRequired, lpSrvcVersion, lpSPIVersion, requestId);
+		final int errorCode = wfsAsyncOpen0(logicalName,
+											hApp,
+											lpszAppID,
+											dwTraceLevel,
+											dwTimeOut,
+											lphService,
+											hWnd,
+											dwSrvcVersionsRequired,
+											lpSrvcVersion,
+											lpSPIVersion,
+											requestId);
 		XfsException.throwFor(errorCode);
 		return requestId;
 	}
 
-	private native int wfsAsyncOpen0(Type lpszLogicalName, Type hApp,
-			Type lpszAppID, Type dwTraceLevel, Type dwTimeOut, Type lphService,
-			Type hWnd, Type dwSrvcVersionsRequired, Type lpSrvcVersion,
-			Type lpSPIVersion, Type lpRequestID);
+	private native int wfsAsyncOpen0(	Type lpszLogicalName,
+										Type hApp,
+										Type lpszAppID,
+										Type dwTraceLevel,
+										Type dwTimeOut,
+										Type lphService,
+										Type hWnd,
+										Type dwSrvcVersionsRequired,
+										Type lpSrvcVersion,
+										Type lpSPIVersion,
+										Type lpRequestID);
 
 	/**
 	 * Enables event monitoring for the specified service by the specified
 	 * window; all messages of the specified class(es) are sent to the window
 	 * specified in the hWndReg parameter. The asynchronous version of
 	 * WFSRegister.
-	 * 
+	 *
 	 * @param hService
 	 *            Handle to the service provider as returned by WFSOpen or
 	 *            WFSAsyncOpen. If this value is NULL, and dwEventClass is
@@ -383,27 +442,30 @@ public class XfsAPI {
 	 *            Pointer to the request identifier for this request (returned
 	 *            parameter).
 	 */
-	public RequestId wfsAsyncRegister(final HSERVICE hService,
-			final DWORD dwEventClass, final HWND hWndReg, final HWND hWnd)
-			throws XfsException {
+	public RequestId wfsAsyncRegister(	final HSERVICE hService,
+										final DWORD dwEventClass,
+										final HWND hWndReg,
+										final HWND hWnd) throws XfsException {
 		final String method = "wfsAsyncRegister(HSERVICE, DWORD, HWND, HWND)";
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(method, "hService=" + hService + ",dwEventClass="
-					+ dwEventClass + ",hWndReg=" + hWndReg + ",hWnd=" + hWnd);
+			LOG.debug(method, "hService=" + hService
+								+ ",dwEventClass="
+								+ dwEventClass
+								+ ",hWndReg="
+								+ hWndReg
+								+ ",hWnd="
+								+ hWnd);
 		}
 		RequestId requestId = new RequestId();
 		requestId.allocate();
-		int errorCode = wfsAsyncRegister0(hService, dwEventClass, hWndReg,
-				hWnd, requestId);
+		int errorCode = wfsAsyncRegister0(hService, dwEventClass, hWndReg, hWnd, requestId);
 		XfsException.throwFor(errorCode);
 		return requestId;
 	}
 
-	private native int wfsAsyncRegister0(Type hService, Type dwEventClass,
-			Type hWndReg, Type hWnd, Type lpRequestID);
+	private native int wfsAsyncRegister0(Type hService, Type dwEventClass, Type hWndReg, Type hWnd, Type lpRequestID);
 
-	public RequestId wfsAsyncClose(final HSERVICE lphService, final HWND hWnd)
-			throws XfsException {
+	public RequestId wfsAsyncClose(final HSERVICE lphService, final HWND hWnd) throws XfsException {
 		String method = "wfsAsyncClose(HSERVICE, HWND)";
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "lphService=" + lphService + ",hWnd=" + hWnd);
@@ -415,6 +477,5 @@ public class XfsAPI {
 		return requestId;
 	}
 
-	private native int wfsAsyncClose0(Type lphService, Type hWnd,
-			Type lpRequestID);
+	private native int wfsAsyncClose0(Type lphService, Type hWnd, Type lpRequestID);
 }

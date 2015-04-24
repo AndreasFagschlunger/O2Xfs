@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.siu;
 
@@ -33,31 +33,32 @@ import static at.o2xfs.xfs.siu.SIUConstant.GUIDLIGHTS_SIZE;
 import static at.o2xfs.xfs.siu.SIUConstant.INDICATORS_SIZE;
 import static at.o2xfs.xfs.siu.SIUConstant.SENSORS_SIZE;
 
-import java.util.Map;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
-import at.o2xfs.win32.WORD;
 import at.o2xfs.win32.WORDArray;
 import at.o2xfs.xfs.XfsVersion;
+import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class SIUStatus extends Struct {
+import java.util.Map;
 
-	private WORD device = new WORD();
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class SIUStatus
+		extends Struct {
+
+	private XfsWord<SIUDeviceState> device = new XfsWord<>(SIUDeviceState.class);
 	private final WORDArray sensors = new WORDArray(SENSORS_SIZE);
 	private final WORDArray doors = new WORDArray(DOORS_SIZE);
 	private final WORDArray indicators = new WORDArray(INDICATORS_SIZE);
 	private final WORDArray auxiliaries = new WORDArray(AUXILIARIES_SIZE);
 	private final WORDArray guidLights = new WORDArray(GUIDLIGHTS_SIZE);
-	private LPZZSTR extra = new LPZZSTR();
-	private USHORT powerSaveRecoveryTime = new USHORT();
-	private WORD antiFraudModule = new WORD();
+	private final LPZZSTR extra = new LPZZSTR();
+	private final USHORT powerSaveRecoveryTime = new USHORT();
+	private final XfsWord<SIUAntiFraudModule> antiFraudModule = new XfsWord<>(SIUAntiFraudModule.class);
 
 	private SIUStatus(final XfsVersion version) {
 		add(device);
@@ -87,25 +88,25 @@ public class SIUStatus extends Struct {
 	public SIUStatus(final XfsVersion version, final SIUStatus status) {
 		this(version);
 		allocate();
-		device.put(status.device);
+		device.set(status.getDevice());
 		for (int i = 0; i < SENSORS_SIZE; i++) {
-			sensors.get(i).put(status.sensors.get(i));
+			sensors.get(i).set(status.sensors.get(i));
 		}
 		for (int i = 0; i < DOORS_SIZE; i++) {
-			doors.get(i).put(status.doors.get(i));
+			doors.get(i).set(status.doors.get(i));
 		}
 		for (int i = 0; i < INDICATORS_SIZE; i++) {
-			indicators.get(i).put(status.indicators.get(i));
+			indicators.get(i).set(status.indicators.get(i));
 		}
 		for (int i = 0; i < AUXILIARIES_SIZE; i++) {
-			auxiliaries.get(i).put(status.auxiliaries.get(i));
+			auxiliaries.get(i).set(status.auxiliaries.get(i));
 		}
 		for (int i = 0; i < GUIDLIGHTS_SIZE; i++) {
-			guidLights.get(i).put(status.guidLights.get(i));
+			guidLights.get(i).set(status.guidLights.get(i));
 		}
 		setExtra(status.getExtra());
-		powerSaveRecoveryTime.put(status.powerSaveRecoveryTime);
-		antiFraudModule.put(status.antiFraudModule);
+		powerSaveRecoveryTime.set(status.powerSaveRecoveryTime);
+		antiFraudModule.set(status.getAntiFraudModule());
 	}
 
 	public SIUDeviceState getDevice() {
@@ -113,7 +114,7 @@ public class SIUStatus extends Struct {
 	}
 
 	public void setDevice(final SIUDeviceState device) {
-		this.device.put(device.getValue());
+		this.device.set(device);
 	}
 
 	public int getSensorState(final SIUSensor sensor) {
@@ -169,7 +170,7 @@ public class SIUStatus extends Struct {
 	}
 
 	public void setPowerSaveRecoveryTime(final int powerSaveRecoveryTime) {
-		this.powerSaveRecoveryTime.put(powerSaveRecoveryTime);
+		this.powerSaveRecoveryTime.set(powerSaveRecoveryTime);
 	}
 
 	public SIUAntiFraudModule getAntiFraudModule() {
@@ -177,19 +178,20 @@ public class SIUStatus extends Struct {
 	}
 
 	public void setAntiFraudModule(final SIUAntiFraudModule antiFraudModule) {
-		this.antiFraudModule.put(antiFraudModule.getValue());
+		this.antiFraudModule.set(antiFraudModule);
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("device", getDevice())
-				.append("sensorStatus", getSensorStatus())
-				.append("doorStatus", getDoorStatus())
-				.append("indicatorStatus", getIndicatorStatus())
-				.append("auxiliaryStatus", getAuxiliaryStatus())
-				.append("guidLightStatus", getGuidLightStatus())
-				.append("extra", getExtra())
-				.append("powerSaveRecoveryTime", getPowerSaveRecoveryTime())
-				.append("antiFraudModule", getAntiFraudModule()).toString();
+										.append("sensorStatus", getSensorStatus())
+										.append("doorStatus", getDoorStatus())
+										.append("indicatorStatus", getIndicatorStatus())
+										.append("auxiliaryStatus", getAuxiliaryStatus())
+										.append("guidLightStatus", getGuidLightStatus())
+										.append("extra", getExtra())
+										.append("powerSaveRecoveryTime", getPowerSaveRecoveryTime())
+										.append("antiFraudModule", getAntiFraudModule())
+										.toString();
 	}
 }

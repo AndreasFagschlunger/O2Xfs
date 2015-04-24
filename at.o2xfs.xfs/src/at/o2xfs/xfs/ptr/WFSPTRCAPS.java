@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,16 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.ptr;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.DWORD;
@@ -49,7 +42,15 @@ import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPTRCAPS extends Struct {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class WFSPTRCAPS
+		extends Struct {
 
 	private final WORD clazz = new WORD();
 	private final WORD type = new WORD();
@@ -168,60 +169,58 @@ public class WFSPTRCAPS extends Struct {
 	public WFSPTRCAPS(final WFSPTRCAPS caps, final XfsVersion version) {
 		this(version);
 		allocate();
-		clazz.put(caps.clazz);
-		type.put(caps.type);
-		compound.put(caps.isCompound());
-		resolution.put(caps.resolution);
-		readForm.put(caps.readForm);
-		writeForm.put(caps.writeForm);
-		extents.put(caps.extents);
-		control.put(caps.control);
+		clazz.set(caps.clazz);
+		type.set(caps.type);
+		compound.set(caps.isCompound());
+		resolution.set(caps.resolution);
+		readForm.set(caps.readForm);
+		writeForm.set(caps.writeForm);
+		extents.set(caps.extents);
+		control.set(caps.control);
 		if (version.isLE(XfsVersion.V2_00)) {
-			maxRetract.put(caps.maxRetract);
+			maxRetract.set(caps.maxRetract);
 		}
-		maxMediaOnStacker.put(caps.maxMediaOnStacker);
-		acceptMedia.put(caps.isAcceptMedia());
-		multiPage.put(caps.isMultiPage());
-		paperSources.put(caps.paperSources);
-		mediaTaken.put(caps.isMediaTaken());
-		retractBins.put(caps.retractBins);
+		maxMediaOnStacker.set(caps.maxMediaOnStacker);
+		acceptMedia.set(caps.isAcceptMedia());
+		multiPage.set(caps.isMultiPage());
+		paperSources.set(caps.paperSources);
+		mediaTaken.set(caps.isMediaTaken());
+		retractBins.set(caps.retractBins);
 		if (getRetractBins() > 0) {
 			final List<Integer> retractCounts = caps.getMaxRetracts();
 			if (!retractCounts.isEmpty()) {
-				final USHORTArray maxRetracts = new USHORTArray(
-						retractCounts.size());
+				final USHORTArray maxRetracts = new USHORTArray(retractCounts.size());
 				maxRetracts.allocate();
 				for (int i = 0; i < maxRetracts.length; i++) {
-					maxRetracts.get(i).put(retractCounts.get(i));
+					maxRetracts.get(i).set(retractCounts.get(i));
 				}
 				this.maxRetracts.pointTo(maxRetracts);
 			}
 		}
-		imageType.put(caps.imageType);
-		frontImageColorFormat.put(caps.frontImageColorFormat);
-		backImageColorFormat.put(caps.backImageColorFormat);
-		codelineFormat.put(caps.codelineFormat);
-		imageSource.put(caps.imageSource);
-		charSupport.put(caps.charSupport);
-		dispensePaper.put(caps.isDispensePaper());
+		imageType.set(caps.imageType);
+		frontImageColorFormat.set(caps.frontImageColorFormat);
+		backImageColorFormat.set(caps.backImageColorFormat);
+		codelineFormat.set(caps.codelineFormat);
+		imageSource.set(caps.imageSource);
+		charSupport.set(caps.charSupport);
+		dispensePaper.set(caps.isDispensePaper());
 		extra.pointTo(KeyValueMap.toZZString(caps.getExtra()));
 		// TODO: guidLights
 		if (caps.getWindowsPrinter() != null) {
 			windowsPrinter.pointTo(new ZSTR(caps.getWindowsPrinter()));
 		}
-		mediaPresented.put(caps.isMediaPresented());
-		autoRetractPeriod.put(caps.autoRetractPeriod);
-		retractToTransport.put(caps.isRetractToTransport());
-		powerSaveControl.put(caps.isPowerSaveControl());
-		coercivityType.put(caps.coercivityType);
-		controlPassbook.put(caps.controlPassbook);
-		printSides.put(caps.printSides);
-		antiFraudModule.put(caps.isAntiFraudModule());
+		mediaPresented.set(caps.isMediaPresented());
+		autoRetractPeriod.set(caps.autoRetractPeriod);
+		retractToTransport.set(caps.isRetractToTransport());
+		powerSaveControl.set(caps.isPowerSaveControl());
+		coercivityType.set(caps.coercivityType);
+		controlPassbook.set(caps.controlPassbook);
+		printSides.set(caps.printSides);
+		antiFraudModule.set(caps.isAntiFraudModule());
 	}
 
 	/**
-	 * Specifies the logical service class, value is:
-	 * {@link XfsServiceClass#WFS_SERVICE_CLASS_PTR}
+	 * Specifies the logical service class, value is: {@link XfsServiceClass#WFS_SERVICE_CLASS_PTR}
 	 */
 	public XfsServiceClass getServiceClass() {
 		return XfsConstants.valueOf(clazz, XfsServiceClass.class);
@@ -247,8 +246,7 @@ public class WFSPTRCAPS extends Struct {
 	 * Specifies at which resolution(s) the physical device can print. Used by
 	 * the application to select the level of print quality desired (e.g. as in
 	 * Word for Windows); does not imply any absolute level of resolution, only
-	 * relative. Specified as a combination of the following flags:
-	 * {@link PTRResolution}
+	 * relative. Specified as a combination of the following flags: {@link PTRResolution}
 	 */
 	public Set<PTRResolution> getResolution() {
 		return XfsConstants.of(resolution, PTRResolution.class);
@@ -256,8 +254,7 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies whether the device can read data from media, as a combination
-	 * of the following flags (zero if none of the choices is supported):
-	 * {@link PTRReadForm}
+	 * of the following flags (zero if none of the choices is supported): {@link PTRReadForm}
 	 */
 	public Set<PTRReadForm> getReadForm() {
 		return XfsConstants.of(readForm, PTRReadForm.class);
@@ -283,8 +280,7 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies the manner in which media can be controlled, as a combination
-	 * of the following flags (zero if none of the choices is supported):
-	 * {@link PTRMediaControl}
+	 * of the following flags (zero if none of the choices is supported): {@link PTRMediaControl}
 	 */
 	public Set<PTRMediaControl> getControl() {
 		return XfsConstants.of(control, PTRMediaControl.class);
@@ -308,7 +304,7 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies whether the device is able to support multiple page print jobs.
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	public boolean isMultiPage() {
@@ -318,7 +314,7 @@ public class WFSPTRCAPS extends Struct {
 	/**
 	 * Specifies the Paper sources available for this printer as a combination
 	 * of the following flags: {@link PTRPaperSource}
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	public Set<PTRPaperSource> getPaperSources() {
@@ -329,7 +325,7 @@ public class WFSPTRCAPS extends Struct {
 	 * Specifies whether the device is able to detect when the media is taken
 	 * from the exit slot. If FALSE, the WFS_SRVE_PTR_MEDIATAKEN event is not
 	 * fired. Its value is either TRUE or FALSE.
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	public boolean isMediaTaken() {
@@ -354,8 +350,7 @@ public class WFSPTRCAPS extends Struct {
 				numbers.add(Integer.valueOf(maxRetract.intValue()));
 			}
 		} else if (getRetractBins() > 0) {
-			final USHORTArray array = new USHORTArray(maxRetracts,
-					getRetractBins());
+			final USHORTArray array = new USHORTArray(maxRetracts, getRetractBins());
 			for (int i = 0; i < array.length; i++) {
 				final int num = array.get(i).intValue();
 				numbers.add(Integer.valueOf(num));
@@ -367,7 +362,7 @@ public class WFSPTRCAPS extends Struct {
 	/**
 	 * Specifies the image format supported by this device, as a combination of
 	 * following flags (empty if not supported): {@link PTRImageType}
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	public Set<PTRImageType> getImageType() {
@@ -377,7 +372,7 @@ public class WFSPTRCAPS extends Struct {
 	/**
 	 * Specifies the front image color formats supported by this device, as a
 	 * combination of following flags (empty if not supported):
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	public Set<PTRImageColor> getFrontImageColorFormat() {
@@ -386,9 +381,8 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies the back image color formats supported by this device, as a
-	 * combination of following flags (empty if not supported):
-	 * {@link PTRImageColor}
-	 * 
+	 * combination of following flags (empty if not supported): {@link PTRImageColor}
+	 *
 	 * @since 3.00
 	 */
 	public Set<PTRImageColor> getBackImageColorFormat() {
@@ -397,9 +391,8 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies the code line (MICR data) formats supported by this device, as
-	 * a combination of following flags (empty if not supported):
-	 * {@link PTRCodelineFormat}
-	 * 
+	 * a combination of following flags (empty if not supported): {@link PTRCodelineFormat}
+	 *
 	 * @since 3.00
 	 */
 	public Set<PTRCodelineFormat> getCodelineFormat() {
@@ -408,9 +401,8 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies the source for the read image command supported by this device,
-	 * as a combination of the following flags (empty if not supported):
-	 * {@link PTRImageSource}
-	 * 
+	 * as a combination of the following flags (empty if not supported): {@link PTRImageSource}
+	 *
 	 * @since 3.00
 	 */
 	public Set<PTRImageSource> getImageSource() {
@@ -420,7 +412,7 @@ public class WFSPTRCAPS extends Struct {
 	/**
 	 * One or more flags specifying the character sets, in addition to single
 	 * byte ASCII, that is supported by the Service Provider:
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	public Set<PTRCharSupport> getCharSupport() {
@@ -429,7 +421,7 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies whether the device is able to dispense paper.
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	public boolean isDispensePaper() {
@@ -445,7 +437,7 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies which guidance lights are available.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	public DWORD getGuidLights() {
@@ -456,10 +448,10 @@ public class WFSPTRCAPS extends Struct {
 	 * Specifies the name of the default logical Windows printer that is
 	 * associated with this Service Provider. Applications should use this
 	 * printer name to generate native printer files (i.e. .PRN) to be printed
-	 * through the WFS_CMD_PTR_PRINT_RAW_FILE command. This value will be
-	 * <code>null</code> if the Service Provider does not support the
+	 * through the WFS_CMD_PTR_PRINT_RAW_FILE command. This value will be <code>null</code> if the Service Provider does
+	 * not support the
 	 * WFS_CMD_PTR_PRINT_RAW_FILE command.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	public String getWindowsPrinter() {
@@ -475,7 +467,7 @@ public class WFSPTRCAPS extends Struct {
 	 * presented to the user for removal. If TRUE, the
 	 * WFS_EXEE_PTR_MEDIAPRESENTED event is fired. If FALSE, the
 	 * WFS_EXEE_PTR_MEDIAPRESENTED event is not fired.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	public boolean isMediaPresented() {
@@ -488,7 +480,7 @@ public class WFSPTRCAPS extends Struct {
 	 * still active when the media is automatically retracted, the command will
 	 * complete with a WFS_ERR_PTR_MEDIARETRACTED error. If the device does not
 	 * retract media automatically this value will be zero.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	public int getAutoRetractPeriod() {
@@ -498,7 +490,7 @@ public class WFSPTRCAPS extends Struct {
 	/**
 	 * Specifies whether the device is able to retract the previously ejected
 	 * media to the transport.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	public boolean isRetractToTransport() {
@@ -507,7 +499,7 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies whether power saving control is available.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	public boolean isPowerSaveControl() {
@@ -517,7 +509,7 @@ public class WFSPTRCAPS extends Struct {
 	/**
 	 * Specifies the form write modes supported by this device, as a combination
 	 * of the following flags: {@link PTRCoercivityType}
-	 * 
+	 *
 	 * @since 3.20
 	 */
 	public Set<PTRCoercivityType> getCoercivityType() {
@@ -528,7 +520,7 @@ public class WFSPTRCAPS extends Struct {
 	 * Specifies how the passbook can be controlled with the
 	 * WFS_CMD_PTR_CONTROL_PASSBOOK command, as a combination of the following
 	 * flags: {@link PTRPassbookControl}
-	 * 
+	 *
 	 * @since 3.20
 	 */
 	public Set<PTRPassbookControl> getControlPassbook() {
@@ -538,7 +530,7 @@ public class WFSPTRCAPS extends Struct {
 	/**
 	 * Specifies on which sides of the media this device can print as one of the
 	 * following values:
-	 * 
+	 *
 	 * @since 3.20
 	 */
 	public PTRPrintSides getPrintSides() {
@@ -547,7 +539,7 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies whether the anti-fraud module is available.
-	 * 
+	 *
 	 * @since 3.20
 	 */
 	public boolean isAntiFraudModule() {
@@ -557,35 +549,37 @@ public class WFSPTRCAPS extends Struct {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("class", getClass())
-				.append("type", getType()).append("compound", isCompound())
-				.append("resolution", getResolution())
-				.append("readForm", getReadForm())
-				.append("writeForm", getWriteForm())
-				.append("extents", getExtents())
-				.append("control", getControl())
-				.append("maxMediaOnStacker", getMaxMediaOnStacker())
-				.append("acceptMedia", isAcceptMedia())
-				.append("multiPage", isMultiPage())
-				.append("paperSources", getPaperSources())
-				.append("mediaTaken", isMediaTaken())
-				.append("maxRetracts", getMaxRetracts())
-				.append("imageType", getImageType())
-				.append("frontImageColorFormat", getFrontImageColorFormat())
-				.append("backImageColorFormat", getBackImageColorFormat())
-				.append("codelineFormat", getCodelineFormat())
-				.append("imageSource", getImageSource())
-				.append("charSupport", getCharSupport())
-				.append("dispensePaper", isDispensePaper())
-				.append("extra", getExtra())
-				.append("guidLights", getGuidLights())
-				.append("windowsPrinter", getWindowsPrinter())
-				.append("mediaPresented", isMediaPresented())
-				.append("autoRetractPeriod", getAutoRetractPeriod())
-				.append("retractToTransport", isRetractToTransport())
-				.append("powerSaveControl", isPowerSaveControl())
-				.append("coercivityType", getCoercivityType())
-				.append("controlPassbook", getControlPassbook())
-				.append("printSides", getPrintSides())
-				.append("antiFraudModule", isAntiFraudModule()).toString();
+										.append("type", getType())
+										.append("compound", isCompound())
+										.append("resolution", getResolution())
+										.append("readForm", getReadForm())
+										.append("writeForm", getWriteForm())
+										.append("extents", getExtents())
+										.append("control", getControl())
+										.append("maxMediaOnStacker", getMaxMediaOnStacker())
+										.append("acceptMedia", isAcceptMedia())
+										.append("multiPage", isMultiPage())
+										.append("paperSources", getPaperSources())
+										.append("mediaTaken", isMediaTaken())
+										.append("maxRetracts", getMaxRetracts())
+										.append("imageType", getImageType())
+										.append("frontImageColorFormat", getFrontImageColorFormat())
+										.append("backImageColorFormat", getBackImageColorFormat())
+										.append("codelineFormat", getCodelineFormat())
+										.append("imageSource", getImageSource())
+										.append("charSupport", getCharSupport())
+										.append("dispensePaper", isDispensePaper())
+										.append("extra", getExtra())
+										.append("guidLights", getGuidLights())
+										.append("windowsPrinter", getWindowsPrinter())
+										.append("mediaPresented", isMediaPresented())
+										.append("autoRetractPeriod", getAutoRetractPeriod())
+										.append("retractToTransport", isRetractToTransport())
+										.append("powerSaveControl", isPowerSaveControl())
+										.append("coercivityType", getCoercivityType())
+										.append("controlPassbook", getControlPassbook())
+										.append("printSides", getPrintSides())
+										.append("antiFraudModule", isAntiFraudModule())
+										.toString();
 	}
 }

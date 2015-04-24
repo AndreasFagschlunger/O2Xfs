@@ -6,12 +6,20 @@
         module="at.o2xfs.emv"
         status="integration">
 	</info>
+	<configurations defaultconfmapping="default">
+		<conf name="default" extends="master,runtime"/>
+    	<conf name="master" description="contains the artifact but no dependencies"/>
+    	<conf name="runtime" extends="compile" description="runtime but not the artifact"/>
+    	<conf name="compile"  visibility="private"/>
+    	<conf name="test" visibility="private" />
+	</configurations>
 	<publications>
-		<artifact name="at.o2xfs.emv" type="jar" />
+		<artifact name="at.o2xfs.emv" type="jar" conf="master"/>
 	</publications>
 	<dependencies>
-		<dependency name="at.o2xfs.common" rev="latest.integration" />
-		<dependency name="at.o2xfs.log" rev="latest.integration" />
-		<dependency org="org.apache.commons" name="commons-lang3" rev="3.3" />
+		<dependency name="at.o2xfs.common" rev="latest.integration" conf="compile->default"/>
+		<dependency name="at.o2xfs.log" rev="latest.integration" conf="compile->default"/>
+		<dependency org="org.apache.commons" name="commons-lang3" rev="${commons-lang3.version}" conf="compile->default"/>
+		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default"/>
 	</dependencies>
 </ivy-module>

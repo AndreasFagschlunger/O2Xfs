@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,11 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.INT;
@@ -40,10 +38,13 @@ import at.o2xfs.xfs.type.HSERVICE;
 import at.o2xfs.xfs.type.RequestId;
 import at.o2xfs.xfs.util.XfsConstants;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * @author Andreas Fagschlunger
  */
-public class WFSResult extends Struct {
+public class WFSResult
+		extends Struct {
 
 	private final static String COMMANDCODE = "commandCode";
 	private final static String EVENTID = "eventID";
@@ -75,12 +76,10 @@ public class WFSResult extends Struct {
 	/**
 	 * WFSExecute "command" code or WFSGetInfo "category" code; not used for
 	 * other command completions.
-	 * 
+	 *
 	 * ID of the event (for unsolicited events).
 	 */
-	private Union u = new Union(new Field[] {
-			new Field(COMMANDCODE, new DWORD()),
-			new Field(EVENTID, new DWORD()) });
+	private Union u = new Union(new Field[] { new Field(COMMANDCODE, new DWORD()), new Field(EVENTID, new DWORD()) });
 
 	/**
 	 * Pointer to the results of the command (if any) or the contents of the
@@ -97,14 +96,13 @@ public class WFSResult extends Struct {
 		add(buffer);
 	}
 
-	public WFSResult(RequestId requestID, HSERVICE hService, INT result,
-			DWORD commandCode) {
+	public WFSResult(RequestId requestID, HSERVICE hService, INT result, DWORD commandCode) {
 		this();
 		allocate();
-		this.requestID.put(requestID);
-		this.service.put(hService);
-		this.result.put(result);
-		this.u.get(COMMANDCODE, DWORD.class).put(commandCode);
+		this.requestID.set(requestID);
+		this.service.set(hService);
+		this.result.set(result);
+		this.u.get(COMMANDCODE, DWORD.class).set(commandCode);
 	}
 
 	public WFSResult(final Pointer pResult) {
@@ -128,14 +126,12 @@ public class WFSResult extends Struct {
 		return result.intValue();
 	}
 
-	public <E extends Enum<E> & XfsConstant> E getCommandCode(
-			final Class<E> enumType) {
+	public <E extends Enum<E> & XfsConstant> E getCommandCode(final Class<E> enumType) {
 		final DWORD value = u.get(COMMANDCODE, DWORD.class);
 		return XfsConstants.valueOf(value, enumType);
 	}
 
-	public <E extends Enum<E> & XfsConstant> E getEventID(
-			final Class<E> enumType) {
+	public <E extends Enum<E> & XfsConstant> E getEventID(final Class<E> enumType) {
 		final DWORD value = u.get(EVENTID, DWORD.class);
 		return XfsConstants.valueOf(value, enumType);
 	}
@@ -147,8 +143,11 @@ public class WFSResult extends Struct {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("requestID", requestID)
-				.append("service", service).append("timestamp", timestamp)
-				.append("result", result).append("u", u)
-				.append("buffer", buffer).toString();
+										.append("service", service)
+										.append("timestamp", timestamp)
+										.append("result", result)
+										.append("u", u)
+										.append("buffer", buffer)
+										.toString();
 	}
 }

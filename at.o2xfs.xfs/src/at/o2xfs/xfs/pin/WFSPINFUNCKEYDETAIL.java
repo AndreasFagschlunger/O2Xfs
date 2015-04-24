@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,13 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.pin;
-
-import java.util.Set;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.PointerArray;
@@ -39,7 +35,12 @@ import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.util.Bitmask;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPINFUNCKEYDETAIL extends Struct {
+import java.util.Set;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class WFSPINFUNCKEYDETAIL
+		extends Struct {
 
 	/**
 	 * Specifies the function keys available for this physical device as a
@@ -80,7 +81,7 @@ public class WFSPINFUNCKEYDETAIL extends Struct {
 	public WFSPINFUNCKEYDETAIL(final WFSPINFUNCKEYDETAIL funcKeyDetail) {
 		this();
 		allocate();
-		funcMask.put(funcKeyDetail.funcMask);
+		funcMask.set(funcKeyDetail.funcMask);
 		final WFSPINFDK[] fdks = funcKeyDetail.getFDKs();
 		for (int i = 0; i < fdks.length; i++) {
 			fdks[i] = new WFSPINFDK(fdks[i]);
@@ -93,7 +94,7 @@ public class WFSPINFUNCKEYDETAIL extends Struct {
 	}
 
 	public void setFunctionKeys(final Set<PINFK> funcMask) {
-		this.funcMask.put(Bitmask.of(funcMask));
+		this.funcMask.set(Bitmask.of(funcMask));
 	}
 
 	private int getNumberFDKs() {
@@ -101,7 +102,7 @@ public class WFSPINFUNCKEYDETAIL extends Struct {
 	}
 
 	private void setNumberFDKs(final int numberFDKs) {
-		this.numberFDKs.put(numberFDKs);
+		this.numberFDKs.set(numberFDKs);
 	}
 
 	public void setFDKs(final WFSPINFDK[] fdks) {
@@ -130,8 +131,9 @@ public class WFSPINFUNCKEYDETAIL extends Struct {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("funcMask", getFunctionKeys())
-				.append("numberFDKs", numberFDKs).append("fdks", getFDKs())
-				.toString();
+										.append("numberFDKs", numberFDKs)
+										.append("fdks", getFDKs())
+										.toString();
 	}
 
 }

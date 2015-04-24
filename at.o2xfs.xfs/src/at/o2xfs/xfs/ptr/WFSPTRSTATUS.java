@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,15 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.ptr;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.DWORDArray;
 import at.o2xfs.win32.LPZZSTR;
@@ -45,7 +39,14 @@ import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPTRSTATUS extends Struct {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class WFSPTRSTATUS
+		extends Struct {
 
 	private static final int WFS_PTR_GUIDLIGHTS_SIZE = 32;
 	private static final int WFS_PTR_SUPPLYSIZE = 16;
@@ -68,8 +69,7 @@ public class WFSPTRSTATUS extends Struct {
 	private Pointer retractBins = null;
 	private final USHORT mediaOnStacker = new USHORT();
 	private final LPZZSTR extra = new LPZZSTR();
-	private final DWORDArray guidLights = new DWORDArray(
-			WFS_PTR_GUIDLIGHTS_SIZE);
+	private final DWORDArray guidLights = new DWORDArray(WFS_PTR_GUIDLIGHTS_SIZE);
 	private final WORD devicePosition = new WORD();
 	private final USHORT powerSaveRecoveryTime = new USHORT();
 	private final WORDArray paperType = new WORDArray(WFS_PTR_SUPPLYSIZE);
@@ -119,15 +119,13 @@ public class WFSPTRSTATUS extends Struct {
 		assignBuffer(p);
 	}
 
-	public WFSPTRSTATUS(final XfsVersion xfsVersion,
-			final WFSPTRSTATUS ptrStatus) {
+	public WFSPTRSTATUS(final XfsVersion xfsVersion, final WFSPTRSTATUS ptrStatus) {
 		this(xfsVersion);
 		allocate();
 	}
 
 	/**
-	 * Specifies the state of the print device as one of the following flags:
-	 * {@link PTRDeviceState}
+	 * Specifies the state of the print device as one of the following flags: {@link PTRDeviceState}
 	 * 
 	 * @since 2.00
 	 */
@@ -155,8 +153,7 @@ public class WFSPTRSTATUS extends Struct {
 		final PTRPaper[] paperSupplies = new PTRPaper[WFS_PTR_SUPPLYSIZE];
 		for (int i = 0; i < paperSupplies.length; i++) {
 			if (i < paper.length) {
-				paperSupplies[i] = XfsConstants.valueOf(paper.get(i),
-						PTRPaper.class);
+				paperSupplies[i] = XfsConstants.valueOf(paper.get(i), PTRPaper.class);
 			} else {
 				paperSupplies[i] = PTRPaper.NOTSUPP;
 			}
@@ -280,8 +277,7 @@ public class WFSPTRSTATUS extends Struct {
 		for (int i = 0; i < paperTypes.length; i++) {
 			PTRPaperType paperType = PTRPaperType.TYPEUNKNOWN;
 			if (i < paper.length && !PTRPaper.NOTSUPP.equals(supplies[i])) {
-				paperType = XfsConstants.valueOf(paper.get(i),
-						PTRPaperType.class);
+				paperType = XfsConstants.valueOf(paper.get(i), PTRPaperType.class);
 			}
 			paperTypes[i] = paperType;
 		}
@@ -301,17 +297,20 @@ public class WFSPTRSTATUS extends Struct {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("device", getDevice())
-				.append("media", getMedia()).append("paper", getPaper())
-				.append("toner", getToner()).append("ink", getInk())
-				.append("lamp", getLamp())
-				.append("retractBins", getRetractBins())
-				.append("mediaOnStacker", getMediaOnStacker())
-				.append("extra", getExtra())
-				.append("guidLights", getGuidLights())
-				.append("devicePosition", getDevicePosition())
-				.append("powerSaveRecoveryTime", getPowerSaveRecoveryTime())
-				.append("paperType", getPaperType())
-				.append("antiFraudModule", getAntiFraudModule()).toString();
+										.append("media", getMedia())
+										.append("paper", getPaper())
+										.append("toner", getToner())
+										.append("ink", getInk())
+										.append("lamp", getLamp())
+										.append("retractBins", getRetractBins())
+										.append("mediaOnStacker", getMediaOnStacker())
+										.append("extra", getExtra())
+										.append("guidLights", getGuidLights())
+										.append("devicePosition", getDevicePosition())
+										.append("powerSaveRecoveryTime", getPowerSaveRecoveryTime())
+										.append("paperType", getPaperType())
+										.append("antiFraudModule", getAntiFraudModule())
+										.toString();
 	}
 
 }

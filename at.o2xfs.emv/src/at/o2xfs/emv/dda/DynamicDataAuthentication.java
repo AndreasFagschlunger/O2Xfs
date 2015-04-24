@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -32,9 +32,6 @@ import static at.o2xfs.emv.dda.RecoveredSDAData.HASH_RESULT;
 import static at.o2xfs.emv.dda.RecoveredSDAData.ICC_DYNAMIC_DATA;
 import static at.o2xfs.emv.dda.RecoveredSDAData.PAD_PATTERN;
 import static at.o2xfs.emv.dda.RecoveredSDAData.SIGNED_DATA_FORMAT;
-
-import java.io.IOException;
-import java.util.Arrays;
 
 import at.o2xfs.common.Bytes;
 import at.o2xfs.emv.DOL;
@@ -57,7 +54,11 @@ import at.o2xfs.emv.icc.InternalAuthenticate;
 import at.o2xfs.emv.icc.RAPDU;
 import at.o2xfs.emv.tlv.TLV;
 
-public class DynamicDataAuthentication extends OfflineDynamicDataAuthentication {
+import java.io.IOException;
+import java.util.Arrays;
+
+public class DynamicDataAuthentication
+		extends OfflineDynamicDataAuthentication {
 
 	private byte[] authenticationData = null;
 
@@ -101,7 +102,7 @@ public class DynamicDataAuthentication extends OfflineDynamicDataAuthentication 
 			if (EMVTag.RESPONSE_MESSAGE_TEMPLATE_FORMAT_1.getTag().equals(tlv.getTag())) {
 				return tlv.getValue();
 			}
-			return new Template(TLV.parse(response.getData())).getMandatoryValue(EMVTag.SIGNED_DYNAMIC_APPLICATION_DATA);
+			return new Template(tlv).getMandatoryValue(EMVTag.SIGNED_DYNAMIC_APPLICATION_DATA);
 		} catch (IOException e) {
 			throw new DDAFailedException(e);
 		} catch (ProcessingStateException e) {

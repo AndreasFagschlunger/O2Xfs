@@ -1,21 +1,21 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- * 
+ *
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,43 +23,42 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.ptr;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.xfs.XfsStruct;
 import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.XfsWord;
 
-public class PTRImageRequestStruct extends XfsStruct {
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-	private final XfsWord<PTRImageType> frontImageType = new XfsWord<PTRImageType>(
-			PTRImageType.class);
-	private final XfsWord<PTRImageType> backImageType = new XfsWord<PTRImageType>(
-			PTRImageType.class);
-	private final XfsWord<PTRImageColor> frontImageColorFormat = new XfsWord<PTRImageColor>(
-			PTRImageColor.class);
-	private final XfsWord<PTRImageColor> backImageColorFormat = new XfsWord<PTRImageColor>(
-			PTRImageColor.class);
-	private final XfsWord<PTRCodelineFormat> codelineFormat = new XfsWord<PTRCodelineFormat>(
-			PTRCodelineFormat.class);
-	private final XfsWord<PTRImageSource> imageSource = new XfsWord<PTRImageSource>(
-			PTRImageSource.class);
+public class PTRImageRequestStruct
+		extends XfsStruct {
+
+	private final XfsWord<PTRImageType> frontImageType = new XfsWord<PTRImageType>(PTRImageType.class);
+	private final XfsWord<PTRImageType> backImageType = new XfsWord<PTRImageType>(PTRImageType.class);
+	private final XfsWord<PTRImageColor> frontImageColorFormat = new XfsWord<PTRImageColor>(PTRImageColor.class);
+	private final XfsWord<PTRImageColor> backImageColorFormat = new XfsWord<PTRImageColor>(PTRImageColor.class);
+	private final XfsWord<PTRCodelineFormat> codelineFormat = new XfsWord<PTRCodelineFormat>(PTRCodelineFormat.class);
+	private final XfsWord<PTRImageSource> imageSource = new XfsWord<PTRImageSource>(PTRImageSource.class);
 	private final LPSTR frontImageFile = new LPSTR();
 	private final LPSTR backImageFile = new LPSTR();
 
 	public PTRImageRequestStruct(XfsVersion version) {
-		new XfsStructInit(version).add(frontImageType).add(backImageType)
-				.add(frontImageColorFormat).add(backImageColorFormat)
-				.add(codelineFormat).add(imageSource).add(frontImageFile)
-				.add(backImageFile).init(this);
+		add(frontImageType);
+		add(backImageType);
+		add(frontImageColorFormat);
+		add(backImageColorFormat);
+		add(codelineFormat);
+		add(imageSource);
+		add(frontImageFile);
+		add(backImageFile);
 	}
 
 	public PTRImageType getFrontImageType() {
-		return frontImageType.enumValue();
+		return frontImageType.get();
 	}
 
 	public void setFrontImageType(PTRImageType frontImageType) {
@@ -67,7 +66,7 @@ public class PTRImageRequestStruct extends XfsStruct {
 	}
 
 	public PTRImageType getBackImageType() {
-		return backImageType.enumValue();
+		return backImageType.get();
 	}
 
 	public void setBackImageType(PTRImageType backImageType) {
@@ -75,7 +74,7 @@ public class PTRImageRequestStruct extends XfsStruct {
 	}
 
 	public PTRImageColor getFrontImageColorFormat() {
-		return frontImageColorFormat.enumValue();
+		return frontImageColorFormat.get();
 	}
 
 	public void setFrontImageColorFormat(PTRImageColor frontImageColorFormat) {
@@ -83,7 +82,7 @@ public class PTRImageRequestStruct extends XfsStruct {
 	}
 
 	public PTRImageColor getBackImageColorFormat() {
-		return backImageColorFormat.enumValue();
+		return backImageColorFormat.get();
 	}
 
 	public void setBackImageColorFormat(PTRImageColor backImageColorFormat) {
@@ -91,7 +90,7 @@ public class PTRImageRequestStruct extends XfsStruct {
 	}
 
 	public PTRCodelineFormat getCodelineFormat() {
-		return codelineFormat.enumValue();
+		return codelineFormat.get();
 	}
 
 	public void setCodelineFormat(PTRCodelineFormat codelineFormat) {
@@ -99,7 +98,7 @@ public class PTRImageRequestStruct extends XfsStruct {
 	}
 
 	public PTRImageSource getImageSource() {
-		return imageSource.enumValue();
+		return imageSource.get();
 	}
 
 	public void setImageSource(PTRImageSource imageSource) {
@@ -111,7 +110,7 @@ public class PTRImageRequestStruct extends XfsStruct {
 	}
 
 	public void setFrontImageFile(String frontImageFile) {
-		this.frontImageFile.pointTo(frontImageFile);
+		this.frontImageFile.put(frontImageFile);
 	}
 
 	public String getBackImageFile() {
@@ -119,19 +118,19 @@ public class PTRImageRequestStruct extends XfsStruct {
 	}
 
 	public void setBackImageFile(String backImageFile) {
-		this.backImageFile.pointTo(backImageFile);
+		this.backImageFile.put(backImageFile);
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
-				.append("frontImageType", getFrontImageType())
-				.append("backImageType", getBackImageType())
-				.append("frontImageColorFormat", getFrontImageColorFormat())
-				.append("backImageColorFormat", getBackImageColorFormat())
-				.append("codelineFormat", getCodelineFormat())
-				.append("imageSource", getImageSource())
-				.append("frontImageFile", getFrontImageFile())
-				.append("backImageFile", getBackImageFile()).toString();
+		return new ToStringBuilder(this).append("frontImageType", getFrontImageType())
+										.append("backImageType", getBackImageType())
+										.append("frontImageColorFormat", getFrontImageColorFormat())
+										.append("backImageColorFormat", getBackImageColorFormat())
+										.append("codelineFormat", getCodelineFormat())
+										.append("imageSource", getImageSource())
+										.append("frontImageFile", getFrontImageFile())
+										.append("backImageFile", getBackImageFile())
+										.toString();
 	}
 }

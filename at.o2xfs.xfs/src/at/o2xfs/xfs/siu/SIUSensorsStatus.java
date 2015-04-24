@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,17 +23,17 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.siu;
+
+import at.o2xfs.xfs.XfsConstant;
+import at.o2xfs.xfs.util.XfsConstants;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
-import at.o2xfs.xfs.XfsConstant;
-import at.o2xfs.xfs.util.XfsConstants;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class SIUSensorsStatus {
 
@@ -43,14 +43,12 @@ public class SIUSensorsStatus {
 		if (sensors == null) {
 			throw new IllegalArgumentException("sensors must not be null");
 		} else if (sensors.length != SIUConstant.SENSORS_SIZE) {
-			throw new IllegalArgumentException("sensors.length != "
-					+ SIUConstant.SENSORS_SIZE);
+			throw new IllegalArgumentException("sensors.length != " + SIUConstant.SENSORS_SIZE);
 		}
 		this.sensors = sensors;
 	}
 
-	private <E extends Enum<E> & XfsConstant> E getState(
-			final SIUSensor sensor, final Class<E> type) {
+	private <E extends Enum<E> & XfsConstant> E getState(final SIUSensor sensor, final Class<E> type) {
 		final int value = sensors[sensor.intValue()];
 		return XfsConstants.valueOf(value, type);
 	}
@@ -92,13 +90,11 @@ public class SIUSensorsStatus {
 	}
 
 	public SIUConsumerDisplayState getConsumerDisplayState() {
-		return getState(SIUSensor.CONSUMER_DISPLAY,
-				SIUConsumerDisplayState.class);
+		return getState(SIUSensor.CONSUMER_DISPLAY, SIUConsumerDisplayState.class);
 	}
 
 	public SIUOperatorCallButtonState getOperatorCallButtonState() {
-		return getState(SIUSensor.OPERATOR_CALL_BUTTON,
-				SIUOperatorCallButtonState.class);
+		return getState(SIUSensor.OPERATOR_CALL_BUTTON, SIUOperatorCallButtonState.class);
 	}
 
 	public SIUHandsetState getHandsetState() {
@@ -106,11 +102,9 @@ public class SIUSensorsStatus {
 	}
 
 	public Map<SIUGeneralPurposeInputPort, Boolean> getGeneralPurposeInputPortStates() {
-		final Map<SIUGeneralPurposeInputPort, Boolean> portStates = new HashMap<SIUGeneralPurposeInputPort, Boolean>(
-				SIUGeneralPurposeInputPort.values().length);
+		final Map<SIUGeneralPurposeInputPort, Boolean> portStates = new HashMap<SIUGeneralPurposeInputPort, Boolean>(SIUGeneralPurposeInputPort.values().length);
 		final int value = sensors[SIUSensor.GENERALINPUTPORT.intValue()];
-		for (final SIUGeneralPurposeInputPort inputPort : SIUGeneralPurposeInputPort
-				.values()) {
+		for (final SIUGeneralPurposeInputPort inputPort : SIUGeneralPurposeInputPort.values()) {
 			boolean turnedOn = false;
 			if ((value & inputPort.getValue()) == inputPort.getValue()) {
 				turnedOn = true;
@@ -122,21 +116,19 @@ public class SIUSensorsStatus {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
-				.append("operatorSwitchState", getOperatorSwitchState())
-				.append("tamperSensorState", getTamperSensorState())
-				.append("internalTamperSensorState",
-						getInternalTamperSensorState())
-				.append("seismicSensorState", getSeismicSensorState())
-				.append("heatSensorState", getHeatSensorState())
-				.append("proximitySensorState", getProximitySensorState())
-				.append("ambientLightSensorState", getAmbientLightSensorState())
-				.append("audioJackState", getAudioJackState())
-				.append("bootSwitchSensorState", getBootSwitchSensorState())
-				.append("consumerDisplayState", getConsumerDisplayState())
-				.append("operatorCallButtonState", getOperatorCallButtonState())
-				.append("handsetState", getHandsetState())
-				.append("generalPurposeInputPortStates",
-						getGeneralPurposeInputPortStates()).toString();
+		return new ToStringBuilder(this).append("operatorSwitchState", getOperatorSwitchState())
+										.append("tamperSensorState", getTamperSensorState())
+										.append("internalTamperSensorState", getInternalTamperSensorState())
+										.append("seismicSensorState", getSeismicSensorState())
+										.append("heatSensorState", getHeatSensorState())
+										.append("proximitySensorState", getProximitySensorState())
+										.append("ambientLightSensorState", getAmbientLightSensorState())
+										.append("audioJackState", getAudioJackState())
+										.append("bootSwitchSensorState", getBootSwitchSensorState())
+										.append("consumerDisplayState", getConsumerDisplayState())
+										.append("operatorCallButtonState", getOperatorCallButtonState())
+										.append("handsetState", getHandsetState())
+										.append("generalPurposeInputPortStates", getGeneralPurposeInputPortStates())
+										.toString();
 	}
 }

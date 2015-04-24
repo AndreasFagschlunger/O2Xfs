@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,11 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.pin;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
@@ -35,7 +33,10 @@ import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WFSPINFDK extends Struct {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class WFSPINFDK
+		extends Struct {
 
 	/**
 	 * Specifies the code returned by this FDK, defined as one of the following
@@ -72,9 +73,9 @@ public class WFSPINFDK extends Struct {
 	public WFSPINFDK(final WFSPINFDK pinFDK) {
 		this();
 		allocate();
-		fdk.put(pinFDK.fdk);
-		xPosition.put(pinFDK.xPosition);
-		yPosition.put(pinFDK.yPosition);
+		fdk.set(pinFDK.fdk);
+		xPosition.set(pinFDK.xPosition);
+		yPosition.set(pinFDK.yPosition);
 	}
 
 	/**
@@ -88,7 +89,7 @@ public class WFSPINFDK extends Struct {
 	 * @see #xPosition
 	 */
 	public void setXPosition(final int xPosition) {
-		this.xPosition.put(xPosition);
+		this.xPosition.set(xPosition);
 	}
 
 	/**
@@ -102,7 +103,7 @@ public class WFSPINFDK extends Struct {
 	 * @see #yPosition
 	 */
 	public void setYPosition(final int yPosition) {
-		this.yPosition.put(yPosition);
+		this.yPosition.set(yPosition);
 	}
 
 	public PINFDK getFDK() {
@@ -110,13 +111,14 @@ public class WFSPINFDK extends Struct {
 	}
 
 	public void setFDK(final PINFDK fdk) {
-		this.fdk.put(fdk.getValue());
+		this.fdk.set(fdk.getValue());
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("fdk", getFDK())
-				.append("xPosition", getXPosition())
-				.append("yPosition", getYPosition()).toString();
+										.append("xPosition", getXPosition())
+										.append("yPosition", getYPosition())
+										.toString();
 	}
 }

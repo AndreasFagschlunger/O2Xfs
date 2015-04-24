@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,11 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.DWORD;
@@ -35,12 +33,14 @@ import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ZSTR;
-import at.o2xfs.xfs.util.XfsConstants;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * @author Andreas Fagschlunger
  */
-public class WFSHWERROR extends Struct {
+public class WFSHWERROR
+		extends Struct {
 
 	/**
 	 * Pointer to the logical service name of the service that generated the
@@ -51,7 +51,7 @@ public class WFSHWERROR extends Struct {
 	/**
 	 * Pointer to the physical service name of the service that generated the
 	 * error (if any)
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	private final LPSTR physicalName = new LPSTR();
@@ -70,10 +70,10 @@ public class WFSHWERROR extends Struct {
 
 	/**
 	 * The action required to manage the error. Possible values are:
-	 * 
+	 *
 	 * @since 3.00
 	 */
-	private final DWORD action = new DWORD();
+	private final XfsWord<XfsErrorAction> action = new XfsWord<XfsErrorAction>(XfsErrorAction.class);
 
 	/**
 	 * The size in bytes of the following description
@@ -159,11 +159,11 @@ public class WFSHWERROR extends Struct {
 	}
 
 	public XfsErrorAction getAction() {
-		return XfsConstants.valueOf(action, XfsErrorAction.class);
+		return action.get();
 	}
 
-	public void setAction(final XfsErrorAction action) {
-		this.action.put(action.getValue());
+	public void setAction(final XfsErrorAction aAction) {
+		action.set(aAction);
 	}
 
 	public byte[] getDescription() {
@@ -175,18 +175,19 @@ public class WFSHWERROR extends Struct {
 	}
 
 	public void setDescription(final byte[] description) {
-		size.put(description.length);
+		size.set(description.length);
 		this.description.pointTo(new ByteArray(description));
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
-				.append("logicalName", getLogicalName())
-				.append("physicalName", getPhysicalName())
-				.append("workstationName", getWorkstationName())
-				.append("appID", getAppID()).append("action", getAction())
-				.append("size", size).append("description", getDescription())
-				.toString();
+		return new ToStringBuilder(this).append("logicalName", getLogicalName())
+										.append("physicalName", getPhysicalName())
+										.append("workstationName", getWorkstationName())
+										.append("appID", getAppID())
+										.append("action", getAction())
+										.append("size", size)
+										.append("description", getDescription())
+										.toString();
 	}
 }

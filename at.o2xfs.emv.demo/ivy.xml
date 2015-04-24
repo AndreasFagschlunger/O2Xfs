@@ -8,5 +8,6 @@
 	</info>
 	<dependencies>
 		<dependency name="at.o2xfs.emv" rev="latest.integration" />
+		<dependency name="at.o2xfs.ctapi" rev="latest.integration" />
 	</dependencies>
 </ivy-module>

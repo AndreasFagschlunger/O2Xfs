@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,11 +23,9 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.pin;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
@@ -38,7 +36,10 @@ import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public class WfsPINData extends Struct {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class WfsPINData
+		extends Struct {
 
 	/**
 	 * Pointer to the data entered by the user. This pointer is set to NULL if
@@ -60,8 +61,7 @@ public class WfsPINData extends Struct {
 	private Pointer pinKeys = new Pointer();
 
 	/**
-	 * Specifies the reason for completion of the entry. Possible values are:
-	 * {@link PINCompletion}
+	 * Specifies the reason for completion of the entry. Possible values are: {@link PINCompletion}
 	 */
 	private WORD completion = new WORD();
 
@@ -85,7 +85,7 @@ public class WfsPINData extends Struct {
 
 	public WfsPINData(XfsVersion xfsVersion, final WfsPINData pinData) {
 		this(xfsVersion);
-		data.pointTo(pinData.getData());
+		data.put(pinData.getData());
 		setPINKeys(pinData.getPINKeys());
 		setCompletion(pinData.getCompletion());
 	}
@@ -98,8 +98,7 @@ public class WfsPINData extends Struct {
 		final int numberOfKeys = keys.intValue();
 		final WfsPINKey[] pinKeyArray = new WfsPINKey[numberOfKeys];
 		if (numberOfKeys > 0) {
-			final PointerArray pointers = new PointerArray(pinKeys,
-					numberOfKeys);
+			final PointerArray pointers = new PointerArray(pinKeys, numberOfKeys);
 			for (int i = 0; i < pinKeyArray.length; i++) {
 				final Pointer p = pointers.get(i);
 				pinKeyArray[i] = new WfsPINKey(p);
@@ -110,7 +109,7 @@ public class WfsPINData extends Struct {
 
 	public void setPINKeys(final WfsPINKey[] pinKeys) {
 		final int numberOfKeys = (pinKeys == null ? 0 : pinKeys.length);
-		keys.put(numberOfKeys);
+		keys.set(numberOfKeys);
 		final PointerArray pointers = new PointerArray(numberOfKeys);
 		pointers.allocate();
 		for (int i = 0; i < numberOfKeys; i++) {
@@ -125,13 +124,15 @@ public class WfsPINData extends Struct {
 	}
 
 	public void setCompletion(PINCompletion completion) {
-		this.completion.put(completion.getValue());
+		this.completion.set((int) completion.getValue());
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("data", getData())
-				.append("keys", keys).append("pinKeys", getPINKeys())
-				.append("completion", getCompletion()).toString();
+										.append("keys", keys)
+										.append("pinKeys", getPINKeys())
+										.append("completion", getCompletion())
+										.toString();
 	}
 }

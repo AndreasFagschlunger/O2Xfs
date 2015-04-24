@@ -1,21 +1,21 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- * 
+ *
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -36,9 +36,6 @@ import static at.o2xfs.emv.RecoveredIssuerData.HASH_RESULT;
 import static at.o2xfs.emv.RecoveredIssuerData.ISSUER_IDENTIFIER;
 import static at.o2xfs.emv.RecoveredIssuerData.ISSUER_PUBLIC_KEY;
 import static at.o2xfs.emv.RecoveredIssuerData.ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR;
-import static at.o2xfs.emv.RecoveredIssuerData.ISSUER_PUBLIC_KEY_LENGTH;
-
-import java.util.Arrays;
 
 import at.o2xfs.common.Bytes;
 import at.o2xfs.common.Hex;
@@ -51,6 +48,8 @@ import at.o2xfs.emv.crypto.CryptoException;
 import at.o2xfs.emv.crypto.CryptoFactory;
 import at.o2xfs.emv.crypto.PublicKey;
 import at.o2xfs.emv.util.CompressedNumeric;
+
+import java.util.Arrays;
 
 public final class IssuerPublicKey {
 
@@ -100,27 +99,26 @@ public final class IssuerPublicKey {
 		checkDataTrailer();
 		checkDataHeader();
 		checkCertificateFormat();
-		byte[] remainder = getIssuerPublicKeyRemainder();
-		byte[] exponent = issuerPublicKeyCertificate.getExponent();
-		checkHashResult(remainder, exponent);
+		checkHashResult();
 		checkIssuerIdentifier();
 		checkExpirationDate();
 		// TODO: Certification Revocation List
 		checkIssuerPublicKeyAlgorithmIndicator();
 		int nCA = caPublicKey.getModulus().length;
-		int nI = Bytes.toInt(issuerData.get(ISSUER_PUBLIC_KEY_LENGTH)[0]);
+		int nI = Bytes.toInt(issuerData.get(RecoveredIssuerData.ISSUER_PUBLIC_KEY_LENGTH)[0]);
 		byte[] modulus;
-		if (nI <= nCA - 36) {
-			modulus = Bytes.left(issuerData.get(ISSUER_PUBLIC_KEY), nI);
+		if (nI <= (nCA - 36)) {
+			modulus = Bytes.left(issuerData.get(RecoveredIssuerData.ISSUER_PUBLIC_KEY), nI);
 		} else {
-			modulus = Bytes.concat(issuerData.get(ISSUER_PUBLIC_KEY), remainder);
+			modulus = Bytes.concat(issuerData.get(ISSUER_PUBLIC_KEY), getIssuerPublicKeyRemainder());
 		}
+		byte[] exponent = issuerPublicKeyCertificate.getExponent();
 		issuerPublicKey = new PublicKey(issuerData.get(ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR), modulus, exponent);
 	}
 
-	private void checkHashResult(byte[] remainder, byte[] exponent) throws IssuerPublicKeyException {
+	private void checkHashResult() throws IssuerPublicKeyException {
 		byte[] hashInput = issuerData.concatenate(CERTIFICATE_FORMAT, ISSUER_PUBLIC_KEY);
-		hashInput = Bytes.concat(hashInput, remainder, exponent);
+		hashInput = Bytes.concat(hashInput, getIssuerPublicKeyRemainder(), issuerPublicKeyCertificate.getExponent());
 		try {
 			CryptoFactory cryptoFactory = CryptoFactory.getInstance();
 			Crypto crypto = cryptoFactory.newCrypto();
@@ -135,8 +133,8 @@ public final class IssuerPublicKey {
 
 	private byte[] getIssuerPublicKeyRemainder() throws IssuerPublicKeyRemainderNotPresentException {
 		int nCA = caPublicKey.getModulus().length;
-		int issuerPublicKeyLength = Bytes.toInt(issuerData.get(ISSUER_PUBLIC_KEY_LENGTH)[0]);
-		if (issuerPublicKeyLength > nCA - 36) {
+		int nI = Bytes.toInt(issuerData.get(RecoveredIssuerData.ISSUER_PUBLIC_KEY_LENGTH)[0]);
+		if (nI > (nCA - 36)) {
 			byte[] remainder = issuerPublicKeyCertificate.getRemainder();
 			if (remainder.length == 0) {
 				throw new IssuerPublicKeyRemainderNotPresentException();
@@ -167,7 +165,9 @@ public final class IssuerPublicKey {
 	private byte[] recoverData() throws CryptoException {
 		CryptoFactory cryptoFactory = CryptoFactory.getInstance();
 		Crypto crypto = cryptoFactory.newCrypto();
-		PublicKey publicKey = new PublicKey(caPublicKey.getPublicKeyAlgorithm(), caPublicKey.getModulus(), caPublicKey.getExponent());
+		PublicKey publicKey = new PublicKey(caPublicKey.getPublicKeyAlgorithm(),
+											caPublicKey.getModulus(),
+											caPublicKey.getExponent());
 		byte[] recoveredData = crypto.decrypt(publicKey, issuerPublicKeyCertificate.getCertificate());
 		return recoveredData;
 	}
@@ -181,8 +181,10 @@ public final class IssuerPublicKey {
 	private void checkIssuerIdentifier() throws IssuerPublicKeyException {
 		String pan = CompressedNumeric.toString(issuerPublicKeyCertificate.getPAN());
 		String issuerIdentifier = CompressedNumeric.toString(issuerData.get(ISSUER_IDENTIFIER));
-		if (issuerIdentifier.length() < 3 || !pan.startsWith(issuerIdentifier)) {
-			throw new IssuerPublicKeyException("Issuer Identifier does not match");
+		if ((issuerIdentifier.length() < 3) || !pan.startsWith(issuerIdentifier)) {
+			throw new IssuerPublicKeyException("Issuer Identifier does not match, PAN: " + pan
+												+ ", Issuer Identifier: "
+												+ issuerIdentifier);
 		}
 	}
 
@@ -198,7 +200,8 @@ public final class IssuerPublicKey {
 	}
 
 	private void checkIssuerPublicKeyAlgorithmIndicator() throws IssuerPublicKeyException {
-		if (!Arrays.equals(issuerData.get(ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR), AsymmetricAlgorithm.RSA.getAlgorithmIndicator())) {
+		if (!Arrays.equals(	issuerData.get(ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR),
+							AsymmetricAlgorithm.RSA.getAlgorithmIndicator())) {
 			throw new IssuerPublicKeyException("Unrecognised Issuer Public Key Algorithm Indicator: " + Hex.encode(issuerData.get(ISSUER_PUBLIC_KEY_ALGORITHM_INDICATOR)));
 		}
 	}

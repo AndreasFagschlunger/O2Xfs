@@ -5,17 +5,17 @@
  * modification, are permitted provided that the following conditions
  * are met:
  * 
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ * - Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
  * 
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ * - Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,20 +23,21 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.xfs.pin;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
-import at.o2xfs.win32.WORD;
+import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.util.XfsConstants;
 
-public final class WfsPINEMVImportPublicKey extends Struct {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public final class WfsPINEMVImportPublicKey
+		extends Struct {
 
 	public static final class WfsPINEMVImportPublicKeyBuilder {
 
@@ -60,8 +61,7 @@ public final class WfsPINEMVImportPublicKey extends Struct {
 			return this;
 		}
 
-		public WfsPINEMVImportPublicKeyBuilder importScheme(
-				PINEMVImportScheme importScheme) {
+		public WfsPINEMVImportPublicKeyBuilder importScheme(PINEMVImportScheme importScheme) {
 			this.importScheme = importScheme;
 			return this;
 		}
@@ -92,7 +92,7 @@ public final class WfsPINEMVImportPublicKey extends Struct {
 
 	private LPSTR key = new LPSTR();
 	private DWORD use = new DWORD();
-	private WORD importScheme = new WORD();
+	private XfsWord<PINEMVImportScheme> importScheme = new XfsWord<>(PINEMVImportScheme.class);
 	private Pointer importData = new Pointer();
 	private LPSTR sigKey = new LPSTR();
 
@@ -108,14 +108,14 @@ public final class WfsPINEMVImportPublicKey extends Struct {
 		this();
 		allocate();
 		setKey(importPublicKey.getKey());
-		use.put(importPublicKey.use);
-		importScheme.put(importPublicKey.importScheme);
+		use.set(importPublicKey.use);
+		importScheme.set(importPublicKey.getImportScheme());
 		setImportData(importPublicKey.getImportData());
 		setSigKey(importPublicKey.getSigKey());
 	}
 
 	public void setKey(String key) {
-		this.key.pointTo(key);
+		this.key.put(key);
 	}
 
 	public String getKey() {
@@ -123,7 +123,7 @@ public final class WfsPINEMVImportPublicKey extends Struct {
 	}
 
 	public void setUse(PINUse use) {
-		this.use.put(use.getValue());
+		this.use.set(use.getValue());
 	}
 
 	public PINUse getUse() {
@@ -131,7 +131,7 @@ public final class WfsPINEMVImportPublicKey extends Struct {
 	}
 
 	public void setImportScheme(PINEMVImportScheme importScheme) {
-		this.importScheme.put(importScheme.getValue());
+		this.importScheme.set(importScheme);
 	}
 
 	public PINEMVImportScheme getImportScheme() {
@@ -150,7 +150,7 @@ public final class WfsPINEMVImportPublicKey extends Struct {
 	}
 
 	public void setSigKey(String sigKey) {
-		this.sigKey.pointTo(sigKey);
+		this.sigKey.put(sigKey);
 	}
 
 	public String getSigKey() {
@@ -160,9 +160,10 @@ public final class WfsPINEMVImportPublicKey extends Struct {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("key", getKey())
-				.append("use", getUse())
-				.append("importScheme", getImportScheme())
-				.append("importData", getImportData())
-				.append("sigKey", getSigKey()).toString();
+										.append("use", getUse())
+										.append("importScheme", getImportScheme())
+										.append("importData", getImportData())
+										.append("sigKey", getSigKey())
+										.toString();
 	}
 }
