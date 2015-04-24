@@ -5,7 +5,7 @@ import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.cam.AntiFraudModule;
 import at.o2xfs.xfs.cam.CamStatus;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class CamStatusV3_20
 		extends CamStatus {

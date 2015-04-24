@@ -33,7 +33,7 @@ import at.o2xfs.xfs.util.XfsConstants;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class SIUSensorsStatus {
 

@@ -6,7 +6,7 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.XfsStruct;
 import at.o2xfs.xfs.XfsWord;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class WfsPinCrypt
 		extends XfsStruct {

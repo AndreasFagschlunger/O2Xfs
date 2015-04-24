@@ -9,7 +9,7 @@ import at.o2xfs.xfs.XfsWordArray;
 
 import java.util.Map;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class CamStatus
 		extends XfsStruct {

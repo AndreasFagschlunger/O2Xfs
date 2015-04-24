@@ -33,7 +33,7 @@ import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.util.XfsConstants;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class WFSPINFDK
 		extends Struct {

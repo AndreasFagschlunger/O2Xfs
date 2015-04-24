@@ -30,7 +30,7 @@ package at.o2xfs.xfs;
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.xfs.util.XFSUtils;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * @author Andreas Fagschlunger

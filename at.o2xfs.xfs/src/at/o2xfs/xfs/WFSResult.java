@@ -38,7 +38,7 @@ import at.o2xfs.xfs.type.HSERVICE;
 import at.o2xfs.xfs.type.RequestId;
 import at.o2xfs.xfs.util.XfsConstants;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * @author Andreas Fagschlunger

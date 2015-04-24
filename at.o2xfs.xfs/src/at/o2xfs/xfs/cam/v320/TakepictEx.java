@@ -5,7 +5,7 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.cam.Camera;
 import at.o2xfs.xfs.cam.Takepict;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class TakepictEx
 		extends Takepict {

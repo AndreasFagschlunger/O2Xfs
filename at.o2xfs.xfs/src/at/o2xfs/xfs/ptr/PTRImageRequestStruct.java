@@ -32,7 +32,7 @@ import at.o2xfs.xfs.XfsStruct;
 import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.XfsWord;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class PTRImageRequestStruct
 		extends XfsStruct {

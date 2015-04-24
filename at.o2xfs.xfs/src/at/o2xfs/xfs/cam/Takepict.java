@@ -5,7 +5,7 @@ import at.o2xfs.win32.LPWSTR;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.XfsWord;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Takepict
 		extends Struct {

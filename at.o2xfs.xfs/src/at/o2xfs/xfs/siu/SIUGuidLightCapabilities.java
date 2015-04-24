@@ -27,7 +27,7 @@
 
 package at.o2xfs.xfs.siu;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class SIUGuidLightCapabilities {
 

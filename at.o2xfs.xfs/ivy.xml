@@ -40,7 +40,6 @@
 		<dependency name="at.o2xfs.common" rev="latest.integration" conf="compile->default" />
 		<dependency name="at.o2xfs.log" rev="latest.integration" conf="compile->default;test->runtime" />
 		<dependency name="at.o2xfs.win32" rev="latest.integration" conf="compile->default" />
-		<dependency org="commons-lang" name="commons-lang" rev="${commons-lang.version}" conf="compile->default" />
 		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default" />
 	</dependencies>
 </ivy-module>

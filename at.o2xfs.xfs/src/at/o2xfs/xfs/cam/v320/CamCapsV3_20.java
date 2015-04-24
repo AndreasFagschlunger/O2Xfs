@@ -4,7 +4,7 @@ import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.cam.CamCaps;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class CamCapsV3_20
 		extends CamCaps {

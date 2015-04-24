@@ -35,7 +35,7 @@ import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.util.XfsConstants;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * @author Andreas Fagschlunger
