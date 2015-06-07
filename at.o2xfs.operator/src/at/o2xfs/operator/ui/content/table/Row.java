@@ -27,7 +27,7 @@
 
 package at.o2xfs.operator.ui.content.table;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.operator.task.TaskCommand;
 

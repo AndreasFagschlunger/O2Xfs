@@ -29,7 +29,7 @@ package at.o2xfs.xfs.service.cmd;
 
 import java.util.concurrent.Callable;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.common.Assert;
 import at.o2xfs.xfs.WFSResult;

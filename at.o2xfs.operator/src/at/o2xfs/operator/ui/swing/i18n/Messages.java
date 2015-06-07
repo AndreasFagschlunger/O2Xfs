@@ -32,7 +32,7 @@ import java.util.Iterator;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;

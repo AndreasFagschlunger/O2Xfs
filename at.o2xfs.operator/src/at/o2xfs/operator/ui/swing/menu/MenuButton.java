@@ -34,7 +34,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
