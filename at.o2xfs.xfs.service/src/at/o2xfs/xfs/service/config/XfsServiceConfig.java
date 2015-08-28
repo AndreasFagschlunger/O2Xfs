@@ -27,16 +27,16 @@
 
 package at.o2xfs.xfs.service.config;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.XfsAPI;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
 
 public final class XfsServiceConfig {
 
@@ -57,6 +57,10 @@ public final class XfsServiceConfig {
 	private void load() {
 		final String method = "load()";
 		File file = new File("xfs.properties");
+		if (!file.isFile()) {
+			LOG.info(method, "File doesn't exist: " + file.getAbsolutePath());
+			return;
+		}
 		FileInputStream inStream = null;
 		try {
 			inStream = new FileInputStream(file);
