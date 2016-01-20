@@ -1,0 +1,18 @@
+apply from: "./libraries.gradle"
+
+allprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    
+    dependencies {
+        testCompile( libraries.junit )
+        testRuntime( libraries.log4j )
+        testRuntime( libraries.slf4j_log4j )
+    }
+}

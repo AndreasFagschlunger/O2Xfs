@@ -1,0 +1,5 @@
+dependencies {
+    compile( project(':at.o2xfs.common') )
+    compile( project(':at.o2xfs.log') )
+    compile( libraries.commons_lang3 )
+}

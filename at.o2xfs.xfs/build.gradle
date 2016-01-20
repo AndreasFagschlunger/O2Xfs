@@ -1,0 +1,4 @@
+dependencies {
+    compile( project(':at.o2xfs.log') )
+    compile( project(':at.o2xfs.win32') )
+}

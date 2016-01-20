@@ -1,0 +1,9 @@
+ext {
+    libraries = [
+        commons_lang3: 'org.apache.commons:commons-lang3:3.4',
+        junit: 'junit:junit:4.12',
+        log4j: 'log4j:log4j:1.2.17',
+        slf4j_api: 'org.slf4j:slf4j-api:1.7.13',
+        slf4j_log4j: 'org.slf4j:slf4j-log4j12:1.7.13'
+    ]
+}

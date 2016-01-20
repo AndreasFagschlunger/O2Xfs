@@ -1,0 +1,5 @@
+dependencies {
+    compile( project(':at.o2xfs.ctapi') )
+    compile( project(':at.o2xfs.emv') )
+    testCompile( project(':emv-icc-sim') )
+}

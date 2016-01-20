@@ -1,0 +1,31 @@
+apply plugin: "cpp"
+apply plugin: 'windows-resources'
+
+model {
+    repositories {
+        libs(PrebuiltLibraries) {
+            jni {
+                def javaHome = org.gradle.internal.jvm.Jvm.current().javaHome.absolutePath
+                headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
+            }
+        }
+    }
+
+    components {
+        main(NativeLibrarySpec) {
+            baseName = 'at.o2xfs.win32'
+            binaries.all {            
+                lib library: "jni", linkage: "api"
+                rcCompiler.args "/v"
+                rcCompiler.define "FILE_VERSION=\"0.0\""
+                rcCompiler.define "COMMA_VERSION=0,0,0,0"
+                rcCompiler.define "ORG_FILENAME="
+            }
+        }
+    }
+}
+
+dependencies {
+    compile( project(':at.o2xfs.common') )
+    compile( libraries.commons_lang3 )
+}
