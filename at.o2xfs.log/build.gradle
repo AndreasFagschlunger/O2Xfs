@@ -1,3 +1,19 @@
-dependencies {
-    compile( libraries.slf4j_api )
+plugins {
+    id 'jvm-component'
+    id 'java-lang'
+}
+
+model {
+    components {
+        'at.o2xfs.log'(JvmLibrarySpec) {
+            sources {
+                java {
+                    source.srcDir 'src/main/java'
+                }
+            }
+            dependencies {
+                module libraries.slf4j_api
+            }
+        }
+    }
 }

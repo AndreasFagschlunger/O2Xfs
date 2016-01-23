@@ -1,5 +1,24 @@
-dependencies {
-    compile( project(':at.o2xfs.common') )
-    compile( project(':at.o2xfs.log') )
-    compile( libraries.commons_lang3 )
+plugins {
+    id 'jvm-component'
+    id 'java-lang'
+}
+
+model {
+    components {
+        'at.o2xfs.emv'(JvmLibrarySpec) {
+            sources {
+                java {
+                    source.srcDir 'src/main/java'
+                }
+                resources {
+                    source.srcDir 'src/main/resources'
+                }
+            }
+            dependencies {
+                project ':at.o2xfs.common'
+                project ':at.o2xfs.log'
+                module libraries.commons_lang3
+            }
+        }
+    }
 }

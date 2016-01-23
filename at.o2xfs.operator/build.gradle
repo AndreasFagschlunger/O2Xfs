@@ -1,3 +1,27 @@
-dependencies {
-    compile( project(':at.o2xfs.xfs.service') )
+plugins {
+    id 'jvm-component'
+    id 'java-lang'
+}
+
+model {
+    components {
+        'at.o2xfs.operator'(JvmLibrarySpec) {
+            sources {
+                java {
+                    source.srcDir 'src/main/java'
+                }
+                resources {
+                    source.srcDir 'src/main/resources'
+                }
+            }
+            dependencies {
+                project ':at.o2xfs.common'
+                project ':at.o2xfs.log'
+                project ':at.o2xfs.win32'
+                project ':at.o2xfs.xfs'
+                project ':at.o2xfs.xfs.service'
+                module libraries.commons_lang3
+            }
+        }
+    }
 }

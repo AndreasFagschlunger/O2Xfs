@@ -1,7 +1,18 @@
-apply plugin: "cpp"
+plugins {
+    id 'jvm-component'
+    id 'java-lang'
+}
+
+apply plugin: 'cpp'
 apply plugin: 'windows-resources'
 
 model {
+    binaries {
+        withType(SharedLibraryBinarySpec) {
+            sharedLibraryFile "${project.buildDir}/libs/${component.name}/shared/at.o2xfs.win32.dll"
+        }
+    }
+
     repositories {
         libs(PrebuiltLibraries) {
             jni {
@@ -12,9 +23,37 @@ model {
     }
 
     components {
-        main(NativeLibrarySpec) {
-            baseName = 'at.o2xfs.win32'
-            binaries.all {            
+        'at.o2xfs.win32'(JvmLibrarySpec) {
+            sources {
+                java {
+                    source.srcDir 'src/main/java'
+                }
+            }
+            dependencies {
+                project ':at.o2xfs.common'
+                project ':at.o2xfs.log'
+                module libraries.commons_lang3
+            }
+        }
+
+        'native'(NativeLibrarySpec) {
+            sources {
+                cpp {
+                    source {
+                        srcDir 'src/native/cpp'
+                    }
+                    exportedHeaders {
+                        srcDir 'src/native/headers'
+                    }
+                }
+                rc {
+                    source {
+                        srcDir 'src/native/rc'
+                    }
+                }
+            }
+
+            binaries.all {
                 lib library: "jni", linkage: "api"
                 rcCompiler.args "/v"
                 rcCompiler.define "FILE_VERSION=\"0.0\""
@@ -23,9 +62,4 @@ model {
             }
         }
     }
-}
-
-dependencies {
-    compile( project(':at.o2xfs.common') )
-    compile( libraries.commons_lang3 )
 }

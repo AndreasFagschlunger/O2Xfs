@@ -1,5 +1,22 @@
-dependencies {
-    compile( project(':at.o2xfs.ctapi') )
-    compile( project(':at.o2xfs.emv') )
-    testCompile( project(':emv-icc-sim') )
+plugins {
+    id 'jvm-component'
+    id 'java-lang'
+}
+
+model {
+    components {
+        'at.o2xfs.emv.demo'(JvmLibrarySpec) {
+            sources {
+                java {
+                    source.srcDir 'src/main/java'
+                }
+            }
+            dependencies {
+                project ':at.o2xfs.common'
+                project ':at.o2xfs.ctapi'
+                project ':at.o2xfs.emv'
+                project ':at.o2xfs.log'
+            }
+        }
+    }
 }
