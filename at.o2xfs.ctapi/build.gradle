@@ -3,7 +3,19 @@ plugins {
     id 'java-lang'
 }
 
+apply plugin: 'cpp'
+apply plugin: 'windows-resources'
+
 model {
+    repositories {
+        libs(PrebuiltLibraries) {
+            jni {
+                def javaHome = System.getenv('JAVA_HOME')
+                headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
+            }
+        }
+    }
+
     components {
         'at.o2xfs.ctapi'(JvmLibrarySpec) {
             sources {
@@ -15,6 +27,17 @@ model {
                 project ':at.o2xfs.common'
                 project ':at.o2xfs.log'
                 project ':at.o2xfs.win32'
+            }
+        }
+
+        'at.o2xfs.ctapi.dll'(NativeLibrarySpec) {
+            binaries.all {
+                lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
+                lib library: 'jni', linkage: 'api'
+                rcCompiler.args "/v"
+                rcCompiler.define "FILE_VERSION=\"0.0\""
+                rcCompiler.define "COMMA_VERSION=0,0,0,0"
+                rcCompiler.define "ORG_FILENAME="
             }
         }
     }

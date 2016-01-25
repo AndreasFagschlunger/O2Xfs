@@ -7,16 +7,10 @@ apply plugin: 'cpp'
 apply plugin: 'windows-resources'
 
 model {
-    binaries {
-        withType(SharedLibraryBinarySpec) {
-            sharedLibraryFile "${project.buildDir}/libs/${component.name}/shared/at.o2xfs.win32.dll"
-        }
-    }
-
     repositories {
         libs(PrebuiltLibraries) {
             jni {
-                def javaHome = org.gradle.internal.jvm.Jvm.current().javaHome.absolutePath
+                def javaHome = System.getenv('JAVA_HOME')
                 headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
             }
         }
@@ -36,22 +30,7 @@ model {
             }
         }
 
-        'native'(NativeLibrarySpec) {
-            sources {
-                cpp {
-                    source {
-                        srcDir 'src/native/cpp'
-                    }
-                    exportedHeaders {
-                        srcDir 'src/native/headers'
-                    }
-                }
-                rc {
-                    source {
-                        srcDir 'src/native/rc'
-                    }
-                }
-            }
+        'at.o2xfs.win32.dll'(NativeLibrarySpec) {
 
             binaries.all {
                 lib library: "jni", linkage: "api"
