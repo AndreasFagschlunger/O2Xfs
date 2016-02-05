@@ -34,7 +34,7 @@ import java.nio.charset.Charset;
  * 
  * @author Andreas Fagschlunger
  */
-interface ASCII {
+public interface ASCII {
 
 	/**
 	 * Charset: US-ASCII

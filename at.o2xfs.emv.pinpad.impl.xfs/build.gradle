@@ -12,11 +12,7 @@ model {
                 }
             }
             dependencies {
-                project ':at.o2xfs.common'
-                project ':at.o2xfs.emv'
-                project ':at.o2xfs.log'
-                project ':at.o2xfs.win32'
-                project ':at.o2xfs.xfs'
+                project ':at.o2xfs.emv' library 'at.o2xfs.emv'
                 project ':at.o2xfs.xfs.service'
             }
         }

@@ -11,12 +11,10 @@ model {
                     source.srcDir 'src/main/java'
                 }
             }
-            dependencies {
-                project ':at.o2xfs.common'
-                project ':at.o2xfs.log'
-                project ':at.o2xfs.win32'
-                project ':at.o2xfs.xfs'
-                module libraries.commons_lang3
+            api {
+                dependencies {
+                    project ':at.o2xfs.xfs'
+                }
             }
         }
     }
