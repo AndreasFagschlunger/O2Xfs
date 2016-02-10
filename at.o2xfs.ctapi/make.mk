@@ -1,2 +1,0 @@
-at.o2xfs.ctapi:
-	i686-pc-mingw32-g++ -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/win32" -I"${O2XFS_WIN32}" -I"${SRC_DIR}" -mwindows -Wl,--add-stdcall-alias -static-libgcc -static-libstdc++ -shared -o "${BIN_DIR}/at.o2xfs.ctapi.dll" "${SRC_DIR}/CT-API.cpp" "${BIN_DIR}/O2XfsWIN32.dll"
