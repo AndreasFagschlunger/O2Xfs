@@ -4,3 +4,4 @@ gradle.properties
 
 # Build output directies
 */build
+*/bin
