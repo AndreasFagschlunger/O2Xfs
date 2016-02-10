@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -41,6 +41,7 @@ import at.o2xfs.emv.CryptogramInformationData;
 import at.o2xfs.emv.Currency;
 import at.o2xfs.emv.EMVTransaction;
 import at.o2xfs.emv.EMVTransactionCallback;
+import at.o2xfs.emv.SelectResult;
 import at.o2xfs.emv.Terminal;
 import at.o2xfs.emv.TerminateSessionException;
 import at.o2xfs.emv.TransactionData;
@@ -77,8 +78,8 @@ public class POSDemo implements EMVTransactionCallback {
 		loadTerminalConfiguration();
 		terminalUI.show();
 		EMVTransaction transaction = new EMVTransaction(terminal, this, icReader, pinPad);
-		TransactionData transactionData = new TransactionData(new TransactionType(Hex.decode("00")), new Currency(Hex.decode("0978"), Hex.decode("02")), new Amount(new BigInteger(
-				"10")), null);
+		TransactionData transactionData = new TransactionData(new TransactionType(Hex.decode("00")), new Currency(Hex.decode("0978"), Hex.decode("02")),
+				new Amount(new BigInteger("10")), null);
 		try {
 			List<Candidate> candidates = transaction.buildCandidateList();
 			do {
@@ -86,7 +87,7 @@ public class POSDemo implements EMVTransactionCallback {
 				if (candidate == null) {
 					break;
 				}
-				if (!transaction.processTransaction(candidate, transactionData)) {
+				if (SelectResult.NOK == transaction.processTransaction(candidate, transactionData)) {
 					candidates.remove(candidate);
 				}
 				break;

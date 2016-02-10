@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * - Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * - Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -27,6 +27,15 @@
 
 package at.o2xfs.emv;
 
+import java.io.IOException;
+import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import at.o2xfs.common.ByteArrayBuilder;
 import at.o2xfs.common.Bytes;
 import at.o2xfs.common.Hex;
@@ -37,15 +46,6 @@ import at.o2xfs.emv.tlv.TLV;
 import at.o2xfs.emv.tlv.Tag;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
-
-import java.io.IOException;
-import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public final class EMVTransaction {
 
@@ -71,10 +71,7 @@ public final class EMVTransaction {
 
 	private Candidate candidate = null;
 
-	public EMVTransaction(	Terminal terminal,
-							EMVTransactionCallback transactionCallback,
-							ICReader icReader,
-							PINPad pinPad) {
+	public EMVTransaction(Terminal terminal, EMVTransactionCallback transactionCallback, ICReader icReader, PINPad pinPad) {
 		this.terminal = terminal;
 		this.transactionCallback = transactionCallback;
 		this.icReader = icReader;
@@ -87,13 +84,12 @@ public final class EMVTransaction {
 		return new CandidateList(terminal, icReader).build();
 	}
 
-	public boolean processTransaction(Candidate aCandidate, TransactionData transactionData) throws TerminateSessionException,
-																							IOException {
+	public SelectResult processTransaction(Candidate aCandidate, TransactionData transactionData) throws TerminateSessionException, IOException {
 		this.candidate = aCandidate;
 		resetTransaction(transactionData);
 		InitiateApplicationProcessing initiateApplicationProcessing = new InitiateApplicationProcessing(this, candidate);
 		if (!initiateApplicationProcessing.perform()) {
-			return false;
+			return SelectResult.NOK;
 		}
 		readApplicationData();
 		checkMandatoryDataObjects();
@@ -114,7 +110,7 @@ public final class EMVTransaction {
 				transactionCallback.onTransactionApproved();
 				break;
 		}
-		return true;
+		return SelectResult.OK;
 	}
 
 	private void performOnlineProcessing() throws TerminateSessionException, IOException {

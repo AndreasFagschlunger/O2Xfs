@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -46,7 +46,7 @@ import at.o2xfs.emv.crypto.CryptoFactory;
 import at.o2xfs.emv.crypto.PublicKey;
 import at.o2xfs.emv.cvm.ICCPINEnciphermentPublicKey;
 import at.o2xfs.emv.cvm.PINBlock;
-import at.o2xfs.emv.demo.ui.TerminalGUI;
+import at.o2xfs.emv.demo.ui.UserInterface;
 import at.o2xfs.emv.pinpad.PINEntryBypassedException;
 import at.o2xfs.emv.pinpad.PINPad;
 import at.o2xfs.emv.pinpad.PINPadException;
@@ -57,7 +57,7 @@ public class SoftwarePINPad implements PINPad {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SoftwarePINPad.class);
 
-	private final TerminalGUI terminalUI;
+	private final UserInterface terminalUI;
 
 	private CAPublicKey caPublicKey = null;
 
@@ -65,7 +65,7 @@ public class SoftwarePINPad implements PINPad {
 
 	private PublicKey iccPublicKey = null;
 
-	public SoftwarePINPad(TerminalGUI terminalUI) {
+	public SoftwarePINPad(UserInterface terminalUI) {
 		this.terminalUI = terminalUI;
 	}
 
@@ -157,7 +157,7 @@ public class SoftwarePINPad implements PINPad {
 	}
 
 	private String askForPINEntry() throws PINPadException {
-		String pin = terminalUI.promptForPINEntry();
+		String pin = terminalUI.performPinEntry();
 		if (pin == null) {
 			throw new PINEntryBypassedException();
 		}
