@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * - Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * - Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -27,16 +27,15 @@
 
 package at.o2xfs.xfs;
 
-import at.o2xfs.xfs.util.XFSUtils;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import at.o2xfs.xfs.util.XFSUtils;
 
 /**
  * @author Andreas Fagschlunger
  */
-public class XfsVersion
-		implements Comparable<XfsVersion> {
+public class XfsVersion implements Comparable<XfsVersion> {
 
 	/**
 	 * Release 2.00
@@ -57,6 +56,11 @@ public class XfsVersion
 	 * Release 3.20
 	 */
 	public final static XfsVersion V3_20 = new XfsVersion("3.20");
+
+	/**
+	 * Release 3.30
+	 */
+	public final static XfsVersion V3_30 = new XfsVersion("3.30");
 
 	private int majorVersion = 0;
 
@@ -153,9 +157,7 @@ public class XfsVersion
 	public boolean equals(final Object obj) {
 		if (obj instanceof XfsVersion) {
 			final XfsVersion v = (XfsVersion) obj;
-			return new EqualsBuilder().append(majorVersion, v.majorVersion)
-										.append(minorVersion, v.minorVersion)
-										.isEquals();
+			return new EqualsBuilder().append(majorVersion, v.majorVersion).append(minorVersion, v.minorVersion).isEquals();
 		}
 		return false;
 	}

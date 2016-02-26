@@ -1,0 +1,62 @@
+plugins {
+    id 'jvm-component'
+    id 'java-lang'
+}
+
+apply plugin: 'cpp'
+apply plugin: 'visual-studio'
+
+task javah(type:Exec) {
+    commandLine 'javah',
+				'-cp',
+				"${file('bin')};${file('../at.o2xfs.win32/bin')}",
+				'-d',
+				file('src/o2xfs-xfs3-test.dll/headers'),
+				'at.o2xfs.xfs.cdm.v3_00.CdmStatus3Test',
+				'at.o2xfs.xfs.cdm.v3_00.CdmCaps3Test',
+				'at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3Test'
+}
+
+model {
+    binaries {
+        withType(SharedLibraryBinarySpec) {
+            if (toolChain in VisualCpp) {
+                cCompiler.args "/Zi"
+                cCompiler.define "DLL_EXPORT"
+            }
+        }
+    }
+
+    repositories {
+        libs(PrebuiltLibraries) {
+            jni {
+                def javaHome = System.getenv('JAVA_HOME')
+                headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
+            }
+            msxfs {
+                headers.srcDir "${XFS_SDK300}/INCLUDE"
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file("${XFS_SDK300}/LIB/msxfs.lib")
+                }
+            }
+        }
+    }
+
+    components {
+        'o2xfs-xfs3'(JvmLibrarySpec) {
+            api {
+                dependencies {
+                    project ':at.o2xfs.xfs' library 'at.o2xfs.xfs'
+                }
+            }
+        }
+
+        'o2xfs-xfs3-test.dll'(NativeLibrarySpec) {
+            binaries.all {
+                lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
+                lib library: 'jni', linkage: 'api'
+                lib library: 'msxfs', linkage: 'static'
+            }
+        }     
+    }
+}

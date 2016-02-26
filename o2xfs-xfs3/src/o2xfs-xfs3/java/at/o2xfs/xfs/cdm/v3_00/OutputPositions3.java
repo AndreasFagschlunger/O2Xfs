@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -25,70 +25,32 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm;
+package at.o2xfs.xfs.cdm.v3_00;
 
-import at.o2xfs.xfs.XfsConstant;
+import at.o2xfs.win32.Pointer;
+import at.o2xfs.xfs.win32.XfsZArray;
 
-public enum CashUnitStatus implements XfsConstant {
+class OutputPositions3 extends XfsZArray<OutputPosition3> {
 
-	/*
-	 * @since v3.00
-	 */
-	OK(0L),
+	public OutputPositions3(OutputPosition3[] array) {
+		super(array);
+	}
 
-	/*
-	 * @since v3.00
-	 */
-	FULL(1L),
-
-	/*
-	 * @since v3.00
-	 */
-	HIGH(2L),
-
-	/*
-	 * @since v3.00
-	 */
-	LOW(3L),
-
-	/*
-	 * @since v3.00
-	 */
-	EMPTY(4L),
-
-	/*
-	 * @since v3.00
-	 */
-	INOP(5L),
-
-	/*
-	 * @since v3.00
-	 */
-	MISSING(6L),
-
-	/*
-	 * @since v3.00
-	 */
-	NOVAL(7L),
-
-	/*
-	 * @since v3.00
-	 */
-	NOREF(8L),
-
-	/*
-	 * @since v3.00
-	 */
-	MANIP(9L);
-
-	private final long value;
-
-	private CashUnitStatus(final long value) {
-		this.value = value;
+	public OutputPositions3(Pointer aPointer) {
+		super(aPointer);
 	}
 
 	@Override
-	public long getValue() {
-		return value;
+	public OutputPosition3 copy(OutputPosition3 copy) {
+		return new OutputPosition3(copy);
+	}
+
+	@Override
+	public OutputPosition3[] get() {
+		OutputPosition3[] result = new OutputPosition3[pointers.length];
+		for (int i = 0; i < pointers.length; i++) {
+			result[i] = copy(new OutputPosition3(pointers[i]));
+		}
+		return result;
 	}
 }
