@@ -4,11 +4,11 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Type;
 import at.o2xfs.win32.ValueType;
 
-public abstract class XfsArray<T extends Type> extends Type implements ValueType<T[]> {
+public abstract class XfsPointerArray<T extends Type> extends Type implements ValueType<T[]> {
 
 	protected final Pointer[] pointers;
 
-	public XfsArray(T[] array) {
+	public XfsPointerArray(T[] array) {
 		pointers = new Pointer[array.length];
 		allocate();
 		for (int i = 0; i < pointers.length; i++) {
@@ -17,7 +17,7 @@ public abstract class XfsArray<T extends Type> extends Type implements ValueType
 		}
 	}
 
-	public XfsArray(Pointer p, int length) {
+	public XfsPointerArray(Pointer p, int length) {
 		pointers = new Pointer[length];
 		assignBuffer(p.buffer(getSize()));
 		for (int i = 0; i < pointers.length; i++) {

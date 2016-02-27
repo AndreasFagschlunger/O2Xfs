@@ -8,11 +8,11 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Type;
 import at.o2xfs.win32.ValueType;
 
-public abstract class XfsZArray<T extends Type> extends Type implements ValueType<T[]> {
+public abstract class XfsZPointerArray<T extends Type> extends Type implements ValueType<T[]> {
 
 	protected final Pointer[] pointers;
 
-	public XfsZArray(T[] array) {
+	public XfsZPointerArray(T[] array) {
 		pointers = new Pointer[array.length];
 		allocate();
 		int size = Pointer.NULL.getSize();
@@ -22,7 +22,7 @@ public abstract class XfsZArray<T extends Type> extends Type implements ValueTyp
 		}
 	}
 
-	public XfsZArray(Pointer aPointer) {
+	public XfsZPointerArray(Pointer aPointer) {
 		int offset = 0;
 		Buffer buffer = null;
 		List<Pointer> pointers = new ArrayList<>();

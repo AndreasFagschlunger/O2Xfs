@@ -25,32 +25,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_00;
+package at.o2xfs.xfs.cdm.v3_10;
 
-import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.win32.XfsPointerArray;
+import static org.junit.Assert.assertEquals;
 
-class CashUnits3 extends XfsPointerArray<CashUnit3> {
+import org.junit.Test;
 
-	public CashUnits3(CashUnit3[] array) {
-		super(array);
+import at.o2xfs.win32.Buffer;
+import at.o2xfs.xfs.v3_10.BaseXfs3_10Test;
+
+public class CashUnit3_10Test extends BaseXfs3_10Test {
+
+	@Test
+	public final void test() {
+		CashUnit3_10 expected = new CashUnit3_10(buildCashUnit3_10().getPointer());
+		CashUnit3_10 actual = new CashUnit3_10(expected);
+		System.out.println(actual);
+		assertEquals(expected, actual);
 	}
 
-	public CashUnits3(Pointer p, int length) {
-		super(p, length);
-	}
-
-	@Override
-	public CashUnit3 copy(CashUnit3 copy) {
-		return new CashUnit3(copy);
-	}
-
-	@Override
-	public CashUnit3[] get() {
-		CashUnit3[] result = new CashUnit3[pointers.length];
-		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new CashUnit3(pointers[i]));
-		}
-		return result;
-	}
+	private native Buffer buildCashUnit3_10();
 }

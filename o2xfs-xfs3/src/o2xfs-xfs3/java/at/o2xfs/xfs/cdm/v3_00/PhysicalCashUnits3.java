@@ -28,9 +28,9 @@
 package at.o2xfs.xfs.cdm.v3_00;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.win32.XfsArray;
+import at.o2xfs.xfs.win32.XfsPointerArray;
 
-public class PhysicalCashUnits3 extends XfsArray<PhysicalCashUnit3> {
+public class PhysicalCashUnits3 extends XfsPointerArray<PhysicalCashUnit3> {
 
 	public PhysicalCashUnits3(PhysicalCashUnit3[] array) {
 		super(array);

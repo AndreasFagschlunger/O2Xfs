@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -25,90 +25,32 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm;
+package at.o2xfs.xfs.cdm.v3_10;
 
-import at.o2xfs.xfs.XfsConstant;
+import at.o2xfs.win32.Pointer;
+import at.o2xfs.xfs.win32.XfsPointerArray;
 
-public enum GuidLights implements XfsConstant {
+class PhysicalCashUnits3_10 extends XfsPointerArray<PhysicalCashUnit3_10> {
 
-	/*
-	 * @since v3.10
-	 */
-	OFF(0x00000001),
+	public PhysicalCashUnits3_10(PhysicalCashUnit3_10[] array) {
+		super(array);
+	}
 
-	/*
-	 * @since v3.10
-	 */
-	SLOW_FLASH(0x00000004),
-
-	/*
-	 * @since v3.10
-	 */
-	MEDIUM_FLASH(0x00000008),
-
-	/*
-	 * @since v3.10
-	 */
-	QUICK_FLASH(0x00000010),
-
-	/*
-	 * @since v3.10
-	 */
-	CONTINUOUS(0x00000080),
-
-	/*
-	 * @since v3.10
-	 */
-	RED(0x00000100),
-
-	/*
-	 * @since v3.10
-	 */
-	GREEN(0x00000200),
-
-	/*
-	 * @since v3.10
-	 */
-	YELLOW(0x00000400),
-
-	/*
-	 * @since v3.10
-	 */
-	BLUE(0x00000800),
-
-	/*
-	 * @since v3.10
-	 */
-	CYAN(0x00001000),
-
-	/*
-	 * @since v3.10
-	 */
-	MAGENTA(0x00002000),
-
-	/*
-	 * @since v3.10
-	 */
-	WHITE(0x00004000),
-
-	/*
-	 * @since v3.10
-	 */
-	NOT_AVAILABLE(0x0000),
-
-	/*
-	 * @since v3.30
-	 */
-	EXIT(0x00200000);
-
-	private final long value;
-
-	private GuidLights(final long value) {
-		this.value = value;
+	public PhysicalCashUnits3_10(Pointer aPointer, int length) {
+		super(aPointer, length);
 	}
 
 	@Override
-	public long getValue() {
-		return value;
+	public PhysicalCashUnit3_10[] get() {
+		PhysicalCashUnit3_10[] result = new PhysicalCashUnit3_10[pointers.length];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = copy(new PhysicalCashUnit3_10(pointers[i]));
+		}
+		return result;
+	}
+
+	@Override
+	public PhysicalCashUnit3_10 copy(PhysicalCashUnit3_10 copy) {
+		return new PhysicalCashUnit3_10(copy);
 	}
 }

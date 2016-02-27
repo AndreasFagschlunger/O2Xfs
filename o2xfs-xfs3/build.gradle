@@ -8,13 +8,21 @@ apply plugin: 'visual-studio'
 
 task javah(type:Exec) {
     commandLine 'javah',
-				'-cp',
-				"${file('bin')};${file('../at.o2xfs.win32/bin')}",
-				'-d',
-				file('src/o2xfs-xfs3-test.dll/headers'),
-				'at.o2xfs.xfs.cdm.v3_00.CdmStatus3Test',
-				'at.o2xfs.xfs.cdm.v3_00.CdmCaps3Test',
-				'at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3Test'
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs3-test.dll/headers'),
+                'at.o2xfs.xfs.cdm.v3_00.CdmStatus3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CdmCaps3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3Test'
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs310-test.dll/headers'),
+                'at.o2xfs.xfs.cdm.v3_10.CashUnit3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.CdmCaps3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.CdmStatus3_10Test'
 }
 
 model {
@@ -33,11 +41,17 @@ model {
                 def javaHome = System.getenv('JAVA_HOME')
                 headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
             }
-            msxfs {
+            xfs3 {
                 headers.srcDir "${XFS_SDK300}/INCLUDE"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("${XFS_SDK300}/LIB/msxfs.lib")
-                }
+                //binaries.withType(StaticLibraryBinary) {
+                //    staticLibraryFile = file("${XFS_SDK300}/LIB/msxfs.lib")
+                //}
+            }
+            xfs310 {
+                headers.srcDir "${XFS_SDK310}/INCLUDE"
+                //binaries.withType(StaticLibraryBinary) {
+                //    staticLibraryFile = file("${XFS_SDK300}/LIB/msxfs.lib")
+                //}
             }
         }
     }
@@ -55,8 +69,15 @@ model {
             binaries.all {
                 lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
                 lib library: 'jni', linkage: 'api'
-                lib library: 'msxfs', linkage: 'static'
+                lib library: 'xfs3', linkage: 'api'
             }
-        }     
+        }
+        'o2xfs-xfs310-test.dll'(NativeLibrarySpec) {
+            binaries.all {
+                lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
+                lib library: 'jni', linkage: 'api'
+                lib library: 'xfs310', linkage: 'api'
+            }
+        }
     }
 }

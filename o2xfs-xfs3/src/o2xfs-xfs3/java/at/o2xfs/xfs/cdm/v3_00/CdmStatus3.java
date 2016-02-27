@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -44,12 +44,12 @@ import at.o2xfs.xfs.cdm.SafeDoor;
 
 public class CdmStatus3 extends Struct {
 
-	private final XfsWord<CdmDeviceState> deviceState = new XfsWord<>(CdmDeviceState.class);
-	private final XfsWord<SafeDoor> safeDoor = new XfsWord<>(SafeDoor.class);
-	private final XfsWord<Dispenser> dispenser = new XfsWord<>(Dispenser.class);
-	private final XfsWord<IntermediateStacker> intermediateStacker = new XfsWord<>(IntermediateStacker.class);
-	private final Pointer positions = new Pointer();
-	private final XfsExtra extra = new XfsExtra();
+	protected final XfsWord<CdmDeviceState> deviceState = new XfsWord<>(CdmDeviceState.class);
+	protected final XfsWord<SafeDoor> safeDoor = new XfsWord<>(SafeDoor.class);
+	protected final XfsWord<Dispenser> dispenser = new XfsWord<>(Dispenser.class);
+	protected final XfsWord<IntermediateStacker> intermediateStacker = new XfsWord<>(IntermediateStacker.class);
+	protected final Pointer positions = new Pointer();
+	protected final XfsExtra extra = new XfsExtra();
 
 	protected CdmStatus3() {
 		add(deviceState);
