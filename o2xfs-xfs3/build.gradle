@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'cpp'
 apply plugin: 'visual-studio'
 
-task javah(type:Exec) {
+task 'javah-xf3'(type:Exec) {
     commandLine 'javah',
                 '-cp',
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
@@ -15,6 +15,9 @@ task javah(type:Exec) {
                 'at.o2xfs.xfs.cdm.v3_00.CdmStatus3Test',
                 'at.o2xfs.xfs.cdm.v3_00.CdmCaps3Test',
                 'at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3Test'
+}
+
+task 'javah-xf310'(type:Exec) {
     commandLine 'javah',
                 '-cp',
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
@@ -23,6 +26,32 @@ task javah(type:Exec) {
                 'at.o2xfs.xfs.cdm.v3_10.CashUnit3_10Test',
                 'at.o2xfs.xfs.cdm.v3_10.CdmCaps3_10Test',
                 'at.o2xfs.xfs.cdm.v3_10.CdmStatus3_10Test'
+}
+
+task 'javah-xf320'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs320-test.dll/headers'),
+                'at.o2xfs.xfs.cdm.v3_20.CdmCaps3_20Test',
+                'at.o2xfs.xfs.cdm.v3_20.CdmStatus3_20Test'
+}
+
+task 'javah-xf330'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs330-test.dll/headers'),
+                'at.o2xfs.xfs.cdm.v3_30.CdmCaps3_30Test'
+}
+
+task javah() {
+    tasks.getByName('javah-xf3').execute()
+    tasks.getByName('javah-xf310').execute()
+    tasks.getByName('javah-xf320').execute()
+    tasks.getByName('javah-xf330').execute()
 }
 
 model {
@@ -43,15 +72,15 @@ model {
             }
             xfs3 {
                 headers.srcDir "${XFS_SDK300}/INCLUDE"
-                //binaries.withType(StaticLibraryBinary) {
-                //    staticLibraryFile = file("${XFS_SDK300}/LIB/msxfs.lib")
-                //}
             }
             xfs310 {
                 headers.srcDir "${XFS_SDK310}/INCLUDE"
-                //binaries.withType(StaticLibraryBinary) {
-                //    staticLibraryFile = file("${XFS_SDK300}/LIB/msxfs.lib")
-                //}
+            }
+            xfs320 {
+                headers.srcDir "${XFS_SDK320}/INCLUDE"
+            }
+            xfs330 {
+                headers.srcDir "${XFS_SDK330}/INCLUDE"
             }
         }
     }
@@ -61,6 +90,27 @@ model {
             api {
                 dependencies {
                     project ':at.o2xfs.xfs' library 'at.o2xfs.xfs'
+                }
+            }
+        }
+        'o2xfs-xfs310'(JvmLibrarySpec) {
+            api {
+                dependencies {
+                    library 'o2xfs-xfs3'
+                }
+            }
+        }
+        'o2xfs-xfs320'(JvmLibrarySpec) {
+            api {
+                dependencies {
+                    library 'o2xfs-xfs310'
+                }
+            }
+        }
+        'o2xfs-xfs330'(JvmLibrarySpec) {
+            api {
+                dependencies {
+                    library 'o2xfs-xfs320'
                 }
             }
         }
@@ -77,6 +127,20 @@ model {
                 lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
                 lib library: 'jni', linkage: 'api'
                 lib library: 'xfs310', linkage: 'api'
+            }
+        }
+        'o2xfs-xfs320-test.dll'(NativeLibrarySpec) {
+            binaries.all {
+                lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
+                lib library: 'jni', linkage: 'api'
+                lib library: 'xfs320', linkage: 'api'
+            }
+        }
+        'o2xfs-xfs330-test.dll'(NativeLibrarySpec) {
+            binaries.all {
+                lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
+                lib library: 'jni', linkage: 'api'
+                lib library: 'xfs330', linkage: 'api'
             }
         }
     }

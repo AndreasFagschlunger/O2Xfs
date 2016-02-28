@@ -34,15 +34,21 @@ package at.o2xfs.win32;
  *
  * @author Andreas Fagschlunger
  */
-public class UINT
-		extends NumberType<Long> {
+public class UINT extends NumberType<Long> {
+
+	public static final int SIZE = 1 << 2;
 
 	public static final long MIN_VALUE = 0;
 
 	public static final long MAX_VALUE = 4294967295L;
 
-	protected UINT() {
-		super(1 << 2);
+	public UINT() {
+		super(SIZE);
+	}
+
+	public UINT(Buffer aBuffer) {
+		this();
+		assignBuffer(aBuffer);
 	}
 
 	public void set(UINT value) {

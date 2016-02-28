@@ -68,6 +68,10 @@ public class CdmStatus3 extends Struct {
 	protected CdmStatus3(CdmStatus3 copy) {
 		this();
 		allocate();
+		set(copy);
+	}
+
+	protected void set(CdmStatus3 copy) {
 		deviceState.set(copy.getDeviceState());
 		safeDoor.set(copy.getSafeDoor());
 		dispenser.set(copy.getDispenser());

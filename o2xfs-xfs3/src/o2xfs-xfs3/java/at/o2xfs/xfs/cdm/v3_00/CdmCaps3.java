@@ -38,7 +38,6 @@ import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
-import at.o2xfs.xfs.XfsBitmask;
 import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.XfsWord;
@@ -48,6 +47,7 @@ import at.o2xfs.xfs.cdm.MoveItems;
 import at.o2xfs.xfs.cdm.Position;
 import at.o2xfs.xfs.cdm.RetractAreas;
 import at.o2xfs.xfs.cdm.RetractStackerActions;
+import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 public class CdmCaps3 extends Struct {
 
@@ -57,16 +57,16 @@ public class CdmCaps3 extends Struct {
 	protected final BOOL compound = new BOOL();
 	protected final BOOL shutter = new BOOL();
 	protected final BOOL shutterControl = new BOOL();
-	protected final XfsBitmask<RetractAreas> retractAreas = new XfsBitmask<>(RetractAreas.class);
-	protected final XfsBitmask<RetractStackerActions> retractTransportActions = new XfsBitmask<>(RetractStackerActions.class);
-	protected final XfsBitmask<RetractStackerActions> retractStackerActions = new XfsBitmask<>(RetractStackerActions.class);
+	protected final XfsWordBitmask<RetractAreas> retractAreas = new XfsWordBitmask<>(RetractAreas.class);
+	protected final XfsWordBitmask<RetractStackerActions> retractTransportActions = new XfsWordBitmask<>(RetractStackerActions.class);
+	protected final XfsWordBitmask<RetractStackerActions> retractStackerActions = new XfsWordBitmask<>(RetractStackerActions.class);
 	protected final BOOL safeDoor = new BOOL();
 	protected final BOOL cashBox = new BOOL();
 	protected final BOOL intermediateStacker = new BOOL();
 	protected final BOOL itemsTakenSensor = new BOOL();
-	protected final XfsBitmask<Position> positions = new XfsBitmask<>(Position.class);
-	protected final XfsBitmask<MoveItems> moveItems = new XfsBitmask<>(MoveItems.class);
-	protected final XfsBitmask<ExchangeType> exchangeType = new XfsBitmask<>(ExchangeType.class);
+	protected final XfsWordBitmask<Position> positions = new XfsWordBitmask<>(Position.class);
+	protected final XfsWordBitmask<MoveItems> moveItems = new XfsWordBitmask<>(MoveItems.class);
+	protected final XfsWordBitmask<ExchangeType> exchangeType = new XfsWordBitmask<>(ExchangeType.class);
 	protected final XfsExtra extra = new XfsExtra();
 
 	protected CdmCaps3() {

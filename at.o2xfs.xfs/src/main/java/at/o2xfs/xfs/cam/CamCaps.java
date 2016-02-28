@@ -3,11 +3,11 @@ package at.o2xfs.xfs.cam;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
-import at.o2xfs.xfs.XfsBitmask;
 import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.XfsWordArray;
+import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 import java.util.Map;
 import java.util.Set;
@@ -22,9 +22,9 @@ public class CamCaps
 	private final XfsWordArray<CameraAvailable> cameras = new XfsWordArray<>(	CameraAvailable.class,
 																				CamConstant.CAMERAS_SIZE);
 	private final USHORT maxPictures = new USHORT();
-	private final XfsBitmask<CamData> camData = new XfsBitmask<CamData>(CamData.class);
+	private final XfsWordBitmask<CamData> camData = new XfsWordBitmask<CamData>(CamData.class);
 	private final USHORT maxDataLength = new USHORT();
-	private final XfsBitmask<CharSupport> charSupport = new XfsBitmask<CharSupport>(CharSupport.class);
+	private final XfsWordBitmask<CharSupport> charSupport = new XfsWordBitmask<CharSupport>(CharSupport.class);
 	private final XfsExtra extra = new XfsExtra();
 
 	protected CamCaps() {
