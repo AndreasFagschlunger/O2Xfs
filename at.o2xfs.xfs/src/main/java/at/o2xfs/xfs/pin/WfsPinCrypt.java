@@ -4,7 +4,7 @@ import at.o2xfs.win32.BYTE;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.XfsStruct;
-import at.o2xfs.xfs.XfsWord;
+import at.o2xfs.xfs.win32.XfsWord;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

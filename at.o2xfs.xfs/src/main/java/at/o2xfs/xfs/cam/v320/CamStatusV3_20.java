@@ -1,9 +1,9 @@
 package at.o2xfs.xfs.cam.v320;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.cam.AntiFraudModule;
 import at.o2xfs.xfs.cam.CamStatus;
+import at.o2xfs.xfs.win32.XfsWord;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

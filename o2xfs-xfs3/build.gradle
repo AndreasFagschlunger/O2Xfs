@@ -14,7 +14,8 @@ task 'javah-xf3'(type:Exec) {
                 file('src/o2xfs-xfs3-test.dll/headers'),
                 'at.o2xfs.xfs.cdm.v3_00.CdmStatus3Test',
                 'at.o2xfs.xfs.cdm.v3_00.CdmCaps3Test',
-                'at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3Test'
+                'at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3Test',
+                'at.o2xfs.xfs.cdm.v3_00.TellerDetails3Test'
 }
 
 task 'javah-xf310'(type:Exec) {

@@ -33,12 +33,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
-import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.cdm.Position;
 import at.o2xfs.xfs.cdm.PositionStatus;
 import at.o2xfs.xfs.cdm.Shutter;
 import at.o2xfs.xfs.cdm.Transport;
 import at.o2xfs.xfs.cdm.TransportStatus;
+import at.o2xfs.xfs.win32.XfsWord;
 
 public class OutputPosition3 extends Struct {
 

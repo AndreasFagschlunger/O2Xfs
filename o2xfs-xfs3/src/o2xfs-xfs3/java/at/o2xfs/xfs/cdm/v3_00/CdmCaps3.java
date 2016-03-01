@@ -40,13 +40,13 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.XfsServiceClass;
-import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.cdm.CdmType;
 import at.o2xfs.xfs.cdm.ExchangeType;
 import at.o2xfs.xfs.cdm.MoveItems;
 import at.o2xfs.xfs.cdm.Position;
 import at.o2xfs.xfs.cdm.RetractAreas;
 import at.o2xfs.xfs.cdm.RetractStackerActions;
+import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 public class CdmCaps3 extends Struct {

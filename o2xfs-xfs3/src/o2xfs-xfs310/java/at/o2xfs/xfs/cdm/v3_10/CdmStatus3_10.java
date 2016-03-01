@@ -36,11 +36,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.USHORT;
-import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.cdm.CdmGuidLights;
 import at.o2xfs.xfs.cdm.DevicePosition;
 import at.o2xfs.xfs.cdm.v3_00.CdmStatus3;
 import at.o2xfs.xfs.win32.XfsBitmaskArray;
+import at.o2xfs.xfs.win32.XfsWord;
 
 public class CdmStatus3_10 extends CdmStatus3 {
 	private static final int GUIDLIGHTS_SIZE = 32;

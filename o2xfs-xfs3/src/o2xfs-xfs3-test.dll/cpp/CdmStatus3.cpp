@@ -9,19 +9,6 @@ static WFSCDMOUTPOS position;
 static LPWFSCDMOUTPOS positions[2];
 static LPSTR lpszExtra = "Key1=Value1\0Key2=Value2\0";
 
-BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
-	return TRUE;
-}
-
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
-	return JNI_VERSION_1_6;
-}
-
-/*
- * Class:     at_o2xfs_xfs_cdm_v3_00_CdmStatus3_00Test
- * Method:    createCdmStatus3_00
- * Signature: ()Lat/o2xfs/win32/Buffer;
- */
 JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_CdmStatus3Test_createCdmStatus3(JNIEnv *env, jobject object) {
 	position.fwPosition = WFS_CDM_POSFRONT;
 	position.fwShutter = WFS_CDM_SHTCLOSED;

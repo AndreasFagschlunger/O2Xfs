@@ -5,8 +5,8 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.XfsServiceClass;
-import at.o2xfs.xfs.XfsWord;
-import at.o2xfs.xfs.XfsWordArray;
+import at.o2xfs.xfs.win32.XfsWord;
+import at.o2xfs.xfs.win32.XfsWordArray;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 import java.util.Map;

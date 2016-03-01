@@ -35,10 +35,10 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsVersion;
-import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.util.Bitmask;
 import at.o2xfs.xfs.util.KeyValueMap;
 import at.o2xfs.xfs.util.XfsConstants;
+import at.o2xfs.xfs.win32.XfsWord;
 
 import java.util.Map;
 import java.util.Set;

@@ -4,8 +4,8 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.USHORTArray;
 import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.XfsStruct;
-import at.o2xfs.xfs.XfsWord;
-import at.o2xfs.xfs.XfsWordArray;
+import at.o2xfs.xfs.win32.XfsWord;
+import at.o2xfs.xfs.win32.XfsWordArray;
 
 import java.util.Map;
 

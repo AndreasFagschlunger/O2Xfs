@@ -25,11 +25,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.win32;
 
 import at.o2xfs.win32.BitConverter;
 import at.o2xfs.win32.NumberType;
 import at.o2xfs.win32.Pointer;
+import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.util.XfsConstants;
 
 public class XfsWord<T extends Enum<T> & XfsConstant>

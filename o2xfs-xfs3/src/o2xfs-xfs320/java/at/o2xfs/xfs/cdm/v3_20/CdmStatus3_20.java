@@ -32,9 +32,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.cdm.AntiFraudModule;
 import at.o2xfs.xfs.cdm.v3_10.CdmStatus3_10;
+import at.o2xfs.xfs.win32.XfsWord;
 
 public class CdmStatus3_20 extends CdmStatus3_10 {
 

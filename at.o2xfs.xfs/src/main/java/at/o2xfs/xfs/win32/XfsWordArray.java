@@ -1,7 +1,8 @@
-package at.o2xfs.xfs;
+package at.o2xfs.xfs.win32;
 
 import at.o2xfs.win32.Array;
 import at.o2xfs.win32.ValueType;
+import at.o2xfs.xfs.XfsConstant;
 
 public class XfsWordArray<T extends Enum<T> & XfsConstant>
 		extends Array<XfsWord<T>>

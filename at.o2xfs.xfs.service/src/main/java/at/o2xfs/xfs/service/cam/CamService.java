@@ -4,11 +4,11 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsServiceClass;
-import at.o2xfs.xfs.XfsWord;
 import at.o2xfs.xfs.cam.CamEventId;
 import at.o2xfs.xfs.cam.Media;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.XfsServiceManager;
+import at.o2xfs.xfs.win32.XfsWord;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
