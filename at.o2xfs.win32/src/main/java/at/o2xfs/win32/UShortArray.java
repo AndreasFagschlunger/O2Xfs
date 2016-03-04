@@ -32,22 +32,27 @@ package at.o2xfs.win32;
  *
  * @author Andreas Fagschlunger
  */
-public class USHORTArray
-		extends Array<USHORT>
-		implements ValueType<int[]> {
+public class UShortArray extends Array<USHORT> implements ValueType<int[]> {
 
-	public USHORTArray(final int length) {
+	public UShortArray(int length) {
 		super(new USHORT[length]);
 		for (int i = 0; i < length; i++) {
 			array[i] = new USHORT();
 		}
 	}
 
-	public USHORTArray(final Pointer p, final int length) {
-		this(length);
+	public UShortArray(int[] array) {
+		this(array.length);
+		allocate();
+		set(array);
 	}
 
-	public void set(USHORTArray values) {
+	public UShortArray(final Pointer p, final int length) {
+		this(length);
+		assignBuffer(p);
+	}
+
+	public void set(UShortArray values) {
 		put(values.getBytes());
 	}
 

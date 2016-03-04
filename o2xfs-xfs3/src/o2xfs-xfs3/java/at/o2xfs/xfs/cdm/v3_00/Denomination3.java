@@ -33,78 +33,86 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
+import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
-import at.o2xfs.xfs.cdm.InputPosition;
-import at.o2xfs.xfs.cdm.Position;
-import at.o2xfs.xfs.win32.XfsDWord;
-import at.o2xfs.xfs.win32.XfsWord;
+import at.o2xfs.xfs.win32.XfsCharArray;
+import at.o2xfs.xfs.win32.XfsUIntArray;
 
-public class TellerDetails3 extends Struct {
+public class Denomination3 extends Struct {
 
-	protected final USHORT tellerID = new USHORT();
-	protected final XfsDWord<InputPosition> inputPosition = new XfsDWord<>(InputPosition.class);
-	protected final XfsWord<Position> outputPosition = new XfsWord<>(Position.class);
-	protected final Pointer tellerTotals = new Pointer();
+	protected final XfsCharArray currencyID = new XfsCharArray(3);
+	protected final ULONG amount = new ULONG();
+	protected final USHORT count = new USHORT();
+	protected final Pointer values = new Pointer();
+	protected final ULONG cashBox = new ULONG();
 
-	protected TellerDetails3() {
-		add(tellerID);
-		add(inputPosition);
-		add(outputPosition);
-		add(tellerTotals);
+	protected Denomination3() {
+		add(currencyID);
+		add(amount);
+		add(count);
+		add(values);
+		add(cashBox);
 	}
 
-	public TellerDetails3(Pointer p) {
+	public Denomination3(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public TellerDetails3(TellerDetails3 copy) {
+	public Denomination3(Denomination3 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(TellerDetails3 copy) {
-		tellerID.set(copy.getTellerID());
-		inputPosition.set(copy.getInputPosition());
-		outputPosition.set(copy.getOutputPosition());
-		tellerTotals.pointTo(new TellerTotals3Array(copy.getTellerTotals()));
+	protected void set(Denomination3 copy) {
+		currencyID.set(copy.getCurrencyID());
+		amount.set(copy.getAmount());
+		count.set(copy.getCount());
+		if (!Pointer.NULL.equals(copy.values)) {
+			values.pointTo(new XfsUIntArray(copy.getValues()));
+		}
+		cashBox.set(copy.getCashBox());
 	}
 
-	public int getTellerID() {
-		return tellerID.get();
+	public char[] getCurrencyID() {
+		return currencyID.get();
 	}
 
-	public InputPosition getInputPosition() {
-		return inputPosition.get();
+	public long getAmount() {
+		return amount.get();
 	}
 
-	public Position getOutputPosition() {
-		return outputPosition.get();
+	public int getCount() {
+		return count.get();
 	}
 
-	public TellerTotals3[] getTellerTotals() {
-		return new TellerTotals3Array(tellerTotals).get();
+	public long[] getValues() {
+		return new XfsUIntArray(values, getCount()).get();
+	}
+
+	public long getCashBox() {
+		return cashBox.get();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getTellerID()).append(getInputPosition()).append(getOutputPosition()).append(getTellerTotals()).toHashCode();
+		return new HashCodeBuilder().append(getCurrencyID()).append(getAmount()).append(getCount()).append(getValues()).append(getCashBox()).toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof TellerDetails3) {
-			TellerDetails3 tellerDetails3 = (TellerDetails3) obj;
-			return new EqualsBuilder().append(getTellerID(), tellerDetails3.getTellerID()).append(getInputPosition(), tellerDetails3.getInputPosition())
-					.append(getOutputPosition(), tellerDetails3.getOutputPosition()).append(getTellerTotals(), tellerDetails3.getTellerTotals()).isEquals();
+		if (obj instanceof Denomination3) {
+			Denomination3 denomination3 = (Denomination3) obj;
+			return new EqualsBuilder().append(getCurrencyID(), denomination3.getCurrencyID()).append(getAmount(), denomination3.getAmount())
+					.append(getCount(), denomination3.getCount()).append(getValues(), denomination3.getValues()).append(getCashBox(), denomination3.getCashBox()).isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("tellerID", getTellerID()).append("inputPosition", getInputPosition()).append("outputPosition", getOutputPosition())
-				.append("tellerTotals", getTellerTotals()).toString();
+		return new ToStringBuilder(this).append("currencyID", getCurrencyID()).append("amount", getAmount()).append("count", getCount()).append("values", getValues())
+				.append("cashBox", getCashBox()).toString();
 	}
 }

@@ -27,22 +27,34 @@
 
 package at.o2xfs.xfs.cdm.v3_00;
 
-import static org.junit.Assert.assertEquals;
+import at.o2xfs.win32.Pointer;
+import at.o2xfs.xfs.win32.XfsPointerArray;
 
-import org.junit.Test;
+class MixRows3Array extends XfsPointerArray<MixRow3> {
 
-import at.o2xfs.win32.Buffer;
-import at.o2xfs.xfs.v3_00.BaseXfs3Test;
+	private final int numberOfColumns;
 
-public class TellerDetails3Test extends BaseXfs3Test {
-
-	@Test
-	public final void test() {
-		TellerDetails3 expected = new TellerDetails3(buildTellerDetails3().getPointer());
-		TellerDetails3 actual = new TellerDetails3(expected);
-		System.out.println(actual);
-		assertEquals(expected, actual);
+	public MixRows3Array(MixRow3[] array, int numberOfColumns) {
+		super(array);
+		this.numberOfColumns = numberOfColumns;
 	}
 
-	private native Buffer buildTellerDetails3();
+	public MixRows3Array(Pointer p, int length, int numberOfColumns) {
+		super(p, length);
+		this.numberOfColumns = numberOfColumns;
+	}
+
+	@Override
+	public MixRow3 copy(MixRow3 copy) {
+		return new MixRow3(copy);
+	}
+
+	@Override
+	public MixRow3[] get() {
+		MixRow3[] result = new MixRow3[pointers.length];
+		for (int i = 0; i < pointers.length; i++) {
+			result[i] = copy(new MixRow3(pointers[i], numberOfColumns));
+		}
+		return result;
+	}
 }

@@ -33,70 +33,61 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
-import at.o2xfs.win32.USHORT;
-import at.o2xfs.xfs.win32.XfsCharArray;
+import at.o2xfs.win32.ULONG;
+import at.o2xfs.win32.UShortArray;
 
-public class TellerInfo3 extends Struct {
+public class MixRow3 extends Struct {
 
-	protected final USHORT tellerID = new USHORT();
-	protected final XfsCharArray currencyID = new XfsCharArray(3);
+	protected final ULONG amount = new ULONG();
+	protected final Pointer mixture = new Pointer();
+	private final int numberOfColumns;
 
-	protected TellerInfo3() {
-		add(tellerID);
-		add(currencyID);
+	protected MixRow3(int numberOfColumns) {
+		add(amount);
+		add(mixture);
+		this.numberOfColumns = numberOfColumns;
 	}
 
-	public TellerInfo3(Pointer p) {
-		this();
+	public MixRow3(Pointer p, int numberOfColumns) {
+		this(numberOfColumns);
 		assignBuffer(p);
 	}
 
-	private TellerInfo3(int tellerID, char[] currencyID) {
-		this();
-		allocate();
-		this.tellerID.set(tellerID);
-		this.currencyID.set(currencyID);
-	}
-
-	public TellerInfo3(TellerInfo3 copy) {
-		this();
+	public MixRow3(MixRow3 copy) {
+		this(copy.numberOfColumns);
 		allocate();
 		set(copy);
 	}
 
-	protected void set(TellerInfo3 copy) {
-		tellerID.set(copy.getTellerID());
-		currencyID.set(copy.getCurrencyID());
+	protected void set(MixRow3 copy) {
+		amount.set(copy.getAmount());
+		mixture.pointTo(new UShortArray(copy.getMixture()));
 	}
 
-	public int getTellerID() {
-		return tellerID.get();
+	public long getAmount() {
+		return amount.get();
 	}
 
-	public char[] getCurrencyID() {
-		return currencyID.get();
+	public int[] getMixture() {
+		return new UShortArray(mixture, numberOfColumns).get();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getTellerID()).append(getCurrencyID()).toHashCode();
+		return new HashCodeBuilder().append(getAmount()).append(getMixture()).toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof TellerInfo3) {
-			TellerInfo3 tellerInfo3 = (TellerInfo3) obj;
-			return new EqualsBuilder().append(getTellerID(), tellerInfo3.getTellerID()).append(getCurrencyID(), tellerInfo3.getCurrencyID()).isEquals();
+		if (obj instanceof MixRow3) {
+			MixRow3 mixRow3 = (MixRow3) obj;
+			return new EqualsBuilder().append(getAmount(), mixRow3.getAmount()).append(getMixture(), mixRow3.getMixture()).isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("tellerID", getTellerID()).append("currencyID", getCurrencyID()).toString();
-	}
-
-	public static final TellerInfo3 build(int tellerID, char[] currencyID) {
-		return new TellerInfo3(tellerID, currencyID);
+		return new ToStringBuilder(this).append("amount", getAmount()).append("mixture", getMixture()).toString();
 	}
 }

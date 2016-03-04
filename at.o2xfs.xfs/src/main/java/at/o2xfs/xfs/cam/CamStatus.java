@@ -1,7 +1,7 @@
 package at.o2xfs.xfs.cam;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.USHORTArray;
+import at.o2xfs.win32.UShortArray;
 import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.XfsStruct;
 import at.o2xfs.xfs.win32.XfsWord;
@@ -18,7 +18,7 @@ public class CamStatus
 	protected final XfsWordArray<Media> mediaStates = new XfsWordArray<Media>(Media.class, CamConstant.CAMERAS_SIZE);
 	protected final XfsWordArray<CameraState> cameraStates = new XfsWordArray<CameraState>(	CameraState.class,
 																							CamConstant.CAMERAS_SIZE);
-	protected final USHORTArray pictures = new USHORTArray(CamConstant.CAMERAS_SIZE);
+	protected final UShortArray pictures = new UShortArray(CamConstant.CAMERAS_SIZE);
 	protected final XfsExtra extra = new XfsExtra();
 
 	protected CamStatus() {

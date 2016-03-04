@@ -32,17 +32,22 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
+import at.o2xfs.win32.Pointer;
+import at.o2xfs.win32.ZList;
 import at.o2xfs.xfs.v3_00.BaseXfs3Test;
 
-public class TellerDetails3Test extends BaseXfs3Test {
+public class CurrencyExp3Test extends BaseXfs3Test {
 
 	@Test
 	public final void test() {
-		TellerDetails3 expected = new TellerDetails3(buildTellerDetails3().getPointer());
-		TellerDetails3 actual = new TellerDetails3(expected);
-		System.out.println(actual);
-		assertEquals(expected, actual);
+		ZList currencyExp3 = new ZList(buildCurrencyExp3().getPointer());
+		for (Pointer each : currencyExp3) {
+			CurrencyExp3 expected = new CurrencyExp3(each);
+			CurrencyExp3 actual = new CurrencyExp3(expected);
+			System.out.println(actual);
+			assertEquals(expected, actual);
+		}
 	}
 
-	private native Buffer buildTellerDetails3();
+	private native Buffer buildCurrencyExp3();
 }

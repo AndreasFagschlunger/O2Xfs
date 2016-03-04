@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_00.BaseXfs3Test;
 
-public class TellerDetails3Test extends BaseXfs3Test {
+public class MixTable3Test extends BaseXfs3Test {
 
 	@Test
 	public final void test() {
-		TellerDetails3 expected = new TellerDetails3(buildTellerDetails3().getPointer());
-		TellerDetails3 actual = new TellerDetails3(expected);
+		MixTable3 expected = new MixTable3(buildMixTable3().getPointer());
+		MixTable3 actual = new MixTable3(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildTellerDetails3();
+	private native Buffer buildMixTable3();
 }

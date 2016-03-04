@@ -12,9 +12,13 @@ task 'javah-xf3'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs3-test.dll/headers'),
-                'at.o2xfs.xfs.cdm.v3_00.CdmStatus3Test',
-                'at.o2xfs.xfs.cdm.v3_00.CdmCaps3Test',
                 'at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CdmCaps3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CdmStatus3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CurrencyExp3Test',
+                'at.o2xfs.xfs.cdm.v3_00.MixTable3Test',
+                'at.o2xfs.xfs.cdm.v3_00.MixType3Test',
+                'at.o2xfs.xfs.cdm.v3_00.PresentStatus3Test',
                 'at.o2xfs.xfs.cdm.v3_00.TellerDetails3Test'
 }
 
