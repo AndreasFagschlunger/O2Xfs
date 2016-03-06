@@ -44,7 +44,7 @@ import at.o2xfs.xfs.cdm.CdmType;
 import at.o2xfs.xfs.cdm.ExchangeType;
 import at.o2xfs.xfs.cdm.MoveItems;
 import at.o2xfs.xfs.cdm.Position;
-import at.o2xfs.xfs.cdm.RetractAreas;
+import at.o2xfs.xfs.cdm.RetractArea;
 import at.o2xfs.xfs.cdm.RetractStackerActions;
 import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
@@ -57,7 +57,7 @@ public class CdmCaps3 extends Struct {
 	protected final BOOL compound = new BOOL();
 	protected final BOOL shutter = new BOOL();
 	protected final BOOL shutterControl = new BOOL();
-	protected final XfsWordBitmask<RetractAreas> retractAreas = new XfsWordBitmask<>(RetractAreas.class);
+	protected final XfsWordBitmask<RetractArea> retractAreas = new XfsWordBitmask<>(RetractArea.class);
 	protected final XfsWordBitmask<RetractStackerActions> retractTransportActions = new XfsWordBitmask<>(RetractStackerActions.class);
 	protected final XfsWordBitmask<RetractStackerActions> retractStackerActions = new XfsWordBitmask<>(RetractStackerActions.class);
 	protected final BOOL safeDoor = new BOOL();
@@ -144,7 +144,7 @@ public class CdmCaps3 extends Struct {
 		return shutterControl.get();
 	}
 
-	public Set<RetractAreas> getRetractAreas() {
+	public Set<RetractArea> getRetractAreas() {
 		return retractAreas.get();
 	}
 

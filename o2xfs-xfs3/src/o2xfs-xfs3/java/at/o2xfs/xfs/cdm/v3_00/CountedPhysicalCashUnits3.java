@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -25,50 +25,32 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm;
+package at.o2xfs.xfs.cdm.v3_00;
 
-import at.o2xfs.xfs.XfsConstant;
+import at.o2xfs.win32.Pointer;
+import at.o2xfs.xfs.win32.XfsPointerArray;
 
-public enum RetractAreas implements XfsConstant {
+class CountedPhysicalCashUnits3 extends XfsPointerArray<CountedPhysicalCashUnit3> {
 
-	/*
-	 * @since v3.30
-	 */
-	RETRACT(0x0001),
+	public CountedPhysicalCashUnits3(CountedPhysicalCashUnit3[] array) {
+		super(array);
+	}
 
-	/*
-	 * @since v3.30
-	 */
-	TRANSPORT(0x0002),
-
-	/*
-	 * @since v3.30
-	 */
-	STACKER(0x0004),
-
-	/*
-	 * @since v3.30
-	 */
-	REJECT(0x0008),
-
-	/*
-	 * @since v3.30
-	 */
-	NOTSUPP(0x0010),
-
-	/*
-	 * @since v3.30
-	 */
-	ITEMCASSETTE(0x0020);
-
-	private final long value;
-
-	private RetractAreas(final long value) {
-		this.value = value;
+	public CountedPhysicalCashUnits3(Pointer aPointer, int length) {
+		super(aPointer, length);
 	}
 
 	@Override
-	public long getValue() {
-		return value;
+	public CountedPhysicalCashUnit3[] get() {
+		CountedPhysicalCashUnit3[] result = new CountedPhysicalCashUnit3[pointers.length];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = copy(new CountedPhysicalCashUnit3(pointers[i]));
+		}
+		return result;
+	}
+
+	@Override
+	public CountedPhysicalCashUnit3 copy(CountedPhysicalCashUnit3 copy) {
+		return new CountedPhysicalCashUnit3(copy);
 	}
 }
