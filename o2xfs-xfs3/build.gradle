@@ -34,7 +34,10 @@ task 'javah-xf310'(type:Exec) {
                 file('src/o2xfs-xfs310-test.dll/headers'),
                 'at.o2xfs.xfs.cdm.v3_10.CashUnit3_10Test',
                 'at.o2xfs.xfs.cdm.v3_10.CdmCaps3_10Test',
-                'at.o2xfs.xfs.cdm.v3_10.CdmStatus3_10Test'
+                'at.o2xfs.xfs.cdm.v3_10.CdmStatus3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.PowerSaveControl3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.PrepareDispense3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.SetGuidLight3_10Test'
 }
 
 task 'javah-xf320'(type:Exec) {
@@ -44,7 +47,8 @@ task 'javah-xf320'(type:Exec) {
                 '-d',
                 file('src/o2xfs-xfs320-test.dll/headers'),
                 'at.o2xfs.xfs.cdm.v3_20.CdmCaps3_20Test',
-                'at.o2xfs.xfs.cdm.v3_20.CdmStatus3_20Test'
+                'at.o2xfs.xfs.cdm.v3_20.CdmStatus3_20Test',
+                'at.o2xfs.xfs.cdm.v3_20.ItemNumberList3_20Test'
 }
 
 task 'javah-xf330'(type:Exec) {
@@ -53,7 +57,9 @@ task 'javah-xf330'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs330-test.dll/headers'),
-                'at.o2xfs.xfs.cdm.v3_30.CdmCaps3_30Test'
+                'at.o2xfs.xfs.cdm.v3_30.Blacklist3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.CdmCaps3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.SynchronizeCommand3_30Test'
 }
 
 task javah() {
