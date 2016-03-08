@@ -25,24 +25,60 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_00;
+package at.o2xfs.xfs.cdm.v3_10;
 
-import static org.junit.Assert.assertEquals;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.junit.Test;
+import at.o2xfs.win32.Pointer;
+import at.o2xfs.win32.Struct;
+import at.o2xfs.xfs.cdm.PrepareDispenseAction;
+import at.o2xfs.xfs.win32.XfsWord;
 
-import at.o2xfs.win32.Buffer;
-import at.o2xfs.xfs.v3_00.BaseXfs3Test;
+public class PrepareDispense3_10 extends Struct {
 
-public class Dispense3Test extends BaseXfs3Test {
+	protected final XfsWord<PrepareDispenseAction> action = new XfsWord<>(PrepareDispenseAction.class);
 
-	@Test
-	public final void test() {
-		Dispense3 expected = new Dispense3(buildDispense3().getPointer());
-		Dispense3 actual = new Dispense3(expected);
-		System.out.println(actual);
-		assertEquals(expected, actual);
+	protected PrepareDispense3_10() {
+		add(action);
 	}
 
-	private native Buffer buildDispense3();
+	public PrepareDispense3_10(Pointer p) {
+		this();
+		assignBuffer(p);
+	}
+
+	public PrepareDispense3_10(PrepareDispense3_10 copy) {
+		this();
+		allocate();
+		set(copy);
+	}
+
+	protected void set(PrepareDispense3_10 copy) {
+		action.set(copy.getAction());
+	}
+
+	public PrepareDispenseAction getAction() {
+		return action.get();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(getAction()).toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof PrepareDispense3_10) {
+			PrepareDispense3_10 prepareDispense = (PrepareDispense3_10) obj;
+			return new EqualsBuilder().append(getAction(), prepareDispense.getAction()).isEquals();
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).append("action", getAction()).toString();
+	}
 }
