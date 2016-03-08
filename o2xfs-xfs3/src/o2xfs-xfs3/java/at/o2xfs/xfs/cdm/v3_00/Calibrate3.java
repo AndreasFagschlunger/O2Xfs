@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -61,7 +61,7 @@ public class Calibrate3 extends Struct {
 	protected void set(Calibrate3 copy) {
 		number.set(copy.getNumber());
 		numOfBills.set(copy.getNumOfBills());
-		position.pointTo(copy.getPosition());
+		position.pointTo(new Pointer(copy.getPosition()));
 	}
 
 	public int getNumber() {
@@ -73,7 +73,7 @@ public class Calibrate3 extends Struct {
 	}
 
 	public ItemPosition3 getPosition() {
-		return new ItemPosition3(new ItemPosition3(position));
+		return new ItemPosition3(new ItemPosition3(new Pointer(position)));
 	}
 
 	@Override

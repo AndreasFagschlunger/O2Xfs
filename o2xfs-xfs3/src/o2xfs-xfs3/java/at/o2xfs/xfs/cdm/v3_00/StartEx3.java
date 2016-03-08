@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -38,32 +38,32 @@ import at.o2xfs.win32.UShortArray;
 import at.o2xfs.xfs.cdm.ExchangeType;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class Startex3 extends Struct {
+public class StartEx3 extends Struct {
 
 	protected final XfsWord<ExchangeType> exchangeType = new XfsWord<>(ExchangeType.class);
 	protected final USHORT tellerID = new USHORT();
 	protected final USHORT count = new USHORT();
 	protected final Pointer cUNumList = new Pointer();
 
-	protected Startex3() {
+	protected StartEx3() {
 		add(exchangeType);
 		add(tellerID);
 		add(count);
 		add(cUNumList);
 	}
 
-	public Startex3(Pointer p) {
+	public StartEx3(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Startex3(Startex3 copy) {
+	public StartEx3(StartEx3 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Startex3 copy) {
+	protected void set(StartEx3 copy) {
 		exchangeType.set(copy.getExchangeType());
 		tellerID.set(copy.getTellerID());
 		count.set(copy.getCount());
@@ -93,10 +93,10 @@ public class Startex3 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Startex3) {
-			Startex3 startex3 = (Startex3) obj;
-			return new EqualsBuilder().append(getExchangeType(), startex3.getExchangeType()).append(getTellerID(), startex3.getTellerID()).append(getCount(), startex3.getCount())
-					.append(getCUNumList(), startex3.getCUNumList()).isEquals();
+		if (obj instanceof StartEx3) {
+			StartEx3 startEx3 = (StartEx3) obj;
+			return new EqualsBuilder().append(getExchangeType(), startEx3.getExchangeType()).append(getTellerID(), startEx3.getTellerID()).append(getCount(), startEx3.getCount())
+					.append(getCUNumList(), startEx3.getCUNumList()).isEquals();
 		}
 		return false;
 	}
