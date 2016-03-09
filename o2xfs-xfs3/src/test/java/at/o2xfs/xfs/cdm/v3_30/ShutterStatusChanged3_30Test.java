@@ -25,75 +25,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm;
+package at.o2xfs.xfs.cdm.v3_30;
 
-import at.o2xfs.xfs.XfsConstant;
+import static org.junit.Assert.assertEquals;
 
-public enum Reason implements XfsConstant {
+import org.junit.Test;
 
-	/*
-	 * @since v3.00
-	 */
-	DOUBLENOTEDETECTED(1L),
+import at.o2xfs.win32.Buffer;
+import at.o2xfs.xfs.v3_30.BaseXfs3_30Test;
 
-	/*
-	 * @since v3.00
-	 */
-	LONGNOTEDETECTED(2L),
+public class ShutterStatusChanged3_30Test extends BaseXfs3_30Test {
 
-	/*
-	 * @since v3.00
-	 */
-	SKEWEDNOTE(3L),
-
-	/*
-	 * @since v3.00
-	 */
-	INCORRECTCOUNT(4L),
-
-	/*
-	 * @since v3.00
-	 */
-	NOTESTOOCLOSE(5L),
-
-	/*
-	 * @since v3.10
-	 */
-	OTHERNOTEERROR(6L),
-
-	/*
-	 * @since v3.10
-	 */
-	SHORTNOTEDETECTED(7L),
-
-	/*
-	 * @since v3.30
-	 */
-	IRRETRACTFAILURE(1L),
-
-	/*
-	 * @since v3.30
-	 */
-	IRRETRACTAREAFULL(2L),
-
-	/*
-	 * @since v3.30
-	 */
-	IRFOREIGNITEMSDETECTED(3L),
-
-	/*
-	 * @since v3.30
-	 */
-	IRINVALIDBUNCH(4L);
-
-	private final long value;
-
-	private Reason(final long value) {
-		this.value = value;
+	@Test
+	public final void test() {
+		ShutterStatusChanged3_30 expected = new ShutterStatusChanged3_30(buildShutterStatusChanged3_30().getPointer());
+		ShutterStatusChanged3_30 actual = new ShutterStatusChanged3_30(expected);
+		System.out.println(actual);
+		assertEquals(expected, actual);
 	}
 
-	@Override
-	public long getValue() {
-		return value;
-	}
+	private native Buffer buildShutterStatusChanged3_30();
 }

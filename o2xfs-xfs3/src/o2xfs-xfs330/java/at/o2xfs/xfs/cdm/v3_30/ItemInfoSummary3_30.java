@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_20;
+package at.o2xfs.xfs.cdm.v3_30;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,57 +34,59 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
+import at.o2xfs.xfs.cdm.Level;
+import at.o2xfs.xfs.win32.XfsWord;
 
-public class ItemNumberList3_20 extends Struct {
+public class ItemInfoSummary3_30 extends Struct {
 
-	protected final USHORT numOfItemNumbers = new USHORT();
-	protected final Pointer itemNumber = new Pointer();
+	protected final XfsWord<Level> level = new XfsWord<>(Level.class);
+	protected final USHORT numOfItems = new USHORT();
 
-	public ItemNumberList3_20() {
-		add(numOfItemNumbers);
-		add(itemNumber);
+	protected ItemInfoSummary3_30() {
+		add(level);
+		add(numOfItems);
 	}
 
-	public ItemNumberList3_20(Pointer p) {
+	public ItemInfoSummary3_30(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemNumberList3_20(ItemNumberList3_20 copy) {
+	public ItemInfoSummary3_30(ItemInfoSummary3_30 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	public void set(ItemNumberList3_20 copy) {
-		numOfItemNumbers.set(copy.getNumOfItemNumbers());
-		itemNumber.pointTo(new ItemNumbers3_20(copy.getItemNumber()));
+	protected void set(ItemInfoSummary3_30 copy) {
+		level.set(copy.getLevel());
+		numOfItems.set(copy.getNumOfItems());
 	}
 
-	public int getNumOfItemNumbers() {
-		return numOfItemNumbers.get();
+	public Level getLevel() {
+		return level.get();
 	}
 
-	public ItemNumber3_20[] getItemNumber() {
-		return new ItemNumbers3_20(itemNumber, getNumOfItemNumbers()).get();
+	public int getNumOfItems() {
+		return numOfItems.get();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getNumOfItemNumbers()).append(getItemNumber()).toHashCode();
+		return new HashCodeBuilder().append(getLevel()).append(getNumOfItems()).toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemNumberList3_20) {
-			ItemNumberList3_20 itemNumberList = (ItemNumberList3_20) obj;
-			return new EqualsBuilder().append(getNumOfItemNumbers(), itemNumberList.getNumOfItemNumbers()).append(getItemNumber(), itemNumberList.getItemNumber()).isEquals();
+		if (obj instanceof ItemInfoSummary3_30) {
+			ItemInfoSummary3_30 itemInfoSummary = (ItemInfoSummary3_30) obj;
+			return new EqualsBuilder().append(getLevel(), itemInfoSummary.getLevel()).append(getNumOfItems(), itemInfoSummary.getNumOfItems()).isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("numOfItemNumbers", getNumOfItemNumbers()).append("itemNumber", getItemNumber()).toString();
+		return new ToStringBuilder(this).append("level", getLevel()).append("numOfItems", getNumOfItems()).toString();
 	}
 }

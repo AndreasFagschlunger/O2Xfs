@@ -13,10 +13,12 @@ task 'javah-xf3'(type:Exec) {
                 '-d',
                 file('src/o2xfs-xfs3-test.dll/headers'),
                 'at.o2xfs.xfs.cdm.v3_00.Calibrate3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CashUnitError3Test',
                 'at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3Test',
                 'at.o2xfs.xfs.cdm.v3_00.CdmCaps3Test',
                 'at.o2xfs.xfs.cdm.v3_00.CdmStatus3Test',
                 'at.o2xfs.xfs.cdm.v3_00.Count3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CountsChanged3Test',
                 'at.o2xfs.xfs.cdm.v3_00.CurrencyExp3Test',
                 'at.o2xfs.xfs.cdm.v3_00.Dispense3Test',
                 'at.o2xfs.xfs.cdm.v3_00.MixTable3Test',
@@ -33,8 +35,11 @@ task 'javah-xf310'(type:Exec) {
                 '-d',
                 file('src/o2xfs-xfs310-test.dll/headers'),
                 'at.o2xfs.xfs.cdm.v3_10.CashUnit3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.CashUnitError3_10Test',
                 'at.o2xfs.xfs.cdm.v3_10.CdmCaps3_10Test',
                 'at.o2xfs.xfs.cdm.v3_10.CdmStatus3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.DevicePosition3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.PowerSaveChange3_10Test',
                 'at.o2xfs.xfs.cdm.v3_10.PowerSaveControl3_10Test',
                 'at.o2xfs.xfs.cdm.v3_10.PrepareDispense3_10Test',
                 'at.o2xfs.xfs.cdm.v3_10.SetGuidLight3_10Test'
@@ -59,6 +64,9 @@ task 'javah-xf330'(type:Exec) {
                 file('src/o2xfs-xfs330-test.dll/headers'),
                 'at.o2xfs.xfs.cdm.v3_30.Blacklist3_30Test',
                 'at.o2xfs.xfs.cdm.v3_30.CdmCaps3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.IncompleteRetract3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.ItemInfoSummary3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.ShutterStatusChanged3_30Test',
                 'at.o2xfs.xfs.cdm.v3_30.SynchronizeCommand3_30Test'
 }
 

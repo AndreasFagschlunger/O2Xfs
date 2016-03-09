@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_20;
+package at.o2xfs.xfs.cdm.v3_00;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,57 +34,58 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
+import at.o2xfs.win32.UShortArray;
 
-public class ItemNumberList3_20 extends Struct {
+public class CountsChanged3 extends Struct {
 
-	protected final USHORT numOfItemNumbers = new USHORT();
-	protected final Pointer itemNumber = new Pointer();
+	protected final USHORT count = new USHORT();
+	protected final Pointer lpusCUNumList = new Pointer();
 
-	public ItemNumberList3_20() {
-		add(numOfItemNumbers);
-		add(itemNumber);
+	protected CountsChanged3() {
+		add(count);
+		add(lpusCUNumList);
 	}
 
-	public ItemNumberList3_20(Pointer p) {
+	public CountsChanged3(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemNumberList3_20(ItemNumberList3_20 copy) {
+	public CountsChanged3(CountsChanged3 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	public void set(ItemNumberList3_20 copy) {
-		numOfItemNumbers.set(copy.getNumOfItemNumbers());
-		itemNumber.pointTo(new ItemNumbers3_20(copy.getItemNumber()));
+	protected void set(CountsChanged3 copy) {
+		count.set(copy.getCount());
+		lpusCUNumList.pointTo(new UShortArray(copy.getCUNumList()));
 	}
 
-	public int getNumOfItemNumbers() {
-		return numOfItemNumbers.get();
+	public int getCount() {
+		return count.get();
 	}
 
-	public ItemNumber3_20[] getItemNumber() {
-		return new ItemNumbers3_20(itemNumber, getNumOfItemNumbers()).get();
+	public int[] getCUNumList() {
+		return new UShortArray(lpusCUNumList, getCount()).get();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getNumOfItemNumbers()).append(getItemNumber()).toHashCode();
+		return new HashCodeBuilder().append(getCount()).append(getCUNumList()).toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemNumberList3_20) {
-			ItemNumberList3_20 itemNumberList = (ItemNumberList3_20) obj;
-			return new EqualsBuilder().append(getNumOfItemNumbers(), itemNumberList.getNumOfItemNumbers()).append(getItemNumber(), itemNumberList.getItemNumber()).isEquals();
+		if (obj instanceof CountsChanged3) {
+			CountsChanged3 countsChanged = (CountsChanged3) obj;
+			return new EqualsBuilder().append(getCount(), countsChanged.getCount()).append(getCUNumList(), countsChanged.getCUNumList()).isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("numOfItemNumbers", getNumOfItemNumbers()).append("itemNumber", getItemNumber()).toString();
+		return new ToStringBuilder(this).append("count", getCount()).append("cUNumList", getCUNumList()).toString();
 	}
 }

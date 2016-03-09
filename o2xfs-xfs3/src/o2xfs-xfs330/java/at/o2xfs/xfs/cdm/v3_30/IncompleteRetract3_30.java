@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_20;
+package at.o2xfs.xfs.cdm.v3_30;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,58 +33,60 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
-import at.o2xfs.win32.USHORT;
+import at.o2xfs.xfs.cdm.IncompleteRetractReason;
+import at.o2xfs.xfs.cdm.v3_20.ItemNumberList3_20;
+import at.o2xfs.xfs.win32.XfsWord;
 
-public class ItemNumberList3_20 extends Struct {
+public class IncompleteRetract3_30 extends Struct {
 
-	protected final USHORT numOfItemNumbers = new USHORT();
-	protected final Pointer itemNumber = new Pointer();
+	protected final ItemNumberList3_20 itemNumberList = new ItemNumberList3_20();
+	protected final XfsWord<IncompleteRetractReason> reason = new XfsWord<>(IncompleteRetractReason.class);
 
-	public ItemNumberList3_20() {
-		add(numOfItemNumbers);
-		add(itemNumber);
+	protected IncompleteRetract3_30() {
+		add(itemNumberList);
+		add(reason);
 	}
 
-	public ItemNumberList3_20(Pointer p) {
+	public IncompleteRetract3_30(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemNumberList3_20(ItemNumberList3_20 copy) {
+	public IncompleteRetract3_30(IncompleteRetract3_30 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	public void set(ItemNumberList3_20 copy) {
-		numOfItemNumbers.set(copy.getNumOfItemNumbers());
-		itemNumber.pointTo(new ItemNumbers3_20(copy.getItemNumber()));
+	protected void set(IncompleteRetract3_30 copy) {
+		itemNumberList.set(copy.getItemNumberList());
+		reason.set(copy.getReason());
 	}
 
-	public int getNumOfItemNumbers() {
-		return numOfItemNumbers.get();
+	public ItemNumberList3_20 getItemNumberList() {
+		return new ItemNumberList3_20(itemNumberList);
 	}
 
-	public ItemNumber3_20[] getItemNumber() {
-		return new ItemNumbers3_20(itemNumber, getNumOfItemNumbers()).get();
+	public IncompleteRetractReason getReason() {
+		return reason.get();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getNumOfItemNumbers()).append(getItemNumber()).toHashCode();
+		return new HashCodeBuilder().append(getItemNumberList()).append(getReason()).toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemNumberList3_20) {
-			ItemNumberList3_20 itemNumberList = (ItemNumberList3_20) obj;
-			return new EqualsBuilder().append(getNumOfItemNumbers(), itemNumberList.getNumOfItemNumbers()).append(getItemNumber(), itemNumberList.getItemNumber()).isEquals();
+		if (obj instanceof IncompleteRetract3_30) {
+			IncompleteRetract3_30 incompleteRetract = (IncompleteRetract3_30) obj;
+			return new EqualsBuilder().append(getItemNumberList(), incompleteRetract.getItemNumberList()).append(getReason(), incompleteRetract.getReason()).isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("numOfItemNumbers", getNumOfItemNumbers()).append("itemNumber", getItemNumber()).toString();
+		return new ToStringBuilder(this).append("itemNumberList", getItemNumberList()).append("reason", getReason()).toString();
 	}
 }

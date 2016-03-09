@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * 
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- *
+ * 
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_20;
+package at.o2xfs.xfs.cdm.v3_30;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,58 +33,60 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
-import at.o2xfs.win32.USHORT;
+import at.o2xfs.xfs.cdm.Position;
+import at.o2xfs.xfs.cdm.Shutter;
+import at.o2xfs.xfs.win32.XfsWord;
 
-public class ItemNumberList3_20 extends Struct {
+public class ShutterStatusChanged3_30 extends Struct {
 
-	protected final USHORT numOfItemNumbers = new USHORT();
-	protected final Pointer itemNumber = new Pointer();
+	protected final XfsWord<Position> position = new XfsWord<>(Position.class);
+	protected final XfsWord<Shutter> shutter = new XfsWord<>(Shutter.class);
 
-	public ItemNumberList3_20() {
-		add(numOfItemNumbers);
-		add(itemNumber);
+	protected ShutterStatusChanged3_30() {
+		add(position);
+		add(shutter);
 	}
 
-	public ItemNumberList3_20(Pointer p) {
+	public ShutterStatusChanged3_30(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemNumberList3_20(ItemNumberList3_20 copy) {
+	public ShutterStatusChanged3_30(ShutterStatusChanged3_30 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	public void set(ItemNumberList3_20 copy) {
-		numOfItemNumbers.set(copy.getNumOfItemNumbers());
-		itemNumber.pointTo(new ItemNumbers3_20(copy.getItemNumber()));
+	protected void set(ShutterStatusChanged3_30 copy) {
+		position.set(copy.getPosition());
+		shutter.set(copy.getShutter());
 	}
 
-	public int getNumOfItemNumbers() {
-		return numOfItemNumbers.get();
+	public Position getPosition() {
+		return position.get();
 	}
 
-	public ItemNumber3_20[] getItemNumber() {
-		return new ItemNumbers3_20(itemNumber, getNumOfItemNumbers()).get();
+	public Shutter getShutter() {
+		return shutter.get();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getNumOfItemNumbers()).append(getItemNumber()).toHashCode();
+		return new HashCodeBuilder().append(getPosition()).append(getShutter()).toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemNumberList3_20) {
-			ItemNumberList3_20 itemNumberList = (ItemNumberList3_20) obj;
-			return new EqualsBuilder().append(getNumOfItemNumbers(), itemNumberList.getNumOfItemNumbers()).append(getItemNumber(), itemNumberList.getItemNumber()).isEquals();
+		if (obj instanceof ShutterStatusChanged3_30) {
+			ShutterStatusChanged3_30 shutterStatusChanged = (ShutterStatusChanged3_30) obj;
+			return new EqualsBuilder().append(getPosition(), shutterStatusChanged.getPosition()).append(getShutter(), shutterStatusChanged.getShutter()).isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("numOfItemNumbers", getNumOfItemNumbers()).append("itemNumber", getItemNumber()).toString();
+		return new ToStringBuilder(this).append("position", getPosition()).append("shutter", getShutter()).toString();
 	}
 }
