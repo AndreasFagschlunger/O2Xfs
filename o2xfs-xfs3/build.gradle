@@ -62,9 +62,13 @@ task 'javah-xf330'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs330-test.dll/headers'),
+                'at.o2xfs.xfs.cdm.v3_30.AllItemsInfo3_30Test',
                 'at.o2xfs.xfs.cdm.v3_30.Blacklist3_30Test',
                 'at.o2xfs.xfs.cdm.v3_30.CdmCaps3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.GetAllItemsInfo3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.GetItemInfo3_30Test',
                 'at.o2xfs.xfs.cdm.v3_30.IncompleteRetract3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.ItemInfo3_30Test',
                 'at.o2xfs.xfs.cdm.v3_30.ItemInfoSummary3_30Test',
                 'at.o2xfs.xfs.cdm.v3_30.ShutterStatusChanged3_30Test',
                 'at.o2xfs.xfs.cdm.v3_30.SynchronizeCommand3_30Test'
