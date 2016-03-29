@@ -27,7 +27,6 @@
 
 package at.o2xfs.win32;
 
-
 /**
  * A 16-bit unsigned integer (range: 0 through 65535 decimal).
  *
@@ -35,8 +34,7 @@ package at.o2xfs.win32;
  *
  * @author Andreas Fagschlunger
  */
-public class USHORT
-		extends NumberType<Integer> {
+public class USHORT extends NumberType<Integer> {
 
 	public static final int MIN_VALUE = 0;
 
@@ -50,6 +48,11 @@ public class USHORT
 		this();
 		allocate();
 		set(value);
+	}
+
+	public USHORT(Pointer p) {
+		this();
+		assignBuffer(p);
 	}
 
 	public void set(USHORT value) {

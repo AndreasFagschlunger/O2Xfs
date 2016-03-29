@@ -84,6 +84,14 @@ public class XfsVersion implements Comparable<XfsVersion> {
 		minorVersion = (version >>> 8 & 0xFF);
 	}
 
+	public int getMajorVersion() {
+		return majorVersion;
+	}
+
+	public int getMinorVersion() {
+		return minorVersion;
+	}
+
 	public int intValue() {
 		int v = 0;
 		v |= minorVersion;

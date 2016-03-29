@@ -64,6 +64,7 @@ public class XfsWord<T extends Enum<T> & XfsConstant> extends NumberType<T> {
 	public static final <T extends Enum<T> & XfsConstant> XfsWord<T> valueOf(T value) {
 		@SuppressWarnings("unchecked")
 		XfsWord<T> result = new XfsWord<>((Class<T>) value.getClass());
+		result.allocate();
 		result.set(value);
 		return result;
 	}

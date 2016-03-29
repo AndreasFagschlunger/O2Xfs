@@ -51,6 +51,11 @@ public class UINT extends NumberType<Long> {
 		assignBuffer(aBuffer);
 	}
 
+	public UINT(Pointer p) {
+		this();
+		assignBuffer(p);
+	}
+
 	public void set(UINT value) {
 		set(value.longValue());
 	}

@@ -18,7 +18,7 @@ public class XfsData extends BaseType implements ValueType<byte[]> {
 
 	public XfsData(Pointer p, int length) {
 		this(length);
-		assignBuffer(p.buffer(getSize()));
+		assignBuffer(p);
 	}
 
 	@Override

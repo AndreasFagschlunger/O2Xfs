@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -27,6 +27,9 @@
 
 package at.o2xfs.xfs.cdm.v3_00;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -40,6 +43,37 @@ import at.o2xfs.xfs.win32.XfsUIntArray;
 
 public class Denomination3 extends Struct {
 
+	public static class Builder {
+		private char[] currencyID = new char[] { ' ', ' ', ' ' };
+		private long amount = 0L;
+		private Optional<long[]> values = Optional.empty();
+		private long cashBox = 0L;
+
+		public Builder currencyID(char[] currencyID) {
+			this.currencyID = Arrays.copyOf(currencyID, currencyID.length);
+			return this;
+		}
+
+		public Builder amount(long amount) {
+			this.amount = amount;
+			return this;
+		}
+
+		public Builder values(long values[]) {
+			this.values = Optional.of(Arrays.copyOf(values, values.length));
+			return this;
+		}
+
+		public Builder cashBox(long cashBox) {
+			this.cashBox = cashBox;
+			return this;
+		}
+
+		public Denomination3 build() {
+			return new Denomination3(this);
+		}
+	}
+
 	protected final XfsCharArray currencyID = new XfsCharArray(3);
 	protected final ULONG amount = new ULONG();
 	protected final USHORT count = new USHORT();
@@ -52,6 +86,18 @@ public class Denomination3 extends Struct {
 		add(count);
 		add(values);
 		add(cashBox);
+	}
+
+	public Denomination3(Builder builder) {
+		this();
+		allocate();
+		currencyID.set(builder.currencyID);
+		amount.set(builder.amount);
+		count.set(values.getSize());
+		if (builder.values.isPresent()) {
+			values.pointTo(new XfsUIntArray(builder.values.get()));
+		}
+		cashBox.set(builder.cashBox);
 	}
 
 	public Denomination3(Pointer p) {
@@ -69,8 +115,9 @@ public class Denomination3 extends Struct {
 		currencyID.set(copy.getCurrencyID());
 		amount.set(copy.getAmount());
 		count.set(copy.getCount());
-		if (!Pointer.NULL.equals(copy.values)) {
-			values.pointTo(new XfsUIntArray(copy.getValues()));
+		Optional<long[]> values = copy.getValues();
+		if (values.isPresent()) {
+			this.values.pointTo(new XfsUIntArray(values.get()));
 		}
 		cashBox.set(copy.getCashBox());
 	}
@@ -87,8 +134,12 @@ public class Denomination3 extends Struct {
 		return count.get();
 	}
 
-	public long[] getValues() {
-		return new XfsUIntArray(values, getCount()).get();
+	public Optional<long[]> getValues() {
+		Optional<long[]> result = Optional.empty();
+		if (!Pointer.NULL.equals(values)) {
+			result = Optional.of(new XfsUIntArray(values, getCount()).get());
+		}
+		return result;
 	}
 
 	public long getCashBox() {
@@ -105,14 +156,15 @@ public class Denomination3 extends Struct {
 		if (obj instanceof Denomination3) {
 			Denomination3 denomination3 = (Denomination3) obj;
 			return new EqualsBuilder().append(getCurrencyID(), denomination3.getCurrencyID()).append(getAmount(), denomination3.getAmount())
-					.append(getCount(), denomination3.getCount()).append(getValues(), denomination3.getValues()).append(getCashBox(), denomination3.getCashBox()).isEquals();
+					.append(getCount(), denomination3.getCount()).append(getValues().orElse(null), denomination3.getValues().orElse(null))
+					.append(getCashBox(), denomination3.getCashBox()).isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("currencyID", getCurrencyID()).append("amount", getAmount()).append("count", getCount()).append("values", getValues())
+		return new ToStringBuilder(this).append("currencyID", getCurrencyID()).append("amount", getAmount()).append("count", getCount()).append("values", getValues().orElse(null))
 				.append("cashBox", getCashBox()).toString();
 	}
 }

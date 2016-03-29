@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -40,6 +40,44 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class Dispense3 extends Struct {
 
+	public static class Builder {
+
+		private int tellerID = 0;
+		private int mixNumber = 0;
+		private Position position = Position.NULL;
+		private boolean present = false;
+		private Denomination3 denomination = null;
+
+		public Builder tellerID(int tellerID) {
+			this.tellerID = tellerID;
+			return this;
+		}
+
+		public Builder mixNumber(int mixNumber) {
+			this.mixNumber = mixNumber;
+			return this;
+		}
+
+		public Builder position(Position position) {
+			this.position = position;
+			return this;
+		}
+
+		public Builder present(boolean present) {
+			this.present = present;
+			return this;
+		}
+
+		public Builder denomination(Denomination3 denomination) {
+			this.denomination = denomination;
+			return this;
+		}
+
+		public Dispense3 build() {
+			return new Dispense3(this);
+		}
+	}
+
 	protected final USHORT tellerID = new USHORT();
 	protected final USHORT mixNumber = new USHORT();
 	protected final XfsWord<Position> position = new XfsWord<>(Position.class);
@@ -52,6 +90,16 @@ public class Dispense3 extends Struct {
 		add(position);
 		add(present);
 		add(denomination);
+	}
+
+	protected Dispense3(Builder builder) {
+		this();
+		allocate();
+		tellerID.set(builder.tellerID);
+		mixNumber.set(builder.mixNumber);
+		position.set(builder.position);
+		present.set(builder.present);
+		denomination.pointTo(builder.denomination);
 	}
 
 	public Dispense3(Pointer p) {

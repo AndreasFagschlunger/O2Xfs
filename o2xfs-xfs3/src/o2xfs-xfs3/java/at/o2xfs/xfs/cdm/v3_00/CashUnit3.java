@@ -37,12 +37,15 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
+import at.o2xfs.xfs.cdm.CashUnitStatus;
+import at.o2xfs.xfs.cdm.CashUnitType;
 import at.o2xfs.xfs.win32.XfsCharArray;
+import at.o2xfs.xfs.win32.XfsWord;
 
 public class CashUnit3 extends Struct {
 
 	protected final USHORT number = new USHORT();
-	protected final USHORT type = new USHORT();
+	protected final XfsWord<CashUnitType> type = new XfsWord<>(CashUnitType.class);
 	protected final LPSTR cashUnitName = new LPSTR();
 	protected final XfsCharArray unitID = new XfsCharArray(5);
 	protected final XfsCharArray currencyID = new XfsCharArray(3);
@@ -53,7 +56,7 @@ public class CashUnit3 extends Struct {
 	protected final ULONG minimum = new ULONG();
 	protected final ULONG maximum = new ULONG();
 	protected final BOOL appLock = new BOOL();
-	protected final USHORT status = new USHORT();
+	protected final XfsWord<CashUnitStatus> status = new XfsWord<>(CashUnitStatus.class);
 	protected final USHORT numPhysicalCUs = new USHORT();
 	protected final Pointer physical = new Pointer();
 
@@ -104,7 +107,7 @@ public class CashUnit3 extends Struct {
 		return number.get();
 	}
 
-	public int getType() {
+	public CashUnitType getType() {
 		return type.get();
 	}
 
@@ -112,15 +115,11 @@ public class CashUnit3 extends Struct {
 		return cashUnitName.get();
 	}
 
-	public char[] getUnitID()
-
-	{
+	public char[] getUnitID() {
 		return unitID.get();
 	}
 
-	public char[] getCurrencyID()
-
-	{
+	public char[] getCurrencyID() {
 		return currencyID.get();
 	}
 
@@ -152,7 +151,7 @@ public class CashUnit3 extends Struct {
 		return appLock.get();
 	}
 
-	public int getStatus() {
+	public CashUnitStatus getStatus() {
 		return status.get();
 	}
 
