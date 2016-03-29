@@ -1,33 +1,14 @@
-plugins {
-    id 'jvm-component'
-    id 'java-lang'
-    id 'junit-test-suite'
+dependencies {
+    compile project(':at.o2xfs.common'),
+            project(':at.o2xfs.log'),
+            libraries.commons_lang3
+    testCompile libraries.junit
 }
 
-model {
-    components {
-        'at.o2xfs.emv'(JvmLibrarySpec) {
-            sources {
-                java {
-                    source.srcDir 'src/main/java'
-                }
-                resources {
-                    source.srcDir 'src/main/resources'
-                }
-            }
-            api {
-                dependencies {
-                    project ':at.o2xfs.common' library 'at.o2xfs.common'
-                    project ':at.o2xfs.log' library 'at.o2xfs.log'
-                    module libraries.commons_lang3
-                }
-            }
-        }
-    }
-    testSuites {
-        test(JUnitTestSuiteSpec) {
-            jUnitVersion libraries.jUnitVersion
-            testing $.components.get('at.o2xfs.emv')
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
         }
     }
 }

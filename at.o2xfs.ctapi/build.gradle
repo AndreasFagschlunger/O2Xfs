@@ -1,10 +1,12 @@
-plugins {
-    id 'jvm-component'
-    id 'java-lang'
-}
-
 apply plugin: 'cpp'
 apply plugin: 'windows-resources'
+
+dependencies {
+    compile project(':at.o2xfs.win32')
+    testCompile libraries.junit
+    debugDll project(path: ':at.o2xfs.win32', configuration: 'debugDll')
+    releaseDll project(path: ':at.o2xfs.win32', configuration: 'releaseDll')
+}
 
 model {
     repositories {
@@ -17,17 +19,6 @@ model {
     }
 
     components {
-        'at.o2xfs.ctapi'(JvmLibrarySpec) {
-            sources {
-                java {
-                    source.srcDir 'src/main/java'
-                }
-            }
-            dependencies {
-                project ':at.o2xfs.win32'
-            }
-        }
-
         'at.o2xfs.ctapi.dll'(NativeLibrarySpec) {
             binaries.all {
                 lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
@@ -37,6 +28,14 @@ model {
                 rcCompiler.define "COMMA_VERSION=0,0,0,0"
                 rcCompiler.define "ORG_FILENAME="
             }
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
         }
     }
 }

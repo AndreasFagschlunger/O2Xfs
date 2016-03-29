@@ -1,10 +1,17 @@
-plugins {
-    id 'jvm-component'
-    id 'java-lang'
-}
-
 apply plugin: 'cpp'
 apply plugin: 'windows-resources'
+
+dependencies {
+    compile project(':at.o2xfs.win32')
+    testCompile libraries.junit
+    debugDll project(path: ':at.o2xfs.win32', configuration: 'debugDll')
+    releaseDll project(path: ':at.o2xfs.win32', configuration: 'releaseDll'),
+               files('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.dll')
+}
+
+test {
+    systemProperty 'java.library.path', configurations.releaseDll.collect { it.parentFile.absolutePath }.join(';') + ';' + file('build/libs/at.o2xfs.xfs.dll/shared/release').absolutePath
+}
 
 def findXfsSdk() {
     def xfsSdk = 'C:/Program Files (x86)/Common Files/XFS/SDK'
@@ -50,19 +57,6 @@ model {
     }
 
     components {
-        'at.o2xfs.xfs'(JvmLibrarySpec) {
-            sources {
-                java {
-                    source.srcDir 'src/main/java'
-                }
-            }
-            api {
-                dependencies {
-                    project ':at.o2xfs.win32'
-                }
-            }
-        }
-
         'at.o2xfs.xfs.dll'(NativeLibrarySpec) {
             binaries.all {
                 lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
@@ -99,5 +93,20 @@ model {
                 rcCompiler.define "ORG_FILENAME="
             }
         }        
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact(file('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.dll')) {
+            }
+            artifact(file('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.exp')) {
+            }
+            artifact(file('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.lib')) {
+            }
+        }
     }
 }

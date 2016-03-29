@@ -1,23 +1,11 @@
-plugins {
-    id 'jvm-component'
-    id 'java-lang'
-    id 'junit-test-suite'
+dependencies {
+    testCompile libraries.junit
 }
 
-model {
-    components {
-        'at.o2xfs.common'(JvmLibrarySpec) {
-            sources {
-                java {
-                    source.srcDir 'src/main/java'
-                }
-            }
-        }
-    }
-    testSuites {
-        test(JUnitTestSuiteSpec) {
-            jUnitVersion libraries.jUnitVersion
-            testing $.components.get('at.o2xfs.common')
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
         }
     }
 }

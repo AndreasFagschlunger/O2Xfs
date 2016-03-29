@@ -1,21 +1,14 @@
-plugins {
-    id 'jvm-component'
-    id 'java-lang'
+dependencies {
+    compile project(':o2xfs-xfs3')
+    testCompile libraries.junit
+    debugDll project(path: ':at.o2xfs.xfs', configuration: 'debugDll')
+    releaseDll project(path: ':at.o2xfs.xfs', configuration: 'releaseDll')
 }
 
-model {
-    components {
-        'at.o2xfs.xfs.service'(JvmLibrarySpec) {
-            sources {
-                java {
-                    source.srcDir 'src/main/java'
-                }
-            }
-            api {
-                dependencies {
-                    project ':at.o2xfs.xfs'
-                }
-            }
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
         }
     }
 }

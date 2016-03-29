@@ -1,13 +1,39 @@
-plugins {
-    id 'jvm-component'
-    id 'java-lang'
-}
-
 apply plugin: 'cpp'
 apply plugin: 'visual-studio'
 apply plugin: 'windows-resources'
 
+dependencies {
+    compile project(':at.o2xfs.log'),
+            project(':at.o2xfs.common'),
+            libraries.commons_lang3
+    testCompile libraries.junit
+    debugDll files('build/libs/at.o2xfs.win32.dll/shared/debug/at.o2xfs.win32.dll')
+    releaseDll files('build/libs/at.o2xfs.win32.dll/shared/release/at.o2xfs.win32.dll')
+}
+
+test {
+    systemProperty 'java.library.path', file('build/libs/at.o2xfs.win32.dll/shared/release').absolutePath
+}
+
 model {
+    buildTypes {
+        debug
+        release
+    }
+
+    binaries {
+        all {
+            if (toolChain in Gcc && buildType == buildTypes.debug) {
+                cppCompiler.args "-g"
+            }
+            if (toolChain in VisualCpp && buildType == buildTypes.debug) {
+                cppCompiler.args '/Zi'
+                cppCompiler.define 'DEBUG'
+                linker.args '/DEBUG'
+            }
+        }
+    }
+
     repositories {
         libs(PrebuiltLibraries) {
             jni {
@@ -18,21 +44,6 @@ model {
     }
 
     components {
-        'at.o2xfs.win32'(JvmLibrarySpec) {
-            sources {
-                java {
-                    source.srcDir 'src/main/java'
-                }
-            }
-            api {
-                dependencies {
-                    project ':at.o2xfs.common' library 'at.o2xfs.common'
-                    project ':at.o2xfs.log' library 'at.o2xfs.log'
-                    module libraries.commons_lang3
-                }
-            }
-        }
-
         'at.o2xfs.win32.dll'(NativeLibrarySpec) {
 
             binaries.all {
@@ -41,6 +52,17 @@ model {
                 rcCompiler.define "FILE_VERSION=\"0.0\""
                 rcCompiler.define "COMMA_VERSION=0,0,0,0"
                 rcCompiler.define "ORG_FILENAME="
+            }
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact(file('build/libs/at.o2xfs.win32.dll/shared/release/at.o2xfs.win32.dll')) {
             }
         }
     }

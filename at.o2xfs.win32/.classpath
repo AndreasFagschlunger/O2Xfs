@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared/release"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src/test/java"/>

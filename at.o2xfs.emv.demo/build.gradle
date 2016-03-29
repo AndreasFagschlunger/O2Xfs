@@ -1,20 +1,14 @@
-plugins {
-    id 'jvm-component'
-    id 'java-lang'
+dependencies {
+    compile project(':at.o2xfs.emv'),
+            project(':at.o2xfs.ctapi')
+    testCompile project(':emv-icc-sim'),
+                libraries.junit
 }
 
-model {
-    components {
-        'at.o2xfs.emv.demo'(JvmLibrarySpec) {
-            sources {
-                java {
-                    source.srcDir 'src/main/java'
-                }
-            }
-            dependencies {
-                project ':at.o2xfs.ctapi'
-                project ':at.o2xfs.emv' library 'at.o2xfs.emv'
-            }
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
         }
     }
 }

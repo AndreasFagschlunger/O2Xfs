@@ -1,8 +1,3 @@
-plugins {
-    id 'jvm-component'
-    id 'java-lang'
-}
-
 apply plugin: 'cpp'
 apply plugin: 'visual-studio'
 
@@ -20,6 +15,7 @@ task 'javah-xf3'(type:Exec) {
                 'at.o2xfs.xfs.cdm.v3_00.Count3Test',
                 'at.o2xfs.xfs.cdm.v3_00.CountsChanged3Test',
                 'at.o2xfs.xfs.cdm.v3_00.CurrencyExp3Test',
+                'at.o2xfs.xfs.cdm.v3_00.Denominate3Test',
                 'at.o2xfs.xfs.cdm.v3_00.Dispense3Test',
                 'at.o2xfs.xfs.cdm.v3_00.MixTable3Test',
                 'at.o2xfs.xfs.cdm.v3_00.MixType3Test',
@@ -81,6 +77,33 @@ task javah() {
     tasks.getByName('javah-xf330').execute()
 }
 
+sourceSets {
+    main {
+        java {
+            srcDir 'src/o2xfs-xfs3/java'
+        }
+        java {
+            srcDir 'src/o2xfs-xfs310/java'
+        }
+        java {
+            srcDir 'src/o2xfs-xfs320/java'
+        }
+        java {
+            srcDir 'src/o2xfs-xfs330/java'
+        }
+    }
+}
+
+dependencies {
+    compile project(':at.o2xfs.xfs')
+    testCompile libraries.junit
+    releaseDll project(path: ':at.o2xfs.xfs', configuration: 'releaseDll')
+}
+
+test {
+    systemProperty 'java.library.path', configurations.releaseDll.collect { it.parentFile.absolutePath }.join(';') + ';' + file('build/libs/o2xfs-xfs3-test.dll/shared').absolutePath + ';' + file('build/libs/o2xfs-xfs310-test.dll/shared').absolutePath + ';' + file('build/libs/o2xfs-xfs320-test.dll/shared').absolutePath + ';' + file('build/libs/o2xfs-xfs330-test.dll/shared').absolutePath
+}
+
 model {
     binaries {
         withType(SharedLibraryBinarySpec) {
@@ -113,35 +136,6 @@ model {
     }
 
     components {
-        'o2xfs-xfs3'(JvmLibrarySpec) {
-            api {
-                dependencies {
-                    project ':at.o2xfs.xfs' library 'at.o2xfs.xfs'
-                }
-            }
-        }
-        'o2xfs-xfs310'(JvmLibrarySpec) {
-            api {
-                dependencies {
-                    library 'o2xfs-xfs3'
-                }
-            }
-        }
-        'o2xfs-xfs320'(JvmLibrarySpec) {
-            api {
-                dependencies {
-                    library 'o2xfs-xfs310'
-                }
-            }
-        }
-        'o2xfs-xfs330'(JvmLibrarySpec) {
-            api {
-                dependencies {
-                    library 'o2xfs-xfs320'
-                }
-            }
-        }
-
         'o2xfs-xfs3-test.dll'(NativeLibrarySpec) {
             binaries.all {
                 lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
@@ -168,6 +162,42 @@ model {
                 lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
                 lib library: 'jni', linkage: 'api'
                 lib library: 'xfs330', linkage: 'api'
+            }
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact(file('build/libs/o2xfs-xfs3-test.dll/shared/o2xfs-xfs3-test.dll')) {
+            }
+            artifact(file('build/libs/o2xfs-xfs3-test.dll/shared/o2xfs-xfs3-test.exp')) {
+            }
+            artifact(file('build/libs/o2xfs-xfs3-test.dll/shared/o2xfs-xfs3-test.lib')) {
+            }
+
+            artifact(file('build/libs/o2xfs-xfs310-test.dll/shared/o2xfs-xfs310-test.dll')) {
+            }
+            artifact(file('build/libs/o2xfs-xfs310-test.dll/shared/o2xfs-xfs310-test.exp')) {
+            }
+            artifact(file('build/libs/o2xfs-xfs310-test.dll/shared/o2xfs-xfs310-test.lib')) {
+            }
+
+            artifact(file('build/libs/o2xfs-xfs320-test.dll/shared/o2xfs-xfs320-test.dll')) {
+            }
+            artifact(file('build/libs/o2xfs-xfs320-test.dll/shared/o2xfs-xfs320-test.exp')) {
+            }
+            artifact(file('build/libs/o2xfs-xfs320-test.dll/shared/o2xfs-xfs320-test.lib')) {
+            }
+
+            artifact(file('build/libs/o2xfs-xfs330-test.dll/shared/o2xfs-xfs330-test.dll')) {
+            }
+            artifact(file('build/libs/o2xfs-xfs330-test.dll/shared/o2xfs-xfs330-test.exp')) {
+            }
+            artifact(file('build/libs/o2xfs-xfs330-test.dll/shared/o2xfs-xfs330-test.lib')) {
             }
         }
     }
