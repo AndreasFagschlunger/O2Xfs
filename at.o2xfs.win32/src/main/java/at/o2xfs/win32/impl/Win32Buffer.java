@@ -27,19 +27,22 @@
 
 package at.o2xfs.win32.impl;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.win32.BufferOverflowException;
 
-import java.util.Arrays;
-
-final class Win32Buffer
-		extends Buffer {
+final class Win32Buffer extends Buffer {
 
 	static {
 		System.loadLibrary("at.o2xfs.win32");
 	}
 
 	private static final byte[] NULL = new byte[4];
+
+	private final Set<Buffer> subBuffers = new HashSet<>();
 
 	public Win32Buffer(int size) {
 		super(size);
@@ -88,7 +91,9 @@ final class Win32Buffer
 		} else if (index + size > getSize()) {
 			throw new BufferOverflowException();
 		}
-		return subBuffer0(getAddress(), index, size);
+		Buffer result = subBuffer0(getAddress(), index, size);
+		subBuffers.add(result);
+		return result;
 	}
 
 	private native Buffer subBuffer0(byte[] address, int index, int size);
