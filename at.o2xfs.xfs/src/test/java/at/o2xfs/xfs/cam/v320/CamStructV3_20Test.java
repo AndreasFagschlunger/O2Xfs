@@ -1,10 +1,12 @@
 package at.o2xfs.xfs.cam.v320;
 
-import at.o2xfs.win32.Buffer;
-
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import at.o2xfs.win32.Buffer;
+
+@Ignore
 public class CamStructV3_20Test {
 
 	static {

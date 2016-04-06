@@ -1,12 +1,14 @@
 package at.o2xfs.xfs.v2_00.idc;
 
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import at.o2xfs.xfs.XfsVersion;
 import at.o2xfs.xfs.idc.WFSIDCCAPS;
 import at.o2xfs.xfs.idc.WfsIDCStatus;
 
-import org.junit.Assert;
-import org.junit.Test;
-
+@Ignore
 public class IdcStructsTest {
 
 	@Test

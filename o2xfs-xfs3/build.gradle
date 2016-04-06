@@ -70,7 +70,7 @@ task 'javah-xf330'(type:Exec) {
                 'at.o2xfs.xfs.cdm.v3_30.SynchronizeCommand3_30Test'
 }
 
-task javah() {
+task javah() << {
     tasks.getByName('javah-xf3').execute()
     tasks.getByName('javah-xf310').execute()
     tasks.getByName('javah-xf320').execute()

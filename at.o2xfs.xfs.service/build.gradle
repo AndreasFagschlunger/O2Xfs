@@ -1,3 +1,7 @@
+test {
+    exclude 'at/**'
+} 
+
 dependencies {
     compile project(':o2xfs-xfs3')
     testCompile libraries.junit
