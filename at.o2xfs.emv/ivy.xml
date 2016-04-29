@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info
-        organisation="at.o2xfs"
+        organisation="at.o2xfs.emv"
         module="at.o2xfs.emv"
         status="integration">
 	</info>
@@ -17,8 +17,8 @@
 		<artifact name="at.o2xfs.emv" type="jar" conf="master"/>
 	</publications>
 	<dependencies>
-		<dependency name="at.o2xfs.common" rev="latest.integration" conf="compile->default"/>
-		<dependency name="at.o2xfs.log" rev="latest.integration" conf="compile->default"/>
+		<dependency org="at.o2xfs" name="at.o2xfs.common" rev="latest.integration" conf="compile->default"/>
+		<dependency org="at.o2xfs" name="at.o2xfs.log" rev="latest.integration" conf="compile->default"/>
 		<dependency org="org.apache.commons" name="commons-lang3" rev="${commons-lang3.version}" conf="compile->default"/>
 		<dependency org="junit" name="junit" rev="${junit.version}" conf="test->default"/>
 	</dependencies>

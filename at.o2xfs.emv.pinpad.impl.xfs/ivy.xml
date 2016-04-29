@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info
@@ -6,11 +6,18 @@
         module="at.o2xfs.emv.pinpad.impl.xfs"
         status="integration">
 	</info>
+	<configurations defaultconfmapping="default">
+		<conf name="default" extends="master,runtime"/>
+    	<conf name="master" description="contains the artifact but no dependencies"/>
+    	<conf name="runtime" extends="compile" description="runtime but not the artifact"/>
+    	<conf name="compile"  visibility="private"/>
+    	<conf name="test" visibility="private" />
+	</configurations>
 	<publications>
-		<artifact name="at.o2xfs.emv.pinpad.impl.xfs" type="jar" />
+		<artifact name="at.o2xfs.emv.pinpad.impl.xfs" type="jar" conf="master" />
 	</publications>
 	<dependencies>
-		<dependency name="at.o2xfs.emv" rev="latest.integration" />
+		<dependency org="at.o2xfs.emv" name="at.o2xfs.emv" rev="latest.integration" conf="compile->default" />
 		<dependency name="at.o2xfs.xfs.service" rev="latest.integration" />
 	</dependencies>
 </ivy-module>
