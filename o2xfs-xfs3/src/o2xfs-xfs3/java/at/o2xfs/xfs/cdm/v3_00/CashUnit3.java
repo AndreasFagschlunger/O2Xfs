@@ -49,7 +49,7 @@ public class CashUnit3 extends Struct {
 	protected final LPSTR cashUnitName = new LPSTR();
 	protected final XfsCharArray unitID = new XfsCharArray(5);
 	protected final XfsCharArray currencyID = new XfsCharArray(3);
-	protected final ULONG values = new ULONG();
+	protected final ULONG value = new ULONG();
 	protected final ULONG initialCount = new ULONG();
 	protected final ULONG count = new ULONG();
 	protected final ULONG rejectCount = new ULONG();
@@ -66,7 +66,7 @@ public class CashUnit3 extends Struct {
 		add(cashUnitName);
 		add(unitID);
 		add(currencyID);
-		add(values);
+		add(value);
 		add(initialCount);
 		add(count);
 		add(rejectCount);
@@ -91,7 +91,7 @@ public class CashUnit3 extends Struct {
 		cashUnitName.set(copy.getCashUnitName());
 		unitID.set(copy.getUnitID());
 		currencyID.set(copy.getCurrencyID());
-		values.set(copy.getValues());
+		value.set(copy.getValue());
 		initialCount.set(copy.getInitialCount());
 		count.set(copy.getCount());
 		rejectCount.set(copy.getRejectCount());
@@ -123,8 +123,8 @@ public class CashUnit3 extends Struct {
 		return currencyID.get();
 	}
 
-	public long getValues() {
-		return values.get();
+	public long getValue() {
+		return value.get();
 	}
 
 	public long getInitialCount() {
@@ -165,7 +165,7 @@ public class CashUnit3 extends Struct {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getNumber()).append(getType()).append(getCashUnitName()).append(getUnitID()).append(getCurrencyID()).append(getValues())
+		return new HashCodeBuilder().append(getNumber()).append(getType()).append(getCashUnitName()).append(getUnitID()).append(getCurrencyID()).append(getValue())
 				.append(getInitialCount()).append(getCount()).append(getRejectCount()).append(getMinimum()).append(getMaximum()).append(isAppLock()).append(getStatus())
 				.append(getNumPhysicalCUs()).append(getPhysical()).toHashCode();
 	}
@@ -175,7 +175,7 @@ public class CashUnit3 extends Struct {
 		if (obj instanceof CashUnit3) {
 			CashUnit3 cashUnit3 = (CashUnit3) obj;
 			return new EqualsBuilder().append(getNumber(), cashUnit3.getNumber()).append(getType(), cashUnit3.getType()).append(getCashUnitName(), cashUnit3.getCashUnitName())
-					.append(getUnitID(), cashUnit3.getUnitID()).append(getCurrencyID(), cashUnit3.getCurrencyID()).append(getValues(), cashUnit3.getValues())
+					.append(getUnitID(), cashUnit3.getUnitID()).append(getCurrencyID(), cashUnit3.getCurrencyID()).append(getValue(), cashUnit3.getValue())
 					.append(getInitialCount(), cashUnit3.getInitialCount()).append(getCount(), cashUnit3.getCount()).append(getRejectCount(), cashUnit3.getRejectCount())
 					.append(getMinimum(), cashUnit3.getMinimum()).append(getMaximum(), cashUnit3.getMaximum()).append(isAppLock(), cashUnit3.isAppLock())
 					.append(getStatus(), cashUnit3.getStatus()).append(getNumPhysicalCUs(), cashUnit3.getNumPhysicalCUs()).append(getPhysical(), cashUnit3.getPhysical())
@@ -187,7 +187,7 @@ public class CashUnit3 extends Struct {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("number", getNumber()).append("type", getType()).append("cashUnitName", getCashUnitName()).append("unitID[5]", getUnitID())
-				.append("currencyID[3]", getCurrencyID()).append("values", getValues()).append("initialCount", getInitialCount()).append("count", getCount())
+				.append("currencyID[3]", getCurrencyID()).append("value", getValue()).append("initialCount", getInitialCount()).append("count", getCount())
 				.append("rejectCount", getRejectCount()).append("minimum", getMinimum()).append("maximum", getMaximum()).append("appLock", isAppLock())
 				.append("status", getStatus()).append("numPhysicalCUs", getNumPhysicalCUs()).append("physical", getPhysical()).toString();
 	}
