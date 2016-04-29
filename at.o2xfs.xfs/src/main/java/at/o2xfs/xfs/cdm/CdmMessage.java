@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -34,117 +34,117 @@ public enum CdmMessage implements XfsConstant {
 	/*
 	 * @since v3.00
 	 */
-	SRVE_CDM_SAFEDOOROPEN(301L),
+	SRVE_SAFEDOOROPEN(301L),
 
 	/*
 	 * @since v3.00
 	 */
-	SRVE_CDM_SAFEDOORCLOSED(302L),
+	SRVE_SAFEDOORCLOSED(302L),
 
 	/*
 	 * @since v3.00
 	 */
-	USRE_CDM_CASHUNITTHRESHOLD(303L),
+	USRE_CASHUNITTHRESHOLD(303L),
 
 	/*
 	 * @since v3.00
 	 */
-	SRVE_CDM_CASHUNITINFOCHANGED(304L),
+	SRVE_CASHUNITINFOCHANGED(304L),
 
 	/*
 	 * @since v3.00
 	 */
-	SRVE_CDM_TELLERINFOCHANGED(305L),
+	SRVE_TELLERINFOCHANGED(305L),
 
 	/*
 	 * @since v3.00
 	 */
-	EXEE_CDM_DELAYEDDISPENSE(306L),
+	EXEE_DELAYEDDISPENSE(306L),
 
 	/*
 	 * @since v3.00
 	 */
-	EXEE_CDM_STARTDISPENSE(307L),
+	EXEE_STARTDISPENSE(307L),
 
 	/*
 	 * @since v3.00
 	 */
-	EXEE_CDM_CASHUNITERROR(308L),
+	EXEE_CASHUNITERROR(308L),
 
 	/*
 	 * @since v3.00
 	 */
-	SRVE_CDM_ITEMSTAKEN(309L),
+	SRVE_ITEMSTAKEN(309L),
 
 	/*
 	 * @since v3.00
 	 */
-	EXEE_CDM_PARTIALDISPENSE(310L),
+	EXEE_PARTIALDISPENSE(310L),
 
 	/*
 	 * @since v3.00
 	 */
-	EXEE_CDM_SUBDISPENSEOK(311L),
+	EXEE_SUBDISPENSEOK(311L),
 
 	/*
 	 * @since v3.00
 	 */
-	SRVE_CDM_ITEMSPRESENTED(313L),
+	SRVE_ITEMSPRESENTED(313L),
 
 	/*
 	 * @since v3.00
 	 */
-	SRVE_CDM_COUNTS_CHANGED(314L),
+	SRVE_COUNTS_CHANGED(314L),
 
 	/*
 	 * @since v3.00
 	 */
-	EXEE_CDM_INCOMPLETEDISPENSE(315L),
+	EXEE_INCOMPLETEDISPENSE(315L),
 
 	/*
 	 * @since v3.00
 	 */
-	EXEE_CDM_NOTEERROR(316L),
+	EXEE_NOTEERROR(316L),
 
 	/*
 	 * @since v3.00
 	 */
-	EXEE_CDM_MEDIADETECTED(317L),
+	EXEE_MEDIADETECTED(317L),
 
 	/*
 	 * @since v3.00
 	 */
-	SRVE_CDM_MEDIADETECTED(317L),
+	SRVE_MEDIADETECTED(317L),
 
 	/*
 	 * @since v3.10
 	 */
-	EXEE_CDM_INPUT_P6(318L),
+	EXEE_INPUT_P6(318L),
 
 	/*
 	 * @since v3.10
 	 */
-	SRVE_CDM_DEVICEPOSITION(319L),
+	SRVE_DEVICEPOSITION(319L),
 
 	/*
 	 * @since v3.10
 	 */
-	SRVE_CDM_POWER_SAVE_CHANGE(320L),
+	SRVE_POWER_SAVE_CHANGE(320L),
 
 	/*
 	 * @since v3.30
 	 */
-	EXEE_CDM_INFO_AVAILABLE(321L),
+	EXEE_INFO_AVAILABLE(321L),
 
 	/*
 	 * @since v3.30
 	 */
-	EXEE_CDM_INCOMPLETERETRACT(322L),
+	EXEE_INCOMPLETERETRACT(322L),
 
 	/*
 	 * @since v3.30
 	 */
-	SRVE_CDM_SHUTTERSTATUSCHANGED(323L);
+	SRVE_SHUTTERSTATUSCHANGED(323L);
 
 	private final long value;
 
