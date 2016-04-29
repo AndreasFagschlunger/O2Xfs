@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -40,8 +40,7 @@ import at.o2xfs.xfs.service.pin.cmd.PINStatusCommand;
 
 public class PINStatusTask extends PINServiceTask {
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(PINStatusTask.class);
+	private final static Logger LOG = LoggerFactory.getLogger(PINStatusTask.class);
 
 	private Table table = null;
 
@@ -54,8 +53,8 @@ public class PINStatusTask extends PINServiceTask {
 	}
 
 	@Override
-	protected void doExecute(PINService service) {
-		final String method = "doExecute(PINService)";
+	protected void execute() {
+		String method = "execute()";
 		try {
 			final WFSPINSTATUS pinStatus = new PINStatusCommand(service).call();
 			if (LOG.isInfoEnabled()) {
@@ -66,9 +65,7 @@ public class PINStatusTask extends PINServiceTask {
 			getContent().setUIElement(table);
 		} catch (final XfsException e) {
 			if (LOG.isErrorEnabled()) {
-				LOG.error(method,
-						"Error executing PINStatusCommand for PINService: "
-								+ service, e);
+				LOG.error(method, "Error executing PINStatusCommand for PINService: " + service, e);
 			}
 		}
 	}
@@ -82,8 +79,7 @@ public class PINStatusTask extends PINServiceTask {
 		addRow("DevicePosition", pinStatus.getDevicePosition());
 		addRow("PowerSaveRecoveryTime", pinStatus.getPowerSaveRecoveryTime());
 		addRow("AntiFraudModule", pinStatus.getAntiFraudModule());
-		for (final Map.Entry<String, String> entry : pinStatus.getExtra()
-				.entrySet()) {
+		for (final Map.Entry<String, String> entry : pinStatus.getExtra().entrySet()) {
 			table.addRow(entry.getKey(), entry.getValue());
 		}
 	}

@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -29,6 +29,7 @@ package at.o2xfs.operator.ui.swing;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
@@ -41,8 +42,7 @@ import at.o2xfs.operator.task.TaskManagerListener;
 import at.o2xfs.operator.ui.UserInterface;
 import at.o2xfs.operator.ui.input.InputDevice;
 
-public class SwingUI implements UserInterface, SwingUIConfigKey,
-		TaskManagerListener {
+public class SwingUI implements UserInterface, SwingUIConfigKey, TaskManagerListener {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SwingUI.class);
 
@@ -95,13 +95,21 @@ public class SwingUI implements UserInterface, SwingUIConfigKey,
 
 	@Override
 	public void contentChanged() {
-		SwingUtilities.invokeLater(new Runnable() {
+		if (SwingUtilities.isEventDispatchThread()) {
+			frame.setContent(taskManager.getContent());
+		} else {
+			try {
+				SwingUtilities.invokeAndWait(new Runnable() {
 
-			@Override
-			public void run() {
-				frame.setContent(taskManager.getContent());
+					@Override
+					public void run() {
+						frame.setContent(taskManager.getContent());
+					}
+				});
+			} catch (InvocationTargetException | InterruptedException e) {
+				e.printStackTrace();
 			}
-		});
+		}
 	}
 
 	@Override

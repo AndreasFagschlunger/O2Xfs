@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * - Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * - Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -27,6 +27,8 @@
 
 package at.o2xfs.operator.task.xfs.idc;
 
+import java.util.List;
+
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.task.ExecuteTaskCommand;
@@ -38,21 +40,14 @@ import at.o2xfs.xfs.idc.IDCTrack;
 import at.o2xfs.xfs.idc.WFSIDCCAPS;
 import at.o2xfs.xfs.idc.WFSIDCCARDDATA;
 import at.o2xfs.xfs.idc.WfsIDCStatus;
-import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.idc.cmd.IDCCapabilitiesCommand;
 import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 import at.o2xfs.xfs.service.idc.cmd.ReadCardCommand;
 import at.o2xfs.xfs.service.idc.cmd.ReadCardListener;
 
-import java.util.List;
-
-public class IDCReadTask
-		extends IDCTask
-		implements ReadCardListener {
+public class IDCReadTask extends IDCTask implements ReadCardListener {
 
 	private final static Logger LOG = LoggerFactory.getLogger(IDCReadTask.class);
-
-	private IDCService service = null;
 
 	private ReadCardCommand command = null;
 
@@ -78,9 +73,8 @@ public class IDCReadTask
 	}
 
 	@Override
-	protected void doExecute(IDCService service) {
-		final String method = "doExecute(IDCService)";
-		this.service = service;
+	protected void execute() {
+		String method = "execute()";
 		command = new ReadCardCommand(service);
 		WFSIDCCAPS caps;
 		try {

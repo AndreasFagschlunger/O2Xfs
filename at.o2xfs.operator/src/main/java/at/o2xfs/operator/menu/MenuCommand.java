@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -34,7 +34,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.operator.task.TaskCommand;
 import at.o2xfs.operator.ui.content.text.Label;
 
-public class MenuCommand implements TaskCommand {
+public class MenuCommand extends TaskCommand {
 
 	private final Label label;
 
@@ -42,8 +42,7 @@ public class MenuCommand implements TaskCommand {
 
 	private final MenuTask menuTask;
 
-	public MenuCommand(MenuTask menuTask, String label,
-			List<TaskCommand> children) {
+	public MenuCommand(MenuTask menuTask, String label, List<TaskCommand> children) {
 		this.menuTask = menuTask;
 		this.label = new Label(label);
 		this.children = children;
@@ -53,6 +52,7 @@ public class MenuCommand implements TaskCommand {
 		return children;
 	}
 
+	@Override
 	public Label getLabel() {
 		return label;
 	}
@@ -64,7 +64,6 @@ public class MenuCommand implements TaskCommand {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("label", label)
-				.append("children", children).toString();
+		return new ToStringBuilder(this).append("label", label).append("children", children).toString();
 	}
 }

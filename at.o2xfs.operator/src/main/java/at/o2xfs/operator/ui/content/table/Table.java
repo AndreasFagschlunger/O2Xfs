@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -50,14 +50,18 @@ public class Table implements UIElement {
 
 	private List<TableListener> tableListeners = null;
 
-	public Table(final Class<? extends Task> taskClass,
-			final String... columnNames) {
+	public Table(final String... columnNames) {
 		tableListeners = new ArrayList<TableListener>();
 		this.columnNames = new Label[columnNames.length];
 		for (int i = 0; i < columnNames.length; i++) {
-			this.columnNames[i] = new Label(taskClass).append(columnNames[i]);
+			this.columnNames[i] = new Label(columnNames[i]);
 		}
 		rows = new ArrayList<Row>();
+		taskName = "";
+	}
+
+	public Table(final Class<? extends Task> taskClass, final String... columnNames) {
+		this(columnNames);
 		taskName = taskClass.getSimpleName();
 	}
 
@@ -118,21 +122,16 @@ public class Table implements UIElement {
 
 	public void addRow(final Object... rowData) {
 		if (rowData.length != getColumnCount()) {
-			throw new IllegalArgumentException(
-					"Illegal number of columns in row: " + rowData.length
-							+ ", expected: " + getColumnCount());
+			throw new IllegalArgumentException("Illegal number of columns in row: " + rowData.length + ", expected: " + getColumnCount());
 		}
 		rows.add(new Row(rowData));
 		fireTableChanged();
 	}
 
-	public void addRowWithCommand(final TaskCommand command,
-			final Object... rowData) {
+	public void addRowWithCommand(final TaskCommand command, final Object... rowData) {
 		Assert.notNull(command);
 		if (rowData.length != getColumnCount()) {
-			throw new IllegalArgumentException(
-					"Illegal number of columns in row: " + rowData.length
-							+ ", expected: " + getColumnCount());
+			throw new IllegalArgumentException("Illegal number of columns in row: " + rowData.length + ", expected: " + getColumnCount());
 		}
 		rows.add(new Row(command, rowData));
 		fireTableChanged();

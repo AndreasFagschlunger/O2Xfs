@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -28,7 +28,6 @@
 package at.o2xfs.operator.task.xfs.idc;
 
 import at.o2xfs.xfs.service.cmd.IAsyncCommandListener;
-import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.idc.cmd.IDCResetCommand;
 
 public class IDCResetTask extends IDCTask implements IAsyncCommandListener {
@@ -39,7 +38,8 @@ public class IDCResetTask extends IDCTask implements IAsyncCommandListener {
 	}
 
 	@Override
-	protected void doExecute(IDCService service) {
+	protected void execute() {
+		String method = "execute()";
 		final IDCResetCommand resetCommand = new IDCResetCommand(service);
 		resetCommand.addCommandListener(this);
 		resetCommand.execute();

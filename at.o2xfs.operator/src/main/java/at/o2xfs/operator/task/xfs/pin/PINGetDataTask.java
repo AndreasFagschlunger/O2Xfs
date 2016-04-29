@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -54,11 +54,9 @@ import at.o2xfs.xfs.service.pin.cmd.PINDataListener;
 import at.o2xfs.xfs.service.pin.cmd.PINFunctionKeysCommand;
 import at.o2xfs.xfs.service.pin.cmd.PINGetDataCommand;
 
-public class PINGetDataTask extends PINServiceTask implements PINTaskConfigKey,
-		PINDataListener {
+public class PINGetDataTask extends PINServiceTask implements PINTaskConfigKey, PINDataListener {
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(PINGetDataTask.class);
+	private final static Logger LOG = LoggerFactory.getLogger(PINGetDataTask.class);
 
 	private PINService service = null;
 
@@ -83,15 +81,14 @@ public class PINGetDataTask extends PINServiceTask implements PINTaskConfigKey,
 	}
 
 	@Override
-	protected void doExecute(PINService service) {
-		final String method = "doExecute(PINService)";
+	protected void execute() {
+		String method = "execute()";
 		try {
 			this.service = service;
 			stopUIXfsInputDevice();
 			pressedKeys = new ArrayList<VirtualKey>();
 			textInput = new TextInput();
-			final WFSPINFUNCKEYDETAIL funcKeyDetail = new PINFunctionKeysCommand(
-					service).call();
+			final WFSPINFUNCKEYDETAIL funcKeyDetail = new PINFunctionKeysCommand(service).call();
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "funcKeyDetail=" + funcKeyDetail);
 			}
@@ -109,12 +106,10 @@ public class PINGetDataTask extends PINServiceTask implements PINTaskConfigKey,
 			getDataCommand = new PINGetDataCommand(service, pinGetData);
 			getDataCommand.addCommandListener(this);
 			getDataCommand.execute();
-			final long timeOut = TaskConfig.getConfig(this).getLong(
-					KEY_INPUT_TIMEOUT);
+			final long timeOut = TaskConfig.getConfig(this).getLong(KEY_INPUT_TIMEOUT);
 			startCancelTimer(timeOut);
 			getContent().setUIElement(textInput);
-			getCommands().setNextCommand(
-					new CancelCommand(getClass(), getDataCommand));
+			getCommands().setNextCommand(new CancelCommand(getClass(), getDataCommand));
 		} catch (final XfsException e) {
 			showException(e);
 			startFailed();
@@ -183,8 +178,7 @@ public class PINGetDataTask extends PINServiceTask implements PINTaskConfigKey,
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "pinKey=" + pinKey);
 		}
-		final VirtualKey virtualKey = PINKeyUtil.getVirtualKey(pinKey,
-				service.getXfsVersion());
+		final VirtualKey virtualKey = PINKeyUtil.getVirtualKey(pinKey, service.getXfsVersion());
 		if (virtualKey == null) {
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Unknown WFSPINKEY: " + pinKey);

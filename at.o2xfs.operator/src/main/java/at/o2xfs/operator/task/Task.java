@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -28,10 +28,10 @@
 package at.o2xfs.operator.task;
 
 import at.o2xfs.operator.ui.UIContent;
-import at.o2xfs.operator.ui.content.text.ErrorMessage;
+import at.o2xfs.operator.ui.UIMessage;
+import at.o2xfs.operator.ui.UIMessage.Severity;
 import at.o2xfs.operator.ui.content.text.ExceptionMessage;
 import at.o2xfs.operator.ui.content.text.Label;
-import at.o2xfs.operator.ui.content.text.WarningLabel;
 
 public abstract class Task {
 
@@ -54,18 +54,22 @@ public abstract class Task {
 		return content;
 	}
 
-	protected void showMessage(String label) {
-		content.setUIElement(new Label(getClass(), label));
+	@Deprecated
+	protected void showMessage(String messageId) {
+		content.setUIElement(new UIMessage(Severity.INFO, Label.valueOf(messageId)));
 	}
 
-	protected void showWarning(String label) {
-		content.setUIElement(new WarningLabel(getClass(), label));
+	@Deprecated
+	protected void showWarning(String messageId) {
+		content.setUIElement(new UIMessage(Severity.WARN, Label.valueOf(messageId)));
 	}
 
-	protected void showError(String label) {
-		content.setUIElement(new ErrorMessage(getClass(), label));
+	@Deprecated
+	protected void showError(String messageId) {
+		content.setUIElement(new UIMessage(Severity.ERROR, Label.valueOf(messageId)));
 	}
 
+	@Deprecated
 	protected void showException(Exception cause) {
 		content.setUIElement(new ExceptionMessage(getClass(), cause));
 	}

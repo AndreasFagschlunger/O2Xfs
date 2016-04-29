@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -109,9 +109,7 @@ public class UIFrame implements SwingUIConfigKey, InputDeviceListener {
 		contentPane.setPreferredSize(new Dimension(640, 480));
 		frame.pack();
 		contentPanel = new ContentPanel(this);
-		contentScrollPane = new JScrollPane(contentPanel,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		contentScrollPane = new JScrollPane(contentPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		contentScrollPane.setBorder(BorderFactory.createEmptyBorder());
 		new Scroller(this);
 		initLayout();
@@ -193,11 +191,12 @@ public class UIFrame implements SwingUIConfigKey, InputDeviceListener {
 		}
 	}
 
-	private void setButtonAction(final int buttonIndex,
-			final TaskCommand command) {
+	private void setButtonAction(final int buttonIndex, final TaskCommand command) {
 		final MenuButton button = buttons.get(buttonIndex);
 		final MenuAction menuAction = new TaskMenuAction(command);
+		command.addTaskCommandListener(() -> button.setEnabled(command.isEnabled()));
 		button.setMenuAction(menuAction);
+		button.setEnabled(command.isEnabled());
 		menuActions.add(menuAction);
 	}
 
@@ -254,12 +253,10 @@ public class UIFrame implements SwingUIConfigKey, InputDeviceListener {
 		final String method = "initInputDevices()";
 		final List<String> deviceNames = config.getValues(KEY_INPUT_DEVICES);
 		for (final String deviceName : deviceNames) {
-			final Properties deviceProperties = config
-					.getProperties(deviceName);
+			final Properties deviceProperties = config.getProperties(deviceName);
 			final String className = deviceProperties.getProperty("Class");
 			try {
-				final Class<InputDevice> clazz = (Class<InputDevice>) Class
-						.forName(className);
+				final Class<InputDevice> clazz = (Class<InputDevice>) Class.forName(className);
 				final InputDevice inputDevice = clazz.newInstance();
 				inputDevices.add(inputDevice);
 				inputDevice.init(deviceProperties);
@@ -267,8 +264,7 @@ public class UIFrame implements SwingUIConfigKey, InputDeviceListener {
 				inputDevice.start();
 			} catch (final Exception e) {
 				if (LOG.isErrorEnabled()) {
-					LOG.error(method, "Error creating InputDevice: "
-							+ className, e);
+					LOG.error(method, "Error creating InputDevice: " + className, e);
 				}
 			}
 		}
@@ -287,12 +283,10 @@ public class UIFrame implements SwingUIConfigKey, InputDeviceListener {
 
 	private void updateSupportedKeys() {
 		for (final InputDevice inputDevice : inputDevices) {
-			final Set<VirtualKey> supportedKeys = inputDevice
-					.getSupportedKeys();
+			final Set<VirtualKey> supportedKeys = inputDevice.getSupportedKeys();
 			for (final VirtualKey key : supportedKeys) {
 				for (final MenuButton menuButton : buttons) {
-					if (menuButton.isSupportedKey(key)
-							&& !menuButton.isActiveKey(key)) {
+					if (menuButton.isSupportedKey(key) && !menuButton.isActiveKey(key)) {
 						menuButton.addActiveKey(key);
 					}
 				}

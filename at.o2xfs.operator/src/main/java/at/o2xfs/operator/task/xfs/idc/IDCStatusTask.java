@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -40,8 +40,7 @@ import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 
 public class IDCStatusTask extends IDCTask {
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(IDCStatusTask.class);
+	private final static Logger LOG = LoggerFactory.getLogger(IDCStatusTask.class);
 
 	public IDCStatusTask() {
 		super();
@@ -52,8 +51,8 @@ public class IDCStatusTask extends IDCTask {
 	}
 
 	@Override
-	protected void doExecute(IDCService service) {
-		final String method = "doExecute(IDCService)";
+	protected void execute() {
+		String method = "execute()";
 		try {
 			final Table table = new Table(getClass(), "Component", "Status");
 			final WfsIDCStatus status = new IDCStatusCommand(service).call();
@@ -72,9 +71,7 @@ public class IDCStatusTask extends IDCTask {
 			getContent().setUIElement(table);
 		} catch (XfsException e) {
 			if (LOG.isErrorEnabled()) {
-				LOG.error(method,
-						"Error executing statusCommand for XfsService: "
-								+ service, e);
+				LOG.error(method, "Error executing statusCommand for XfsService: " + service, e);
 			}
 		}
 	}

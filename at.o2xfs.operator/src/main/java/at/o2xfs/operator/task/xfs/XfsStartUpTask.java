@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -39,6 +39,7 @@ import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.XfsServiceManagerException;
+import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.pin.PINService;
 import at.o2xfs.xfs.service.ptr.PTRService;
@@ -57,8 +58,7 @@ public class XfsStartUpTask extends Task {
 	@Override
 	protected void doExecute() {
 		getCommands().clear();
-		final XfsServiceManager serviceManager = XfsServiceManager
-				.getInstance();
+		final XfsServiceManager serviceManager = XfsServiceManager.getInstance();
 		try {
 			serviceManager.initialize();
 		} catch (XfsServiceManagerException e) {
@@ -68,26 +68,21 @@ public class XfsStartUpTask extends Task {
 		}
 		final Table table = new Table(getClass(), "Service", "Status");
 		getContent().setUIElement(table);
-		final Map<String, XfsServiceClass> services = new PropertiesServiceLookup()
-				.lookup();
+		final Map<String, XfsServiceClass> services = new PropertiesServiceLookup().lookup();
 		int row = 0;
 		for (Map.Entry<String, XfsServiceClass> service : services.entrySet()) {
 			final String logicalName = service.getKey();
-			final Class<? extends XfsService> serviceClass = map(service
-					.getValue());
+			final Class<? extends XfsService> serviceClass = map(service.getValue());
 			if (serviceClass == null) {
 				continue;
 			}
-			table.addRow(logicalName, new Label(getClass().getSimpleName(),
-					"Initiate"));
+			table.addRow(logicalName, new Label(getClass().getSimpleName(), "Initiate"));
 			Object status = null;
 			try {
-				final XfsService xfsService = serviceManager.openAndRegister(
-						logicalName, serviceClass);
+				final XfsService xfsService = serviceManager.openAndRegister(logicalName, serviceClass);
 				status = XfsError.WFS_SUCCESS;
 				if (XfsServiceClass.SIU.equals(service.getValue())) {
-					new SIUEnableEventsCommand((SIUService) xfsService)
-							.execute();
+					new SIUEnableEventsCommand((SIUService) xfsService).execute();
 				}
 			} catch (final XfsException e) {
 				status = e.getError();
@@ -103,6 +98,8 @@ public class XfsStartUpTask extends Task {
 
 	private Class<? extends XfsService> map(final XfsServiceClass serviceClass) {
 		switch (serviceClass) {
+			case CDM:
+				return CdmService.class;
 			case IDC:
 				return IDCService.class;
 			case PIN:
@@ -111,8 +108,8 @@ public class XfsStartUpTask extends Task {
 				return PTRService.class;
 			case SIU:
 				return SIUService.class;
-				// case TTU:
-				// return TTUService.class;
+			// case TTU:
+			// return TTUService.class;
 			default:
 				return null;
 		}

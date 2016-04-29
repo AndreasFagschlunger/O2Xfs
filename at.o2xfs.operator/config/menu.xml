@@ -69,6 +69,17 @@
 				<Class>at.o2xfs.operator.task.xfs.siu.SIUCapabilitiesTask</Class>
 			</TaskCommand>
 		</MenuCommand>
+		<MenuCommand>
+			<Label>CDM</Label>
+			<TaskCommand>
+				<Label>Dispense</Label>
+				<Class>at.o2xfs.operator.task.xfs.cdm.DispenseTask</Class>
+			</TaskCommand>
+			<TaskCommand>
+				<Label>Reset</Label>
+				<Class>at.o2xfs.operator.task.xfs.cdm.ResetTask</Class>
+			</TaskCommand>
+		</MenuCommand>
 	</MenuCommand>
 	<TaskCommand>
 		<Label>Shutdown</Label>

@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -48,8 +48,7 @@ import at.o2xfs.xfs.service.XfsServiceManager;
 
 public class O2XfsOperator implements IController {
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(O2XfsOperator.class);
+	private final static Logger LOG = LoggerFactory.getLogger(O2XfsOperator.class);
 
 	private static O2XfsOperator instance = null;
 
@@ -80,12 +79,10 @@ public class O2XfsOperator implements IController {
 		}
 		for (final String uiName : uiNames) {
 			try {
-				final Class<UIFactory> uiFactoryClass = (Class<UIFactory>) Class
-						.forName(config.getUIFactory(uiName));
+				final Class<UIFactory> uiFactoryClass = (Class<UIFactory>) Class.forName(config.getUIFactory(uiName));
 				final File uiConfig = config.getUIConfigFile(uiName);
 				final UIFactory uiFactory = uiFactoryClass.newInstance();
-				final UserInterface ui = uiFactory.newUserInterfaceInstance(
-						this, uiConfig);
+				final UserInterface ui = uiFactory.newUserInterfaceInstance(this, uiConfig);
 				userInterfaces.add(ui);
 			} catch (final Exception e) {
 				if (LOG.isErrorEnabled()) {

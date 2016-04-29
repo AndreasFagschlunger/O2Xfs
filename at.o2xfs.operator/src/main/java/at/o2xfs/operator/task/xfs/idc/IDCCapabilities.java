@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -33,20 +33,17 @@ import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.WFSIDCCAPS;
-import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.idc.cmd.IDCCapabilitiesCommand;
 
 public class IDCCapabilities extends IDCTask {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(IDCCapabilities.class);
+	private static final Logger LOG = LoggerFactory.getLogger(IDCCapabilities.class);
 
 	private Table table = null;
 
 	@Override
-	protected void doExecute(IDCService service) {
-		final IDCCapabilitiesCommand command = new IDCCapabilitiesCommand(
-				service);
+	protected void execute() {
+		final IDCCapabilitiesCommand command = new IDCCapabilitiesCommand(service);
 		try {
 			final WFSIDCCAPS capabilities = command.call();
 			createTable(capabilities);
@@ -71,8 +68,7 @@ public class IDCCapabilities extends IDCTask {
 		addRow("PowerOnOption", caps.getPowerOnOption());
 		addRow("PowerOffOption", caps.getPowerOffOption());
 		addRow("FluxSensorProgrammable", caps.isFluxSensorProgrammable());
-		addRow("ReadWriteAccessFollowingEject",
-				caps.isReadWriteAccessFollowingEject());
+		addRow("ReadWriteAccessFollowingEject", caps.isReadWriteAccessFollowingEject());
 		addRow("WriteMode", caps.getWriteMode());
 		addRow("ChipPower", caps.getChipPower());
 		addRow("Extra", caps.getExtra());

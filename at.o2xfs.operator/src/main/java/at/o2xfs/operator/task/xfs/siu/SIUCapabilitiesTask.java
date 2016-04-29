@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -54,32 +54,27 @@ public class SIUCapabilitiesTask extends SIUServiceTask {
 	}
 
 	@Override
-	protected void doExecute(SIUService service) {
+	protected void execute() {
+		String method = "execute()";
 		try {
-			final SIUCapabilities capabilities = new SIUCapabilitiesCallable(
-					service).call();
+			final SIUCapabilities capabilities = new SIUCapabilitiesCallable(service).call();
 			table = new Table(getClass(), "Capability", "Value");
 			addRow("ServiceClass", capabilities.getServiceClass());
 			addRow("Type", capabilities.getType());
 			final SIUSensorCapabilities sensors = capabilities.getSensors();
 			addRow("OperatorSwitch", sensors.getOperatorSwitch());
 			addRow("TamperSensor", sensors.isTamperSensorAvailable());
-			addRow("InternalTamperSensor",
-					sensors.isInternalTamperSensorAvailable());
+			addRow("InternalTamperSensor", sensors.isInternalTamperSensorAvailable());
 			addRow("SeismicSensor", sensors.isSeismicSensorAvailable());
 			addRow("HeatSensor", sensors.isHeatSensorAvailable());
 			addRow("ProximitySensor", sensors.isProximitySensorAvailable());
-			addRow("AmbientLightSensor",
-					sensors.isAmbientLightSensorAvailable());
+			addRow("AmbientLightSensor", sensors.isAmbientLightSensorAvailable());
 			addRow("AudioJack", sensors.getAudioJackCapabilities());
 			addRow("BootSwitch", sensors.isBootSwitchAvailable());
-			addRow("ConsumerDisplaySensor",
-					sensors.isConsumerDisplaySensorAvailable());
-			addRow("OperatorCallButton",
-					sensors.isOperatorCallButtonAvailable());
+			addRow("ConsumerDisplaySensor", sensors.isConsumerDisplaySensorAvailable());
+			addRow("OperatorCallButton", sensors.isOperatorCallButtonAvailable());
 			addRow("HandsetCapabilities", sensors.getHandsetCapabilities());
-			addRow("GeneralPurposeInputPorts",
-					sensors.getGeneralPurposeInputPorts());
+			addRow("GeneralPurposeInputPorts", sensors.getGeneralPurposeInputPorts());
 			final SIUDoorCapabilities doors = capabilities.getDoors();
 			addRow("CabinetDoors", doors.getCabinetDoors());
 			addRow("SafeDoors", doors.getSafeDoors());
@@ -88,29 +83,22 @@ public class SIUCapabilitiesTask extends SIUServiceTask {
 			addRow("RearCabinetDoors", doors.getRearCabinetDoors());
 			addRow("LeftCabinetDoors", doors.getLeftCabinetDoors());
 			addRow("RightCabinetDoors", doors.getRightCabinetDoors());
-			final SIUIndicatorCapabilities indicators = capabilities
-					.getIndicators();
+			final SIUIndicatorCapabilities indicators = capabilities.getIndicators();
 			addRow("OpenClosedIndicator", indicators.isOpenClosedIndicator());
 			addRow("FasciaLight", indicators.isFasciaLight());
 			addRow("AudioIndicator", indicators.isAudioIndicator());
 			addRow("HeatingDevice", indicators.isHeatingDevice());
-			addRow("ConsumerDisplayBacklight",
-					indicators.isConsumerDisplayBacklight());
+			addRow("ConsumerDisplayBacklight", indicators.isConsumerDisplayBacklight());
 			addRow("SignageDisplay", indicators.isSignageDisplay());
-			addRow("TransactionIndicators",
-					indicators.getTransactionIndicators());
-			addRow("GeneralPurposeOutputPorts",
-					indicators.getGeneralPurposeOutputPorts());
-			final SIUAuxiliariesCapabilities auxiliaries = capabilities
-					.getAuxiliaries();
+			addRow("TransactionIndicators", indicators.getTransactionIndicators());
+			addRow("GeneralPurposeOutputPorts", indicators.getGeneralPurposeOutputPorts());
+			final SIUAuxiliariesCapabilities auxiliaries = capabilities.getAuxiliaries();
 			addRow("VolumeControl", auxiliaries.getVolumeControl());
 			addRow("UPSCapabilities", auxiliaries.getUPSCapabilities());
 			addRow("RemoteStatusMonitor", auxiliaries.isRemoteStatusMonitor());
 			addRow("AudibleAlarmDevice", auxiliaries.isAudibleAlarmDevice());
-			addRow("EnhancedAudioControl",
-					auxiliaries.getEnhancedAudioControl());
-			final SIUGuidLightCapabilities guidLights = capabilities
-					.getGuidLights();
+			addRow("EnhancedAudioControl", auxiliaries.getEnhancedAudioControl());
+			final SIUGuidLightCapabilities guidLights = capabilities.getGuidLights();
 			addRow("CardUnit", guidLights.isCardUnit());
 			addRow("PINPad", guidLights.isPINPad());
 			addRow("NoteDispenser", guidLights.isNoteDispenser());
@@ -124,8 +112,7 @@ public class SIUCapabilitiesTask extends SIUServiceTask {
 			addRow("DocumentPrinter", guidLights.isDocumentPrinter());
 			addRow("CoinAcceptor", guidLights.isCoinAcceptor());
 			addRow("Scanner", guidLights.isScanner());
-			for (final Map.Entry<String, String> entry : capabilities
-					.getExtra().entrySet()) {
+			for (final Map.Entry<String, String> entry : capabilities.getExtra().entrySet()) {
 				table.addRow(entry.getKey(), entry.getValue());
 			}
 			getContent().setUIElement(table);
