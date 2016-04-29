@@ -93,8 +93,8 @@ public class Denomination3 extends Struct {
 		allocate();
 		currencyID.set(builder.currencyID);
 		amount.set(builder.amount);
-		count.set(values.getSize());
 		if (builder.values.isPresent()) {
+			count.set(builder.values.get().length);
 			values.pointTo(new XfsUIntArray(builder.values.get()));
 		}
 		cashBox.set(builder.cashBox);
