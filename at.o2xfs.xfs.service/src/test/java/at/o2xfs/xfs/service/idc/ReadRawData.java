@@ -42,8 +42,10 @@ import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.util.Bitmask;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class ReadRawData
 		extends XfsCommandTest {
 

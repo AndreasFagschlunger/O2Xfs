@@ -36,12 +36,19 @@ package at.o2xfs.win32;
  */
 public class USHORT extends NumberType<Integer> {
 
+	public static final int SIZE = 2;
+
 	public static final int MIN_VALUE = 0;
 
 	public static final int MAX_VALUE = 65535;
 
 	public USHORT() {
-		super(2);
+		super(SIZE);
+	}
+
+	public USHORT(Buffer aBuffer) {
+		this();
+		assignBuffer(aBuffer);
 	}
 
 	public USHORT(final int value) {

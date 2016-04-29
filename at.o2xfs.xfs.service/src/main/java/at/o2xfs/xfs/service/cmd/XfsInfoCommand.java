@@ -27,23 +27,50 @@
 
 package at.o2xfs.xfs.service.cmd;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import at.o2xfs.common.Assert;
 import at.o2xfs.win32.Type;
 import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.service.XfsService;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 /**
  * @author Andreas Fagschlunger
  *
  */
-public class XfsInfoCommand<T extends Enum<? extends XfsConstant>>
-		extends XfsCommand {
+public class XfsInfoCommand<T extends Enum<? extends XfsConstant>> extends XfsCommand {
+
+	public static class Builder<T extends Enum<? extends XfsConstant>> {
+
+		private final XfsService xfsService;
+
+		private final T category;
+
+		private Type queryDetails;
+
+		public Builder(XfsService xfsService, T category) {
+			this.xfsService = xfsService;
+			this.category = category;
+		}
+
+		public Builder<T> queryDetails(Type queryDetails) {
+			this.queryDetails = queryDetails;
+			return this;
+		}
+
+		public XfsInfoCommand<T> build() {
+			return new XfsInfoCommand<T>(this);
+		}
+
+	}
 
 	private final T category;
 
 	private final Type queryDetails;
+
+	private XfsInfoCommand(Builder<T> builder) {
+		this(builder.xfsService, builder.category, builder.queryDetails);
+	}
 
 	public XfsInfoCommand(XfsService xfsService, T category) {
 		this(xfsService, category, null);
@@ -76,9 +103,6 @@ public class XfsInfoCommand<T extends Enum<? extends XfsConstant>>
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).appendSuper(super.toString())
-										.append("category", category)
-										.append("queryDetails", queryDetails)
-										.toString();
+		return new ToStringBuilder(this).appendSuper(super.toString()).append("category", category).append("queryDetails", queryDetails).toString();
 	}
 }

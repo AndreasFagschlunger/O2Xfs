@@ -27,6 +27,11 @@
 
 package at.o2xfs.xfs.service.idc;
 
+import java.util.List;
+
+import org.junit.Ignore;
+import org.junit.Test;
+
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.LPZZSTR;
@@ -42,12 +47,8 @@ import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 import at.o2xfs.xfs.service.idc.cmd.IDCCapabilitiesCommand;
 import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 
-import java.util.List;
-
-import org.junit.Test;
-
-public class IDCInfoTest
-		extends XfsCommandTest {
+@Ignore
+public class IDCInfoTest extends XfsCommandTest {
 
 	private static final Logger LOG = LoggerFactory.getLogger(IDCInfoTest.class);
 
@@ -101,9 +102,7 @@ public class IDCInfoTest
 	private void queryForm(final String formName) throws Exception {
 		for (final IDCService idcService : idcServices) {
 			ZSTR szFormName = new ZSTR(formName);
-			XfsCommand xfsCommand = new XfsInfoCommand<IDCInfoCommand>(	idcService,
-																		IDCInfoCommand.QUERY_FORM,
-																		szFormName);
+			XfsCommand xfsCommand = new XfsInfoCommand<IDCInfoCommand>(idcService, IDCInfoCommand.QUERY_FORM, szFormName);
 			WFSResult wfsResult = null;
 			try {
 				wfsResult = xfsCommand.call();
