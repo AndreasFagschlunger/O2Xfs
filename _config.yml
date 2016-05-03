@@ -9,8 +9,8 @@
 title: O²Xfs Framework
 email: o2xfs@fagschlunger.co.at
 description: "" # this means to ignore newlines until "baseurl:"
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://AndreasFagschlunger.github.io/O2Xfs" # the base hostname & protocol for your site
+baseurl: "/O2Xfs" # the subpath of your site, e.g. /blog
+url: "http://AndreasFagschlunger.github.io/O2Xfs/" # the base hostname & protocol for your site
 github_username:  AndreasFagschlunger
 
 # Build settings
