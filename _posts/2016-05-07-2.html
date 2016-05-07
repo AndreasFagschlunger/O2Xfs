@@ -2,13 +2,8 @@
 title:  "Buildship & Docs"
 date:   2016-05-07 21:56:24 +0200
 ---
-{% capture main_content %}
 I finally managed to switch my Eclipse workspace from IvyDE to Buildship. Since I switched the build system from Ant to Gradle, this was the next logical step.
 
 I've added two documents on how to [Setup]({{site.baseurl}}/setup.html) a development envirionment and how to import the projects into [Eclipse]({{site.baseurl}}/eclipse.html).
 
 The Eclipse part is pretty simple due to Gradle and Buildship plugin, the development envirionment is a bit messy due to the various XFS SDKs, 32 bit versions, etc. But ones the envirionment is setup, you can control native and Java build from within eclipse and even JUnit tests run smooth with native binaries.
-
-{% endcapture %}
-
-{% include project_page.html %}
