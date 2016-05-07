@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>at.o2xfs.emv</name>
-	<comment>Project at.o2xfs.emv created by Buildship.</comment>
+	<name>O2Xfs</name>
+	<comment>Project O2Xfs created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>

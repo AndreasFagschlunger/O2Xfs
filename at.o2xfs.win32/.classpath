@@ -3,10 +3,15 @@
 	<classpathentry kind="src" path="src/main/java">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared/release"/>
+			<attribute name="FROM_GRADLE_MODEL" value="false"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/test/java">
+		<attributes>
+			<attribute name="FROM_GRADLE_MODEL" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=at.o2xfs.win32&amp;ivyXmlPath=ivy.xml&amp;confs=*&amp;ivySettingsPath=file%3A%2F%24%7Bgit_work_tree%7D%2Fivy%2Fivysettings.xml&amp;loadSettingsOnDemand=false&amp;ivyUserDir=&amp;propertyFiles=%24%7Bgit_work_tree%7D%2Fivy%2Flibraries.properties"/>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

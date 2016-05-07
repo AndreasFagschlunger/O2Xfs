@@ -3,25 +3,33 @@
 	<classpathentry kind="src" path="src/o2xfs-xfs3/java">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="o2xfs-xfs3/build/libs/o2xfs-xfs3-test.dll/shared"/>
+			<attribute name="FROM_GRADLE_MODEL" value="false"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src/o2xfs-xfs310/java">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="o2xfs-xfs3/build/libs/o2xfs-xfs310-test.dll/shared"/>
+			<attribute name="FROM_GRADLE_MODEL" value="false"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src/o2xfs-xfs320/java">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="o2xfs-xfs3/build/libs/o2xfs-xfs320-test.dll/shared"/>
+			<attribute name="FROM_GRADLE_MODEL" value="false"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src/o2xfs-xfs330/java">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="o2xfs-xfs3/build/libs/o2xfs-xfs330-test.dll/shared"/>
+			<attribute name="FROM_GRADLE_MODEL" value="false"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src/test/java" />
+	<classpathentry kind="src" path="src/test/java">
+		<attributes>
+			<attribute name="FROM_GRADLE_MODEL" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=o2xfs-xfs3&amp;ivyXmlPath=ivy.xml&amp;confs=*"/>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
