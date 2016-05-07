@@ -1,0 +1,102 @@
+---
+---
+{% capture main_content %}
+
+## Building from Source
+
+### Prerequisites
+
+* JDK 8+ (x86)
+* Git
+* XFS SDKs
+* gradle.properties
+
+### JDK 8+ (x86)
+
+Make sure you have a JDK 8+ (Windows x86) installed on your machine, you can download it from Oracle:
+
+http://www.oracle.com/technetwork/java/javase/downloads/index.html
+
+### Check out sources
+
+Checkout the code from GitHub and switch to the `develop` branch:
+
+    git clone https://github.com/AndreasFagschlunger/O2Xfs.git
+    cd O2Xfs
+    git checkout develop
+
+### XFS SDKs
+
+In order to compile the test binaries we have to provide the C header files for every XFS version under test. So go ahead an download the following SDKs into a directory (e.g. C:\XFS SDKs\):
+
+[XFS Release 3.03](ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA14050/sdk303.zip)  
+[XFS Release 3.10](ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA15748/XFS310SDKInstall.zip)  
+[XFS Release 3.20](ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA16374/SDK320.zip)  
+[XFS Release 3.30](ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA16926/SDK330.zip)  
+
+Extract all files in the ZIP archives, you should have the following files:
+
+```
+├──Install.EXE
+├──SDK320.msi
+├──SDK330.msi
+└──XFS310SDKInstall.exe
+```
+
+The next step is to extract the C header files from the various install packages without installing them. This is especially tricky for the XFS Release 3.03 (Install.EXE).
+
+The `Install.EXE` of Release 3.03 is a self-extracting CAB file, so most Unpackers like WínRAR recognize the format. So either extract the contents of Install.EXE with a program like WinRAR or go ahead an run the following command:
+
+    Install.EXE /s /f"C:\XFS SDKs\"
+
+First thing you notice is a UAC Pop-Up, you must confirm to proceed. Then you should see the progress of the extraction. After the files are extracted, the actual XFS Manager SDK installer launches. Cancel the installation, since we should have the files we need.
+
+With the contents of Install.EXE extracted, there should be three new files:
+
+```
+XFS SDKs
+├──Data1.cab
+├──setup.exe
+└──XFS_Manager_SDK.msi
+```
+
+You can now simply extract the contents of the MSI file by running following command:
+
+    msiexec /a "C:\XFS SDKs\XFS_Manager_SDK.msi" /qb TARGETDIR="C:\XFS SDKs\SDK303"
+
+That's it, the INCLUDE directory should be under the following path `.\SDK303\Common\XFS\SDK\INCLUDE`. Now for the other three SDKs run the following commands:
+
+    "C:\XFS SDKs\XFS310SDKInstall.exe" /a /s /v"/qn TARGETDIR=\"C:\XFS SDKs\SDK310\""
+    msiexec /a "C:\XFS SDKs\SDK320.msi" /qn TARGETDIR="C:\XFS SDKs\SDK320"
+    msiexec /a "C:\XFS SDKs\SDK330.msi" /qn TARGETDIR="C:\XFS SDKs\SDK330"
+
+### gradle.properties
+
+Go to the project root directory and create a new file **gradle.properties**.
+
+Add a property **org.gradle.java.home** which points to your JDK 8+ (x86), e.g.:
+
+    org.gradle.java.home=C:/Program Files (x86)/Java/jdk1.8.0_51
+
+This tells Gradle to use the specified JDK for building. Add a property **xfsSdkDir** which contains the path to any XFS SDK, the default value is `C:/Program Files (x86)/Common Files/XFS`, e.g.:
+
+    xfsSdkDir=C:/Program Files (x86)/Common Files/XFS
+
+Next we have to set properties for our XFS SDKs:
+
+```ini
+XFS_SDK300=C:/XFS SDKs/SDK303/Common/XFS/SDK
+XFS_SDK310=C:/XFS SDKs/SDK310/Common/XFS/SDK
+XFS_SDK320=C:/XFS SDKs/SDK320/XFS/SDK
+XFS_SDK330=C:/XFS SDKs/SDK330/XFS/SDK
+```
+
+## Compile and test
+
+    ./gradlew build
+
+... and discover more commands with `./gradlew tasks`.
+
+{% endcapture %}
+
+{% include project_page.html %}

@@ -1,0 +1,21 @@
+---
+---
+{% capture main_content %}
+
+## Setup Eclipse workspace
+
+Before you start make sure you've completed the Development Setup and executed at least one successful build using `.\gradlew build`.
+
+Start you Eclipse workspace and install the [Buildship plugin](https://projects.eclipse.org/projects/tools.buildship):
+
+https://github.com/eclipse/buildship/blob/master/docs/user/Installation.md
+
+In Eclipse select `File -> Import -> Gradle -> Gradle Project` and click `Next`. Change the *Project root directory* to the O2Xfs repository on your file system and click `Finish`.
+
+You will be asked if you want to overwrite existing Eclipse project descriptors - click `Keep`.
+
+Before you run JUnit test ensure your **JavaSE-1.8** execution environment points to a x86 runtime. In Eclipse open Preferences with `Window -> Preferences`. In the tree navigate to `Java -> Installed JREs` and ensure the JRE location points to a x86 version, otherwise `Add...` a new JRE. In the `Execution Environtments` node you can specify the JRE to be used by **JavaSE-1.8**.
+
+{% endcapture %}
+
+{% include project_page.html %}

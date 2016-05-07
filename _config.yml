@@ -7,7 +7,7 @@
 
 # Site settings
 title: O²Xfs Framework
-email: o2xfs@fagschlunger.co.at
+email: github@fagschlunger.co.at
 description: "" # this means to ignore newlines until "baseurl:"
 baseurl: "/O2Xfs" # the subpath of your site, e.g. /blog
 url: "http://AndreasFagschlunger.github.io/O2Xfs/" # the base hostname & protocol for your site
