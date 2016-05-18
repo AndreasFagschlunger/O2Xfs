@@ -1,0 +1,22 @@
+---
+---
+{% capture main_content %}
+
+## Setup Visual Studio
+
+O²Xfs uses Gradle's `visual-studio` plugin to create Visual Studio project and solution files. So run `./gradlew tasks` to get a list of available tasks, e.g.:
+
+```
+./gradlew at.o2xfs.win32.dllVisualStudio
+./gradlew at.o2xfs.xfs.conf.dllVisualStudio
+./gradlew at.o2xfs.xfs.dllVisualStudio
+./gradlew at.o2xfs.xfs.test.dllVisualStudio
+./gradlew o2xfs-xfs3-test.dllVisualStudio
+./gradlew o2xfs-xfs310-test.dllVisualStudio
+./gradlew o2xfs-xfs320-test.dllVisualStudio
+./gradlew o2xfs-xfs330-test.dllVisualStudio
+```
+
+{% endcapture %}
+
+{% include project_page.html %}
