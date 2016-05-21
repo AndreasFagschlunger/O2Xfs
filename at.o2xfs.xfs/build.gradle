@@ -1,4 +1,5 @@
 apply plugin: 'cpp'
+apply plugin: 'visual-studio'
 apply plugin: 'windows-resources'
 
 dependencies {

@@ -1,8 +1,7 @@
 dependencies {
     compile project(':at.o2xfs.emv'),
             project(':at.o2xfs.ctapi')
-    testCompile project(':emv-icc-sim'),
-                libraries.junit
+    testCompile libraries.junit
 }
 
 publishing {
