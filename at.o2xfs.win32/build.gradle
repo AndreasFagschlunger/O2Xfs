@@ -38,6 +38,9 @@ model {
         libs(PrebuiltLibraries) {
             jni {
                 def javaHome = System.getenv('JAVA_HOME')
+                if(project.hasProperty('org.gradle.java.home')) {
+                    javaHome = project.getProperty('org.gradle.java.home');
+                }
                 headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
             }
         }
