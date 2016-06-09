@@ -2,41 +2,36 @@ package at.o2xfs.xfs.cim;
 
 import at.o2xfs.xfs.XfsConstant;
 
-public enum CashInType implements XfsConstant {
+public enum PositionStatus implements XfsConstant {
 
 	/*
 	 * @since v3.00
 	 */
-	RECYCLING(1L),
+	EMPTY(0L),
 
 	/*
 	 * @since v3.00
 	 */
-	CASHIN(2L),
+	NOTEMPTY(1L),
 
 	/*
 	 * @since v3.00
 	 */
-	REPCONTAINER(3L),
+	UNKNOWN(2L),
 
 	/*
 	 * @since v3.00
 	 */
-	RETRACTCASSETTE(4L),
+	NOTSUPPORTED(3L),
 
 	/*
 	 * @since v3.10
 	 */
-	REJECT(5L),
-
-	/*
-	 * @since v3.10
-	 */
-	CDMSPECIFIC(6L);
+	FOREIGNITEMS(4L);
 
 	private final long value;
 
-	private CashInType(final long value) {
+	private PositionStatus(final long value) {
 		this.value = value;
 	}
 

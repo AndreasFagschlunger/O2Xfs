@@ -30,7 +30,8 @@ task 'javah-xf3-cim'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs3-test.dll/headers/cim'),
-                'at.o2xfs.xfs.cim.v3_00.CashInType3Test'
+                'at.o2xfs.xfs.cim.v3_00.CashInType3Test',
+                'at.o2xfs.xfs.cim.v3_00.NoteIDsTest'
 }
 
 task 'javah-xf310'(type:Exec) {

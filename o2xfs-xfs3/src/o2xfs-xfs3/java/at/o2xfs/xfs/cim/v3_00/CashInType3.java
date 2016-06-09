@@ -36,13 +36,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
-import at.o2xfs.xfs.cim.CashInType;
+import at.o2xfs.xfs.cim.CashInItemType;
 import at.o2xfs.xfs.win32.XfsDWordBitmask;
 
 public class CashInType3 extends Struct {
 
 	protected final USHORT number = new USHORT();
-	protected final XfsDWordBitmask<CashInType> type = new XfsDWordBitmask<>(CashInType.class);
+	protected final XfsDWordBitmask<CashInItemType> type = new XfsDWordBitmask<>(CashInItemType.class);
 	protected final Pointer noteIDs = new Pointer();
 
 	protected CashInType3() {
@@ -72,7 +72,7 @@ public class CashInType3 extends Struct {
 		return number.get();
 	}
 
-	public Set<CashInType> getType() {
+	public Set<CashInItemType> getType() {
 		return type.get();
 	}
 
