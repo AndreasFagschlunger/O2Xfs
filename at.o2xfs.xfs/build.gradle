@@ -82,7 +82,7 @@ model {
                 rcCompiler.define "ORG_FILENAME="
             }
         }
-
+/*
         'at.o2xfs.xfs.test.dll'(NativeLibrarySpec) {
             binaries.all {
                 lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
@@ -93,7 +93,8 @@ model {
                 rcCompiler.define "COMMA_VERSION=0,0,0,0"
                 rcCompiler.define "ORG_FILENAME="
             }
-        }        
+        }
+*/
     }
 }
 
