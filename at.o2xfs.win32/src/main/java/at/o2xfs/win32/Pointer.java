@@ -95,9 +95,12 @@ public class Pointer extends BaseType {
 	public void pointTo(final Type aReference) {
 		if (this == NULL) {
 			throw new NullPointerException("Could not reassign NULL");
+		} else if (aReference == NULL) {
+			put(NULL.getBuffer().get());
+		} else {
+			reference = aReference;
+			put(reference.getBuffer().getAddress());
 		}
-		reference = aReference;
-		put(reference.getBuffer().getAddress());
 	}
 
 	@Override

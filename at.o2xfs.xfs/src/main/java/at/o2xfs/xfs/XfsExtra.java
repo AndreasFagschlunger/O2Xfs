@@ -1,9 +1,5 @@
 package at.o2xfs.xfs;
 
-import at.o2xfs.win32.ByteArray;
-import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.ValueType;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -15,9 +11,11 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class XfsExtra
-		extends Pointer
-		implements ValueType<Map<String, String>> {
+import at.o2xfs.win32.ByteArray;
+import at.o2xfs.win32.Pointer;
+import at.o2xfs.win32.ValueType;
+
+public class XfsExtra extends Pointer implements ValueType<Map<String, String>> {
 
 	public void set(XfsExtra value) {
 		set(value.get());
@@ -25,7 +23,11 @@ public class XfsExtra
 
 	@Override
 	public void set(Map<String, String> value) {
-		pointTo(new ByteArray(encode(value)));
+		if (value.isEmpty()) {
+			pointTo(NULL);
+		} else {
+			pointTo(new ByteArray(encode(value)));
+		}
 	}
 
 	private byte[] encode(Map<String, String> value) {
