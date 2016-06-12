@@ -2,7 +2,7 @@ package at.o2xfs.xfs.cim;
 
 import at.o2xfs.xfs.XfsConstant;
 
-public enum UnitAction implements XfsConstant {
+public enum LockStatus implements XfsConstant {
 
 	/*
 	 * @since v3.20
@@ -46,7 +46,7 @@ public enum UnitAction implements XfsConstant {
 
 	private final long value;
 
-	private UnitAction(final long value) {
+	private LockStatus(final long value) {
 		this.value = value;
 	}
 

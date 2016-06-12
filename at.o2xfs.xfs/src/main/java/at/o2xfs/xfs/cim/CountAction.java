@@ -2,7 +2,7 @@ package at.o2xfs.xfs.cim;
 
 import at.o2xfs.xfs.XfsConstant;
 
-public enum CountActions implements XfsConstant {
+public enum CountAction implements XfsConstant {
 
 	/*
 	 * @since v3.20
@@ -21,7 +21,7 @@ public enum CountActions implements XfsConstant {
 
 	private final long value;
 
-	private CountActions(final long value) {
+	private CountAction(final long value) {
 		this.value = value;
 	}
 

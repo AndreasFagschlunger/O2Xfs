@@ -7,7 +7,7 @@ public enum Level implements XfsConstant {
 	/*
 	 * @since v3.00
 	 */
-	LEVEL_ALL(0L),
+	ALL(0L),
 
 	/*
 	 * @since v3.00

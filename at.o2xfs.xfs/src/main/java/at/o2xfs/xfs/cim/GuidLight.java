@@ -2,7 +2,7 @@ package at.o2xfs.xfs.cim;
 
 import at.o2xfs.xfs.XfsConstant;
 
-public enum GuidLights implements XfsConstant {
+public enum GuidLight implements XfsConstant {
 
 	/*
 	 * @since v3.10
@@ -81,7 +81,7 @@ public enum GuidLights implements XfsConstant {
 
 	private final long value;
 
-	private GuidLights(final long value) {
+	private GuidLight(final long value) {
 		this.value = value;
 	}
 

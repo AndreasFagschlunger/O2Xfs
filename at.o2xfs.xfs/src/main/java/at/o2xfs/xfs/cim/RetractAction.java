@@ -2,7 +2,7 @@ package at.o2xfs.xfs.cim;
 
 import at.o2xfs.xfs.XfsConstant;
 
-public enum RetractStackerActions implements XfsConstant {
+public enum RetractAction implements XfsConstant {
 
 	/*
 	 * @since v3.00
@@ -36,7 +36,7 @@ public enum RetractStackerActions implements XfsConstant {
 
 	private final long value;
 
-	private RetractStackerActions(final long value) {
+	private RetractAction(final long value) {
 		this.value = value;
 	}
 

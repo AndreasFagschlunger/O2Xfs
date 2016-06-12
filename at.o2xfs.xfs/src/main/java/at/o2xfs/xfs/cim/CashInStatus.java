@@ -2,7 +2,7 @@ package at.o2xfs.xfs.cim;
 
 import at.o2xfs.xfs.XfsConstant;
 
-public enum Status implements XfsConstant {
+public enum CashInStatus implements XfsConstant {
 
 	/*
 	 * @since v3.00
@@ -36,7 +36,7 @@ public enum Status implements XfsConstant {
 
 	private final long value;
 
-	private Status(final long value) {
+	private CashInStatus(final long value) {
 		this.value = value;
 	}
 
