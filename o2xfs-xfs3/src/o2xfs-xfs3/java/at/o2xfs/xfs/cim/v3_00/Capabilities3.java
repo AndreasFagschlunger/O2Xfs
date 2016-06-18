@@ -40,7 +40,7 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.XfsServiceClass;
-import at.o2xfs.xfs.cdm.RetractAction;
+import at.o2xfs.xfs.cim.RetractAction;
 import at.o2xfs.xfs.cim.ExchangeType;
 import at.o2xfs.xfs.cim.Position;
 import at.o2xfs.xfs.cim.RetractArea;
