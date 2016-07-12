@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * - Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * - Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -27,22 +27,23 @@
 
 package at.o2xfs.xfs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import at.o2xfs.common.Assert;
 import at.o2xfs.xfs.cam.CamExceptionFactory;
+import at.o2xfs.xfs.cdm.CdmExceptionFactory;
+import at.o2xfs.xfs.cim.CimExceptionFactory;
 import at.o2xfs.xfs.idc.IDCServiceExceptionFactory;
 import at.o2xfs.xfs.pin.PINServiceExceptionFactory;
 import at.o2xfs.xfs.siu.SIUServiceExceptionFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @see AbstractXfsExceptionFactory
  *
  * @author Andreas Fagschlunger
  */
-public abstract class XfsException
-		extends Exception {
+public abstract class XfsException extends Exception {
 
 	private static List<AbstractXfsExceptionFactory> exceptionFactories = null;
 
@@ -50,9 +51,11 @@ public abstract class XfsException
 		exceptionFactories = new ArrayList<AbstractXfsExceptionFactory>();
 		exceptionFactories.add(new XfsServiceExceptionFactory());
 		exceptionFactories.add(new IDCServiceExceptionFactory());
+		exceptionFactories.add(new CdmExceptionFactory());
 		exceptionFactories.add(new PINServiceExceptionFactory());
 		exceptionFactories.add(new SIUServiceExceptionFactory());
 		exceptionFactories.add(new CamExceptionFactory());
+		exceptionFactories.add(new CimExceptionFactory());
 	}
 
 	private final Enum<? extends XfsConstant> error;
