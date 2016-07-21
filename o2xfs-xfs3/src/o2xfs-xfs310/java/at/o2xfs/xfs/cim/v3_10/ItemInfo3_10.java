@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -26,6 +26,8 @@
  */
 
 package at.o2xfs.xfs.cim.v3_10;
+
+import java.util.Optional;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -62,20 +64,34 @@ public class ItemInfo3_10 extends Struct {
 
 	protected void set(ItemInfo3_10 copy) {
 		noteID.set(copy.getNoteID());
-		serialNumber.set(copy.getSerialNumber());
-		p6Signature.pointTo(new P6Signature3(copy.getP6Signature()));
+		Optional<String> serialNumber = copy.getSerialNumber();
+		if (serialNumber.isPresent()) {
+			this.serialNumber.set(serialNumber.get());
+		}
+		Optional<P6Signature3> p6Signature = copy.getP6Signature();
+		if (p6Signature.isPresent()) {
+			this.p6Signature.pointTo(new P6Signature3(p6Signature.get()));
+		}
 	}
 
 	public int getNoteID() {
 		return noteID.get();
 	}
 
-	public String getSerialNumber() {
-		return serialNumber.get();
+	public Optional<String> getSerialNumber() {
+		Optional<String> result = Optional.empty();
+		if (!Pointer.NULL.equals(serialNumber)) {
+			result = Optional.of(serialNumber.get());
+		}
+		return result;
 	}
 
-	public P6Signature3 getP6Signature() {
-		return new P6Signature3(p6Signature);
+	public Optional<P6Signature3> getP6Signature() {
+		Optional<P6Signature3> result = Optional.empty();
+		if (!Pointer.NULL.equals(p6Signature)) {
+			result = Optional.of(new P6Signature3(p6Signature));
+		}
+		return result;
 	}
 
 	@Override
