@@ -39,7 +39,7 @@ JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_110_Status3_110Test_buildStat
 	
 	positionIndex++;
 	lppPositions[positionIndex] = NULL;
-	Status.dwGuidLights[WFS_CIM_POSINFRONT] = WFS_CIM_GUIDANCE_MEDIUM_FLASH | WFS_CIM_GUIDANCE_BLUE;
+	Status.dwGuidLights[WFS_CIM_GUIDANCE_POSINFRONT] = WFS_CIM_GUIDANCE_MEDIUM_FLASH | WFS_CIM_GUIDANCE_BLUE;
 	Status.wDevicePosition = WFS_CIM_DEVICEINPOSITION;
 	Status.usPowerSaveRecoveryTime = 0;
 	return NewBuffer(env, &Status, sizeof(WFSCIMSTATUS));
