@@ -12,6 +12,7 @@ static LPWFSCIMNOTENUMBER lpNoteNumber[4];
 static WFSCIMPHCU Physical;
 static LPWFSCIMPHCU pPhysical[1];
 static LPSTR lpPhysicalPositionName = "COMPARTMENT2";
+static USHORT usNoteIDs[] = { 1, 2, 3, 4, 0 };
 
 JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_110_CashIn3_110Test_buildCashIn3_110(JNIEnv *env, jobject obj) {
 	CashIn.usNumber = 9;
@@ -58,6 +59,7 @@ JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_110_CashIn3_110Test_buildCash
 	Physical.ulPresentedCount = 0;
 	Physical.ulRetractedCount = 0;
 	Physical.ulRejectCount = 0;
+	CashIn.lpusNoteIDs = usNoteIDs;
 	CashIn.usCDMType = WFS_CDM_TYPEREJECTCASSETTE;
 	CashIn.ulInitialCount = 0;
 	CashIn.ulDispensedCount = 0;
