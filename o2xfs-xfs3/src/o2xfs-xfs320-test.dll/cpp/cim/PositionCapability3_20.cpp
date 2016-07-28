@@ -4,8 +4,8 @@
 #include <XFSCIM.H>
 #include "at.o2xfs.win32.h"
 
-WFSCIMPOSCAPS PosCapabilities;
-LPSTR lpszExtra = "P6=2\0";
+static WFSCIMPOSCAPS PosCapabilities;
+static LPSTR lpszExtra = "P6=2\0";
 
 JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_PositionCapability3_120Test_buildPositionCapability3_120(JNIEnv *env, jobject obj) {
 	PosCapabilities.fwPosition = WFS_CIM_POSOUTFRONT;

@@ -4,10 +4,10 @@
 #include <XFSCIM.H>
 #include "at.o2xfs.win32.h"
 
-WFSCIMSTATUS Status;
-WFSCIMINPOS Positions[2];
-LPWFSCIMINPOS lppPositions[3];
-LPSTR lpszStatusExtra = "LASTERROR=StClass=00000000\0StCode=00000000\0LastErrorText=OK:none\0";
+static WFSCIMSTATUS Status;
+static WFSCIMINPOS Positions[2];
+static LPWFSCIMINPOS lppPositions[3];
+static LPSTR lpszExtra = "LASTERROR=StClass=00000000\0StCode=00000000\0LastErrorText=OK:none\0";
 
 JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_Status3_120Test_buildStatus3_120(JNIEnv *env, jobject obj) {
 	Status.fwDevice = WFS_CIM_DEVONLINE;
@@ -18,7 +18,7 @@ JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_Status3_120Test_buildStat
 	Status.fwBanknoteReader = WFS_CIM_BNROK;
 	Status.bDropBox = FALSE;
 	Status.lppPositions = lppPositions;
-	Status.lpszExtra = lpszStatusExtra;
+	Status.lpszExtra = lpszExtra;
 
 	int positionIndex = 0;
 	lppPositions[positionIndex] = &Positions[positionIndex];

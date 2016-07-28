@@ -4,9 +4,9 @@
 #include <XFSCIM.H>
 #include "at.o2xfs.win32.h"
 
-WFSCIMDEVICELOCKCONTROL DeviceLockControl;
-WFSCIMUNITLOCKCONTROL UnitLockControl[1];
-LPWFSCIMUNITLOCKCONTROL lpUnitLockControl[2];
+static WFSCIMDEVICELOCKCONTROL DeviceLockControl;
+static WFSCIMUNITLOCKCONTROL UnitLockControl[1];
+static LPWFSCIMUNITLOCKCONTROL lpUnitLockControl[2];
 static LPSTR lpPhysicalPositionName = "COMPARTMENT1";
 
 JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_DeviceLockControl3_120Test_buildDeviceLockControl3_120(JNIEnv *env, jobject obj) {

@@ -4,9 +4,9 @@
 #include <XFSCIM.H>
 #include "at.o2xfs.win32.h"
 
-WFSCIMREP Replenish;
-WFSCIMREPTARGET ReplenishTargets[1];
-LPWFSCIMREPTARGET lpReplenishTargets[2];
+static WFSCIMREP Replenish;
+static WFSCIMREPTARGET ReplenishTargets[1];
+static LPWFSCIMREPTARGET lpReplenishTargets[2];
 
 JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_Replenish3_120Test_buildReplenish3_120(JNIEnv *env, jobject obj) {
 	Replenish.usNumberSource = 1;

@@ -4,7 +4,7 @@
 #include <XFSCIM.H>
 #include "at.o2xfs.win32.h"
 
-WFSCIMREPINFO ReplenishInfo;
+static WFSCIMREPINFO ReplenishInfo;
 
 JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_ReplenishInfo3_120Test_buildReplenishInfo3_120(JNIEnv *env, jobject obj) {
 	ReplenishInfo.usNumberSource = 1;

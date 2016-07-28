@@ -4,8 +4,8 @@
 #include <XFSCIM.H>
 #include "at.o2xfs.win32.h"
 
-WFSCIMCOUNT Count;
-USHORT usCUNumList[] = { 1, 2, 3 };
+static WFSCIMCOUNT Count;
+static USHORT usCUNumList[] = { 1, 2, 3 };
 
 JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_Count3_120Test_buildCount3_120(JNIEnv *env, jobject obj) {
 	Count.usCount = 3;

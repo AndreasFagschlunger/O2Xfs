@@ -4,10 +4,10 @@
 #include <XFSCIM.H>
 #include "at.o2xfs.win32.h"
 
-WFSCIMINCOMPLETEREPLENISH IncompleteReplenish;
-WFSCIMREPRES Replenish;
-WFSCIMREPTARGETRES ReplenishTargetResults[1];
-LPWFSCIMREPTARGETRES lpReplenishTargetResults[2];
+static WFSCIMINCOMPLETEREPLENISH IncompleteReplenish;
+static WFSCIMREPRES Replenish;
+static WFSCIMREPTARGETRES ReplenishTargetResults[1];
+static LPWFSCIMREPTARGETRES lpReplenishTargetResults[2];
 
 JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_IncompleteReplenish3_120Test_buildIncompleteReplenish3_120(JNIEnv *env, jobject obj) {
 	IncompleteReplenish.lpReplenish = &Replenish;

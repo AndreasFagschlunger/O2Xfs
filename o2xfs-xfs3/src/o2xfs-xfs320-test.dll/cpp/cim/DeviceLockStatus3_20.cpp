@@ -4,10 +4,10 @@
 #include <XFSCIM.H>
 #include "at.o2xfs.win32.h"
 
-WFSCIMDEVICELOCKSTATUS DevLockStatus;
-WFSCIMCASHUNITLOCK CashUnitLock[1];
-LPWFSCIMCASHUNITLOCK lpCashUnitLock[2];
-LPSTR lpPhysicalPositionName = "COMPARTMENT2";
+static WFSCIMDEVICELOCKSTATUS DevLockStatus;
+static WFSCIMCASHUNITLOCK CashUnitLock[1];
+static LPWFSCIMCASHUNITLOCK lpCashUnitLock[2];
+static LPSTR lpPhysicalPositionName = "COMPARTMENT2";
 
 JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_DeviceLockStatus3_120Test_buildDeviceLockStatus3_120(JNIEnv *env, jobject obj) {
 	DevLockStatus.wDeviceLockStatus = WFS_CIM_LOCK;
