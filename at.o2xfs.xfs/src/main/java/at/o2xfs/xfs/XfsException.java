@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.o2xfs.common.Assert;
+import at.o2xfs.xfs.bcr.BcrExceptionFactory;
 import at.o2xfs.xfs.cam.CamExceptionFactory;
 import at.o2xfs.xfs.cdm.CdmExceptionFactory;
 import at.o2xfs.xfs.cim.CimExceptionFactory;
@@ -56,6 +57,7 @@ public abstract class XfsException extends Exception {
 		exceptionFactories.add(new SIUServiceExceptionFactory());
 		exceptionFactories.add(new CamExceptionFactory());
 		exceptionFactories.add(new CimExceptionFactory());
+		exceptionFactories.add(new BcrExceptionFactory());
 	}
 
 	private final Enum<? extends XfsConstant> error;

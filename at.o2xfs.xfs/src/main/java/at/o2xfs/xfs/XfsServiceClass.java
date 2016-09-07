@@ -82,7 +82,12 @@ public enum XfsServiceClass implements XfsConstant {
 	/**
 	 * Cash-In Module
 	 */
-	CIM(13L, "CIM");
+	CIM(13L, "CIM"),
+
+	/**
+	 * Barcode Reader
+	 */
+	BCR(15L, "BCR");
 
 	/**
 	 * Class Identifier
