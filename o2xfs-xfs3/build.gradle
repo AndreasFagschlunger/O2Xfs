@@ -90,6 +90,15 @@ task 'javah-xfs310-cim'(type:Exec) {
                 'at.o2xfs.xfs.cim.v3_10.Status3_10Test'
 }
 
+task 'javah-xfs310-bcr'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs310-test.dll/headers/bcr'),
+                'at.o2xfs.xfs.bcr.v3_10.Capabilities3_10Test'
+}
+
 task 'javah-xfs320'(type:Exec) {
     commandLine 'javah',
                 '-cp',

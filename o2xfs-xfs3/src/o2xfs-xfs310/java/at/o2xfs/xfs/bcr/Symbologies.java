@@ -41,6 +41,14 @@ public class Symbologies extends Type implements ValueType<Symbology[]> {
 	}
 
 	@Override
+	protected void assignBuffer(Buffer aBuffer) {
+		super.assignBuffer(aBuffer);
+		for (int i = 0; i < symbologies.length; i++) {
+			symbologies[i] = new WORD(getBuffer().subBuffer(i * WORD.SIZE, WORD.SIZE));
+		}
+	}
+
+	@Override
 	public void set(Symbology[] value) {
 		for (int i = 0; i < value.length; i++) {
 			symbologies[i].set((int) value[i].getValue());
