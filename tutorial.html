@@ -1,0 +1,210 @@
+---
+---
+{% capture main_content %}
+
+## Tutorial
+
+
+```java
+/*
+ * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ * 
+ *   - Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package at.o2xfs.emv.demo.icc;
+
+import java.io.IOException;
+import java.util.List;
+
+import at.o2xfs.common.Hex;
+import at.o2xfs.emv.icc.CAPDU;
+import at.o2xfs.emv.icc.ICReader;
+import at.o2xfs.emv.icc.RAPDU;
+import at.o2xfs.emv.icc.atr.ATR;
+import at.o2xfs.emv.icc.atr.ATRException;
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
+import at.o2xfs.xfs.XfsException;
+import at.o2xfs.xfs.idc.ChipIOStruct;
+import at.o2xfs.xfs.idc.IDCChipProtocol;
+import at.o2xfs.xfs.idc.IDCTrack;
+import at.o2xfs.xfs.idc.WFSIDCCARDDATA;
+import at.o2xfs.xfs.service.XfsServiceManager;
+import at.o2xfs.xfs.service.XfsServiceManagerException;
+import at.o2xfs.xfs.service.idc.IDCService;
+import at.o2xfs.xfs.service.idc.cmd.ChipIOCommand;
+import at.o2xfs.xfs.service.idc.cmd.ReadCardCommand;
+import at.o2xfs.xfs.service.idc.cmd.ReadCardListener;
+
+public class XfsICReader implements ICReader, ReadCardListener {
+
+	private static final Logger LOG = LoggerFactory.getLogger(XfsICReader.class);
+
+	private final XfsServiceManager serviceManager;
+
+	private final IDCService service;
+
+	private boolean running = true;
+
+	private byte[] atr = null;
+
+	private byte[] track2 = null;
+
+	private byte[] track3 = null;
+
+	private IDCChipProtocol chipProtocol = IDCChipProtocol.T0;
+
+	public XfsICReader() throws XfsServiceManagerException {
+		serviceManager = XfsServiceManager.getInstance();
+		service = serviceManager.getService(IDCService.class);
+	}
+
+	@Override
+	public byte[] reset() throws IOException {
+		final String method = "reset()";
+		ReadCardCommand readCardCommand = new ReadCardCommand(service);
+		readCardCommand.addCommandListener(this);
+		readCardCommand.addReadData(IDCTrack.TRACK2);
+		readCardCommand.addReadData(IDCTrack.TRACK3);
+		readCardCommand.addReadData(IDCTrack.CHIP);
+		readCardCommand.execute();
+		synchronized (this) {
+			try {
+				while (running) {
+					wait();
+				}
+			} catch (InterruptedException e) {
+				LOG.error(method, "Interrupted", e);
+			}
+		}
+		try {
+			ATR newATR = new ATR(atr);
+			if (newATR.containsTD(1)) {
+				int protocol = newATR.getTD(1) & 0xF;
+				switch (protocol) {
+					case 1:
+						chipProtocol = IDCChipProtocol.T1;
+						break;
+				}
+			}
+		} catch (ATRException e) {
+			LOG.error(method, "ATR Error: " + Hex.encode(atr), e);
+		}
+		return atr;
+	}
+
+	@Override
+	public void commandCancelled() {
+		synchronized (this) {
+			running = false;
+			notifyAll();
+		}
+	}
+
+	@Override
+	public void commandFailed(Exception e) {
+		final String method = "commandFailed(Exception)";
+		LOG.error(method, "", e);
+		synchronized (this) {
+			running = false;
+			notifyAll();
+		}
+	}
+
+	@Override
+	public void commandSuccessful() {
+		synchronized (this) {
+			running = false;
+			notifyAll();
+		}
+	}
+
+	@Override
+	public void cardInserted() {
+		final String method = "cardInserted()";
+		LOG.info(method, "");
+	}
+
+	@Override
+	public void cardInvalid() {
+		final String method = "cardInvalid()";
+		LOG.info(method, "");
+	}
+
+	@Override
+	public void cardRead(List<WFSIDCCARDDATA> cardData) {
+		final String method = "cardRead(List<WFSIDCCARDDATA>)";
+		for (WFSIDCCARDDATA each : cardData) {
+			LOG.info(method, each);
+			switch (each.getDataSource()) {
+				case CHIP:
+					atr = each.getData();
+					break;
+				case TRACK2:
+					track2 = each.getData();
+					break;
+				case TRACK3:
+					track3 = each.getData();
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	@Override
+	public RAPDU transmit(CAPDU command) throws IOException {
+		return transmit(command.getBytes());
+	}
+
+	@Override
+	public RAPDU transmit(byte[] command) throws IOException {
+		try {
+			if (atr == null) {
+				reset();
+			}
+			ChipIOStruct in = new ChipIOStruct(command);
+			in.setChipProtocol(chipProtocol);
+			ChipIOStruct result = new ChipIOCommand(service, in).call();
+			return new RAPDU(result.getChipData());
+		} catch (XfsException e) {
+			throw new IOException(e);
+		}
+	}
+
+	public byte[] getTrack2() {
+		return track2;
+	}
+
+	public byte[] getTrack3() {
+		return track3;
+	}
+
+}
+```
+
+{% endcapture %}
+
+{% include project_page.html %}
