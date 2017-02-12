@@ -4,5 +4,7 @@ jdk:
 branches:
   only:
     - develop
+before_install:
+ - chmod +x gradlew
 script:
   - ./gradlew build --continue --stacktrace -Dversion=0.0.1.BUILD-SNAPSHOT
