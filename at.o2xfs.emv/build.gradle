@@ -8,6 +8,10 @@ dependencies {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-emv'
+            version version
+
             from components.java
         }
     }

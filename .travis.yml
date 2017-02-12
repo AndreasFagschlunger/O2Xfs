@@ -5,4 +5,4 @@ branches:
   only:
     - develop
 script:
-  - ./gradlew build --continue --stacktrace
+  - ./gradlew build --continue --stacktrace -Dversion=0.0.1.BUILD-SNAPSHOT

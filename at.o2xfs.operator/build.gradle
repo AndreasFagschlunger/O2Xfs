@@ -30,6 +30,10 @@ task dist(type: Zip) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-operator'
+            version version
+
             from components.java
         }
         zip(MavenPublication) {

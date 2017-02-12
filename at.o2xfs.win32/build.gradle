@@ -63,10 +63,34 @@ model {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-win32'
+            version version
+
             from components.java
 
             artifact(file('build/libs/at.o2xfs.win32.dll/shared/release/at.o2xfs.win32.dll')) {
             }
+
+            artifact sourcesJar {
+                classifier 'sources'
+            }
+
+            artifact javadocJar {
+                classifier 'javadoc'
+            }            
         }
     }
+}
+
+// create the javadoc jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+// create the sources jar
+task sourcesJar(type: Jar, dependsOn: compileJava) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
 }

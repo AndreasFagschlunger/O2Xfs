@@ -5,7 +5,31 @@ dependencies {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-common'
+            version version
+
             from components.java
+
+            artifact sourcesJar {
+                classifier 'sources'
+            }
+
+            artifact javadocJar {
+                classifier 'javadoc'
+            }            
         }
     }
+}
+
+// create the javadoc jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+// create the sources jar
+task sourcesJar(type: Jar, dependsOn: compileJava) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
 }

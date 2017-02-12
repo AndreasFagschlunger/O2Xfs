@@ -279,6 +279,10 @@ model {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-xfs3'
+            version version
+
             from components.java
 
             artifact(file('build/libs/o2xfs-xfs3-test.dll/shared/o2xfs-xfs3-test.dll')) {
@@ -287,27 +291,56 @@ publishing {
             }
             artifact(file('build/libs/o2xfs-xfs3-test.dll/shared/o2xfs-xfs3-test.lib')) {
             }
-
+            
             artifact(file('build/libs/o2xfs-xfs310-test.dll/shared/o2xfs-xfs310-test.dll')) {
+            	classifier 'xfs310'
             }
             artifact(file('build/libs/o2xfs-xfs310-test.dll/shared/o2xfs-xfs310-test.exp')) {
+            	classifier 'xfs310'
             }
             artifact(file('build/libs/o2xfs-xfs310-test.dll/shared/o2xfs-xfs310-test.lib')) {
+            	classifier 'xfs310'
             }
 
             artifact(file('build/libs/o2xfs-xfs320-test.dll/shared/o2xfs-xfs320-test.dll')) {
+            	classifier 'xfs320'
             }
             artifact(file('build/libs/o2xfs-xfs320-test.dll/shared/o2xfs-xfs320-test.exp')) {
+            	classifier 'xfs320'
             }
             artifact(file('build/libs/o2xfs-xfs320-test.dll/shared/o2xfs-xfs320-test.lib')) {
+            	classifier 'xfs320'
             }
 
             artifact(file('build/libs/o2xfs-xfs330-test.dll/shared/o2xfs-xfs330-test.dll')) {
+            	classifier 'xfs330'
             }
             artifact(file('build/libs/o2xfs-xfs330-test.dll/shared/o2xfs-xfs330-test.exp')) {
+            	classifier 'xfs330'
             }
             artifact(file('build/libs/o2xfs-xfs330-test.dll/shared/o2xfs-xfs330-test.lib')) {
+            	classifier 'xfs330'
             }
+
+            artifact sourcesJar {
+                classifier 'sources'
+            }
+
+            artifact javadocJar {
+                classifier 'javadoc'
+            }            
         }
     }
+}
+
+// create the javadoc jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+// create the sources jar
+task sourcesJar(type: Jar, dependsOn: compileJava) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
 }

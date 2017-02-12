@@ -7,6 +7,10 @@ dependencies {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-emv-pinpad-impl-xfs'
+            version version
+
             from components.java
         }
     }

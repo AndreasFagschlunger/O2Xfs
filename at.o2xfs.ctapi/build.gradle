@@ -38,6 +38,10 @@ model {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-ctapi'
+            version version
+
             from components.java
         }
     }

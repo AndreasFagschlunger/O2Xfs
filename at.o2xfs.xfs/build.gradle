@@ -91,6 +91,10 @@ model {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-xfs'
+            version version
+
             from components.java
 
             artifact(file('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.dll')) {
@@ -99,6 +103,30 @@ publishing {
             }
             artifact(file('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.lib')) {
             }
+ 
+            artifact sourcesJar {
+                classifier 'sources'
+            }
+
+            artifact javadocJar {
+                classifier 'javadoc'
+            }            
         }
     }
+}
+
+javadoc {
+    failOnError = false
+}
+
+// create the javadoc jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+// create the sources jar
+task sourcesJar(type: Jar, dependsOn: compileJava) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
 }
