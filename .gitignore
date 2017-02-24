@@ -1,6 +1,5 @@
 # Gradle work directory
 .gradle
-gradle.properties
 
 # Build output directies
 */build
