@@ -90,8 +90,4 @@ publishing {
             }
         }
     }
-}'maven_password') ? project.getProperty('maven_password') : ''
-            }
-        }
-    }
 }

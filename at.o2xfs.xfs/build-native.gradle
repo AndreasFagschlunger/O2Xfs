@@ -110,8 +110,4 @@ publishing {
             }
         }
     }
-}sword = project.hasProperty('maven_password') ? project.getProperty('maven_password') : ''
-            }
-        }
-    }
 }

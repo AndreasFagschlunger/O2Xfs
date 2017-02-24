@@ -49,6 +49,4 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 task sourcesJar(type: Jar, dependsOn: compileJava) {
     from sourceSets.main.allSource
     classifier = 'sources'
-}   from sourceSets.main.allSource
-    classifier = 'sources'
 }

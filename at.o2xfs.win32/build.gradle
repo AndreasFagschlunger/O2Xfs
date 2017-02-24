@@ -46,8 +46,4 @@ publishing {
             }
         }
     }
-}y('maven_password') : ''
-            }
-        }
-    }
 }
