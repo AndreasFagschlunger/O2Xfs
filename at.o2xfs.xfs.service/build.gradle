@@ -1,6 +1,6 @@
 test {
     exclude 'at/**'
-} 
+}
 
 dependencies {
     compile project(':o2xfs-xfs3')
@@ -24,7 +24,17 @@ publishing {
 
             artifact javadocJar {
                 classifier 'javadoc'
-            }            
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url "https://repo.fagschlunger.co.at/libs-snapshot-local"
+            credentials {
+                username = project.hasProperty('maven_username') ? project.getProperty('maven_username') : ''
+                password = project.hasProperty('maven_password') ? project.getProperty('maven_password') : ''
+            }
         }
     }
 }
@@ -38,5 +48,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 // create the sources jar
 task sourcesJar(type: Jar, dependsOn: compileJava) {
     from sourceSets.main.allSource
+    classifier = 'sources'
+}   from sourceSets.main.allSource
     classifier = 'sources'
 }

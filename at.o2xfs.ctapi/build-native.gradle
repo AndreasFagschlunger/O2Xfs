@@ -1,0 +1,76 @@
+apply plugin: 'cpp'
+apply plugin: 'maven-publish'
+apply plugin: 'windows-resources'
+
+model {
+    platforms {
+        x86 {
+            architecture "x86"
+        }
+    }
+
+    buildTypes {
+        debug
+        release
+    }
+
+    repositories {
+        libs(PrebuiltLibraries) {
+            jni {
+                def javaHome = System.getenv('JAVA_HOME')
+                if(project.hasProperty('org.gradle.java.home')) {
+                    javaHome = project.getProperty('org.gradle.java.home');
+                }
+                headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
+            }
+            'o2xfs-win32' {
+                headers.srcDir "../at.o2xfs.win32/src/at.o2xfs.win32.dll/headers"
+                binaries.withType(SharedLibraryBinary) {
+                    sharedLibraryFile = file("../at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.win32.lib")
+                }
+            }
+        }
+    }
+
+    components {
+        'at.o2xfs.ctapi.dll'(NativeLibrarySpec) {
+            targetPlatform "x86"
+
+            binaries.all {
+                lib library: 'jni', linkage: 'api'
+                lib library: 'o2xfs-win32', linkage: 'shared'
+                rcCompiler.args "/v"
+                rcCompiler.define "FILE_VERSION=\"" + version.substring(0,3) + "\""
+                rcCompiler.define "COMMA_VERSION=" + version.substring(0,5).replace('.', ',') + ",0"
+                rcCompiler.define "ORG_FILENAME="
+            }
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-ctapi-binaries-x86'
+            version version
+
+            artifact tasks['ctapi-binaries-x86-jar']
+        }
+    }
+
+    repositories {
+        maven {
+            url "https://repo.fagschlunger.co.at/libs-snapshot-local"
+            credentials {
+                username = project.hasProperty('maven_username') ? project.getProperty('maven_username') : ''
+                password = project.hasProperty('maven_password') ? project.getProperty('maven_password') : ''
+            }
+        }
+    }
+}
+
+
+task 'ctapi-binaries-x86-jar'(type: Jar) {
+    from file('build/libs/at.o2xfs.ctapi.dll/shared/release/at.o2xfs.ctapi.dll')
+}

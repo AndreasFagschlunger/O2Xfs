@@ -1,0 +1,117 @@
+apply plugin: 'cpp'
+apply plugin: 'maven-publish'
+apply plugin: 'visual-studio'
+apply plugin: 'windows-resources'
+
+
+def findXfsSdk() {
+    def xfsSdk = 'C:/Program Files (x86)/Common Files/XFS/SDK'
+    if(System.getenv('XFS_SDK') != null) {
+        xfsSdk = System.getenv('XFS_SDK')
+    } else if(project.hasProperty('xfsSdkDir')) {
+        xfsSdk = xfsSdkDir
+    }
+    return xfsSdk;
+}
+
+def xfsSdk = findXfsSdk()
+
+model {
+    platforms {
+        x86 {
+            architecture "x86"
+        }
+    }
+
+    repositories {
+        libs(PrebuiltLibraries) {
+            jni {
+                def javaHome = System.getenv('JAVA_HOME')
+                if(project.hasProperty('org.gradle.java.home')) {
+                    javaHome = project.getProperty('org.gradle.java.home');
+                }
+                headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
+            }
+            msxfs {
+                headers.srcDir "${xfsSdk}/INCLUDE"
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file("${xfsSdk}/LIB/msxfs.lib")
+                }
+            }
+            'o2xfs-win32' {
+                headers.srcDir "../at.o2xfs.win32/src/at.o2xfs.win32.dll/headers"
+                binaries.withType(SharedLibraryBinary) {
+                    sharedLibraryFile = file("../at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.win32.lib")
+                }
+            }
+            xfs_conf {
+                headers.srcDir "${xfsSdk}/INCLUDE"
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file("${xfsSdk}/LIB/xfs_conf.lib")
+                }
+            }
+        }
+    }
+
+    components {
+        'at.o2xfs.xfs.dll'(NativeLibrarySpec) {
+            targetPlatform "x86"
+
+            binaries.all {
+                lib library: 'jni', linkage: 'api'
+                lib library: 'o2xfs-win32', linkage: 'shared'
+                lib library: 'msxfs', linkage: 'static'
+                linker.args 'Gdi32.lib', 'User32.lib'
+                rcCompiler.args "/v"
+                rcCompiler.define "FILE_VERSION=\"" + version.substring(0,3) + "\""
+                rcCompiler.define "COMMA_VERSION=" + version.substring(0,5).replace('.', ',') + ",0"
+                rcCompiler.define "ORG_FILENAME="
+            }
+        }
+
+        'at.o2xfs.xfs.conf.dll'(NativeLibrarySpec) {
+            targetPlatform "x86"
+
+            binaries.all {
+                lib library: 'jni', linkage: 'api'
+                lib library: 'o2xfs-win32', linkage: 'shared'
+                lib library: 'xfs_conf', linkage: 'static'
+                rcCompiler.args "/v"
+                rcCompiler.define "FILE_VERSION=\"" + version.substring(0,3) + "\""
+                rcCompiler.define "COMMA_VERSION=" + version.substring(0,5).replace('.', ',') + ",0"
+                rcCompiler.define "ORG_FILENAME="
+            }
+        }
+    }
+}
+
+task x86Jar(type: Jar) {
+    from file('build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.xfs.dll'),
+         file('build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.xfs.conf.dll')
+}
+
+publishing {
+    publications {
+        x86(MavenPublication) {
+            groupId 'at.o2xfs.xfs'
+            artifactId 'at.o2xfs.xfs.binaries.x86'
+            version version
+
+            artifact x86Jar
+        }
+    }
+
+    repositories {
+        maven {
+            url "https://repo.fagschlunger.co.at/libs-snapshot-local"
+            credentials {
+                username = project.hasProperty('maven_username') ? project.getProperty('maven_username') : ''
+                password = project.hasProperty('maven_password') ? project.getProperty('maven_password') : ''
+            }
+        }
+    }
+}sword = project.hasProperty('maven_password') ? project.getProperty('maven_password') : ''
+            }
+        }
+    }
+}

@@ -1,0 +1,349 @@
+apply plugin: 'cpp'
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'visual-studio'
+
+task 'javah-xfs3'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs3-test.dll/headers'),
+                'at.o2xfs.xfs.cdm.v3_00.Calibrate3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CashUnitError3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CdmCaps3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CdmStatus3Test',
+                'at.o2xfs.xfs.cdm.v3_00.Count3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CountsChanged3Test',
+                'at.o2xfs.xfs.cdm.v3_00.CurrencyExp3Test',
+                'at.o2xfs.xfs.cdm.v3_00.Denominate3Test',
+                'at.o2xfs.xfs.cdm.v3_00.Dispense3Test',
+                'at.o2xfs.xfs.cdm.v3_00.MixTable3Test',
+                'at.o2xfs.xfs.cdm.v3_00.MixType3Test',
+                'at.o2xfs.xfs.cdm.v3_00.PresentStatus3Test',
+                'at.o2xfs.xfs.cdm.v3_00.StartEx3Test',
+                'at.o2xfs.xfs.cdm.v3_00.TellerDetails3Test'
+}
+
+task 'javah-xfs3-cim'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs3-test.dll/headers/cim'),
+                'at.o2xfs.xfs.cim.v3_00.Capabilities3Test',
+                'at.o2xfs.xfs.cim.v3_00.CashInfo3Test',
+                'at.o2xfs.xfs.cim.v3_00.CashInStart3Test',
+                'at.o2xfs.xfs.cim.v3_00.CashInStatus3Test',
+                'at.o2xfs.xfs.cim.v3_00.CashInType3Test',
+                'at.o2xfs.xfs.cim.v3_00.CashUnitError3Test',
+                'at.o2xfs.xfs.cim.v3_00.CountsChanged3Test',
+                'at.o2xfs.xfs.cim.v3_00.CurrencyExp3Test',
+                'at.o2xfs.xfs.cim.v3_00.GetP6Signature3Test',
+                'at.o2xfs.xfs.cim.v3_00.ItemPosition3Test',
+                'at.o2xfs.xfs.cim.v3_00.NoteTypeList3Test',
+                'at.o2xfs.xfs.cim.v3_00.P6Info3Test',
+                'at.o2xfs.xfs.cim.v3_00.P6Signature3Test',
+                'at.o2xfs.xfs.cim.v3_00.StartEx3Test',
+                'at.o2xfs.xfs.cim.v3_00.Status3Test',
+                'at.o2xfs.xfs.cim.v3_00.TellerInfo3Test',
+                'at.o2xfs.xfs.cim.v3_00.TellerUpdate3Test'
+}
+
+task 'javah-xfs310'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs310-test.dll/headers'),
+                'at.o2xfs.xfs.cdm.v3_10.CashUnit3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.CashUnitError3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.CdmCaps3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.CdmStatus3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.DevicePosition3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.PowerSaveChange3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.PowerSaveControl3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.PrepareDispense3_10Test',
+                'at.o2xfs.xfs.cdm.v3_10.SetGuidLight3_10Test'
+}
+
+task 'javah-xfs310-cim'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs310-test.dll/headers/cim'),
+                'at.o2xfs.xfs.cim.v3_10.Capabilities3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.CashIn3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.ConfigureNoteReader3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.ConfigureNoteReaderOut3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.DevicePosition3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.GetItemInfo3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.ItemInfo3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.ItemInfoSummary3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.P6CompareResult3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.P6CompareSignature3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.PositionCapabilities3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.PositionInfo3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.PowerSaveChange3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.PowerSaveControl3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.SetGuidLight3_10Test',
+                'at.o2xfs.xfs.cim.v3_10.Status3_10Test'
+}
+
+task 'javah-xfs310-bcr'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs310-test.dll/headers/bcr'),
+                'at.o2xfs.xfs.bcr.v3_10.Capabilities3_10Test'
+}
+
+task 'javah-xfs320'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs320-test.dll/headers'),
+                'at.o2xfs.xfs.cdm.v3_20.CdmCaps3_20Test',
+                'at.o2xfs.xfs.cdm.v3_20.CdmStatus3_20Test',
+                'at.o2xfs.xfs.cdm.v3_20.ItemNumberList3_20Test'
+}
+
+task 'javah-xfs320-cim'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs320-test.dll/headers/cim'),
+                'at.o2xfs.xfs.cim.v3_20.Capabilities3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.CashCapabilities3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.CashInLimit3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.Count3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.DeviceLockControl3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.DeviceLockStatus3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.IncompleteReplenish3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.PositionCapability3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.Present3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.Replenish3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.ReplenishInfo3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.ReplenishInfoResult3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.ReplenishResult3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.SetMode3_20Test',
+                'at.o2xfs.xfs.cim.v3_20.Status3_20Test'
+}
+
+task 'javah-xfs330'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs330-test.dll/headers'),
+                'at.o2xfs.xfs.cdm.v3_30.AllItemsInfo3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.Blacklist3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.CdmCaps3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.GetAllItemsInfo3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.GetItemInfo3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.IncompleteRetract3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.ItemInfo3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.ItemInfoSummary3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.ShutterStatusChanged3_30Test',
+                'at.o2xfs.xfs.cdm.v3_30.SynchronizeCommand3_30Test'
+}
+
+task 'javah-xfs330-cim'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs330-test.dll/headers/cim'),
+                'at.o2xfs.xfs.cim.v3_30.AllItemsInfo3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.Blacklist3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.Capabilities3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.Deplete3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.DepleteInfo3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.DepleteInfoResult3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.DepleteResult3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.GetAllItemsInfo3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.IncompleteDeplete3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.Inpos3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.ItemInfo3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.ShutterStatusChanged3_30Test',
+                'at.o2xfs.xfs.cim.v3_30.SynchronizeCommand3_30Test'
+}
+
+task javah
+javah.doLast {
+    tasks.getByName('javah-xf3').execute()
+    tasks.getByName('javah-xf3-cim').execute()
+    tasks.getByName('javah-xfs310').execute()
+    tasks.getByName('javah-xfs310-cim').execute()
+    tasks.getByName('javah-xfs320').execute()
+    tasks.getByName('javah-xfs320-cim').execute()
+    tasks.getByName('javah-xfs330').execute()
+    tasks.getByName('javah-xfs330-cim').execute()
+}
+
+model {
+    platforms {
+        x86 {
+            architecture "x86"
+        }
+    }
+
+    buildTypes {
+        debug
+        release
+    }
+
+    binaries {
+        withType(SharedLibraryBinarySpec) {
+            if (toolChain in VisualCpp) {
+                cCompiler.args "/Zi"
+                cCompiler.define "DLL_EXPORT"
+            }
+        }
+    }
+
+    repositories {
+        libs(PrebuiltLibraries) {
+            jni {
+                def javaHome = System.getenv('JAVA_HOME')
+                if(project.hasProperty('org.gradle.java.home')) {
+                    javaHome = project.getProperty('org.gradle.java.home');
+                }
+                headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
+            }
+            'o2xfs-win32' {
+                headers.srcDir "../at.o2xfs.win32/src/at.o2xfs.win32.dll/headers"
+                binaries.withType(SharedLibraryBinary) {
+                    sharedLibraryFile = file("../at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.win32.lib")
+                }
+            }
+            xfs3 {
+                headers.srcDir "${XFS_SDK300}/INCLUDE"
+            }
+            xfs310 {
+                headers.srcDir "${XFS_SDK310}/INCLUDE"
+            }
+            xfs320 {
+                headers.srcDir "${XFS_SDK320}/INCLUDE"
+            }
+            xfs330 {
+                headers.srcDir "${XFS_SDK330}/INCLUDE"
+            }
+        }
+    }
+
+    components {
+        'o2xfs-xfs3-test.dll'(NativeLibrarySpec) {
+            targetPlatform "x86"
+
+            binaries.all {
+                lib library: 'jni', linkage: 'api'
+                lib library: 'o2xfs-win32', linkage: 'shared'
+                lib library: 'xfs3', linkage: 'api'
+            }
+        }
+        'o2xfs-xfs310-test.dll'(NativeLibrarySpec) {
+            targetPlatform "x86"
+
+            binaries.all {
+                lib library: 'jni', linkage: 'api'
+                lib library: 'o2xfs-win32', linkage: 'shared'
+                lib library: 'xfs310', linkage: 'api'
+            }
+        }
+        'o2xfs-xfs320-test.dll'(NativeLibrarySpec) {
+            targetPlatform "x86"
+
+            binaries.all {
+                lib library: 'jni', linkage: 'api'
+                lib library: 'o2xfs-win32', linkage: 'shared'
+                lib library: 'xfs320', linkage: 'api'
+            }
+        }
+        'o2xfs-xfs330-test.dll'(NativeLibrarySpec) {
+            targetPlatform "x86"
+
+            binaries.all {
+                lib library: 'jni', linkage: 'api'
+                lib library: 'o2xfs-win32', linkage: 'shared'
+                lib library: 'xfs330', linkage: 'api'
+            }
+        }
+    }
+}
+
+task 'xfs3-test-x86-jar'(type: Jar) {
+    from file('build/libs/o2xfs-xfs3-test.dll/shared/release/o2xfs-xfs3-test.dll')
+}
+
+task 'xfs310-test-x86-jar'(type: Jar) {
+    from file('build/libs/o2xfs-xfs310-test.dll/shared/release/o2xfs-xfs310-test.dll')
+}
+
+task 'xfs320-test-x86-jar'(type: Jar) {
+    from file('build/libs/o2xfs-xfs320-test.dll/shared/release/o2xfs-xfs320-test.dll')
+}
+
+task 'xfs330-test-x86-jar'(type: Jar) {
+    from file('build/libs/o2xfs-xfs330-test.dll/shared/release/o2xfs-xfs330-test.dll')
+}
+
+publishing {
+    publications {
+        'xfs3-test-x86'(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-xfs3-test-binaries-x86'
+            version version
+
+            artifact tasks['xfs3-test-x86-jar']
+        }
+
+        'xfs310-test-x86'(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-xfs310-test-binaries-x86'
+            version version
+
+            artifact tasks['xfs310-test-x86-jar']
+        }
+
+        'xfs320-test-x86'(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-xfs320-test-binaries-x86'
+            version version
+
+            artifact tasks['xfs320-test-x86-jar']
+        }
+
+        'xfs330-test-x86'(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-xfs330-test-binaries-x86'
+            version version
+
+            artifact tasks['xfs330-test-x86-jar']
+        }
+    }
+
+    repositories {
+        maven {
+            url "https://repo.fagschlunger.co.at/libs-snapshot-local"
+            credentials {
+                username = project.hasProperty('maven_username') ? project.getProperty('maven_username') : ''
+                password = project.hasProperty('maven_password') ? project.getProperty('maven_password') : ''
+            }
+        }
+    }
+}    repositories {
+        maven {
+            url "https://repo.fagschlunger.co.at/libs-snapshot-local"
+            credentials {
+                username = project.hasProperty('maven_username') ? project.getProperty('maven_username') : ''
+                password = project.hasProperty('maven_password') ? project.getProperty('maven_password') : ''
+            }
+        }
+    }
+}

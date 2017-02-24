@@ -27,10 +27,12 @@
 
 package at.o2xfs.xfs.v3_30;
 
+import at.o2xfs.common.Library;
+
 public class BaseXfs3_30Test {
 
 	static {
-		System.loadLibrary("at.o2xfs.win32");
-		System.loadLibrary("o2xfs-xfs330-test");
+		Library.loadLibrary("at.o2xfs.win32");
+		Library.loadLibrary("o2xfs-xfs330-test");
 	}
 }

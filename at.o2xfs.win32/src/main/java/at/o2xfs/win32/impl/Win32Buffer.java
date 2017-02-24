@@ -31,13 +31,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import at.o2xfs.common.Library;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.win32.BufferOverflowException;
 
 final class Win32Buffer extends Buffer {
 
 	static {
-		System.loadLibrary("at.o2xfs.win32");
+		Library.loadLibrary("at.o2xfs.win32");
 	}
 
 	private static final byte[] NULL = new byte[4];

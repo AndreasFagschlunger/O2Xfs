@@ -1,118 +1,6 @@
-apply plugin: 'cpp'
-apply plugin: 'visual-studio'
-apply plugin: 'windows-resources'
-
 dependencies {
     compile project(':at.o2xfs.win32')
     testCompile libraries.junit
-    debugDll project(path: ':at.o2xfs.win32', configuration: 'debugDll')
-    releaseDll project(path: ':at.o2xfs.win32', configuration: 'releaseDll'),
-               files('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.dll')
-}
-
-test {
-    systemProperty 'java.library.path', configurations.releaseDll.collect { it.parentFile.absolutePath }.join(';') + ';' + file('build/libs/at.o2xfs.xfs.dll/shared/release').absolutePath
-}
-
-def findXfsSdk() {
-    def xfsSdk = 'C:/Program Files (x86)/Common Files/XFS/SDK'
-    if(System.getenv('XFS_SDK') != null) {
-        xfsSdk = System.getenv('XFS_SDK')
-    } else if(project.hasProperty('xfsSdkDir')) {
-        xfsSdk = xfsSdkDir
-    }
-    return xfsSdk;
-}
-
-def xfsSdk = findXfsSdk()
-
-model {
-    binaries {
-        withType(SharedLibraryBinarySpec) {
-            if (toolChain in VisualCpp) {
-                cCompiler.args "/Zi"
-                cCompiler.define "DLL_EXPORT"
-            }
-        }
-    }
-
-    repositories {
-        libs(PrebuiltLibraries) {
-            jni {
-                def javaHome = System.getenv('JAVA_HOME')
-                if(project.hasProperty('org.gradle.java.home')) {
-                    javaHome = project.getProperty('org.gradle.java.home');
-                }
-                headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
-            }
-            msxfs {
-                headers.srcDir "${xfsSdk}/INCLUDE"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("${xfsSdk}/LIB/msxfs.lib")
-                }
-            }
-            xfs_conf {
-                headers.srcDir "${xfsSdk}/INCLUDE"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("${xfsSdk}/LIB/xfs_conf.lib")
-                }
-            }
-        }
-    }
-
-    components {
-        'at.o2xfs.xfs.dll'(NativeLibrarySpec) {
-            binaries.all {
-                lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
-                lib library: 'jni', linkage: 'api'
-                lib library: 'msxfs', linkage: 'static'
-                linker.args 'Gdi32.lib', 'User32.lib'
-                rcCompiler.args "/v"
-                rcCompiler.define "FILE_VERSION=\"0.0\""
-                rcCompiler.define "COMMA_VERSION=0,0,0,0"
-                rcCompiler.define "ORG_FILENAME="
-            }
-        }
-
-        'at.o2xfs.xfs.conf.dll'(NativeLibrarySpec) {
-            binaries.all {
-                lib project: ':at.o2xfs.win32', library: 'at.o2xfs.win32.dll'
-                lib library: 'jni', linkage: 'api'
-                lib library: 'xfs_conf', linkage: 'static'
-                rcCompiler.args "/v"
-                rcCompiler.define "FILE_VERSION=\"0.0\""
-                rcCompiler.define "COMMA_VERSION=0,0,0,0"
-                rcCompiler.define "ORG_FILENAME="
-            }
-        }    
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId 'at.o2xfs'
-            artifactId 'o2xfs-xfs'
-            version version
-
-            from components.java
-
-            artifact(file('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.dll')) {
-            }
-            artifact(file('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.exp')) {
-            }
-            artifact(file('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.lib')) {
-            }
- 
-            artifact sourcesJar {
-                classifier 'sources'
-            }
-
-            artifact javadocJar {
-                classifier 'javadoc'
-            }            
-        }
-    }
 }
 
 javadoc {
@@ -129,4 +17,38 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 task sourcesJar(type: Jar, dependsOn: compileJava) {
     from sourceSets.main.allSource
     classifier = 'sources'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-xfs'
+            version version
+
+            from components.java
+
+            artifact sourcesJar {
+                classifier 'sources'
+            }
+
+            artifact javadocJar {
+                classifier 'javadoc'
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url "https://repo.fagschlunger.co.at/libs-snapshot-local"
+            credentials {
+                username = project.hasProperty('maven_username') ? project.getProperty('maven_username') : ''
+                password = project.hasProperty('maven_password') ? project.getProperty('maven_password') : ''
+            }
+        }
+    }
+}rty('maven_password') : ''
+            }
+        }
+    }
 }

@@ -11,6 +11,7 @@ allprojects {
     }
 
     repositories {
+        maven { url "https://repo.fagschlunger.co.at/libs-snapshot-local" }
         mavenCentral()
         mavenLocal()
     }

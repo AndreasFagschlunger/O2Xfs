@@ -1,0 +1,97 @@
+apply plugin: 'cpp'
+apply plugin: 'maven-publish'
+apply plugin: 'visual-studio'
+apply plugin: 'windows-resources'
+
+model {
+    platforms {
+        x86 {
+            architecture "x86"
+        }
+        x64 {
+            architecture "x86_64"
+        }
+    }
+    buildTypes {
+        debug
+        release
+    }
+
+    binaries {
+        all {
+            if (toolChain in VisualCpp && buildType == buildTypes.debug) {
+                cppCompiler.args '/Zi'
+                cppCompiler.define 'DEBUG'
+                linker.args '/DEBUG'
+            }
+        }
+    }
+
+    repositories {
+        libs(PrebuiltLibraries) {
+            jni {
+                def javaHome = System.getenv('JAVA_HOME')
+                if(project.hasProperty('org.gradle.java.home')) {
+                    javaHome = project.getProperty('org.gradle.java.home');
+                }
+                headers.srcDirs "${javaHome}/include", "${javaHome}/include/win32"
+            }
+        }
+    }
+
+    components {
+        'at.o2xfs.win32.dll'(NativeLibrarySpec) {
+            targetPlatform "x86"
+            targetPlatform "x64"
+
+            binaries.all {
+                lib library: "jni", linkage: "api"
+                rcCompiler.args "/v"
+                rcCompiler.define "FILE_VERSION=\"" + version.substring(0,3) + "\""
+                rcCompiler.define "COMMA_VERSION=" + version.substring(0,5).replace('.', ',') + ",0"
+                rcCompiler.define "ORG_FILENAME=\"at.o2xfs.win32.dll\""
+            }
+        }
+    }
+}
+
+task x86Jar(type: Jar) {
+    from file('build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.win32.dll')
+}
+
+task x64Jar(type: Jar) {
+    from file('build/libs/at.o2xfs.win32.dll/shared/x64/release/at.o2xfs.win32.dll')
+}
+
+publishing {
+    publications {
+        x86(MavenPublication) {
+            groupId 'at.o2xfs.win32'
+            artifactId 'at.o2xfs.win32.binaries.x86'
+            version version
+
+            artifact x86Jar
+        }
+        x64(MavenPublication) {
+            groupId 'at.o2xfs.win32'
+            artifactId 'at.o2xfs.win32.binaries.x86_64'
+            version version
+
+            artifact x64Jar
+        }
+    }
+
+    repositories {
+        maven {
+            url "https://repo.fagschlunger.co.at/libs-snapshot-local"
+            credentials {
+                username = project.hasProperty('maven_username') ? project.getProperty('maven_username') : ''
+                password = project.hasProperty('maven_password') ? project.getProperty('maven_password') : ''
+            }
+        }
+    }
+}'maven_password') ? project.getProperty('maven_password') : ''
+            }
+        }
+    }
+}

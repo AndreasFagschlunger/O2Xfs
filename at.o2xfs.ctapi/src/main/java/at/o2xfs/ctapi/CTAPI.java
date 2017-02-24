@@ -28,6 +28,7 @@
 package at.o2xfs.ctapi;
 
 import at.o2xfs.common.Hex;
+import at.o2xfs.common.Library;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.Buffer;
@@ -40,8 +41,8 @@ import at.o2xfs.win32.ZSTR;
 public final class CTAPI {
 
 	static {
-		System.loadLibrary("at.o2xfs.win32");
-		System.loadLibrary("at.o2xfs.ctapi");
+		Library.loadLibrary("at.o2xfs.win32");
+		Library.loadLibrary("at.o2xfs.ctapi");
 	}
 
 	private static final Logger LOG = LoggerFactory.getLogger(CTAPI.class);
@@ -89,10 +90,7 @@ public final class CTAPI {
 		try {
 			return getFunctionAddress0(moduleHandle, new ZSTR(name));
 		} catch (final NativeException e) {
-			throw new RuntimeException(	"Error getting function address: moduleHandle=" + moduleHandle
-												+ ",name="
-												+ name,
-										e);
+			throw new RuntimeException("Error getting function address: moduleHandle=" + moduleHandle + ",name=" + name, e);
 		}
 	}
 
@@ -131,13 +129,7 @@ public final class CTAPI {
 		return rsp;
 	}
 
-	private native int data0(	Pointer address,
-								USHORT ctn,
-								UINT8 dad,
-								UINT8 sad,
-								ByteArray command,
-								USHORT lenr,
-								ByteArray response);
+	private native int data0(Pointer address, USHORT ctn, UINT8 dad, UINT8 sad, ByteArray command, USHORT lenr, ByteArray response);
 
 	public void close(int ctn) throws CTException {
 		final int rc = close0(closeFunctionAddress, new USHORT(ctn));
