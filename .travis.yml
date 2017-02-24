@@ -7,7 +7,7 @@ branches:
 before_install:
  - chmod +x gradlew
 script:
-  - ./gradlew build -x test --continue --stacktrace
+  - ./gradlew clean build publish -x test --continue --stacktrace
 env:
   global:
     - ORG_GRADLE_PROJECT_maven_username=buildmaster
