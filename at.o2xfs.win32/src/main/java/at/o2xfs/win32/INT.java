@@ -30,12 +30,12 @@ package at.o2xfs.win32;
 /**
  * A 32-bit signed integer. The range is -2147483648 through 2147483647 decimal.
  *
- * {@link "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx"}
+ * @see <a href=
+ *      "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx</a>
  *
  * @author Andreas Fagschlunger
  */
-public class INT
-		extends NumberType<Integer> {
+public class INT extends NumberType<Integer> {
 
 	public INT() {
 		super(4);

@@ -30,7 +30,8 @@ package at.o2xfs.win32;
 /**
  * A 16-bit unsigned integer (range: 0 through 65535 decimal).
  *
- * {@link "http://msdn.microsoft.com/en-us/library/aa383751(v=vs.85).aspx"}
+ * @see <a href=
+ *      "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx</a>
  *
  * @author Andreas Fagschlunger
  */

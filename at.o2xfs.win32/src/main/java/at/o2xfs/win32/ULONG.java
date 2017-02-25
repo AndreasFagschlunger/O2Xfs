@@ -30,7 +30,8 @@ package at.o2xfs.win32;
 /**
  * An unsigned LONG. The range is 0 through 4294967295 decimal.
  *
- * {@link "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx"}
+ * @see <a href=
+ *      "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx</a>
  *
  * @author Andreas Fagschlunger
  */

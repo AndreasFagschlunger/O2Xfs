@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * - Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * - Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -26,6 +26,10 @@
  */
 
 package at.o2xfs.xfs.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -58,16 +62,11 @@ import at.o2xfs.xfs.util.Bitmask;
 import at.o2xfs.xfs.util.IXfsCallback;
 import at.o2xfs.xfs.util.MessageHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 /**
  * @author Andreas Fagschlunger
  *
  */
-public class XfsServiceManager
-		implements IXfsCallback {
+public class XfsServiceManager implements IXfsCallback {
 
 	private final static Logger LOG = LoggerFactory.getLogger(XfsServiceManager.class);
 
@@ -153,6 +152,10 @@ public class XfsServiceManager
 		xfsServices.add(xfsService);
 		notifyXfsServiceStarted(xfsService);
 		return xfsService;
+	}
+
+	public void close(XfsService xfsService) {
+		XfsCloseCommand command = new XfsCloseCommand(xfsService);
 	}
 
 	public <E extends XfsService> E getService(final String logicalName, final Class<E> serviceClass) {
@@ -268,10 +271,7 @@ public class XfsServiceManager
 
 	private RequestId register(XfsRegisterCommand registerCommand, XfsEventNotification eventNotification) throws XfsException {
 		XfsService xfsService = registerCommand.getXFSService();
-		RequestId requestId = xfsAPI.wfsAsyncRegister(	xfsService.getService(),
-														Bitmask.of(registerCommand.getEventClasses()),
-														hWnd,
-														hWnd);
+		RequestId requestId = xfsAPI.wfsAsyncRegister(xfsService.getService(), Bitmask.of(registerCommand.getEventClasses()), hWnd, hWnd);
 		requestQueue.addRequest(requestId, eventNotification, registerCommand, null);
 		return requestId;
 	}
@@ -279,10 +279,7 @@ public class XfsServiceManager
 	private RequestId deRegister(XfsDeRegisterCommand deRegisterCommand, XfsEventNotification eventNotification) throws XfsException {
 		XfsService xfsService = deRegisterCommand.getXFSService();
 		XfsEventClass[] eventClasses = deRegisterCommand.getEventClasses();
-		RequestId requestId = xfsAPI.wfsAsyncDeregister(xfsService.getService(),
-														(eventClasses != null ? Bitmask.of(eventClasses) : null),
-														hWnd,
-														hWnd);
+		RequestId requestId = xfsAPI.wfsAsyncDeregister(xfsService.getService(), (eventClasses != null ? Bitmask.of(eventClasses) : null), hWnd, hWnd);
 		requestQueue.addRequest(requestId, eventNotification, deRegisterCommand, null);
 		return requestId;
 	}
@@ -295,16 +292,8 @@ public class XfsServiceManager
 		final XfsService xfsService = openCommand.getXFSService();
 		final DWORD dwTraceLevel = null;
 		final DWORD timeOut = new DWORD(0L);
-		final RequestId requestId = xfsAPI.wfsAsyncOpen(new ZSTR(xfsService.getLogicalName()),
-														hApp,
-														null,
-														dwTraceLevel,
-														timeOut,
-														xfsService.getService(),
-														hWnd,
-														xfsService.getSrvcVersionsRequired(),
-														xfsService.getSrvcVersion(),
-														xfsService.getSPIVersion());
+		final RequestId requestId = xfsAPI.wfsAsyncOpen(new ZSTR(xfsService.getLogicalName()), hApp, null, dwTraceLevel, timeOut, xfsService.getService(), hWnd,
+				xfsService.getSrvcVersionsRequired(), xfsService.getSrvcVersion(), xfsService.getSPIVersion());
 		requestQueue.addRequest(requestId, eventNotification, openCommand, Long.valueOf(timeOut.longValue()));
 		return requestId;
 	}
@@ -322,11 +311,7 @@ public class XfsServiceManager
 		if (timeOut == null) {
 			timeOut = config.getXfsExecuteTimeout(executeCommand);
 		}
-		final RequestId requestId = xfsAPI.wfsAsyncExecute(	executeCommand.getXFSService().getService(),
-															command,
-															executeCommand.getCmdData(),
-															new DWORD(timeOut.longValue()),
-															hWnd);
+		final RequestId requestId = xfsAPI.wfsAsyncExecute(executeCommand.getXFSService().getService(), command, executeCommand.getCmdData(), new DWORD(timeOut.longValue()), hWnd);
 		requestQueue.addRequest(requestId, eventNotification, executeCommand, timeOut);
 		return requestId;
 	}
@@ -337,11 +322,7 @@ public class XfsServiceManager
 		if (timeOut == null) {
 			timeOut = config.getXfsInfoTimeout(infoCommand);
 		}
-		RequestId requestId = xfsAPI.wfsAsyncGetInfo(	infoCommand.getXFSService().getService(),
-														category,
-														infoCommand.getQueryDetails(),
-														new DWORD(timeOut.longValue()),
-														hWnd);
+		RequestId requestId = xfsAPI.wfsAsyncGetInfo(infoCommand.getXFSService().getService(), category, infoCommand.getQueryDetails(), new DWORD(timeOut.longValue()), hWnd);
 		requestQueue.addRequest(requestId, eventNotification, infoCommand, timeOut);
 		return requestId;
 	}

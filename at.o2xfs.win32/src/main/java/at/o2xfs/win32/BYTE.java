@@ -30,13 +30,12 @@ package at.o2xfs.win32;
 /**
  * A byte (8 bits).
  *
- * {@link "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx"}
+ * @see <a href=
+ *      "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx</a>
  *
  * @author Andreas Fagschlunger
  */
-public class BYTE
-		extends BaseType
-		implements ValueType<Byte> {
+public class BYTE extends BaseType implements ValueType<Byte> {
 
 	public BYTE() {
 		super(1);

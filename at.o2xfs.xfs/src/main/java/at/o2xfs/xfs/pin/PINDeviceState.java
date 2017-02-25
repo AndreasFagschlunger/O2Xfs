@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * - Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * - Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -33,51 +33,52 @@ import at.o2xfs.xfs.XfsDeviceState;
 public enum PINDeviceState implements XfsConstant {
 
 	/**
-	 * @see XfsDeviceState#WFS_STAT_DEVONLINE
+	 * {@link XfsDeviceState#ONLINE}
 	 */
 	ONLINE(XfsDeviceState.ONLINE),
 
 	/**
-	 * @see XfsDeviceState#XfsDeviceState
+	 * {@link XfsDeviceState#OFFLINE}
 	 */
 	OFFLINE(XfsDeviceState.OFFLINE),
 
 	/**
-	 * @see XfsDeviceState#XfsDeviceState
+	 * {@link XfsDeviceState#POWEROFF}
 	 */
 	POWEROFF(XfsDeviceState.POWEROFF),
 
 	/**
-	 * @see XfsDeviceState#XfsDeviceState
+	 * {@link XfsDeviceState#BUSY}
 	 */
 	BUSY(XfsDeviceState.BUSY),
 
 	/**
-	 * @see XfsDeviceState#XfsDeviceState
+	 * {@link XfsDeviceState#NODEVICE}
 	 */
 	NODEVICE(XfsDeviceState.NODEVICE),
 
 	/**
-	 * @see XfsDeviceState#XfsDeviceState
+	 * {@link XfsDeviceState#HWERROR}
 	 */
 	HWERROR(XfsDeviceState.HWERROR),
 
 	/**
-	 * @see XfsDeviceState#XfsDeviceState
+	 * {@link XfsDeviceState#USERERROR}
 	 */
 	USERERROR(XfsDeviceState.USERERROR),
 
 	/**
 	 * The device is present but has detected a fraud attempt.
-	 * 
-	 * @see XfsDeviceState#XfsDeviceState
+	 *
+	 * {@link XfsDeviceState#FRAUDATTEMPT}
+	 *
 	 * @since 3.10
 	 */
 	FRAUDATTEMPT(XfsDeviceState.FRAUDATTEMPT),
 
 	/**
 	 * {@link XfsDeviceState#POTENTIALFRAUD}
-	 * 
+	 *
 	 * @since 3.20
 	 */
 	POTENTIALFRAUD(XfsDeviceState.POTENTIALFRAUD);

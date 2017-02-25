@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * - Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * - Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -27,6 +27,10 @@
 
 package at.o2xfs.xfs.conf;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.DWORD;
@@ -35,10 +39,6 @@ import at.o2xfs.win32.HKEY;
 import at.o2xfs.win32.Type;
 import at.o2xfs.win32.ZSTR;
 import at.o2xfs.xfs.XfsException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Andreas Fagschlunger
@@ -52,8 +52,7 @@ public class O2XfsConf {
 
 	private final static Logger LOG = LoggerFactory.getLogger(O2XfsConf.class);
 
-	private class ValuePair
-			implements Map.Entry<String, String> {
+	private class ValuePair implements Map.Entry<String, String> {
 
 		private String name = null;
 
@@ -163,7 +162,7 @@ public class O2XfsConf {
 	 * Enumerates the subkeys of the specified open key. Retrieves information
 	 * about one subkey each time it is called.
 	 *
-	 * @param hKey
+	 * @param key
 	 *            Handle to a currently open key, or the predefined handle
 	 *            value: {@link #WFS_CFG_HKEY_XFS_ROOT}
 	 * @return the name of the subkey

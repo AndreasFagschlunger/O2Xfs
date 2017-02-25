@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -43,7 +43,7 @@ public final class Bytes {
 
 	/**
 	 * Concatenates the specified arrays.
-	 * 
+	 *
 	 * @param arrays
 	 *            the arrays to concatenate
 	 * @return the concatenation of the specified arrays
@@ -64,7 +64,7 @@ public final class Bytes {
 
 	/**
 	 * Concatenates the arrays in the specified list.
-	 * 
+	 *
 	 * @param list
 	 *            the list containing the arrays to concatenate
 	 * @return the concatenation of the arrays in the specified list
@@ -85,11 +85,11 @@ public final class Bytes {
 
 	/**
 	 * Copies the specified array.
-	 * 
-	 * @param the
-	 *            array to copy
+	 *
+	 * @param bytes
+	 *            the array to copy
 	 * @return the copy of the specified array
-	 * 
+	 *
 	 * @throws NullPointerException
 	 *             if <code>bytes</code> is null
 	 */
@@ -101,14 +101,14 @@ public final class Bytes {
 
 	/**
 	 * Converts the specified <code>byte</code> to a <code>unsigned int</code>.
-	 * 
+	 *
 	 * e.g.
-	 * 
+	 *
 	 * <code>
-	 * <br />byte b = -1; // 0xFF
-	 * <br />int i = Bytes.toInt(b); // i = 255
+	 * <br>byte b = -1; // 0xFF
+	 * <br>int i = Bytes.toInt(b); // i = 255
 	 * </code>
-	 * 
+	 *
 	 * @param b
 	 *            the <code>byte</code> to convert
 	 * @return the specified <code>byte</code> converted to a
@@ -120,7 +120,7 @@ public final class Bytes {
 
 	/**
 	 * Gets the leftmost <code>length</code> bytes
-	 * 
+	 *
 	 * @param value
 	 *            the value to get the leftmost bytes from
 	 * @param length
@@ -135,7 +135,7 @@ public final class Bytes {
 
 	/**
 	 * Gets the rightmost <code>length</code> bytes
-	 * 
+	 *
 	 * @param value
 	 *            the value to get the rightmost bytes from
 	 * @param length
@@ -151,7 +151,7 @@ public final class Bytes {
 	/**
 	 * Left pad a byte array with zeros. The byte array is padded to the length
 	 * of <code>length</code>.
-	 * 
+	 *
 	 * @param value
 	 *            the byte array to pad out
 	 * @param length
@@ -165,7 +165,7 @@ public final class Bytes {
 	/**
 	 * Left pad a byte array with a specified byte. The byte array is padded to
 	 * the length of <code>length</code>.
-	 * 
+	 *
 	 * @param value
 	 *            the byte array to pad out
 	 * @param length
@@ -184,7 +184,7 @@ public final class Bytes {
 	/**
 	 * Right pad a byte array with zeros. The byte array is padded to the length
 	 * of <code>length</code>.
-	 * 
+	 *
 	 * @param value
 	 *            the byte array to pad out
 	 * @param length
@@ -198,7 +198,7 @@ public final class Bytes {
 	/**
 	 * Right pad a byte array with a specified byte. The byte array is padded to
 	 * the length of <code>length</code>.
-	 * 
+	 *
 	 * @param value
 	 *            the byte array to pad out
 	 * @param length
@@ -216,7 +216,7 @@ public final class Bytes {
 
 	/**
 	 * Gets <code>len</code> bytes from the middle of a byte array.
-	 * 
+	 *
 	 * @param value
 	 *            the source array
 	 * @param pos

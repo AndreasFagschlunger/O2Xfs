@@ -104,7 +104,7 @@ public class XfsVersion implements Comparable<XfsVersion> {
 	 * Greater than or equal to
 	 *
 	 * @param version
-	 * @return true if {@link #compareTo(XfsVersion)} returns >= 0, false
+	 * @return true if {@link #compareTo(XfsVersion)} returns &gt;= 0, false
 	 *         otherwise
 	 */
 	public boolean isGE(final XfsVersion version) {

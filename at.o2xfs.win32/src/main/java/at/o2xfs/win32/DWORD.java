@@ -30,12 +30,12 @@ package at.o2xfs.win32;
 /**
  * A 32-bit unsigned integer. The range is 0 through 4294967295 decimal.
  *
- * {@link "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx"}
+ * @see <a href=
+ *      "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx</a>
  *
  * @author Andreas Fagschlunger
  */
-public class DWORD
-		extends UINT {
+public class DWORD extends UINT {
 
 	/**
 	 * The high-order word from this DWORD

@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * - Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * - Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -32,7 +32,7 @@ import at.o2xfs.xfs.XfsConstant;
 public enum SIUEnhancedAudioControllerState implements XfsConstant {
 
 	/**
-	 * 
+	 *
 	 */
 	NOT_AVAILABLE(0x0000L),
 
@@ -40,8 +40,8 @@ public enum SIUEnhancedAudioControllerState implements XfsConstant {
 	 * The Enhanced Audio Controller is in manual mode and is in the public
 	 * state (i.e. audio will be played through speakers). Activating a Privacy
 	 * Device (headset connected/handset off-hook) will have no impact, i.e.
-	 * Output will remain through the speakers & no audio will be directed to
-	 * the Privacy Device.
+	 * Output will remain through the speakers &amp; no audio will be directed
+	 * to the Privacy Device.
 	 */
 	PUBLICAUDIO_MANUAL(0x0001L),
 

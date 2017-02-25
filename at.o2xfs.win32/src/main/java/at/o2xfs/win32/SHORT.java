@@ -30,12 +30,12 @@ package at.o2xfs.win32;
 /**
  * A 16-bit integer. The range is –32768 through 32767 decimal.
  *
- * {@link "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx"}
+ * @see <a href=
+ *      "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx</a>
  *
  * @author Andreas Fagschlunger
  */
-public class SHORT
-		extends NumberType<Short> {
+public class SHORT extends NumberType<Short> {
 
 	public SHORT() {
 		super(1 << 1);

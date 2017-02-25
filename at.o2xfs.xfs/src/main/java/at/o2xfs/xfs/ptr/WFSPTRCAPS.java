@@ -220,7 +220,7 @@ public class WFSPTRCAPS extends Struct {
 
 	/**
 	 * Specifies the logical service class, value is:
-	 * {@link XfsServiceClass#WFS_SERVICE_CLASS_PTR}
+	 * {@link XfsServiceClass#PTR}
 	 */
 	public XfsServiceClass getServiceClass() {
 		return XfsConstants.valueOf(clazz, XfsServiceClass.class);

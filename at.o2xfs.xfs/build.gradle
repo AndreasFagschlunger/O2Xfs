@@ -3,10 +3,6 @@ dependencies {
     testCompile libraries.junit
 }
 
-javadoc {
-    failOnError = false
-}
-
 // create the javadoc jar
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir

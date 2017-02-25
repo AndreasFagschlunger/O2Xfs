@@ -275,7 +275,7 @@ public class XfsAPI {
 	 *            WFSAsyncOpen.
 	 * @param dwCategory
 	 *            See WFSGetInfo.
-	 * @param lpQueryDetails
+	 * @param queryDetails
 	 *            See WFSGetInfo.
 	 * @param dwTimeOut
 	 *            Number of milliseconds to wait for completion
@@ -284,8 +284,6 @@ public class XfsAPI {
 	 * @param hWnd
 	 *            The window handle which is to receive the completion message
 	 *            for this request.
-	 * @param requestId
-	 *            The request identifier for this request (returned parameter).
 	 */
 	public RequestId wfsAsyncGetInfo(final HSERVICE hService, final DWORD dwCategory, final Type queryDetails, final DWORD dwTimeOut, final HWND hWnd) throws XfsException {
 		final String method = "wfsAsyncGetInfo(HSERVICE, DWORD, Type, DWORD, HWND)";

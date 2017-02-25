@@ -30,13 +30,12 @@ package at.o2xfs.win32;
 /**
  * An 8-bit Windows (ANSI) character.
  *
- * {@link "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx"}
+ * @see <a href=
+ *      "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx</a>
  *
  * @author Andreas Fagschlunger
  */
-public class CHAR
-		extends BaseType
-		implements ValueType<Character> {
+public class CHAR extends BaseType implements ValueType<Character> {
 
 	public CHAR() {
 		super(1);
@@ -45,7 +44,8 @@ public class CHAR
 	/**
 	 * Sets the specified <code>char</code> value.
 	 *
-	 * @param c a <code>char</code> value
+	 * @param c
+	 *            a <code>char</code> value
 	 */
 	public void set(char c) {
 		put(new byte[] { (byte) c });

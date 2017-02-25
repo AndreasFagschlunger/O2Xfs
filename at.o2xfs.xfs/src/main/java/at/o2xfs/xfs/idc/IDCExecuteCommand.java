@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * - Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * - Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -115,8 +115,6 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * characters are returned to the application, and are also converted to 8
 	 * bit ASCII form. In addition to that, a security check via a security
 	 * module (i.e., MM, CIM86) can be requested.
-	 * 
-	 * @see WFSIDCCARDDATA
 	 */
 	READ_RAW_DATA(207L),
 
@@ -129,8 +127,6 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * data to the respective tracks. The application must pass the magnetic
 	 * stripe data in ASCII without any sentinels. The data will be converted by
 	 * the service provider. This procedure is followed by data verification.
-	 * 
-	 * @see WFSIDCCARDDATA
 	 */
 	WRITE_RAW_DATA(208L),
 
@@ -139,8 +135,6 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * sent from the application to the chip and the response of the chip is
 	 * returned transparently to the application. The ATR of the chip must be
 	 * obtained before issuing this command by issuing a Read Command.
-	 * 
-	 * @see WFSIDCCHIPIO
 	 */
 	CHIP_IO(209L),
 
@@ -149,7 +143,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * will attempt to return the IDC device to a known good state. This command
 	 * does not over-ride a lock obtained by another application or service
 	 * handle.
-	 * 
+	 *
 	 * The device will attempt to either retain, eject or will perform no action
 	 * on any cards found in the IDC as specified in the lpwResetIn parameter.
 	 * It may not always be possible to retain or eject the items as specified
@@ -157,7 +151,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * WFS_SRVE_IDC_MEDIADETECTED event will inform the application where card
 	 * was actually moved to. If no action is specified the card will not be
 	 * moved even if this means that the IDC cannot be recovered.
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	RESET(210L),
@@ -166,7 +160,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	 * This command handles the power actions that can be done on the chip. This
 	 * command is only used after the chip has been contacted for the first time
 	 * using the WFS_CMD_IDC_READ_RAW_DATA command.
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	CHIP_POWER(211L),
@@ -174,7 +168,7 @@ public enum IDCExecuteCommand implements XfsConstant {
 	/**
 	 * This command takes form name and the output of a successful
 	 * WFS_CMD_IDC_READ_RAW_DATA command and returns the parsed string.
-	 * 
+	 *
 	 * @since 3.00
 	 */
 	PARSE_DATA(212L),

@@ -33,13 +33,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * A pointer to a null-terminated string of 8-bit Windows (ANSI) characters.
  *
- * {@link "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx"}
+ * @see <a href=
+ *      "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx</a>
  *
  * @author Andreas Fagschlunger
  */
-public class LPSTR
-		extends Pointer
-		implements ASCII, ValueType<String> {
+public class LPSTR extends Pointer implements ASCII, ValueType<String> {
 
 	public LPSTR() {
 		super();
@@ -51,7 +50,8 @@ public class LPSTR
 
 	/**
 	 * Makes this <code>Pointer</code> point to a {@link ZSTR} with the
-	 * specified <code>String</code> value or points to <code>NULL</code> if no <code>String</code> is given.
+	 * specified <code>String</code> value or points to <code>NULL</code> if no
+	 * <code>String</code> is given.
 	 *
 	 * @param value
 	 *            a <code>String</code> or <code>null</code>
@@ -66,6 +66,8 @@ public class LPSTR
 	}
 
 	/**
+	 * @param s
+	 *            a <code>String</code> or <code>null</code>
 	 * @deprecated use {@link #set(String)} instead
 	 */
 	@Deprecated
