@@ -9,7 +9,7 @@ environment:
     secure: 5tyikQFuCQgJXFduL6baTVKw+pGrAkRd70TjT82xE+c=
 
 install:
-  - ps: -File ./xfs-sdk.ps1
+  - ps: ./xfs-sdk.ps1
 
 build_script:
   - cmd: .\gradlew.bat -b at.o2xfs.win32\build-native.gradle clean build publish
