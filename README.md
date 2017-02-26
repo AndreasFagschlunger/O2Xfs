@@ -6,6 +6,7 @@ Java API for accessing CEN/XFS API, EMV Level 2 Kernel
 ## Code Status
 
 [![Build Status](https://api.travis-ci.org/AndreasFagschlunger/O2Xfs.svg?branch=develop)](https://travis-ci.org/AndreasFagschlunger/O2Xfs/)
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/AndreasFagschlunger/o2xfs)](https://ci.appveyor.com/project/AndreasFagschlunger/o2xfs)
 
 ## at.o2xfs.common
 This project contains common utility classes.
