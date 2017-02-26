@@ -3,12 +3,10 @@ branches:
     - develop
 
 environment:
+  JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
   ORG_GRADLE_PROJECT_maven_username: buildmaster
   ORG_GRADLE_PROJECT_maven_password:
     secure: 5tyikQFuCQgJXFduL6baTVKw+pGrAkRd70TjT82xE+c=
-
-matrix:
-  - JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
 
 install:
   - ps: Start-FileDownload 'ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA14050/sdk303.zip' -FileName 'C:/Temp/sdk303.zip'
