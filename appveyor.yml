@@ -1,0 +1,21 @@
+branches:
+  only:
+    - develop
+
+environment:
+  ORG_GRADLE_PROJECT_maven_username: buildmaster
+  ORG_GRADLE_PROJECT_maven_password:
+    secure: 5tyikQFuCQgJXFduL6baTVKw+pGrAkRd70TjT82xE+c=
+
+matrix:
+  - JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
+
+install:
+  - ps: Start-FileDownload 'ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA14050/sdk303.zip' -FileName 'C:/Temp/sdk303.zip'
+  - ps: Start-FileDownload 'ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA15748/XFS310SDKInstall.zip' -FileName 'C:/Temp/XFS310SDKInstall.zip'
+  - ps: Start-FileDownload 'ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA16374/SDK320.zip' -FileName 'C:/Temp/SDK320.zip'
+  - ps: Start-FileDownload 'ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA16926/SDK330.zip' -FileName 'C:/Temp/SDK330.zip'
+
+build_script:
+  - cmd: cd at.o2xfs.win32
+  - cmd: ..\gradlew.bat -b build-native.gradle clean build publish
