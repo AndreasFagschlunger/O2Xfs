@@ -10,7 +10,6 @@ environment:
 
 install:
   - ps: .\xfs-sdk.ps1
-  - cmd: powershell.exe -ExecutionPolicy Bypass -File .\xfs-sdk.ps1
 
 build_script:
   - cmd: .\gradlew.bat -b at.o2xfs.win32\build-native.gradle clean build publish
