@@ -20,7 +20,7 @@ Invoke-WebRequest 'https://repo.fagschlunger.co.at/install/eu/cencenelec/XFS/SDK
 & "$zipExe" e -o"$path" -r "$path\Install.EXE" XFS_Manager_SDK.msi Data1.cab
 & msiexec /a "$path\XFS_Manager_SDK.msi" /qb TARGETDIR='"'$path'\SDK303"'
 
-& "$zipExe" e -o"$path" -r '$path\XFS310SDKInstall.zip' XFS310SDKInstall.exe
+& "$zipExe" e -o"$path" -r "$path\XFS310SDKInstall.zip" XFS310SDKInstall.exe
 & "$path\XFS310SDKInstall.exe" /a /s /v'/qn TARGETDIR=\"'$path'\SDK310\"'
 
 & "$zipExe" e -o"$path" -r "$path\SDK320.zip"
