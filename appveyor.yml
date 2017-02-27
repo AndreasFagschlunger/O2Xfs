@@ -13,7 +13,7 @@ install:
 
 build_script:
   - cmd: .\gradlew.bat -b at.o2xfs.win32\build-native.gradle clean build publish
-  - cmd: .\gradlew.bat -b at.o2xfs.xfs\build-native.gradle clean build publish -DxfsSdkDir="C:/XFS SDKs/SDK303/Common/XFS/SDK"
-  - cmd: .\gradlew.bat -b o2xfs-xfs3\build-native.gradle clean build publish -DXFS_SDK300="C:/XFS SDKs/SDK303/Common/XFS/SDK" -DXFS_SDK310="C:/XFS SDKs/SDK310/Common/XFS/SDK" -DXFS_SDK320="C:/XFS SDKs/SDK320/XFS/SDK" -DXFS_SDK330="C:/XFS SDKs/SDK330/XFS/SDK"
+  - cmd: .\gradlew.bat -b at.o2xfs.xfs\build-native.gradle clean build publish -PxfsSdkDir="C:/XFS SDKs/SDK303/Common/XFS/SDK"
+  - cmd: .\gradlew.bat -b o2xfs-xfs3\build-native.gradle clean build publish -PXFS_SDK300="C:/XFS SDKs/SDK303/Common/XFS/SDK" -PXFS_SDK310="C:/XFS SDKs/SDK310/Common/XFS/SDK" -PXFS_SDK320="C:/XFS SDKs/SDK320/XFS/SDK" -PXFS_SDK330="C:/XFS SDKs/SDK330/XFS/SDK"
   - cmd: .\gradlew.bat -b at.o2xfs.ctapi\build-native.gradle clean build publish
   - cmd: .\gradlew.bat clean build publish
