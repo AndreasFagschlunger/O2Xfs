@@ -8,6 +8,8 @@ if($args.count -gt 1) {
   $zipExe = $args[1] + '\' + $zipExe
 }
 
+[Net.ServicePointManager]::SecurityProtocol = 'Tls12'
+
 New-Item -ItemType 'directory' -Force -Path $path
 Invoke-WebRequest 'https://repo.fagschlunger.co.at/install/eu/cencenelec/XFS/sdk303.zip' -OutFile "$path\sdk303.zip"
 Invoke-WebRequest 'https://repo.fagschlunger.co.at/install/eu/cencenelec/XFS/XFS310SDKInstall.zip' -OutFile "$path\XFS310SDKInstall.zip"
