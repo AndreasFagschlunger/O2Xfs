@@ -7,8 +7,4 @@ branches:
 before_install:
  - chmod +x gradlew
 script:
-  - ./gradlew clean build publish -x test --continue --stacktrace
-env:
-  global:
-    - ORG_GRADLE_PROJECT_maven_username=buildmaster
-    - secure: uDLQWCCe0C/el7AFSIv2MIok5rZ3vUb60DH7DCjz8IzxI33oMLidysPTLBpHorBmnhdL2qHxlznPoiXb6q29BxdHDIwQ5YYzqZVT5r1Pbc7d8+Cy7guSQtENtsc5i+5s48Xc+WO1N9DTypfp2pgxLm6+2/xIuMNMKrFkVKV9YKgKJxrRUxD+1HEniIrqmhlyd5DDXHHhMXBaqqK1tSH5CiDuPnu6Nm30zEpQuacp4vXmdR5CrlRJo+wDr076m9xb/Poc/ur4leBNuprtPv+Umpk2ry6kaC9t0KLSZ0HVZHfMhe7eIrQ74QhkoK/FbLxaRFvkh7vZ6xcr7OlbhlHleShFpd8d4IWyYhSkwIcae7CdQD0hf6gmkAjpslmvYrvkW1q3Y4O0Dv13Pl7Yo9t7pmGpZAFcJNqA1eIsHQjnPm5PEmlkmeWEEpK1lWECodGkiGWLEaIsP5N1d4OgTDMFI7fC9Zo19Wd5o2q3PsDR4sRG6tJGcsJOk4XK67fNC294BjpER13Sq09XAwwAxSaIstkKvPhU1JhLPW+FJZ2c7TQ2koOxWLaZqFIWnwZ1EhNAc4pbzSLQelpFymmFse7IxHlRtZYUg111iCH0HtmEiwnBajp2KIooYdjvVwmY30ey1g48hDhswQ9oEp7tKIG9neNw6UVZvxVcjPstEp1IUPo=
+  - ./gradlew clean build -x test --continue --stacktrace
