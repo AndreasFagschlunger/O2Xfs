@@ -222,16 +222,16 @@ model {
                 }
             }
             xfs3 {
-                headers.srcDir "${XFS_SDK300}/INCLUDE"
+                headers.srcDir project.hasProperty('XFS_SDK300') ? project.getProperty('XFS_SDK300') + '/INCLUDE' : 'C:/XFS SDKs/SDK303/Common/XFS/SDK/INCLUDE'
             }
             xfs310 {
-                headers.srcDir "${XFS_SDK310}/INCLUDE"
+                headers.srcDir project.hasProperty('XFS_SDK310') ? project.getProperty('XFS_SDK310') + '/INCLUDE' : 'C:/XFS SDKs/SDK310/Common/XFS/SDK/INCLUDE'
             }
             xfs320 {
-                headers.srcDir "${XFS_SDK320}/INCLUDE"
+                headers.srcDir project.hasProperty('XFS_SDK320') ? project.getProperty('XFS_SDK320') + '/INCLUDE' : 'C:/XFS SDKs/SDK320/XFS/SDK/INCLUDE'
             }
             xfs330 {
-                headers.srcDir "${XFS_SDK330}/INCLUDE"
+                headers.srcDir project.hasProperty('XFS_SDK330') ? project.getProperty('XFS_SDK330') + '/INCLUDE' : 'C:/XFS SDKs/SDK330/XFS/SDK/INCLUDE'
             }
         }
     }

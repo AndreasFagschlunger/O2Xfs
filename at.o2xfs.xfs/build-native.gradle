@@ -6,6 +6,9 @@ apply plugin: 'windows-resources'
 
 def findXfsSdk() {
     def xfsSdk = 'C:/Program Files (x86)/Common Files/XFS/SDK'
+    if(!file(xfsSdk).exists()) {
+        xfsSdk = 'C:/XFS SDKs/SDK303/Common/XFS/SDK'
+    }
     if(System.getenv('XFS_SDK') != null) {
         xfsSdk = System.getenv('XFS_SDK')
     } else if(project.hasProperty('xfsSdkDir')) {
