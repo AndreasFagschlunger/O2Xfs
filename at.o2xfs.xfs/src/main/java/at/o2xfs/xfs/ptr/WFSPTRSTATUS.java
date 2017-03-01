@@ -1,21 +1,21 @@
 /*
- * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ * Copyright (c) 2017, Andreas Fagschlunger. All rights reserved.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
- * - Redistributions of source code must retain the above copyright
- * notice, this list of conditions and the following disclaimer.
- * 
- * - Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- * 
+ *
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *   - Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -126,7 +126,7 @@ public class WFSPTRSTATUS
 
 	/**
 	 * Specifies the state of the print device as one of the following flags: {@link PTRDeviceState}
-	 * 
+	 *
 	 * @since 2.00
 	 */
 	public PTRDeviceState getDevice() {
@@ -137,7 +137,7 @@ public class WFSPTRSTATUS
 	 * Specifies the state of the print media (i.e. receipt, statement,
 	 * passbook, etc.) as one of the following values. This field does not apply
 	 * to journal printers: {@link PTRMedia}
-	 * 
+	 *
 	 * @since 2.00
 	 */
 	public PTRMedia getMedia() {
@@ -164,7 +164,7 @@ public class WFSPTRSTATUS
 	/**
 	 * Specifies the state of the toner or ink supply or the state of the ribbon
 	 * as one of the following values: {@link PTRToner}
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	public PTRToner getToner() {
@@ -174,7 +174,7 @@ public class WFSPTRSTATUS
 	/**
 	 * Specifies the status of the stamping ink in the printer as one of the
 	 * following values: {@link PTRInk}
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	public PTRInk getInk() {
@@ -184,7 +184,7 @@ public class WFSPTRSTATUS
 	/**
 	 * Specifies the status of the printer imaging lamp as one of the following
 	 * values: {@link PTRLamp}
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	public PTRLamp getLamp() {
@@ -192,7 +192,7 @@ public class WFSPTRSTATUS
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public List<WFSPTRRETRACTBINS> getRetractBins() {
@@ -214,7 +214,7 @@ public class WFSPTRSTATUS
 	/**
 	 * The number of media on stacker; applicable only to printers with stacking
 	 * capability.
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	public int getMediaOnStacker() {
@@ -223,7 +223,7 @@ public class WFSPTRSTATUS
 
 	/**
 	 * Pointer to a list of vendor-specific, or any other extended, information.
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	public Map<String, String> getExtra() {
@@ -245,7 +245,7 @@ public class WFSPTRSTATUS
 	 * is not in its normal operating position (i.e. WFS_PTR_DEVICEINPOSITION)
 	 * then media may not be presented through the normal customer interface.
 	 * This value is one of the following values: {@link PTRDevicePosition}
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	public PTRDevicePosition getDevicePosition() {
@@ -257,7 +257,7 @@ public class WFSPTRSTATUS
 	 * its normal operational state from the current power saving mode. This
 	 * value is zero if either the power saving mode has not been activated or
 	 * no power save control is supported.
-	 * 
+	 *
 	 * @since 3.10
 	 */
 	public int getPowerSaveRecoveryTime() {
@@ -268,7 +268,7 @@ public class WFSPTRSTATUS
 	 * Specifies the type of paper loaded in the device. A number of paper types
 	 * are defined below. Vendor specific paper types are defined starting from
 	 * the end of the array. The maximum paper index is WFS_PTR_SUPPLYMAX.
-	 * 
+	 *
 	 * @since 3.20
 	 */
 	public PTRPaperType[] getPaperType() {
@@ -287,7 +287,7 @@ public class WFSPTRSTATUS
 	/**
 	 * Specifies the state of the anti-fraud module as one of the following
 	 * values: {@link PTRAntiFraudModule}
-	 * 
+	 *
 	 * @since 3.20
 	 */
 	public PTRAntiFraudModule getAntiFraudModule() {

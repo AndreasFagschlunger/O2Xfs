@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
+ * Copyright (c) 2017, Andreas Fagschlunger. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -161,7 +161,7 @@ JNIEXPORT jlong JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsGetInfo0(JNIEnv *env, jobjec
 		lpQueryDetails = GetTypeAddress(env, queryDetailsObj);
 	}
 	DWORD dwTimeOut = (*(LPDWORD) GetTypeAddress(env, dwTimeOutObj));
-	LPWFSRESULT* lppResult = (LPWFSRESULT*) GetTypeAddress(env, resultObj);	
+	LPWFSRESULT* lppResult = (LPWFSRESULT*) GetTypeAddress(env, resultObj);
 	return WFSGetInfo(hService, dwCategory, lpQueryDetails, dwTimeOut, lppResult);
 }
 

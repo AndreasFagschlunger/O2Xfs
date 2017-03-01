@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
+ * Copyright (c) 2017, Andreas Fagschlunger. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -71,7 +71,7 @@ O2XFSWIN32_API jobject NewBuffer(JNIEnv *env, LPVOID address, jint size) {
 	jclass factoryClass = env->FindClass("at/o2xfs/win32/BufferFactory");
 	jmethodID getInstanceMethod = env->GetStaticMethodID(factoryClass, "getInstance", "()Lat/o2xfs/win32/BufferFactory;");
 	jmethodID createBufferMethod = env->GetMethodID(factoryClass, "createBuffer", "([BI)Lat/o2xfs/win32/Buffer;");
-	jobject factoryObj = env->CallStaticObjectMethod(factoryClass, getInstanceMethod);	
+	jobject factoryObj = env->CallStaticObjectMethod(factoryClass, getInstanceMethod);
 	jbyteArray addressArray = env->NewByteArray(sizeof(address));
 	env->SetByteArrayRegion(addressArray, 0, env->GetArrayLength(addressArray), (jbyte*) &address);
 	result = env->CallObjectMethod(factoryObj, createBufferMethod, addressArray, size);

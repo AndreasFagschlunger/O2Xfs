@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2014, Andreas Fagschlunger. All rights reserved.
- * 
+ * Copyright (c) 2017, Andreas Fagschlunger. All rights reserved.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *   - Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *   - Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 package at.o2xfs.emv;
 
@@ -49,7 +49,7 @@ public class ProcessingState {
 
 	/**
 	 * Returns if SW1 indicates a normal processing.
-	 * 
+	 *
 	 * @return true if SW1 indicates a normal processing.
 	 */
 	public boolean isNormalCondition() {
@@ -58,7 +58,7 @@ public class ProcessingState {
 
 	/**
 	 * Returns if SW1 indicates a warning processing.
-	 * 
+	 *
 	 * @return true if SW1 indicates a warning processing.
 	 */
 	public boolean isWarningCondition() {
@@ -67,7 +67,7 @@ public class ProcessingState {
 
 	/**
 	 * Returns if SW1 indicates an error condition.
-	 * 
+	 *
 	 * @return true if SW1 indicates an error condition.
 	 */
 	public boolean isErrorCondition() {

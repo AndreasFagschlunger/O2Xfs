@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Andreas Fagschlunger. All rights reserved.
+ * Copyright (c) 2017, Andreas Fagschlunger. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -69,7 +69,7 @@ void ThrowLastError(JNIEnv *env) {
  */
 JNIEXPORT jobject JNICALL Java_at_o2xfs_ctapi_CTAPI_loadLibrary0(JNIEnv *env, jobject obj, jobject fileName) {
 	HMODULE hLib = LoadLibrary((LPCTSTR) GetTypeAddress(env, fileName));
-	if(hLib == NULL) {		
+	if(hLib == NULL) {
 		ThrowLastError(env);
 	}
 	return NewBuffer(env, hLib, sizeof(hLib));
