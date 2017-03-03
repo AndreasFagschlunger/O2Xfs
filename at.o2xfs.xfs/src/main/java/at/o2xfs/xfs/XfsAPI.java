@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs;
 
+import at.o2xfs.common.Library;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.CHAR;
@@ -51,8 +52,8 @@ public class XfsAPI {
 	private static XfsAPI instance = null;
 
 	private XfsAPI() {
-		System.loadLibrary("at.o2xfs.win32");
-		System.loadLibrary("at.o2xfs.xfs");
+		Library.loadLibrary("at.o2xfs.win32");
+		Library.loadLibrary("at.o2xfs.xfs");
 	}
 
 	public final static XfsAPI getInstance() {

@@ -32,8 +32,6 @@ test {
 dependencies {
     compile project(':o2xfs-xfs3')
     testCompile libraries.junit
-    debugDll project(path: ':at.o2xfs.xfs', configuration: 'debugDll')
-    releaseDll project(path: ':at.o2xfs.xfs', configuration: 'releaseDll')
 }
 
 publishing {

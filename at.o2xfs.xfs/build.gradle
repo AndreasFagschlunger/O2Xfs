@@ -28,6 +28,7 @@
 dependencies {
     compile project(':at.o2xfs.win32')
     testCompile libraries.junit
+    runtime 'at.o2xfs.xfs:at.o2xfs.xfs.binaries.x86:' + version
 }
 
 // create the javadoc jar

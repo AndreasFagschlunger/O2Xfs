@@ -28,7 +28,6 @@
 dependencies {
     compile project(':at.o2xfs.xfs.service')
     testCompile libraries.junit
-    releaseDll project(path: ':at.o2xfs.xfs.service', configuration: 'releaseDll')
 }
 
 jar {
@@ -44,9 +43,6 @@ task dist(type: Zip) {
     into('lib') {
         from configurations.runtime
         from 'build/libs'
-    }
-    into('bin') {
-        from configurations.releaseDll
     }
     into('config') {
         from 'config'

@@ -116,8 +116,8 @@ model {
 }
 
 task x86Jar(type: Jar) {
-    from file('build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.xfs.dll'),
-         file('build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.xfs.conf.dll')
+    from file('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.dll'),
+         file('build/libs/at.o2xfs.xfs.conf.dll/shared/at.o2xfs.xfs.conf.dll')
 }
 
 publishing {
