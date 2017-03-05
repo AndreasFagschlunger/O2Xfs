@@ -42,12 +42,16 @@ jar {
 task dist(type: Zip) {
     into('lib') {
         from configurations.runtime
-        from 'build/libs'
+        from 'build/libs/at.o2xfs.operator-' + version + '.jar'
     }
     into('config') {
         from 'config'
     }
     from 'start.cmd', 'services.properties'
+    filesMatching('start.cmd') {
+        expand(version: version)
+    }
+    
 }
 
 publishing {
