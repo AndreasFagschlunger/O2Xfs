@@ -5,3 +5,10 @@
 */build
 */bin
 /build/
+
+# Buildship
+org.eclipse.buildship.core.prefs
+
+.project
+.classpath
+/.settings
