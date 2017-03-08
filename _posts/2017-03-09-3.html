@@ -1,0 +1,9 @@
+---
+layout: post
+title:  "CI build & public repository"
+date:   2017-03-09 00:20:00 +0200
+---
+Thanks to [AppVeyor](https://www.appveyor.com/) we now have a CI server building, testing and publishing on every commit in `develop` branch. All artifacts are available from https://repo.fagschlunger.co.at.
+
+I also changed the way native libraries are loaded, since it's always a pain to keep the library path working. I use the approach [SWT](http://www.eclipse.org/swt/) is using. The CI server packages native libraries in JAR archives and publishes them as maven artifacts.
+This allows us to retrieve native dependencies as they where java dependencies. Now since the native libraries are present in the java classpath, the `Library` utility class extracts them to a temporary directory and loads from this location. So hopefully there will be less `UnsatisfiedLinkError` exceptions.

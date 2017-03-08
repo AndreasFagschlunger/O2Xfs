@@ -7,9 +7,9 @@
 ### Prerequisites
 
 * JDK 8+ (x86)
-* Visual Studio 2013
+* Visual Studio 2015 or later (if compiling native code)
 * Git
-* XFS SDKs
+* XFS SDKs (if compiling native code)
 * gradle.properties
 
 ### JDK 8+ (x86)
@@ -17,9 +17,6 @@
 Make sure you have a JDK 8+ (Windows x86) installed on your machine, you can download it from Oracle:
 
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
-
-### Visual Studio
-You can download [Visual Studio Express 2013 for Desktop](https://www.visualstudio.com/downloads/download-visual-studio-vs) or use a different version. I do not recommend to install the latest 2015 edition, since gradle doesn't support it yet.
 
 ### Check out sources
 
@@ -29,9 +26,46 @@ Checkout the code from GitHub and switch to the `develop` branch:
     cd O2Xfs
     git checkout develop
 
+### gradle.properties
+
+Go to the project root directory and create a new file **gradle.properties**.
+
+Add a property **org.gradle.java.home** which points to your JDK 8+ (x86), e.g.:
+
+    org.gradle.java.home=C:/Program Files (x86)/Java/jdk1.8.0_51
+
+This tells Gradle to use the specified JDK for building and running tests.
+
+## Compile and test
+
+    ./gradlew build
+
+... and discover more commands with `./gradlew tasks`.
+
+
+### Visual Studio
+You can download Visual Studio from Microsoft:
+
+https://www.visualstudio.com/
+
+Visual Studio Community is free for open source projects and will do just fine.
+
+
 ### XFS SDKs
 
-In order to compile the test binaries we have to provide the C header files for every XFS version under test. So go ahead an download the following SDKs into a directory (e.g. C:\XFS SDKs\):
+In order to compile test binaries we have to provide the C header files for every XFS version under test.
+
+## Use xfs-sdk.ps1
+
+The repository root contains a PowerShell script `xfs-sdk.ps1` which the CI-Build server uses to retrieve and extract all necessary SDKs. In order to work you must have [7-zip](http://www.7-zip.org/) installed. If you run `xfs-sdk.ps1` without parameters, `7z.exe` must be present in the environment `PATH`. The default directory for all XFS SDKs is `C:\XFS SDKs`.
+Optionally `xfs-sdk.ps1` offers to parameters to configure behaviour:
+
+`-sevenZipPath [Path to 7z.exe]` lets you specify the path to `7z.exe`.
+`-sdkPath [Destination path for XFS SDKs]` lets you specify the path where the XFS SDKs gets extracted.
+
+## Manual setup
+
+So go ahead an download the following SDKs into a directory (e.g. C:\XFS SDKs\):
 
 [XFS Release 3.03](ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA14050/sdk303.zip)  
 [XFS Release 3.10](ftp://ftp.cencenelec.eu/CEN/WhatWeDo/Fields/ICT/eBusiness/WS/XFS/CWA15748/XFS310SDKInstall.zip)  
@@ -74,15 +108,7 @@ That's it, the INCLUDE directory should be under the following path `.\SDK303\Co
     msiexec /a "C:\XFS SDKs\SDK320.msi" /qn TARGETDIR="C:\XFS SDKs\SDK320"
     msiexec /a "C:\XFS SDKs\SDK330.msi" /qn TARGETDIR="C:\XFS SDKs\SDK330"
 
-### gradle.properties
-
-Go to the project root directory and create a new file **gradle.properties**.
-
-Add a property **org.gradle.java.home** which points to your JDK 8+ (x86), e.g.:
-
-    org.gradle.java.home=C:/Program Files (x86)/Java/jdk1.8.0_51
-
-This tells Gradle to use the specified JDK for building. Add a property **xfsSdkDir** which contains the path to any XFS SDK, the default value is `C:/Program Files (x86)/Common Files/XFS`, e.g.:
+Add a property **xfsSdkDir** to `gradle.properties` which contains the path to any XFS SDK, the default value is `C:/Program Files (x86)/Common Files/XFS`, e.g.:
 
     xfsSdkDir=C:/Program Files (x86)/Common Files/XFS
 
@@ -95,11 +121,18 @@ XFS_SDK320=C:/XFS SDKs/SDK320/XFS/SDK
 XFS_SDK330=C:/XFS SDKs/SDK330/XFS/SDK
 ```
 
-## Compile and test
+Now you should be able to build the native binaries with gradle:
 
-    ./gradlew build
+```
+.\gradlew.bat -b at.o2xfs.win32\build-native.gradle clean build
+.\gradlew.bat -b at.o2xfs.xfs\build-native.gradle clean build
+.\gradlew.bat -b o2xfs-xfs3\build-native.gradle clean build
+.\gradlew.bat -b at.o2xfs.ctapi\build-native.gradle clean build
+```
 
-... and discover more commands with `./gradlew tasks`.
+## CI-Build
+
+The CI build server always builds and publishes the native artifacts. So if you are running into issues building native artifacts, check the CI build script [appveyor.yml](https://github.com/AndreasFagschlunger/O2Xfs/blob/develop/appveyor.yml).
 
 {% endcapture %}
 
