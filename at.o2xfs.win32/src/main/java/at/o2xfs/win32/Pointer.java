@@ -47,7 +47,7 @@ public class Pointer extends BaseType {
 	private Type reference = null;
 
 	public Pointer() {
-		super(1 << 2);
+		super(Sizeof.POINTER);
 	}
 
 	public Pointer(Pointer p) {

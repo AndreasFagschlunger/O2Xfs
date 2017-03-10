@@ -30,6 +30,7 @@
 #include <Windows.h>
 #include <tchar.h>
 #include "at.o2xfs.win32.h"
+#include "at_o2xfs_win32_Sizeof.h"
 #include "at_o2xfs_win32_Type.h"
 #include "at_o2xfs_win32_impl_Win32Buffer.h"
 
@@ -158,4 +159,13 @@ JNIEXPORT jobject JNICALL Java_at_o2xfs_win32_impl_Win32Buffer_subBuffer0(JNIEnv
 JNIEXPORT void JNICALL Java_at_o2xfs_win32_impl_Win32Buffer_free0(JNIEnv *env, jobject obj, jbyteArray buf) {
 	LPVOID p = ToPointer(env, buf);
 	free(p);
+}
+
+/*
+* Class:     at_o2xfs_win32_Sizeof
+* Method:    sizeofLpvoid
+* Signature: ()I
+*/
+JNIEXPORT jint JNICALL Java_at_o2xfs_win32_Sizeof_sizeofLpvoid(JNIEnv *env, jclass obj) {
+	return sizeof(LPVOID);
 }
