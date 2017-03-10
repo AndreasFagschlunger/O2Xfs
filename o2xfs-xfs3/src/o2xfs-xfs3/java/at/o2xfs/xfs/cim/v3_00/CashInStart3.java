@@ -40,6 +40,45 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class CashInStart3 extends Struct {
 
+	public static class Builder {
+
+		private int tellerId;
+		private boolean useRecycleUnits;
+		private Position outputPosition;
+		private Position inputPosition;
+
+		public Builder() {
+			tellerId = 0;
+			useRecycleUnits = false;
+			outputPosition = Position.NULL;
+			inputPosition = Position.NULL;
+		}
+
+		public Builder tellerId(int tellerId) {
+			this.tellerId = tellerId;
+			return this;
+		}
+
+		public Builder useRecycleUnits(boolean useRecycleUnits) {
+			this.useRecycleUnits = useRecycleUnits;
+			return this;
+		}
+
+		public Builder outputPosition(Position outputPosition) {
+			this.outputPosition = outputPosition;
+			return this;
+		}
+
+		public Builder inputPosition(Position inputPosition) {
+			this.inputPosition = inputPosition;
+			return this;
+		}
+
+		public CashInStart3 build() {
+			return new CashInStart3(this);
+		}
+	}
+
 	protected final USHORT tellerID = new USHORT();
 	protected final BOOL useRecycleUnits = new BOOL();
 	protected final XfsWord<Position> outputPosition = new XfsWord<>(Position.class);
@@ -50,6 +89,15 @@ public class CashInStart3 extends Struct {
 		add(useRecycleUnits);
 		add(outputPosition);
 		add(inputPosition);
+	}
+
+	protected CashInStart3(Builder builder) {
+		this();
+		allocate();
+		tellerID.set(builder.tellerId);
+		useRecycleUnits.set(builder.useRecycleUnits);
+		outputPosition.set(builder.outputPosition);
+		inputPosition.set(builder.inputPosition);
 	}
 
 	public CashInStart3(Pointer p) {
@@ -88,22 +136,35 @@ public class CashInStart3 extends Struct {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getTellerID()).append(isUseRecycleUnits()).append(getOutputPosition()).append(getInputPosition()).toHashCode();
+		return new HashCodeBuilder()
+				.append(getTellerID())
+				.append(isUseRecycleUnits())
+				.append(getOutputPosition())
+				.append(getInputPosition())
+				.toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof CashInStart3) {
 			CashInStart3 cashInStart3 = (CashInStart3) obj;
-			return new EqualsBuilder().append(getTellerID(), cashInStart3.getTellerID()).append(isUseRecycleUnits(), cashInStart3.isUseRecycleUnits())
-					.append(getOutputPosition(), cashInStart3.getOutputPosition()).append(getInputPosition(), cashInStart3.getInputPosition()).isEquals();
+			return new EqualsBuilder()
+					.append(getTellerID(), cashInStart3.getTellerID())
+					.append(isUseRecycleUnits(), cashInStart3.isUseRecycleUnits())
+					.append(getOutputPosition(), cashInStart3.getOutputPosition())
+					.append(getInputPosition(), cashInStart3.getInputPosition())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("tellerID", getTellerID()).append("useRecycleUnits", isUseRecycleUnits()).append("outputPosition", getOutputPosition())
-				.append("inputPosition", getInputPosition()).toString();
+		return new ToStringBuilder(this)
+				.append("tellerID", getTellerID())
+				.append("useRecycleUnits", isUseRecycleUnits())
+				.append("outputPosition", getOutputPosition())
+				.append("inputPosition", getInputPosition())
+				.toString();
 	}
 }
