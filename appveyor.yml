@@ -38,10 +38,10 @@ install:
   - ps: .\xfs-sdk.ps1
 
 build_script:
-  - cmd: .\gradlew.bat -b at.o2xfs.win32\build-native.gradle clean build publish
-  - cmd: .\gradlew.bat -b at.o2xfs.xfs\build-native.gradle clean build publish
-  - cmd: .\gradlew.bat -b o2xfs-xfs3\build-native.gradle clean build publish
-  - cmd: .\gradlew.bat -b at.o2xfs.ctapi\build-native.gradle clean build publish
-  - cmd: .\gradlew.bat clean build
-  - cmd: .\gradlew.bat -Dorg.gradle.java.home="C:\Program Files\Java\jdk1.8.0" test
-  - cmd: .\gradlew.bat publish
+  - cmd: .\gradlew.bat -b at.o2xfs.win32\build-native.gradle --no-daemon clean build publish
+  - cmd: .\gradlew.bat -b at.o2xfs.xfs\build-native.gradle --no-daemon clean build publish
+  - cmd: .\gradlew.bat -b o2xfs-xfs3\build-native.gradle --no-daemon clean build publish
+  - cmd: .\gradlew.bat -b at.o2xfs.ctapi\build-native.gradle --no-daemon clean build publish
+  - cmd: .\gradlew.bat --no-daemon clean build
+  - cmd: .\gradlew.bat -Dorg.gradle.java.home="C:\Program Files\Java\jdk1.8.0" --no-daemon test
+  - cmd: .\gradlew.bat --no-daemon publish
