@@ -34,12 +34,25 @@
 
 void ThrowLastError(JNIEnv *);
 
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
-	return JNI_VERSION_1_6;
-}
+HMODULE hinstWin32Lib;
+GET_TYPE_ADDRESS lpGetTypeAddress;
+GET_TYPE_SIZE lpGetTypeSize;
+NEW_BUFFER lpNewBuffer;
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
+	switch (fdwReason) {
+	case DLL_PROCESS_DETACH:
+		if (hinstWin32Lib != NULL) {
+			FreeLibrary(hinstWin32Lib);
+		}
+		break;
+	}
 	return TRUE;
+}
+
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
+	return JNI_VERSION_1_6;
 }
 
 void ThrowLastError(JNIEnv *env) {
@@ -68,11 +81,21 @@ void ThrowLastError(JNIEnv *env) {
  * Signature: (Lat/o2xfs/win32/ZSTR;)Lat/o2xfs/win32/Buffer;
  */
 JNIEXPORT jobject JNICALL Java_at_o2xfs_ctapi_CTAPI_loadLibrary0(JNIEnv *env, jobject obj, jobject fileName) {
-	HMODULE hLib = LoadLibrary((LPCTSTR) GetTypeAddress(env, fileName));
-	if(hLib == NULL) {
+	jobject result = NULL;
+	hinstWin32Lib = LoadLibrary("at.o2xfs.win32.dll");
+	if (hinstWin32Lib == NULL) {
 		ThrowLastError(env);
+	} else {
+		lpGetTypeAddress = (GET_TYPE_ADDRESS) GetProcAddress(hinstWin32Lib, "GetTypeAddress");
+		lpGetTypeSize = (GET_TYPE_SIZE) GetProcAddress(hinstWin32Lib, "GetTypeSize");
+		lpNewBuffer = (NEW_BUFFER) GetProcAddress(hinstWin32Lib, "NewBuffer");
+		HMODULE hLib = LoadLibrary((LPCTSTR) lpGetTypeAddress(env, fileName));
+		if (hLib == NULL) {
+			ThrowLastError(env);
+		}
+		result = lpNewBuffer(env, hLib, sizeof(hLib));
 	}
-	return NewBuffer(env, hLib, sizeof(hLib));
+	return result;
 }
 
 /*
@@ -81,11 +104,11 @@ JNIEXPORT jobject JNICALL Java_at_o2xfs_ctapi_CTAPI_loadLibrary0(JNIEnv *env, jo
  * Signature: (Lat/o2xfs/win32/Pointer;Lat/o2xfs/win32/ZSTR;)Lat/o2xfs/win32/Buffer;
  */
 JNIEXPORT jobject JNICALL Java_at_o2xfs_ctapi_CTAPI_getFunctionAddress0(JNIEnv *env, jobject obj, jobject hLib, jobject procName) {
-	FARPROC procAddress = GetProcAddress((HMODULE) GetTypeAddress(env, hLib), (LPCSTR) GetTypeAddress(env, procName));
+	FARPROC procAddress = GetProcAddress((HMODULE) lpGetTypeAddress(env, hLib), (LPCSTR) lpGetTypeAddress(env, procName));
 	if(procAddress == NULL) {
 		ThrowLastError(env);
 	}
-	return NewBuffer(env, (LPVOID) procAddress, sizeof(procAddress));
+	return lpNewBuffer(env, (LPVOID) procAddress, sizeof(procAddress));
 }
 
 /*
@@ -94,9 +117,9 @@ JNIEXPORT jobject JNICALL Java_at_o2xfs_ctapi_CTAPI_getFunctionAddress0(JNIEnv *
  * Signature: (Lat/o2xfs/win32/Pointer;Lat/o2xfs/win32/USHORT;Lat/o2xfs/win32/USHORT;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_init0(JNIEnv *env, jobject obj, jobject addrObj, jobject ctnObj, jobject pnObj) {
-	CT_INIT CT_init = (CT_INIT) GetTypeAddress(env, addrObj);
-	USHORT ctn = (*(PUSHORT) GetTypeAddress(env, ctnObj));
-	USHORT pn (*(PUSHORT) GetTypeAddress(env, pnObj));
+	CT_INIT CT_init = (CT_INIT) lpGetTypeAddress(env, addrObj);
+	USHORT ctn = (*(PUSHORT) lpGetTypeAddress(env, ctnObj));
+	USHORT pn (*(PUSHORT) lpGetTypeAddress(env, pnObj));
 	return CT_init(ctn, pn);
 }
 
@@ -106,14 +129,14 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_init0(JNIEnv *env, jobject obj,
  * Signature: (Lat/o2xfs/win32/Pointer;Lat/o2xfs/win32/USHORT;Lat/o2xfs/win32/UINT8;Lat/o2xfs/win32/UINT8;Lat/o2xfs/win32/ByteArray;Lat/o2xfs/win32/USHORT;Lat/o2xfs/win32/ByteArray;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_data0(JNIEnv *env, jobject obj, jobject addrObj, jobject ctnObj, jobject dadObj, jobject sadObj, jobject commandObj, jobject lenrObj, jobject responseObj) {
-	CT_DATA CT_data = (CT_DATA) GetTypeAddress(env, addrObj);
-	USHORT ctn = (*(PUSHORT) GetTypeAddress(env, ctnObj));
-	UCHAR *dad = (UCHAR*) GetTypeAddress(env, dadObj);
-	UCHAR *sad = (UCHAR*) GetTypeAddress(env, sadObj);
-	USHORT lenc = (USHORT) GetTypeSize(env, commandObj);
-	UCHAR *command = (UCHAR*) GetTypeAddress(env, commandObj);
-	USHORT *lenr = (USHORT*) GetTypeAddress(env, lenrObj);
-	UCHAR *response = (UCHAR*) GetTypeAddress(env, responseObj);
+	CT_DATA CT_data = (CT_DATA) lpGetTypeAddress(env, addrObj);
+	USHORT ctn = (*(PUSHORT) lpGetTypeAddress(env, ctnObj));
+	UCHAR *dad = (UCHAR*) lpGetTypeAddress(env, dadObj);
+	UCHAR *sad = (UCHAR*) lpGetTypeAddress(env, sadObj);
+	USHORT lenc = (USHORT) lpGetTypeSize(env, commandObj);
+	UCHAR *command = (UCHAR*) lpGetTypeAddress(env, commandObj);
+	USHORT *lenr = (USHORT*) lpGetTypeAddress(env, lenrObj);
+	UCHAR *response = (UCHAR*) lpGetTypeAddress(env, responseObj);
 	CHAR rc = CT_data(ctn, dad, sad, lenc, command, lenr, response);
 	return rc;
 }
@@ -124,8 +147,8 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_data0(JNIEnv *env, jobject obj,
  * Signature: (Lat/o2xfs/win32/Pointer;Lat/o2xfs/win32/USHORT;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_close0(JNIEnv *env, jobject obj, jobject addrObj, jobject ctnObj) {
-	CT_CLOSE CT_close = (CT_CLOSE) GetTypeAddress(env, addrObj);
-	USHORT ctn = (*(PUSHORT) GetTypeAddress(env, ctnObj));
+	CT_CLOSE CT_close = (CT_CLOSE) lpGetTypeAddress(env, addrObj);
+	USHORT ctn = (*(PUSHORT) lpGetTypeAddress(env, ctnObj));
 	return CT_close(ctn);
 }
 
@@ -135,7 +158,7 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_ctapi_CTAPI_close0(JNIEnv *env, jobject obj
  * Signature: (Lat/o2xfs/win32/Pointer;)V
  */
 JNIEXPORT void JNICALL Java_at_o2xfs_ctapi_CTAPI_freeLibrary0(JNIEnv *env, jobject obj, jobject hLib) {
-	if(FreeLibrary((HMODULE) GetTypeAddress(env, hLib)) == 0) {
+	if(FreeLibrary((HMODULE) lpGetTypeAddress(env, hLib)) == 0) {
 		ThrowLastError(env);
 	}
 }

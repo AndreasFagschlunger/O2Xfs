@@ -51,7 +51,15 @@ model {
         x86 {
             architecture "x86"
         }
+        x64 {
+            architecture "x86_64"
+        }
     }
+    buildTypes {
+        debug
+        release
+    }
+
 
     repositories {
         libs(PrebuiltLibraries) {
@@ -64,21 +72,12 @@ model {
             }
             msxfs {
                 headers.srcDir "${xfsSdk}/INCLUDE"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("${xfsSdk}/LIB/msxfs.lib")
-                }
             }
             'o2xfs-win32' {
                 headers.srcDir "../at.o2xfs.win32/src/at.o2xfs.win32.dll/headers"
-                binaries.withType(SharedLibraryBinary) {
-                    sharedLibraryFile = file("../at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.win32.lib")
-                }
             }
             xfs_conf {
                 headers.srcDir "${xfsSdk}/INCLUDE"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("${xfsSdk}/LIB/xfs_conf.lib")
-                }
             }
         }
     }
@@ -86,11 +85,12 @@ model {
     components {
         'at.o2xfs.xfs.dll'(NativeLibrarySpec) {
             targetPlatform "x86"
+            targetPlatform "x64"
 
             binaries.all {
                 lib library: 'jni', linkage: 'api'
-                lib library: 'o2xfs-win32', linkage: 'shared'
-                lib library: 'msxfs', linkage: 'static'
+                lib library: 'o2xfs-win32', linkage: 'api'
+                lib library: 'msxfs', linkage: 'api'
                 linker.args 'Gdi32.lib', 'User32.lib'
                 rcCompiler.args "/v"
                 rcCompiler.define "FILE_VERSION=\"" + version.substring(0,3) + "\""
@@ -101,11 +101,12 @@ model {
 
         'at.o2xfs.xfs.conf.dll'(NativeLibrarySpec) {
             targetPlatform "x86"
+            targetPlatform "x64"
 
             binaries.all {
                 lib library: 'jni', linkage: 'api'
-                lib library: 'o2xfs-win32', linkage: 'shared'
-                lib library: 'xfs_conf', linkage: 'static'
+                lib library: 'o2xfs-win32', linkage: 'api'
+                lib library: 'xfs_conf', linkage: 'api'
                 rcCompiler.args "/v"
                 rcCompiler.define "FILE_VERSION=\"" + version.substring(0,3) + "\""
                 rcCompiler.define "COMMA_VERSION=" + version.substring(0,5).replace('.', ',') + ",0"
@@ -115,19 +116,29 @@ model {
     }
 }
 
-task x86Jar(type: Jar) {
-    from file('build/libs/at.o2xfs.xfs.dll/shared/at.o2xfs.xfs.dll'),
-         file('build/libs/at.o2xfs.xfs.conf.dll/shared/at.o2xfs.xfs.conf.dll')
+task binariesJar(type: Jar) {
+    from ('build/libs/at.o2xfs.xfs.dll/shared/x86/release/at.o2xfs.xfs.dll') {
+        into 'x86'
+    }
+    from ('build/libs/at.o2xfs.xfs.conf.dll/shared/x86/release/at.o2xfs.xfs.conf.dll') {
+        into 'x86'
+    }
+    from ('build/libs/at.o2xfs.xfs.dll/shared/x64/release/at.o2xfs.xfs.dll') {
+        into 'x86_64'
+    }
+    from ('build/libs/at.o2xfs.xfs.conf.dll/shared/x64/release/at.o2xfs.xfs.conf.dll') {
+        into 'x86_64'
+    }
 }
 
 publishing {
     publications {
         x86(MavenPublication) {
-            groupId 'at.o2xfs.xfs'
-            artifactId 'at.o2xfs.xfs.binaries.x86'
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-xfs-binaries'
             version version
 
-            artifact x86Jar
+            artifact binariesJar
         }
     }
 

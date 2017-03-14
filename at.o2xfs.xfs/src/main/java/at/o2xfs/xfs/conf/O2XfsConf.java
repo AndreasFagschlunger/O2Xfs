@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import at.o2xfs.common.Library;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.DWORD;
@@ -43,11 +44,11 @@ import at.o2xfs.xfs.XfsException;
 /**
  * @author Andreas Fagschlunger
  */
-public class O2XfsConf {
+public final class O2XfsConf {
 
 	static {
-		System.loadLibrary("at.o2xfs.win32");
-		System.loadLibrary("at.o2xfs.xfs.conf");
+		Library.loadLibrary("at.o2xfs.win32");
+		Library.loadLibrary("at.o2xfs.xfs.conf");
 	}
 
 	private final static Logger LOG = LoggerFactory.getLogger(O2XfsConf.class);
@@ -99,7 +100,10 @@ public class O2XfsConf {
 
 	private O2XfsConf() {
 		openKeys = new ArrayList<HKEY>();
+		loadLibraries();
 	}
+
+	private native void loadLibraries();
 
 	public static O2XfsConf getInstance() {
 		if (instance == null) {
@@ -185,12 +189,15 @@ public class O2XfsConf {
 	public Map.Entry<String, String> wfmEnumValue(final HKEY hKey, final DWORD iValue) throws XfsException {
 		ZSTR value = new ZSTR(SIZE_LIMIT, true);
 		ZSTR data = new ZSTR(SIZE_LIMIT, true);
-		final int errorCode = wfmEnumValue0(hKey, iValue, value, data);
+		DWORD cchValue = new DWORD(SIZE_LIMIT);
+		DWORD cchData = new DWORD(SIZE_LIMIT);
+		final int errorCode = wfmEnumValue0(hKey, iValue, value, cchValue, data, cchData);
 		XfsException.throwFor(errorCode);
 		return new ValuePair(value.toString(), data.toString());
 	}
 
-	private native int wfmEnumValue0(Type hKey, Type iValue, Type lpszValue, Type lpszData);
+	private native int wfmEnumValue0(Type hKey, Type iValue, Type lpszValue, Type lpcchValue, Type lpszData,
+			Type lpcchData);
 
 	@Override
 	protected void finalize() throws Throwable {

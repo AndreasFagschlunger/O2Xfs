@@ -29,6 +29,7 @@ branches:
 
 environment:
   JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
+  ORG_GRADLE_PROJECT_org.gradle.daemon: false
   ORG_GRADLE_PROJECT_maven_username: buildmaster
   ORG_GRADLE_PROJECT_maven_password:
     secure: 5tyikQFuCQgJXFduL6baTVKw+pGrAkRd70TjT82xE+c=
@@ -41,4 +42,6 @@ build_script:
   - cmd: .\gradlew.bat -b at.o2xfs.xfs\build-native.gradle clean build publish
   - cmd: .\gradlew.bat -b o2xfs-xfs3\build-native.gradle clean build publish
   - cmd: .\gradlew.bat -b at.o2xfs.ctapi\build-native.gradle clean build publish
-  - cmd: .\gradlew.bat clean build publish
+  - cmd: .\gradlew.bat clean build
+  - cmd: .\gradlew.bat -Dorg.gradle.java.home="C:\Program Files\Java\jdk1.8.0" test
+  - cmd: .\gradlew.bat publish

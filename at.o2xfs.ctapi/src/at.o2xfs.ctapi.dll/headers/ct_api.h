@@ -28,6 +28,7 @@
 #ifndef ct_api_h
 #define ct_api_h
 #include <Windows.h>
+#include <jni.h>
 
 #define OK 0
 #define ERR_INVALID -1
@@ -40,5 +41,9 @@
 typedef CHAR (WINAPI *CT_INIT) (USHORT ctn, USHORT pn);
 typedef CHAR (WINAPI *CT_DATA) (USHORT ctn, UCHAR* dad, UCHAR* sad, USHORT lenc, UCHAR* command, USHORT* lenr, UCHAR* response);
 typedef CHAR (WINAPI *CT_CLOSE) (USHORT ctn);
+
+typedef LPVOID(__cdecl *GET_TYPE_ADDRESS) (JNIEnv *env, jobject type);
+typedef LPVOID(__cdecl *GET_TYPE_SIZE) (JNIEnv *env, jobject type);
+typedef jobject(__cdecl *NEW_BUFFER) (JNIEnv *env, LPVOID address, jint size);
 
 #endif

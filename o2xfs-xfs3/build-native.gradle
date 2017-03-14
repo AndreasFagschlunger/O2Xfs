@@ -217,6 +217,9 @@ model {
         x86 {
             architecture "x86"
         }
+        x64 {
+            architecture "x86_64"
+        }
     }
 
     buildTypes {
@@ -245,7 +248,11 @@ model {
             'o2xfs-win32' {
                 headers.srcDir "../at.o2xfs.win32/src/at.o2xfs.win32.dll/headers"
                 binaries.withType(SharedLibraryBinary) {
-                    sharedLibraryFile = file("../at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.win32.lib")
+                    if("${targetPlatform.name}" == "x86") {
+                        sharedLibraryFile = file("../at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.win32.lib")
+                    } else if("${targetPlatform.name}" == "x64") {
+                        sharedLibraryFile = file("../at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared/x64/release/at.o2xfs.win32.lib")
+                    }
                 }
             }
             xfs3 {
@@ -266,6 +273,7 @@ model {
     components {
         'o2xfs-xfs3-test.dll'(NativeLibrarySpec) {
             targetPlatform "x86"
+            targetPlatform "x64"
 
             binaries.all {
                 lib library: 'jni', linkage: 'api'
@@ -275,6 +283,7 @@ model {
         }
         'o2xfs-xfs310-test.dll'(NativeLibrarySpec) {
             targetPlatform "x86"
+            targetPlatform "x64"
 
             binaries.all {
                 lib library: 'jni', linkage: 'api'
@@ -284,6 +293,7 @@ model {
         }
         'o2xfs-xfs320-test.dll'(NativeLibrarySpec) {
             targetPlatform "x86"
+            targetPlatform "x64"
 
             binaries.all {
                 lib library: 'jni', linkage: 'api'
@@ -293,6 +303,7 @@ model {
         }
         'o2xfs-xfs330-test.dll'(NativeLibrarySpec) {
             targetPlatform "x86"
+            targetPlatform "x64"
 
             binaries.all {
                 lib library: 'jni', linkage: 'api'
@@ -303,54 +314,41 @@ model {
     }
 }
 
-task 'xfs3-test-x86-jar'(type: Jar) {
-    from file('build/libs/o2xfs-xfs3-test.dll/shared/release/o2xfs-xfs3-test.dll')
-}
-
-task 'xfs310-test-x86-jar'(type: Jar) {
-    from file('build/libs/o2xfs-xfs310-test.dll/shared/release/o2xfs-xfs310-test.dll')
-}
-
-task 'xfs320-test-x86-jar'(type: Jar) {
-    from file('build/libs/o2xfs-xfs320-test.dll/shared/release/o2xfs-xfs320-test.dll')
-}
-
-task 'xfs330-test-x86-jar'(type: Jar) {
-    from file('build/libs/o2xfs-xfs330-test.dll/shared/release/o2xfs-xfs330-test.dll')
+task 'xfs3-test-binaries-jar'(type: Jar) {
+    from ('build/libs/o2xfs-xfs3-test.dll/shared/x86/release/o2xfs-xfs3-test.dll') {
+        into 'x86'
+    }
+    from ('build/libs/o2xfs-xfs310-test.dll/shared/x86/release/o2xfs-xfs310-test.dll') {
+        into 'x86'
+    }
+    from ('build/libs/o2xfs-xfs320-test.dll/shared/x86/release/o2xfs-xfs320-test.dll') {
+        into 'x86'
+    }
+    from ('build/libs/o2xfs-xfs330-test.dll/shared/x86/release/o2xfs-xfs330-test.dll') {
+        into 'x86'
+    }
+    from ('build/libs/o2xfs-xfs3-test.dll/shared/x64/release/o2xfs-xfs3-test.dll') {
+        into 'x86_64'
+    }
+    from ('build/libs/o2xfs-xfs310-test.dll/shared/x64/release/o2xfs-xfs310-test.dll') {
+        into 'x86_64'
+    }
+    from ('build/libs/o2xfs-xfs320-test.dll/shared/x64/release/o2xfs-xfs320-test.dll') {
+        into 'x86_64'
+    }
+    from ('build/libs/o2xfs-xfs330-test.dll/shared/x64/release/o2xfs-xfs330-test.dll') {
+        into 'x86_64'
+    }
 }
 
 publishing {
     publications {
         'xfs3-test-x86'(MavenPublication) {
             groupId 'at.o2xfs'
-            artifactId 'o2xfs-xfs3-test-binaries-x86'
+            artifactId 'o2xfs-xfs3-test-binaries'
             version version
 
-            artifact tasks['xfs3-test-x86-jar']
-        }
-
-        'xfs310-test-x86'(MavenPublication) {
-            groupId 'at.o2xfs'
-            artifactId 'o2xfs-xfs310-test-binaries-x86'
-            version version
-
-            artifact tasks['xfs310-test-x86-jar']
-        }
-
-        'xfs320-test-x86'(MavenPublication) {
-            groupId 'at.o2xfs'
-            artifactId 'o2xfs-xfs320-test-binaries-x86'
-            version version
-
-            artifact tasks['xfs320-test-x86-jar']
-        }
-
-        'xfs330-test-x86'(MavenPublication) {
-            groupId 'at.o2xfs'
-            artifactId 'o2xfs-xfs330-test-binaries-x86'
-            version version
-
-            artifact tasks['xfs330-test-x86-jar']
+            artifact tasks['xfs3-test-binaries-jar']
         }
     }
 

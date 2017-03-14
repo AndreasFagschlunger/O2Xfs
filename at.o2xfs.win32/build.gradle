@@ -29,7 +29,7 @@ dependencies {
     compile project(':at.o2xfs.log'),
             project(':at.o2xfs.common'),
             libraries.commons_lang3
-    runtime 'at.o2xfs.win32:at.o2xfs.win32.binaries.x86:' + version
+    runtime 'at.o2xfs:o2xfs-win32-binaries:' + version
     testCompile libraries.junit
 }
 

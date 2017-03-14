@@ -12,3 +12,10 @@ org.eclipse.buildship.core.prefs
 .project
 .classpath
 /.settings
+
+.vs/
+*.sln
+*.db
+*.vcxproj
+*.vcxproj.filters
+*.opendb

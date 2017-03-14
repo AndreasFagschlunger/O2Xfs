@@ -28,11 +28,15 @@
 apply plugin: 'cpp'
 apply plugin: 'maven-publish'
 apply plugin: 'windows-resources'
+apply plugin: 'visual-studio'
 
 model {
     platforms {
         x86 {
             architecture "x86"
+        }
+        x64 {
+            architecture "x86_64"
         }
     }
 
@@ -52,9 +56,6 @@ model {
             }
             'o2xfs-win32' {
                 headers.srcDir "../at.o2xfs.win32/src/at.o2xfs.win32.dll/headers"
-                binaries.withType(SharedLibraryBinary) {
-                    sharedLibraryFile = file("../at.o2xfs.win32/build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.win32.lib")
-                }
             }
         }
     }
@@ -62,10 +63,11 @@ model {
     components {
         'at.o2xfs.ctapi.dll'(NativeLibrarySpec) {
             targetPlatform "x86"
+            targetPlatform "x64"
 
             binaries.all {
                 lib library: 'jni', linkage: 'api'
-                lib library: 'o2xfs-win32', linkage: 'shared'
+                lib library: 'o2xfs-win32', linkage: 'api'
                 rcCompiler.args "/v"
                 rcCompiler.define "FILE_VERSION=\"" + version.substring(0,3) + "\""
                 rcCompiler.define "COMMA_VERSION=" + version.substring(0,5).replace('.', ',') + ",0"
@@ -75,14 +77,23 @@ model {
     }
 }
 
+task 'ctapi-binaries-jar'(type: Jar) {
+    from ('build/libs/at.o2xfs.ctapi.dll/shared/x86/release/at.o2xfs.ctapi.dll') {
+        into 'x86'
+    }
+    from ('build/libs/at.o2xfs.ctapi.dll/shared/x64/release/at.o2xfs.ctapi.dll') {
+        into 'x86_64'
+    }
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId 'at.o2xfs'
-            artifactId 'o2xfs-ctapi-binaries-x86'
+            artifactId 'o2xfs-ctapi-binaries'
             version version
 
-            artifact tasks['ctapi-binaries-x86-jar']
+            artifact tasks['ctapi-binaries-jar']
         }
     }
 
@@ -95,9 +106,4 @@ publishing {
             }
         }
     }
-}
-
-
-task 'ctapi-binaries-x86-jar'(type: Jar) {
-    from file('build/libs/at.o2xfs.ctapi.dll/shared/release/at.o2xfs.ctapi.dll')
 }

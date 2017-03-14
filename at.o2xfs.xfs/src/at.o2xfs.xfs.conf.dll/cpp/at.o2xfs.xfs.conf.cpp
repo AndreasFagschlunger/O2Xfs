@@ -31,14 +31,84 @@
 #include <at.o2xfs.win32.h>
 #include "at_o2xfs_xfs_conf_O2XfsConf.h"
 
+typedef HRESULT(__cdecl *WFM_CLOSE_KEY) (HKEY hKey);
+typedef HRESULT(__cdecl *WFM_CREATE_KEY) (HKEY hKey, LPSTR lpszSubKey, PHKEY phkResult, LPDWORD lpdwDisposition);
+typedef HRESULT(__cdecl *WFM_DELETE_KEY) (HKEY hKey, LPSTR lpszSubKey);
+typedef HRESULT(__cdecl *WFM_DELETE_VALUE) (HKEY hKey, LPSTR lpszValue);
+typedef HRESULT(__cdecl *WFM_ENUM_KEY) (HKEY hKey, DWORD iSubKey, LPSTR lpszName, LPDWORD lpcchName, PFILETIME lpftLastWrite);
+typedef HRESULT(__cdecl *WFM_ENUM_VALUE) (HKEY hKey, DWORD iValue, LPSTR lpszValue, LPDWORD lpcchValue, LPSTR lpszData, LPDWORD lpcchData);
+typedef HRESULT(__cdecl *WFM_OPEN_KEY) (HKEY hKey, LPSTR lpszSubKey, PHKEY phkResult);
+typedef HRESULT(__cdecl *WFM_QUERY_VALUE) (HKEY hKey, LPSTR lpszValueName, LPSTR lpszData, LPDWORD lpcchData);
+typedef HRESULT(__cdecl *WFM_SET_VALUE) (HKEY hKey, LPSTR lpszValueName, LPSTR lpszData, DWORD cchData);
+
+typedef LPVOID(__cdecl *GET_TYPE_ADDRESS) (JNIEnv *env, jobject type);
+typedef jobject(__cdecl *NEW_BUFFER) (JNIEnv *env, LPVOID address, jint size);
+
+HMODULE hinstXfsconfLib = NULL;
+WFM_CLOSE_KEY     lpWFMCloseKey;
+WFM_CREATE_KEY    lpWFMCreateKey;
+WFM_DELETE_KEY    lpWFMDeleteKey;
+WFM_DELETE_VALUE  lpWFMDeleteValue;
+WFM_ENUM_KEY      lpWFMEnumKey;
+WFM_ENUM_VALUE    lpWFMEnumValue;
+WFM_OPEN_KEY      lpWFMOpenKey;
+WFM_QUERY_VALUE   lpWFMQueryValue;
+WFM_SET_VALUE     lpWFMSetValue;
+
+HMODULE hinstO2win32Lib;
+GET_TYPE_ADDRESS lpGetTypeAddress;
+
+BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
+	switch (fdwReason) {
+	case DLL_PROCESS_DETACH:
+		if (hinstXfsconfLib != NULL) {
+			FreeLibrary(hinstXfsconfLib);
+		}
+		if (hinstO2win32Lib != NULL) {
+			FreeLibrary(hinstO2win32Lib);
+		}
+		break;
+	}
+	return TRUE;
+}
+
+/*
+* Class:     at_o2xfs_xfs_conf_O2XfsConf
+* Method:    loadLibraries
+* Signature: ()V
+*/
+JNIEXPORT void JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_loadLibraries(JNIEnv *env, jobject obj) {
+	hinstXfsconfLib = LoadLibrary("xfs_conf.dll");
+	if (hinstXfsconfLib != NULL) {
+		lpWFMCloseKey = (WFM_CLOSE_KEY) GetProcAddress(hinstXfsconfLib, "WFMCloseKey");
+		lpWFMCreateKey = (WFM_CREATE_KEY) GetProcAddress(hinstXfsconfLib, "WFMCreateKey");
+		lpWFMDeleteKey = (WFM_DELETE_KEY) GetProcAddress(hinstXfsconfLib, "WFMDeleteKey");
+		lpWFMDeleteValue = (WFM_DELETE_VALUE) GetProcAddress(hinstXfsconfLib, "WFMDeleteValue");
+		lpWFMEnumKey = (WFM_ENUM_KEY) GetProcAddress(hinstXfsconfLib, "WFMEnumKey");
+		lpWFMEnumValue = (WFM_ENUM_VALUE) GetProcAddress(hinstXfsconfLib, "WFMEnumValue");
+		lpWFMOpenKey = (WFM_OPEN_KEY) GetProcAddress(hinstXfsconfLib, "WFMOpenKey");
+		lpWFMQueryValue = (WFM_QUERY_VALUE) GetProcAddress(hinstXfsconfLib, "WFMQueryValue");
+		lpWFMSetValue = (WFM_SET_VALUE) GetProcAddress(hinstXfsconfLib, "WFMSetValue");
+	} else {
+		printf("Error loading xfs_conf.dll: %d\r\n", GetLastError());
+	}
+	hinstO2win32Lib = LoadLibrary("at.o2xfs.win32.dll");
+	if (hinstO2win32Lib == NULL) {
+		printf("Error loading at.o2xfs.win32.dll: %d\r\n", GetLastError());
+	}
+	else {
+		lpGetTypeAddress = (GET_TYPE_ADDRESS) GetProcAddress(hinstO2win32Lib, "GetTypeAddress");
+	}
+}
+
 /*
  * Class:     at_o2xfs_xfs_conf_O2XfsConf
  * Method:    wfmCloseKey0
  * Signature: (Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmCloseKey0(JNIEnv *env, jobject obj, jobject objhKey) {
-	HKEY hKey = (*(PHKEY) GetTypeAddress(env, objhKey));
-	return WFMCloseKey(hKey);
+	HKEY hKey = (*(PHKEY) lpGetTypeAddress(env, objhKey));
+	return lpWFMCloseKey(hKey);
 }
 
 /*
@@ -47,10 +117,10 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmCloseKey0(JNIEnv *env
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmOpenKey0(JNIEnv *env, jobject obj, jobject objhKey, jobject objlpszSubKey, jobject objphkResult) {
-	HKEY hKey = (*(PHKEY) GetTypeAddress(env, objhKey));
-	LPSTR lpszSubKey = (LPSTR) GetTypeAddress(env, objlpszSubKey);
-	PHKEY phkResult = (PHKEY) GetTypeAddress(env, objphkResult);
-	return WFMOpenKey(hKey, lpszSubKey, phkResult);
+	HKEY hKey = (*(PHKEY) lpGetTypeAddress(env, objhKey));
+	LPSTR lpszSubKey = (LPSTR) lpGetTypeAddress(env, objlpszSubKey);
+	PHKEY phkResult = (PHKEY) lpGetTypeAddress(env, objphkResult);
+	return lpWFMOpenKey(hKey, lpszSubKey, phkResult);
 }
 
 /*
@@ -59,11 +129,11 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmOpenKey0(JNIEnv *env,
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmQueryValue0(JNIEnv *env, jobject obj, jobject objhKey, jobject objlpszValueName, jobject objlpszData, jobject objlpcchData) {
-	HKEY hKey = (*(PHKEY) GetTypeAddress(env, objhKey));
-	LPSTR lpszValueName = (LPSTR) GetTypeAddress(env, objlpszValueName);
-	LPSTR lpszData = (LPSTR) GetTypeAddress(env, objlpszData);
-	LPDWORD lpcchData = (LPDWORD) GetTypeAddress(env, objlpcchData);
-	return WFMQueryValue(hKey, lpszValueName, lpszData, lpcchData);
+	HKEY hKey = (*(PHKEY) lpGetTypeAddress(env, objhKey));
+	LPSTR lpszValueName = (LPSTR) lpGetTypeAddress(env, objlpszValueName);
+	LPSTR lpszData = (LPSTR) lpGetTypeAddress(env, objlpszData);
+	LPDWORD lpcchData = (LPDWORD) lpGetTypeAddress(env, objlpcchData);
+	return lpWFMQueryValue(hKey, lpszValueName, lpszData, lpcchData);
 }
 
 /*
@@ -72,25 +142,25 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmQueryValue0(JNIEnv *e
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumKey0(JNIEnv *env, jobject obj, jobject objhKey, jobject objiSubKey, jobject objlpszName, jobject objlpcchName, jobject objlpftLastWrite) {
-	HKEY hKey = (*(PHKEY) GetTypeAddress(env, objhKey));
-	DWORD iSubKey = (*(LPDWORD) GetTypeAddress(env, objiSubKey));
-	LPSTR lpszName = (LPSTR) GetTypeAddress(env, objlpszName);
-	LPDWORD lpcchName = (LPDWORD) GetTypeAddress(env, objlpcchName);
-	PFILETIME lpftLastWrite = (PFILETIME) GetTypeAddress(env, objlpftLastWrite);
-	return WFMEnumKey(hKey, iSubKey, lpszName, lpcchName, lpftLastWrite);
+	HKEY hKey = (*(PHKEY) lpGetTypeAddress(env, objhKey));
+	DWORD iSubKey = (*(LPDWORD) lpGetTypeAddress(env, objiSubKey));
+	LPSTR lpszName = (LPSTR) lpGetTypeAddress(env, objlpszName);
+	LPDWORD lpcchName = (LPDWORD) lpGetTypeAddress(env, objlpcchName);
+	PFILETIME lpftLastWrite = (PFILETIME) lpGetTypeAddress(env, objlpftLastWrite);
+	return lpWFMEnumKey(hKey, iSubKey, lpszName, lpcchName, lpftLastWrite);
 }
 
 /*
- * Class:     at_o2xfs_xfs_conf_O2XfsConf
- * Method:    wfmEnumValue0
- * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
- */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumValue0(JNIEnv *env, jobject obj, jobject objhKey, jobject objiValue, jobject objlpszValue, jobject objlpcchValue, jobject objlpszData, jobject objlpcchData) {
-	HKEY hKey = (*(PHKEY) GetTypeAddress(env, objhKey));
-	DWORD iValue = (*(LPDWORD) GetTypeAddress(env, objiValue));
-	LPSTR lpszValue = (LPSTR) GetTypeAddress(env, objlpszValue);
-	LPDWORD lpcchValue = (LPDWORD) GetTypeAddress(env, objlpcchValue);
-	LPSTR lpszData =  (LPSTR) GetTypeAddress(env, objlpszData);
-	LPDWORD lpcchData =  (LPDWORD) GetTypeAddress(env, objlpcchData);
-	return WFMEnumValue(hKey, iValue, lpszValue, lpcchValue, lpszData, lpcchData);
+* Class:     at_o2xfs_xfs_conf_O2XfsConf
+* Method:    wfmEnumValue0
+* Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
+*/
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_conf_O2XfsConf_wfmEnumValue0(JNIEnv *env, jobject obj, jobject objhKey, jobject objiValue, jobject szValue, jobject cchValue, jobject szData, jobject cchData) {
+	HKEY hKey = (*(PHKEY) lpGetTypeAddress(env, objhKey));
+	DWORD iValue = (*(LPDWORD) lpGetTypeAddress(env, objiValue));
+	LPSTR lpszValue = (LPSTR) lpGetTypeAddress(env, szValue);
+	LPDWORD lpcchValue = (LPDWORD) lpGetTypeAddress(env, cchValue);
+	LPSTR lpszData =  (LPSTR) lpGetTypeAddress(env, szData);
+	LPDWORD lpcchData =  (LPDWORD) lpGetTypeAddress(env, cchData);
+	return lpWFMEnumValue(hKey, iValue, lpszValue, lpcchValue, lpszData, lpcchData);
 }

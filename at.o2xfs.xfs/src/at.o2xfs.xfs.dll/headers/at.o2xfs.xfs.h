@@ -35,4 +35,38 @@
 
 extern HINSTANCE hInstance;
 
+typedef HRESULT(__cdecl *WFS_CANCEL_ASYNC_REQUEST)  (HSERVICE hService, REQUESTID RequestID);
+typedef HRESULT(__cdecl *WFS_CANCEL_BLOCKING_CALL)  (DWORD dwThreadID);
+typedef HRESULT(__cdecl *WFS_CLEAN_UP)  ();
+typedef HRESULT(__cdecl *WFS_CLOSE)  (HSERVICE hService);
+typedef HRESULT(__cdecl *WFS_ASYNC_CLOSE)  (HSERVICE hService, HWND hWnd, LPREQUESTID lpRequestID);
+typedef HRESULT(__cdecl *WFS_CREATE_APP_HANDLE)  (LPHAPP lphApp);
+typedef HRESULT(__cdecl *WFS_DEREGISTER)  (HSERVICE hService, DWORD dwEventClass, HWND hWndReg);
+typedef HRESULT(__cdecl *WFS_ASYNC_DEREGISTER)  (HSERVICE hService, DWORD dwEventClass, HWND hWndReg, HWND hWnd, LPREQUESTID lpRequestID);
+typedef HRESULT(__cdecl *WFS_DESTROY_APP_HANDLE)  (HAPP hApp);
+typedef HRESULT(__cdecl *WFS_EXECUTE)  (HSERVICE hService, DWORD dwCommand, LPVOID lpCmdData, DWORD dwTimeOut, LPWFSRESULT * lppResult);
+typedef HRESULT(__cdecl *WFS_ASYNC_EXECUTE)  (HSERVICE hService, DWORD dwCommand, LPVOID lpCmdData, DWORD dwTimeOut, HWND hWnd, LPREQUESTID lpRequestID);
+typedef HRESULT(__cdecl *WFS_FREE_RESULT)  (LPWFSRESULT lpResult);
+typedef HRESULT(__cdecl *WFS_GET_INFO)  (HSERVICE hService, DWORD dwCategory, LPVOID lpQueryDetails, DWORD dwTimeOut, LPWFSRESULT * lppResult);
+typedef HRESULT(__cdecl *WFS_ASYNC_GET_INFO)  (HSERVICE hService, DWORD dwCategory, LPVOID lpQueryDetails, DWORD dwTimeOut, HWND hWnd, LPREQUESTID lpRequestID);
+typedef BOOL(__cdecl *WFS_IS_BLOCKING)  ();
+typedef HRESULT(__cdecl *WFS_LOCK)  (HSERVICE hService, DWORD dwTimeOut, LPWFSRESULT * lppResult);
+typedef HRESULT(__cdecl *WFS_ASYNC_LOCK)  (HSERVICE hService, DWORD dwTimeOut, HWND hWnd, LPREQUESTID lpRequestID);
+typedef HRESULT(__cdecl *WFS_OPEN)  (LPSTR lpszLogicalName, HAPP hApp, LPSTR lpszAppID, DWORD dwTraceLevel, DWORD dwTimeOut, DWORD dwSrvcVersionsRequired, LPWFSVERSION lpSrvcVersion, LPWFSVERSION lpSPIVersion, LPHSERVICE lphService);
+typedef HRESULT(__cdecl *WFS_ASYNC_OPEN)  (LPSTR lpszLogicalName, HAPP hApp, LPSTR lpszAppID, DWORD dwTraceLevel, DWORD dwTimeOut, LPHSERVICE lphService, HWND hWnd, DWORD dwSrvcVersionsRequired, LPWFSVERSION lpSrvcVersion, LPWFSVERSION lpSPIVersion, LPREQUESTID lpRequestID);
+typedef HRESULT(__cdecl *WFS_REGISTER)  (HSERVICE hService, DWORD dwEventClass, HWND hWndReg);
+typedef HRESULT(__cdecl *WFS_ASYNC_REGISTER)  (HSERVICE hService, DWORD dwEventClass, HWND hWndReg, HWND hWnd, LPREQUESTID lpRequestID);
+typedef HRESULT(__cdecl *WFS_SET_BLOCKING_HOOK)  (XFSBLOCKINGHOOK lpBlockFunc, LPXFSBLOCKINGHOOK lppPrevFunc);
+typedef HRESULT(__cdecl *WFS_START_UP)  (DWORD dwVersionsRequired, LPWFSVERSION lpWFSVersion);
+typedef HRESULT(__cdecl *WFS_UNHOOK_BLOCKING_HOOK)  ();
+typedef HRESULT(__cdecl *WFS_UNLOCK)  (HSERVICE hService);
+typedef HRESULT(__cdecl *WFS_ASYNC_UNLOCK)  (HSERVICE hService, HWND hWnd, LPREQUESTID lpRequestID);
+typedef HRESULT(__cdecl *WFM_SET_TRACE_LEVEL)  (HSERVICE hService, DWORD dwTraceLevel);
+
+typedef LPVOID(__cdecl *GET_TYPE_ADDRESS) (JNIEnv *env, jobject type);
+typedef jobject(__cdecl *NEW_BUFFER) (JNIEnv *env, LPVOID address, jint size);
+
+extern GET_TYPE_ADDRESS lpGetTypeAddress;
+extern NEW_BUFFER lpNewBuffer;
+
 #endif // _O2XFS_

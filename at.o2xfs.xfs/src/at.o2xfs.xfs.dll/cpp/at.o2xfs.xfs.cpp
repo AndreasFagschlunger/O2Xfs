@@ -29,6 +29,40 @@
 #include "at_o2xfs_xfs_XfsAPI.h"
 
 HINSTANCE hInstance;
+HMODULE hinstMsxfsLib;
+
+WFS_CANCEL_ASYNC_REQUEST lpWFSCancelAsyncRequest;
+WFS_CANCEL_BLOCKING_CALL lpWFSCancelBlockingCall;
+WFS_CLEAN_UP             lpWFSCleanUp;
+WFS_CLOSE                lpWFSClose;
+WFS_ASYNC_CLOSE          lpWFSAsyncClose;
+WFS_CREATE_APP_HANDLE    lpWFSCreateAppHandle;
+WFS_DEREGISTER           lpWFSDeregister;
+WFS_ASYNC_DEREGISTER     lpWFSAsyncDeregister;
+WFS_DESTROY_APP_HANDLE   lpWFSDestroyAppHandle;
+WFS_EXECUTE              lpWFSExecute;
+WFS_ASYNC_EXECUTE        lpWFSAsyncExecute;
+WFS_FREE_RESULT          lpWFSFreeResult;
+WFS_GET_INFO             lpWFSGetInfo;
+WFS_ASYNC_GET_INFO       lpWFSAsyncGetInfo;
+WFS_IS_BLOCKING          lpWFSIsBlocking;
+WFS_LOCK                 lpWFSLock;
+WFS_ASYNC_LOCK           lpWFSAsyncLock;
+WFS_OPEN                 lpWFSOpen;
+WFS_ASYNC_OPEN           lpWFSAsyncOpen;
+WFS_REGISTER             lpWFSRegister;
+WFS_ASYNC_REGISTER       lpWFSAsyncRegister;
+WFS_SET_BLOCKING_HOOK    lpWFSSetBlockingHook;
+WFS_START_UP             lpWFSStartUp;
+WFS_UNHOOK_BLOCKING_HOOK lpWFSUnhookBlockingHook;
+WFS_UNLOCK               lpWFSUnlock;
+WFS_ASYNC_UNLOCK         lpWFSAsyncUnlock;
+WFM_SET_TRACE_LEVEL      lpWFMSetTraceLevel;
+
+HMODULE hinstO2win32Lib;
+
+GET_TYPE_ADDRESS lpGetTypeAddress;
+NEW_BUFFER lpNewBuffer;
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
 	switch(fdwReason) {
@@ -38,9 +72,62 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
 			break;
 		case DLL_PROCESS_DETACH:
 			printf("DLL_PROCESS_DETACH\n");
+			if (hinstMsxfsLib != NULL) {
+				FreeLibrary(hinstMsxfsLib);
+			}
+			if (hinstO2win32Lib != NULL) {
+				FreeLibrary(hinstO2win32Lib);
+			}
 			break;
 	}
 	return TRUE;
+}
+
+/*
+* Class:     at_o2xfs_xfs_XfsAPI
+* Method:    loadLibrary
+* Signature: ()V
+*/
+JNIEXPORT void JNICALL Java_at_o2xfs_xfs_XfsAPI_loadLibrary(JNIEnv *env, jobject obj) {
+	hinstMsxfsLib = LoadLibrary("msxfs.dll");
+	if (hinstMsxfsLib == NULL) {
+		printf("Error loading msxfs.dll: %d\r\n", GetLastError());
+	} else {
+		lpWFSCancelAsyncRequest = (WFS_CANCEL_ASYNC_REQUEST) GetProcAddress(hinstMsxfsLib, "WFSCancelAsyncRequest");
+		lpWFSCancelBlockingCall = (WFS_CANCEL_BLOCKING_CALL) GetProcAddress(hinstMsxfsLib, "WFSCancelBlockingCall");
+		lpWFSCleanUp            = (WFS_CLEAN_UP)             GetProcAddress(hinstMsxfsLib, "WFSCleanUp");
+		lpWFSClose              = (WFS_CLOSE)                GetProcAddress(hinstMsxfsLib, "WFSClose");
+		lpWFSAsyncClose         = (WFS_ASYNC_CLOSE)          GetProcAddress(hinstMsxfsLib, "WFSAsyncClose");
+		lpWFSCreateAppHandle    = (WFS_CREATE_APP_HANDLE)    GetProcAddress(hinstMsxfsLib, "WFSCreateAppHandle");
+		lpWFSDeregister         = (WFS_DEREGISTER)           GetProcAddress(hinstMsxfsLib, "WFSDeregister");
+		lpWFSAsyncDeregister    = (WFS_ASYNC_DEREGISTER)     GetProcAddress(hinstMsxfsLib, "WFSAsyncDeregister");
+		lpWFSDestroyAppHandle   = (WFS_DESTROY_APP_HANDLE)   GetProcAddress(hinstMsxfsLib, "WFSDestroyAppHandle");
+		lpWFSExecute            = (WFS_EXECUTE)              GetProcAddress(hinstMsxfsLib, "WFSExecute");
+		lpWFSAsyncExecute       = (WFS_ASYNC_EXECUTE)        GetProcAddress(hinstMsxfsLib, "WFSAsyncExecute");
+		lpWFSFreeResult         = (WFS_FREE_RESULT)          GetProcAddress(hinstMsxfsLib, "WFSFreeResult");
+		lpWFSGetInfo            = (WFS_GET_INFO)             GetProcAddress(hinstMsxfsLib, "WFSGetInfo");
+		lpWFSAsyncGetInfo       = (WFS_ASYNC_GET_INFO)       GetProcAddress(hinstMsxfsLib, "WFSAsyncGetInfo");
+		lpWFSIsBlocking         = (WFS_IS_BLOCKING)          GetProcAddress(hinstMsxfsLib, "WFSIsBlocking");
+		lpWFSLock               = (WFS_LOCK)                 GetProcAddress(hinstMsxfsLib, "WFSLock");
+		lpWFSAsyncLock          = (WFS_ASYNC_LOCK)           GetProcAddress(hinstMsxfsLib, "WFSAsyncLock");
+		lpWFSOpen               = (WFS_OPEN)                 GetProcAddress(hinstMsxfsLib, "WFSOpen");
+		lpWFSAsyncOpen          = (WFS_ASYNC_OPEN)           GetProcAddress(hinstMsxfsLib, "WFSAsyncOpen");
+		lpWFSRegister           = (WFS_REGISTER)             GetProcAddress(hinstMsxfsLib, "WFSRegister");
+		lpWFSAsyncRegister      = (WFS_ASYNC_REGISTER)       GetProcAddress(hinstMsxfsLib, "WFSAsyncRegister");
+		lpWFSSetBlockingHook    = (WFS_SET_BLOCKING_HOOK)    GetProcAddress(hinstMsxfsLib, "WFSSetBlockingHook");
+		lpWFSStartUp            = (WFS_START_UP)             GetProcAddress(hinstMsxfsLib, "WFSStartUp");
+		lpWFSUnhookBlockingHook = (WFS_UNHOOK_BLOCKING_HOOK) GetProcAddress(hinstMsxfsLib, "WFSUnhookBlockingHook");
+		lpWFSUnlock             = (WFS_UNLOCK)               GetProcAddress(hinstMsxfsLib, "WFSUnlock");
+		lpWFSAsyncUnlock        = (WFS_ASYNC_UNLOCK)         GetProcAddress(hinstMsxfsLib, "WFSAsyncUnlock");
+		lpWFMSetTraceLevel      = (WFM_SET_TRACE_LEVEL)      GetProcAddress(hinstMsxfsLib, "WFMSetTraceLevel");
+	}
+	hinstO2win32Lib = LoadLibrary("at.o2xfs.win32.dll");
+	if (hinstO2win32Lib == NULL) {
+		printf("Error loading at.o2xfs.win32.dll: %d\r\n", GetLastError());
+	} else {
+		lpGetTypeAddress = (GET_TYPE_ADDRESS) GetProcAddress(hinstO2win32Lib, "GetTypeAddress");
+		lpNewBuffer = (NEW_BUFFER) GetProcAddress(hinstO2win32Lib, "NewBuffer");
+	}
 }
 
 /*
@@ -49,10 +136,9 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)J
  */
 JNIEXPORT jlong JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsCancelAsyncRequest0(JNIEnv *env, jobject obj, jobject hServiceObj, jobject requestIDObj) {
-	HSERVICE hService = (*(LPHSERVICE) GetTypeAddress(env, hServiceObj));
-	REQUESTID requestID = (*(LPREQUESTID) GetTypeAddress(env, requestIDObj));
-	printf("WFSCancelAsyncRequest: hService=%d, RequestID=%d\n", hService, requestID);
-	return WFSCancelAsyncRequest(hService, requestID);
+	HSERVICE hService = (*(LPHSERVICE) lpGetTypeAddress(env, hServiceObj));
+	REQUESTID requestID = (*(LPREQUESTID) lpGetTypeAddress(env, requestIDObj));	
+	return lpWFSCancelAsyncRequest(hService, requestID);
 }
 
 /*
@@ -61,7 +147,7 @@ JNIEXPORT jlong JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsCancelAsyncRequest0(JNIEnv *
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsCleanUp0(JNIEnv *env, jobject obj) {
-	return WFSCleanUp();
+	return lpWFSCleanUp();
 }
 
 /*
@@ -70,11 +156,10 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsCleanUp0(JNIEnv *env, jobject
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncClose0(JNIEnv *env, jobject obj, jobject hServiceObj, jobject hWndObj, jobject requestIDObj) {
-	HSERVICE hService = (*(LPHSERVICE) GetTypeAddress(env, hServiceObj));
-	HWND hWnd = (HWND) (*(LPHANDLE) GetTypeAddress(env, hWndObj));
-	LPREQUESTID lpRequestID = (LPREQUESTID) GetTypeAddress(env, requestIDObj);
-	printf("WFSAsyncClose: hService=%d, hWnd=%X, requestID=%d\n", hService, hWnd, *lpRequestID);
-	return WFSAsyncClose(hService, hWnd, lpRequestID);
+	HSERVICE hService = (*(LPHSERVICE) lpGetTypeAddress(env, hServiceObj));
+	HWND hWnd = (HWND) (*(LPHANDLE) lpGetTypeAddress(env, hWndObj));
+	LPREQUESTID lpRequestID = (LPREQUESTID) lpGetTypeAddress(env, requestIDObj);
+	return lpWFSAsyncClose(hService, hWnd, lpRequestID);
 }
 
 /*
@@ -83,7 +168,7 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncClose0(JNIEnv *env, jobj
  * Signature: (Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsCreateAppHandle0(JNIEnv *env, jobject obj, jobject hApp) {
-	return WFSCreateAppHandle((LPHAPP) GetTypeAddress(env, hApp));
+	return lpWFSCreateAppHandle((LPHAPP) lpGetTypeAddress(env, hApp));
 }
 
 /*
@@ -94,19 +179,19 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsCreateAppHandle0(JNIEnv *env,
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncDeregister0(JNIEnv *env, jobject obj, jobject hServiceObj, jobject dwEventClassObj, jobject hWndRegObj, jobject hWndObj, jobject requestIDObj) {
 	HSERVICE hService = NULL;
 	if(hServiceObj != NULL) {
-		hService = (*(LPHSERVICE) GetTypeAddress(env, hServiceObj));
+		hService = (*(LPHSERVICE) lpGetTypeAddress(env, hServiceObj));
 	}
 	DWORD dwEventClass = NULL;
 	if(dwEventClassObj != NULL) {
-		dwEventClass = (*(LPDWORD) GetTypeAddress(env, dwEventClassObj));
+		dwEventClass = (*(LPDWORD) lpGetTypeAddress(env, dwEventClassObj));
 	}
 	HWND hWndReg = NULL;
 	if(hWndRegObj != NULL) {
-		hWndReg = (HWND) (*(LPHANDLE) GetTypeAddress(env, hWndRegObj));
+		hWndReg = (HWND) (*(LPHANDLE) lpGetTypeAddress(env, hWndRegObj));
 	}
-	HWND hWnd = (HWND) (*(LPHANDLE) GetTypeAddress(env, hWndObj));
-	LPREQUESTID lpRequestID = (LPREQUESTID) GetTypeAddress(env, requestIDObj);
-	return WFSAsyncDeregister(hService, dwEventClass, hWndReg, hWnd, lpRequestID);
+	HWND hWnd = (HWND) (*(LPHANDLE) lpGetTypeAddress(env, hWndObj));
+	LPREQUESTID lpRequestID = (LPREQUESTID) lpGetTypeAddress(env, requestIDObj);
+	return lpWFSAsyncDeregister(hService, dwEventClass, hWndReg, hWnd, lpRequestID);
 }
 
 /*
@@ -115,8 +200,8 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncDeregister0(JNIEnv *env,
  * Signature: (Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsDestroyAppHandle0(JNIEnv *env, jobject obj, jobject hAppObj) {
-	HAPP hApp = (*(LPHAPP) GetTypeAddress(env, hAppObj));
-	return WFSDestroyAppHandle(hApp);
+	HAPP hApp = (*(LPHAPP) lpGetTypeAddress(env, hAppObj));
+	return lpWFSDestroyAppHandle(hApp);
 }
 
 /*
@@ -125,16 +210,16 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsDestroyAppHandle0(JNIEnv *env
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncExecute0(JNIEnv *env, jobject obj, jobject hServiceObj, jobject dwCommandObj, jobject cmdDataObj, jobject dwTimeOutObj, jobject hWndObj, jobject requestIDObj) {
-	HSERVICE hService = (*(LPHSERVICE) GetTypeAddress(env, hServiceObj));
-	DWORD dwCommand = (*(LPDWORD) GetTypeAddress(env, dwCommandObj));
+	HSERVICE hService = (*(LPHSERVICE) lpGetTypeAddress(env, hServiceObj));
+	DWORD dwCommand = (*(LPDWORD) lpGetTypeAddress(env, dwCommandObj));
 	LPVOID lpCmdData = NULL;
 	if(cmdDataObj != NULL) {
-		lpCmdData = GetTypeAddress(env, cmdDataObj);
+		lpCmdData = lpGetTypeAddress(env, cmdDataObj);
 	}
-	DWORD dwTimeOut = (*(LPDWORD) GetTypeAddress(env, dwTimeOutObj));
-	HWND hWnd = (HWND) (*(LPHANDLE) GetTypeAddress(env, hWndObj));
-	LPREQUESTID lpRequestID = (LPREQUESTID) GetTypeAddress(env, requestIDObj);
-	return WFSAsyncExecute(hService, dwCommand, lpCmdData, dwTimeOut, hWnd, lpRequestID);
+	DWORD dwTimeOut = (*(LPDWORD) lpGetTypeAddress(env, dwTimeOutObj));
+	HWND hWnd = (HWND) (*(LPHANDLE) lpGetTypeAddress(env, hWndObj));
+	LPREQUESTID lpRequestID = (LPREQUESTID) lpGetTypeAddress(env, requestIDObj);
+	return lpWFSAsyncExecute(hService, dwCommand, lpCmdData, dwTimeOut, hWnd, lpRequestID);
 }
 
 /*
@@ -143,9 +228,8 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncExecute0(JNIEnv *env, jo
  * Signature: (Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsFreeResult0(JNIEnv *env, jobject obj, jobject resultObj) {
-	LPWFSRESULT lpResult = (LPWFSRESULT) GetTypeAddress(env, resultObj);
-	printf("WFSFreeResult: lpResult=%X\n", lpResult);
-	return WFSFreeResult(lpResult);
+	LPWFSRESULT lpResult = (LPWFSRESULT) lpGetTypeAddress(env, resultObj);
+	return lpWFSFreeResult(lpResult);
 }
 
 /*
@@ -154,15 +238,15 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsFreeResult0(JNIEnv *env, jobj
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)J
  */
 JNIEXPORT jlong JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsGetInfo0(JNIEnv *env, jobject obj, jobject hServiceObj, jobject dwCategoryObj, jobject queryDetailsObj, jobject dwTimeOutObj, jobject resultObj) {
-	HSERVICE hService = (*(LPHSERVICE) GetTypeAddress(env, hServiceObj));
-	DWORD dwCategory = (*(LPDWORD) GetTypeAddress(env, dwCategoryObj));
+	HSERVICE hService = (*(LPHSERVICE) lpGetTypeAddress(env, hServiceObj));
+	DWORD dwCategory = (*(LPDWORD) lpGetTypeAddress(env, dwCategoryObj));
 	LPVOID lpQueryDetails = NULL;
 	if(queryDetailsObj != NULL) {
-		lpQueryDetails = GetTypeAddress(env, queryDetailsObj);
+		lpQueryDetails = lpGetTypeAddress(env, queryDetailsObj);
 	}
-	DWORD dwTimeOut = (*(LPDWORD) GetTypeAddress(env, dwTimeOutObj));
-	LPWFSRESULT* lppResult = (LPWFSRESULT*) GetTypeAddress(env, resultObj);
-	return WFSGetInfo(hService, dwCategory, lpQueryDetails, dwTimeOut, lppResult);
+	DWORD dwTimeOut = (*(LPDWORD) lpGetTypeAddress(env, dwTimeOutObj));
+	LPWFSRESULT* lppResult = (LPWFSRESULT*) lpGetTypeAddress(env, resultObj);
+	return lpWFSGetInfo(hService, dwCategory, lpQueryDetails, dwTimeOut, lppResult);
 }
 
 /*
@@ -171,17 +255,16 @@ JNIEXPORT jlong JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsGetInfo0(JNIEnv *env, jobjec
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncGetInfo0(JNIEnv *env, jobject obj, jobject hServiceObj, jobject dwCategoryObj, jobject queryDetailsObj, jobject dwTimeOutObj, jobject hWndObj, jobject requestIDObj) {
-	HSERVICE hService = (*(LPHSERVICE) GetTypeAddress(env, hServiceObj));
-	DWORD dwCategory = (*(LPDWORD) GetTypeAddress(env, dwCategoryObj));
+	HSERVICE hService = (*(LPHSERVICE) lpGetTypeAddress(env, hServiceObj));
+	DWORD dwCategory = (*(LPDWORD) lpGetTypeAddress(env, dwCategoryObj));
 	LPVOID lpQueryDetails = NULL;
 	if(queryDetailsObj != NULL) {
-		lpQueryDetails = GetTypeAddress(env, queryDetailsObj);
+		lpQueryDetails = lpGetTypeAddress(env, queryDetailsObj);
 	}
-	DWORD dwTimeOut = (*(LPDWORD) GetTypeAddress(env, dwTimeOutObj));
-	HWND hWnd = (HWND) (*(LPHANDLE) GetTypeAddress(env, hWndObj));
-	LPREQUESTID lpRequestID = (LPREQUESTID) GetTypeAddress(env, requestIDObj);
-	printf("WFSAsyncGetInfo: hService=%d, dwCategory=%d, lpQueryDetails=%p, dwTimeOut=%d, hWnd=%p, lpRequestID=%p\n", hService, dwCategory, lpQueryDetails, dwTimeOut, hWnd, lpRequestID);
-	return WFSAsyncGetInfo(hService, dwCategory, lpQueryDetails, dwTimeOut, hWnd, lpRequestID);
+	DWORD dwTimeOut = (*(LPDWORD) lpGetTypeAddress(env, dwTimeOutObj));
+	HWND hWnd = (HWND) (*(LPHANDLE) lpGetTypeAddress(env, hWndObj));
+	LPREQUESTID lpRequestID = (LPREQUESTID) lpGetTypeAddress(env, requestIDObj);
+	return lpWFSAsyncGetInfo(hService, dwCategory, lpQueryDetails, dwTimeOut, hWnd, lpRequestID);
 }
 
 /*
@@ -190,25 +273,25 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncGetInfo0(JNIEnv *env, jo
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncOpen0(JNIEnv *env, jobject obj, jobject logicalNameObj, jobject hAppObj, jobject appIDObj, jobject dwTraceLevelObj, jobject dwTimeOutObj, jobject hServiceObj, jobject hWndObj, jobject dwSrvcVersionsRequiredObj, jobject srvcVersionObj, jobject spiVersionObj, jobject requestIDObj) {
-	LPSTR lpszLogicalName = (LPSTR) GetTypeAddress(env, logicalNameObj);
-	HAPP hApp = (*(LPHAPP) GetTypeAddress(env, hAppObj));
+	LPSTR lpszLogicalName = (LPSTR) lpGetTypeAddress(env, logicalNameObj);
+	HAPP hApp = (*(LPHAPP) lpGetTypeAddress(env, hAppObj));
 	LPSTR lpszAppID = NULL;
 	if(appIDObj != NULL) {
-		lpszAppID = (LPSTR) GetTypeAddress(env, appIDObj);
+		lpszAppID = (LPSTR) lpGetTypeAddress(env, appIDObj);
 	}
 	DWORD dwTraceLevel = NULL;
 	if(dwTraceLevelObj != NULL) {
-		dwTraceLevel = (*(LPDWORD) GetTypeAddress(env, dwTraceLevelObj));
+		dwTraceLevel = (*(LPDWORD) lpGetTypeAddress(env, dwTraceLevelObj));
 	}
-	DWORD dwTimeOut = (*(LPDWORD) GetTypeAddress(env, dwTimeOutObj));
-	LPHSERVICE lphService = (LPHSERVICE) GetTypeAddress(env, hServiceObj);
-	HWND hWnd = (HWND) (*(LPHANDLE) GetTypeAddress(env, hWndObj));
-	DWORD dwSrvcVersionsRequired = (*(LPDWORD) GetTypeAddress(env, dwSrvcVersionsRequiredObj));
-	LPWFSVERSION lpSrvcVersion = (LPWFSVERSION) GetTypeAddress(env, srvcVersionObj);
-	LPWFSVERSION lpSPIVersion = (LPWFSVERSION) GetTypeAddress(env, spiVersionObj);
-	LPREQUESTID lpRequestID = (LPREQUESTID) GetTypeAddress(env, requestIDObj);
+	DWORD dwTimeOut = (*(LPDWORD) lpGetTypeAddress(env, dwTimeOutObj));
+	LPHSERVICE lphService = (LPHSERVICE) lpGetTypeAddress(env, hServiceObj);
+	HWND hWnd = (HWND) (*(LPHANDLE) lpGetTypeAddress(env, hWndObj));
+	DWORD dwSrvcVersionsRequired = (*(LPDWORD) lpGetTypeAddress(env, dwSrvcVersionsRequiredObj));
+	LPWFSVERSION lpSrvcVersion = (LPWFSVERSION) lpGetTypeAddress(env, srvcVersionObj);
+	LPWFSVERSION lpSPIVersion = (LPWFSVERSION) lpGetTypeAddress(env, spiVersionObj);
+	LPREQUESTID lpRequestID = (LPREQUESTID) lpGetTypeAddress(env, requestIDObj);
 	printf("WFSAsyncOpen: lpszLogicalName=%s,hApp=%p,lpszAppID=%s,dwTraceLevel=%i,dwTimeOut=%i,lphService=%p,hWnd=%p,dwSrvcVersionsRequired=%p,lpSPIVersion=%p,lpRequestID=%p\n", lpszLogicalName, hApp, lpszAppID, dwTraceLevel, dwTimeOut, lphService, hWnd, dwSrvcVersionsRequired, lpSrvcVersion, lpSPIVersion, lpRequestID);
-	return WFSAsyncOpen(lpszLogicalName, hApp, lpszAppID, dwTraceLevel, dwTimeOut, lphService, hWnd, dwSrvcVersionsRequired, lpSrvcVersion, lpSPIVersion, lpRequestID);
+	return lpWFSAsyncOpen(lpszLogicalName, hApp, lpszAppID, dwTraceLevel, dwTimeOut, lphService, hWnd, dwSrvcVersionsRequired, lpSrvcVersion, lpSPIVersion, lpRequestID);
 }
 
 /*
@@ -219,16 +302,16 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncOpen0(JNIEnv *env, jobje
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncRegister0(JNIEnv *env, jobject obj, jobject hServiceObj, jobject dwEventClassObj, jobject hWndRegObj, jobject hWndObj, jobject requestIDObj) {
 	HSERVICE hService = NULL;
 	if(hServiceObj != NULL) {
-		hService = (*(LPHSERVICE) GetTypeAddress(env, hServiceObj));
+		hService = (*(LPHSERVICE) lpGetTypeAddress(env, hServiceObj));
 	}
 	DWORD dwEventClass = NULL;
 	if(dwEventClassObj != NULL) {
-		dwEventClass = (*(LPDWORD) GetTypeAddress(env, dwEventClassObj));
+		dwEventClass = (*(LPDWORD) lpGetTypeAddress(env, dwEventClassObj));
 	}
-	HWND hWndReg =(HWND) (*(LPHANDLE) GetTypeAddress(env, hWndRegObj));
-	HWND hWnd = (HWND) (*(LPHANDLE) GetTypeAddress(env, hWndObj));
-	LPREQUESTID lpRequestID = (LPREQUESTID) GetTypeAddress(env, requestIDObj);
-	return WFSAsyncRegister(hService, dwEventClass, hWndReg, hWnd, lpRequestID);
+	HWND hWndReg =(HWND) (*(LPHANDLE) lpGetTypeAddress(env, hWndRegObj));
+	HWND hWnd = (HWND) (*(LPHANDLE) lpGetTypeAddress(env, hWndObj));
+	LPREQUESTID lpRequestID = (LPREQUESTID) lpGetTypeAddress(env, requestIDObj);
+	return lpWFSAsyncRegister(hService, dwEventClass, hWndReg, hWnd, lpRequestID);
 }
 
 /*
@@ -237,8 +320,8 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncRegister0(JNIEnv *env, j
  * Signature: (Lat/o2xfs/win32/Type;Lat/o2xfs/win32/Type;)I
  */
 JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsStartUp0(JNIEnv *env, jobject obj, jobject versionsRequired, jobject wfsVersion) {
-	DWORD dwVersionsRequired = (*(LPDWORD) GetTypeAddress(env, versionsRequired));
+	DWORD dwVersionsRequired = (*(LPDWORD) lpGetTypeAddress(env, versionsRequired));
 	printf("WFSStartUp: %d.%d - %d.%d\n", LOBYTE(HIWORD(dwVersionsRequired)), HIBYTE(HIWORD(dwVersionsRequired)), LOBYTE(LOWORD(dwVersionsRequired)), HIBYTE(LOWORD(dwVersionsRequired)));
-	LPWFSVERSION lpWFSVersion = (LPWFSVERSION) GetTypeAddress(env, wfsVersion);
-	return WFSStartUp(dwVersionsRequired, lpWFSVersion);
+	LPWFSVERSION lpWFSVersion = (LPWFSVERSION) lpGetTypeAddress(env, wfsVersion);
+	return lpWFSStartUp(dwVersionsRequired, lpWFSVersion);
 }

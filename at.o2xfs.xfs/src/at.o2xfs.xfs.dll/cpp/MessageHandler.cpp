@@ -71,7 +71,7 @@ JNIEXPORT void JNICALL Java_at_o2xfs_xfs_util_MessageHandler_run0(JNIEnv *env, j
 
 	HWND hWnd = CreateWindow(szAppName, TEXT("O2Xfs"), WS_DISABLED, -1, -1, 0, 0, NULL, NULL, hInstance, NULL);
 	jmethodID methodID = GetMethodID(env, env->GetObjectClass(obj), "hWnd", "()V");
-	memcpy(GetTypeAddress(env, hWndBuf), &hWnd, sizeof(HWND));
+	memcpy(lpGetTypeAddress(env, hWndBuf), &hWnd, sizeof(HWND));
 	env->CallVoidMethod(obj, methodID);
 	handlerObj = env->NewGlobalRef(obj);
 
@@ -89,7 +89,7 @@ JNIEXPORT void JNICALL Java_at_o2xfs_xfs_util_MessageHandler_run0(JNIEnv *env, j
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	if(msg > WM_USER) {
-		g_pEnv->CallVoidMethod(handlerObj, callbackMID, msg, NewBuffer(g_pEnv, &lParam, sizeof(lParam)));
+		g_pEnv->CallVoidMethod(handlerObj, callbackMID, msg, lpNewBuffer(g_pEnv, &lParam, sizeof(lParam)));
 		return 0;
 	} else {
 		switch(msg) {
@@ -107,5 +107,5 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
  * Signature: (Lat/o2xfs/win32/Type;)V
  */
 JNIEXPORT void JNICALL Java_at_o2xfs_xfs_util_MessageHandler_close0(JNIEnv *env, jobject obj, jobject hWndObj) {
-	SendMessage((HWND) (*(LPHANDLE) GetTypeAddress(env, hWndObj)), WM_CLOSE, 0, 0);
+	SendMessage((HWND) (*(LPHANDLE) lpGetTypeAddress(env, hWndObj)), WM_CLOSE, 0, 0);
 }

@@ -82,29 +82,23 @@ model {
     }
 }
 
-task x86Jar(type: Jar) {
-    from file('build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.win32.dll')
-}
-
-task x64Jar(type: Jar) {
-    from file('build/libs/at.o2xfs.win32.dll/shared/x64/release/at.o2xfs.win32.dll')
+task binariesJar(type: Jar) {
+    from ('build/libs/at.o2xfs.win32.dll/shared/x86/release/at.o2xfs.win32.dll') {
+        into 'x86'
+    }
+    from ('build/libs/at.o2xfs.win32.dll/shared/x64/release/at.o2xfs.win32.dll') {
+        into 'x86_64'
+    }
 }
 
 publishing {
     publications {
         x86(MavenPublication) {
-            groupId 'at.o2xfs.win32'
-            artifactId 'at.o2xfs.win32.binaries.x86'
+            groupId 'at.o2xfs'
+            artifactId 'o2xfs-win32-binaries'
             version version
 
-            artifact x86Jar
-        }
-        x64(MavenPublication) {
-            groupId 'at.o2xfs.win32'
-            artifactId 'at.o2xfs.win32.binaries.x86_64'
-            version version
-
-            artifact x64Jar
+            artifact binariesJar
         }
     }
 

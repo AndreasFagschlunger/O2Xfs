@@ -60,20 +60,24 @@ public final class Library {
 	public static final void loadLibrary(String name) {
 		String fileName = name + ".dll";
 		Path path = Paths.get(System.getProperty("user.home"), LIB_DIR, fileName);
-		System.out.println(path);
-		if (!Files.exists(path)) {
-			try (InputStream inStream = Library.class.getResourceAsStream("/" + fileName)) {
-				Files.createDirectories(path.getParent());
-				try (OutputStream outStream = Files.newOutputStream(path)) {
-					byte[] buffer = new byte[4096];
-					int len = 0;
-					while ((len = inStream.read(buffer)) > 0) {
-						outStream.write(buffer, 0, len);
+		try {
+			if (!Files.exists(path) || Files.deleteIfExists(path)) {
+				try (InputStream inStream = Library.class.getResourceAsStream("/" + arch() + "/" + fileName)) {
+					if (inStream == null) {
+						throw new UnsatisfiedLinkError("Library not found: " + arch() + "/" + fileName);
+					}
+					Files.createDirectories(path.getParent());
+					try (OutputStream outStream = Files.newOutputStream(path)) {
+						byte[] buffer = new byte[4096];
+						int len = 0;
+						while ((len = inStream.read(buffer)) > 0) {
+							outStream.write(buffer, 0, len);
+						}
 					}
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+		} catch (IOException e) {
+			System.out.println("Extracting " + fileName + " failed: " + e.getMessage());
 		}
 		System.load(path.toString());
 	}

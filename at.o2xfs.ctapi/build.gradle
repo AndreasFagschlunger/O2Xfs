@@ -27,7 +27,7 @@
 
 dependencies {
     compile project(':at.o2xfs.win32')
-    runtime 'at.o2xfs:o2xfs-ctapi-binaries-x86:' + version
+    runtime 'at.o2xfs:o2xfs-ctapi-binaries:' + version
     testCompile libraries.junit
 }
 

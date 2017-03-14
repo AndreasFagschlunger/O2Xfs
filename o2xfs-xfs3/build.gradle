@@ -45,10 +45,7 @@ sourceSets {
 dependencies {
     compile project(':at.o2xfs.xfs')
     testCompile libraries.junit
-    testRuntime 'at.o2xfs:o2xfs-xfs3-test-binaries-x86:' + version
-    testRuntime 'at.o2xfs:o2xfs-xfs310-test-binaries-x86:' + version
-    testRuntime 'at.o2xfs:o2xfs-xfs320-test-binaries-x86:' + version
-    testRuntime 'at.o2xfs:o2xfs-xfs330-test-binaries-x86:' + version
+    testRuntime 'at.o2xfs:o2xfs-xfs3-test-binaries:' + version
 }
 
 // create the javadoc jar
