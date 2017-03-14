@@ -36,6 +36,8 @@ import java.nio.file.Paths;
 
 public final class Library {
 
+	private static final boolean CLEAN = Boolean.getBoolean("clean");
+
 	private static final String SEPARATOR;
 	private static final String LIB_DIR;
 
@@ -61,7 +63,7 @@ public final class Library {
 		String fileName = name + ".dll";
 		Path path = Paths.get(System.getProperty("user.home"), LIB_DIR, fileName);
 		try {
-			if (!Files.exists(path) || Files.deleteIfExists(path)) {
+			if (!Files.exists(path) || (CLEAN && Files.deleteIfExists(path))) {
 				try (InputStream inStream = Library.class.getResourceAsStream("/" + arch() + "/" + fileName)) {
 					if (inStream == null) {
 						throw new UnsatisfiedLinkError("Library not found: " + arch() + "/" + fileName);
