@@ -61,6 +61,8 @@ WFM_SET_TRACE_LEVEL      lpWFMSetTraceLevel;
 
 HMODULE hinstO2win32Lib;
 
+HAPP hApp;
+
 GET_TYPE_ADDRESS lpGetTypeAddress;
 NEW_BUFFER lpNewBuffer;
 
@@ -167,8 +169,8 @@ JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsAsyncClose0(JNIEnv *env, jobj
  * Method:    wfsCreateAppHandle0
  * Signature: (Lat/o2xfs/win32/Type;)I
  */
-JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsCreateAppHandle0(JNIEnv *env, jobject obj, jobject hApp) {
-	return lpWFSCreateAppHandle((LPHAPP) lpGetTypeAddress(env, hApp));
+JNIEXPORT jint JNICALL Java_at_o2xfs_xfs_XfsAPI_wfsCreateAppHandle0(JNIEnv *env, jobject obj, jobject hAppObj) {
+	return lpWFSCreateAppHandle((LPHAPP) lpGetTypeAddress(env, hAppObj));
 }
 
 /*

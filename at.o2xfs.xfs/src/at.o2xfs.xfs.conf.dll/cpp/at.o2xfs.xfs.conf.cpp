@@ -31,15 +31,15 @@
 #include <at.o2xfs.win32.h>
 #include "at_o2xfs_xfs_conf_O2XfsConf.h"
 
-typedef HRESULT(__cdecl *WFM_CLOSE_KEY) (HKEY hKey);
-typedef HRESULT(__cdecl *WFM_CREATE_KEY) (HKEY hKey, LPSTR lpszSubKey, PHKEY phkResult, LPDWORD lpdwDisposition);
-typedef HRESULT(__cdecl *WFM_DELETE_KEY) (HKEY hKey, LPSTR lpszSubKey);
-typedef HRESULT(__cdecl *WFM_DELETE_VALUE) (HKEY hKey, LPSTR lpszValue);
-typedef HRESULT(__cdecl *WFM_ENUM_KEY) (HKEY hKey, DWORD iSubKey, LPSTR lpszName, LPDWORD lpcchName, PFILETIME lpftLastWrite);
-typedef HRESULT(__cdecl *WFM_ENUM_VALUE) (HKEY hKey, DWORD iValue, LPSTR lpszValue, LPDWORD lpcchValue, LPSTR lpszData, LPDWORD lpcchData);
-typedef HRESULT(__cdecl *WFM_OPEN_KEY) (HKEY hKey, LPSTR lpszSubKey, PHKEY phkResult);
-typedef HRESULT(__cdecl *WFM_QUERY_VALUE) (HKEY hKey, LPSTR lpszValueName, LPSTR lpszData, LPDWORD lpcchData);
-typedef HRESULT(__cdecl *WFM_SET_VALUE) (HKEY hKey, LPSTR lpszValueName, LPSTR lpszData, DWORD cchData);
+typedef HRESULT(WINAPI *WFM_CLOSE_KEY) (HKEY hKey);
+typedef HRESULT(WINAPI *WFM_CREATE_KEY) (HKEY hKey, LPSTR lpszSubKey, PHKEY phkResult, LPDWORD lpdwDisposition);
+typedef HRESULT(WINAPI *WFM_DELETE_KEY) (HKEY hKey, LPSTR lpszSubKey);
+typedef HRESULT(WINAPI *WFM_DELETE_VALUE) (HKEY hKey, LPSTR lpszValue);
+typedef HRESULT(WINAPI *WFM_ENUM_KEY) (HKEY hKey, DWORD iSubKey, LPSTR lpszName, LPDWORD lpcchName, PFILETIME lpftLastWrite);
+typedef HRESULT(WINAPI *WFM_ENUM_VALUE) (HKEY hKey, DWORD iValue, LPSTR lpszValue, LPDWORD lpcchValue, LPSTR lpszData, LPDWORD lpcchData);
+typedef HRESULT(WINAPI *WFM_OPEN_KEY) (HKEY hKey, LPSTR lpszSubKey, PHKEY phkResult);
+typedef HRESULT(WINAPI *WFM_QUERY_VALUE) (HKEY hKey, LPSTR lpszValueName, LPSTR lpszData, LPDWORD lpcchData);
+typedef HRESULT(WINAPI *WFM_SET_VALUE) (HKEY hKey, LPSTR lpszValueName, LPSTR lpszData, DWORD cchData);
 
 typedef LPVOID(__cdecl *GET_TYPE_ADDRESS) (JNIEnv *env, jobject type);
 typedef jobject(__cdecl *NEW_BUFFER) (JNIEnv *env, LPVOID address, jint size);
