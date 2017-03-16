@@ -38,10 +38,29 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class GetAllItemsInfo3_30 extends Struct {
 
+	public static class Builder {
+
+		private final Level level;
+
+		public Builder(Level level) {
+			this.level = level;
+		}
+
+		public GetAllItemsInfo3_30 build() {
+			return new GetAllItemsInfo3_30(this);
+		}
+	}
+
 	protected final XfsWord<Level> level = new XfsWord<>(Level.class);
 
 	protected GetAllItemsInfo3_30() {
 		add(level);
+	}
+
+	protected GetAllItemsInfo3_30(Builder builder) {
+		this();
+		allocate();
+		level.set(builder.level);
 	}
 
 	public GetAllItemsInfo3_30(Pointer p) {

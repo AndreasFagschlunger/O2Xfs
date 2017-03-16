@@ -37,10 +37,29 @@ import at.o2xfs.win32.USHORT;
 
 public class DepleteInfo3_30 extends Struct {
 
+	public static class Builder {
+
+		private final int numberTarget;
+
+		public Builder(int numberTarget) {
+			this.numberTarget = numberTarget;
+		}
+
+		public DepleteInfo3_30 build() {
+			return new DepleteInfo3_30(this);
+		}
+	}
+
 	protected final USHORT numberTarget = new USHORT();
 
 	protected DepleteInfo3_30() {
 		add(numberTarget);
+	}
+
+	protected DepleteInfo3_30(Builder builder) {
+		this();
+		allocate();
+		numberTarget.set(builder.numberTarget);
 	}
 
 	public DepleteInfo3_30(Pointer p) {

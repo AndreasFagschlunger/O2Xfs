@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.cim.v3_10;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -43,6 +44,28 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class GetItemInfo3_10 extends Struct {
 
+	public static class Builder {
+
+		private final Level level;
+		private final int index;
+		private final Set<ItemInfoType> itemInfoTypes;
+
+		public Builder(Level level, int index) {
+			this.level = level;
+			this.index = index;
+			itemInfoTypes = new HashSet<>();
+		}
+
+		public Builder itemInfoType(ItemInfoType itemInfoType) {
+			itemInfoTypes.add(itemInfoType);
+			return this;
+		}
+
+		public GetItemInfo3_10 build() {
+			return new GetItemInfo3_10(this);
+		}
+	}
+
 	protected final XfsWord<Level> level = new XfsWord<>(Level.class);
 	protected final USHORT index = new USHORT();
 	protected final XfsDWordBitmask<ItemInfoType> itemInfoType = new XfsDWordBitmask<>(ItemInfoType.class);
@@ -51,6 +74,14 @@ public class GetItemInfo3_10 extends Struct {
 		add(level);
 		add(index);
 		add(itemInfoType);
+	}
+
+	protected GetItemInfo3_10(Builder builder) {
+		this();
+		allocate();
+		level.set(builder.level);
+		index.set(builder.index);
+		itemInfoType.set(builder.itemInfoTypes);
 	}
 
 	public GetItemInfo3_10(Pointer p) {
@@ -91,14 +122,21 @@ public class GetItemInfo3_10 extends Struct {
 	public boolean equals(Object obj) {
 		if (obj instanceof GetItemInfo3_10) {
 			GetItemInfo3_10 getItemInfo3_10 = (GetItemInfo3_10) obj;
-			return new EqualsBuilder().append(getLevel(), getItemInfo3_10.getLevel()).append(getIndex(), getItemInfo3_10.getIndex())
-					.append(getItemInfoType(), getItemInfo3_10.getItemInfoType()).isEquals();
+			return new EqualsBuilder()
+					.append(getLevel(), getItemInfo3_10.getLevel())
+					.append(getIndex(), getItemInfo3_10.getIndex())
+					.append(getItemInfoType(), getItemInfo3_10.getItemInfoType())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("level", getLevel()).append("index", getIndex()).append("itemInfoType", getItemInfoType()).toString();
+		return new ToStringBuilder(this)
+				.append("level", getLevel())
+				.append("index", getIndex())
+				.append("itemInfoType", getItemInfoType())
+				.toString();
 	}
 }

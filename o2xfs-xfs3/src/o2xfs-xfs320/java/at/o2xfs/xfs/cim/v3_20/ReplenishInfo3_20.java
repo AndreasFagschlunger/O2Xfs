@@ -37,10 +37,29 @@ import at.o2xfs.win32.USHORT;
 
 public class ReplenishInfo3_20 extends Struct {
 
+	public static class Builder {
+
+		private final int numberSource;
+
+		public Builder(int numberSource) {
+			this.numberSource = numberSource;
+		}
+
+		public ReplenishInfo3_20 build() {
+			return new ReplenishInfo3_20(this);
+		}
+	}
+
 	protected final USHORT numberSource = new USHORT();
 
 	protected ReplenishInfo3_20() {
 		add(numberSource);
+	}
+
+	protected ReplenishInfo3_20(Builder builder) {
+		this();
+		allocate();
+		numberSource.set(builder.numberSource);
 	}
 
 	public ReplenishInfo3_20(Pointer p) {

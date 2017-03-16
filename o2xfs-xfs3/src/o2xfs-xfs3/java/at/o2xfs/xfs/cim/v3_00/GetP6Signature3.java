@@ -39,12 +39,35 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class GetP6Signature3 extends Struct {
 
+	public static class Builder {
+
+		private final Level level;
+		private final int index;
+
+		public Builder(Level level, int index) {
+			this.level = level;
+			this.index = index;
+		}
+
+		public GetP6Signature3 build() {
+			return new GetP6Signature3(this);
+		}
+	}
+
 	protected final XfsWord<Level> level = new XfsWord<>(Level.class);
 	protected final USHORT index = new USHORT();
 
 	protected GetP6Signature3() {
 		add(level);
 		add(index);
+	}
+
+	protected GetP6Signature3(Builder builder) {
+		this();
+		allocate();
+		level.set(builder.level);
+		index.set(builder.index);
+		;
 	}
 
 	public GetP6Signature3(Pointer p) {
@@ -80,7 +103,10 @@ public class GetP6Signature3 extends Struct {
 	public boolean equals(Object obj) {
 		if (obj instanceof GetP6Signature3) {
 			GetP6Signature3 getP6Signature3 = (GetP6Signature3) obj;
-			return new EqualsBuilder().append(getLevel(), getP6Signature3.getLevel()).append(getIndex(), getP6Signature3.getIndex()).isEquals();
+			return new EqualsBuilder()
+					.append(getLevel(), getP6Signature3.getLevel())
+					.append(getIndex(), getP6Signature3.getIndex())
+					.isEquals();
 		}
 		return false;
 	}
