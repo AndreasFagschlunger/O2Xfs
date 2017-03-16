@@ -49,7 +49,7 @@ import at.o2xfs.xfs.service.cdm.xfs3.PresentCommand;
 import at.o2xfs.xfs.service.cdm.xfs3.PresentListener;
 import at.o2xfs.xfs.service.cmd.event.CancelEvent;
 import at.o2xfs.xfs.service.cmd.event.ErrorEvent;
-import at.o2xfs.xfs.service.cmd.event.SucessEvent;
+import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 
 public class PresentTask extends XfsServiceTask<CdmService> implements PresentListener {
 
@@ -211,7 +211,7 @@ public class PresentTask extends XfsServiceTask<CdmService> implements PresentLi
 	}
 
 	@Override
-	public void onComplete(SucessEvent event) {
+	public void onComplete(SuccessEvent event) {
 		showMessage("Take items.");
 		getCommands().clear();
 	}

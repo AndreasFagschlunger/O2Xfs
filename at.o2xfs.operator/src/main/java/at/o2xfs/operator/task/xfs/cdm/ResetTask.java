@@ -38,7 +38,7 @@ import at.o2xfs.xfs.service.cdm.xfs3.ResetCommand;
 import at.o2xfs.xfs.service.cdm.xfs3.ResetListener;
 import at.o2xfs.xfs.service.cmd.event.CancelEvent;
 import at.o2xfs.xfs.service.cmd.event.ErrorEvent;
-import at.o2xfs.xfs.service.cmd.event.SucessEvent;
+import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 
 public class ResetTask extends XfsServiceTask<CdmService> implements ResetListener {
 
@@ -113,7 +113,7 @@ public class ResetTask extends XfsServiceTask<CdmService> implements ResetListen
 	}
 
 	@Override
-	public void onComplete(SucessEvent event) {
+	public void onComplete(SuccessEvent event) {
 		updateState(State.SUCCESS);
 	}
 }

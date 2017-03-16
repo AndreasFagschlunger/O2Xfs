@@ -41,10 +41,10 @@ import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
-import at.o2xfs.xfs.service.cmd.event.SucessEvent;
+import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class PresentCommand extends AbstractAsyncXfsCommand<PresentListener, SucessEvent> {
+public class PresentCommand extends AbstractAsyncXfsCommand<PresentListener, SuccessEvent> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(PresentCommand.class);
 
@@ -105,7 +105,7 @@ public class PresentCommand extends AbstractAsyncXfsCommand<PresentListener, Suc
 	}
 
 	@Override
-	protected SucessEvent createCompleteEvent(Pointer results) {
-		return SucessEvent.build();
+	protected SuccessEvent createCompleteEvent(Pointer results) {
+		return SuccessEvent.build();
 	}
 }

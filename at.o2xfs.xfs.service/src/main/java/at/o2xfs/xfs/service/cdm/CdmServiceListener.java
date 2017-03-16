@@ -62,4 +62,5 @@ public interface CdmServiceListener {
 	public void onPowerSaveChange(PowerSaveChange3_10 powerSaveChange);
 
 	public void onShutterStatusChanged(ShutterStatusChanged3_30 shutterStatusChanged);
+
 }

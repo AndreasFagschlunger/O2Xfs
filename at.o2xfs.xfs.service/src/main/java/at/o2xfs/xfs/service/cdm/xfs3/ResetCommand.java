@@ -45,9 +45,9 @@ import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
-import at.o2xfs.xfs.service.cmd.event.SucessEvent;
+import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 
-public class ResetCommand extends AbstractAsyncXfsCommand<ResetListener, SucessEvent> {
+public class ResetCommand extends AbstractAsyncXfsCommand<ResetListener, SuccessEvent> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ResetCommand.class);
 
@@ -139,7 +139,7 @@ public class ResetCommand extends AbstractAsyncXfsCommand<ResetListener, SucessE
 	}
 
 	@Override
-	protected SucessEvent createCompleteEvent(Pointer results) {
-		return SucessEvent.build();
+	protected SuccessEvent createCompleteEvent(Pointer results) {
+		return SuccessEvent.build();
 	}
 }
