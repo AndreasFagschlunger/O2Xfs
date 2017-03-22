@@ -58,7 +58,7 @@ public final class CashInStatusCommand implements Callable<CashInStatus3> {
 				CimInfoCommand.BANKNOTE_TYPES);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), CashInStatus3.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);

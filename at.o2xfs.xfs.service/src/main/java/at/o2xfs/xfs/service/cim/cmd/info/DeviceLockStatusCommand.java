@@ -58,7 +58,7 @@ public final class DeviceLockStatusCommand implements Callable<DeviceLockStatus3
 				CimInfoCommand.DEVICELOCK_STATUS);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), DeviceLockStatus3_20.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);

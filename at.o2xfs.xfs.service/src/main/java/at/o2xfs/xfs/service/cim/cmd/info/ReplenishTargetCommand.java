@@ -62,7 +62,7 @@ public final class ReplenishTargetCommand implements Callable<ReplenishInfoResul
 				CimInfoCommand.REPLENISH_TARGET, replenishInfo);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(),
 					ReplenishInfoResult3_20.class);
 			if (LOG.isInfoEnabled()) {

@@ -58,7 +58,7 @@ public final class PositionCapabilitiesCommand implements Callable<PositionCapab
 				CimInfoCommand.POSITION_CAPABILITIES);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(),
 					PositionCapabilities3_10.class);
 			if (LOG.isInfoEnabled()) {

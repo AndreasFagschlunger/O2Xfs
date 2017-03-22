@@ -59,7 +59,7 @@ public final class GetP6InfoCommand implements Callable<List<P6Info3>> {
 				CimInfoCommand.GET_P6_INFO);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.fromNullTerminatedArray(cimService.getXfsVersion(), wfsResult.getResults(),
 					P6Info3.class);
 			if (LOG.isInfoEnabled()) {

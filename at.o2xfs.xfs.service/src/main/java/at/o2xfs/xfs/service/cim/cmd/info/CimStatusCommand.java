@@ -57,7 +57,7 @@ public final class CimStatusCommand implements Callable<Status3> {
 		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService, CimInfoCommand.STATUS);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), Status3.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);

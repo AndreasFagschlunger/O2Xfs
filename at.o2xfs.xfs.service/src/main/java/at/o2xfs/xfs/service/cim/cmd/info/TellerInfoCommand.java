@@ -63,7 +63,7 @@ public final class TellerInfoCommand implements Callable<List<TellerDetails3>> {
 				CimInfoCommand.TELLER_INFO, tellerInfo);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.fromNullTerminatedArray(cimService.getXfsVersion(), wfsResult.getResults(),
 					TellerDetails3.class);
 			if (LOG.isInfoEnabled()) {

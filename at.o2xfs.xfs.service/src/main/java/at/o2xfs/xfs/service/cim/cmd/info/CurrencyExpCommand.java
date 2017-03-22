@@ -58,7 +58,7 @@ public final class CurrencyExpCommand implements Callable<CurrencyExp3> {
 				CimInfoCommand.CURRENCY_EXP);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), CurrencyExp3.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);

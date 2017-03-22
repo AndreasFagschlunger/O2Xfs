@@ -58,7 +58,7 @@ public final class CashUnitCapabilitiesCommand implements Callable<CashUnitCapab
 				CimInfoCommand.CASH_UNIT_CAPABILITIES);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(),
 					CashUnitCapabilities3_20.class);
 			if (LOG.isInfoEnabled()) {

@@ -58,7 +58,7 @@ public final class GetBlacklistCommand implements Callable<Blacklist3_30> {
 				CimInfoCommand.GET_BLACKLIST);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), Blacklist3_30.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);

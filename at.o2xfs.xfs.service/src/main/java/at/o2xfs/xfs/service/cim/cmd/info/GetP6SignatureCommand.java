@@ -62,7 +62,7 @@ public final class GetP6SignatureCommand implements Callable<P6Signature3> {
 				CimInfoCommand.GET_P6_SIGNATURE, getP6Signature);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), P6Signature3.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);

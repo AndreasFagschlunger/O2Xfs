@@ -63,7 +63,7 @@ public final class DepleteSourceCommand implements Callable<List<DepleteInfoResu
 				CimInfoCommand.DEPLETE_SOURCE, depleteInfo);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.fromNullTerminatedArray(cimService.getXfsVersion(), wfsResult.getResults(),
 					DepleteInfoResult3_30.class);
 			if (LOG.isInfoEnabled()) {

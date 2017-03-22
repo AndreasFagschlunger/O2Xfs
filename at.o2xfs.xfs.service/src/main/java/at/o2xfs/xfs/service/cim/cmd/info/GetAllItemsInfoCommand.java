@@ -62,7 +62,7 @@ public final class GetAllItemsInfoCommand implements Callable<AllItemsInfo3_30> 
 				CimInfoCommand.GET_ALL_ITEMS_INFO, getAllItemsInfo);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), AllItemsInfo3_30.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);

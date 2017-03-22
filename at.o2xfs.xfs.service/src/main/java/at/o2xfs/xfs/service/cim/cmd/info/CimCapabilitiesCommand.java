@@ -58,7 +58,7 @@ public final class CimCapabilitiesCommand implements Callable<Capabilities3> {
 				CimInfoCommand.CAPABILITIES);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), Capabilities3.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);

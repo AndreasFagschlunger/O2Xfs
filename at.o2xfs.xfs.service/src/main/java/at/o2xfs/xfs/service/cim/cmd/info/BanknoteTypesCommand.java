@@ -58,7 +58,7 @@ public final class BanknoteTypesCommand implements Callable<NoteTypeList3> {
 				CimInfoCommand.BANKNOTE_TYPES);
 		WFSResult wfsResult = null;
 		try {
-			wfsResult = new XfsCallable(command).call();
+			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), NoteTypeList3.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);
