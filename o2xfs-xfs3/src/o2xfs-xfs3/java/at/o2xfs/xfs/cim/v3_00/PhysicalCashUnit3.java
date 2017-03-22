@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.cim.v3_00;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -44,6 +45,58 @@ import at.o2xfs.xfs.win32.XfsCharArray;
 import at.o2xfs.xfs.win32.XfsWord;
 
 public class PhysicalCashUnit3 extends Struct {
+
+	public static class Builder {
+
+		private final String physicalPositionName;
+		private final char[] unitID;
+		protected long cashInCount;
+		protected long count;
+		protected long maximum;
+		private final CashUnitStatus status;
+		protected boolean hardwareSensors;
+		protected Map<String, String> extra;
+
+		public Builder(String physicalPositionName, char[] unitID, CashUnitStatus status) {
+			this.physicalPositionName = physicalPositionName;
+			this.unitID = unitID;
+			cashInCount = 0L;
+			count = 0L;
+			maximum = 0L;
+			this.status = status;
+			hardwareSensors = false;
+			extra = Collections.emptyMap();
+		}
+
+		public Builder cashInCount(long cashInCount) {
+			this.cashInCount = cashInCount;
+			return this;
+		}
+
+		public Builder count(long count) {
+			this.count = count;
+			return this;
+		}
+
+		public Builder maximum(long maximum) {
+			this.maximum = maximum;
+			return this;
+		}
+
+		public Builder hardwareSensors(boolean hardwareSensors) {
+			this.hardwareSensors = hardwareSensors;
+			return this;
+		}
+
+		public Builder extra(Map<String, String> extra) {
+			this.extra = extra;
+			return this;
+		}
+
+		public PhysicalCashUnit3 build() {
+			return new PhysicalCashUnit3(this);
+		}
+	}
 
 	protected final LPSTR physicalPositionName = new LPSTR();
 	protected final XfsCharArray unitID = new XfsCharArray(5);
@@ -63,6 +116,19 @@ public class PhysicalCashUnit3 extends Struct {
 		add(status);
 		add(hardwareSensors);
 		add(extra);
+	}
+
+	protected PhysicalCashUnit3(Builder builder) {
+		this();
+		allocate();
+		physicalPositionName.set(builder.physicalPositionName);
+		unitID.set(builder.unitID);
+		cashInCount.set(builder.cashInCount);
+		count.set(builder.count);
+		maximum.set(builder.maximum);
+		status.set(builder.status);
+		hardwareSensors.set(builder.hardwareSensors);
+		extra.set(builder.extra);
 	}
 
 	public PhysicalCashUnit3(Pointer p) {
@@ -121,26 +187,47 @@ public class PhysicalCashUnit3 extends Struct {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getPhysicalPositionName()).append(getUnitID()).append(getCashInCount()).append(getCount()).append(getMaximum()).append(getStatus())
-				.append(isHardwareSensors()).append(getExtra()).toHashCode();
+		return new HashCodeBuilder()
+				.append(getPhysicalPositionName())
+				.append(getUnitID())
+				.append(getCashInCount())
+				.append(getCount())
+				.append(getMaximum())
+				.append(getStatus())
+				.append(isHardwareSensors())
+				.append(getExtra())
+				.toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof PhysicalCashUnit3) {
 			PhysicalCashUnit3 physicalCashUnit3 = (PhysicalCashUnit3) obj;
-			return new EqualsBuilder().append(getPhysicalPositionName(), physicalCashUnit3.getPhysicalPositionName()).append(getUnitID(), physicalCashUnit3.getUnitID())
-					.append(getCashInCount(), physicalCashUnit3.getCashInCount()).append(getCount(), physicalCashUnit3.getCount())
-					.append(getMaximum(), physicalCashUnit3.getMaximum()).append(getStatus(), physicalCashUnit3.getStatus())
-					.append(isHardwareSensors(), physicalCashUnit3.isHardwareSensors()).append(getExtra(), physicalCashUnit3.getExtra()).isEquals();
+			return new EqualsBuilder()
+					.append(getPhysicalPositionName(), physicalCashUnit3.getPhysicalPositionName())
+					.append(getUnitID(), physicalCashUnit3.getUnitID())
+					.append(getCashInCount(), physicalCashUnit3.getCashInCount())
+					.append(getCount(), physicalCashUnit3.getCount())
+					.append(getMaximum(), physicalCashUnit3.getMaximum())
+					.append(getStatus(), physicalCashUnit3.getStatus())
+					.append(isHardwareSensors(), physicalCashUnit3.isHardwareSensors())
+					.append(getExtra(), physicalCashUnit3.getExtra())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("physicalPositionName", getPhysicalPositionName()).append("unitID", getUnitID()).append("cashInCount", getCashInCount())
-				.append("count", getCount()).append("maximum", getMaximum()).append("pStatus", getStatus()).append("hardwareSensors", isHardwareSensors())
-				.append("extra", getExtra()).toString();
+		return new ToStringBuilder(this)
+				.append("physicalPositionName", getPhysicalPositionName())
+				.append("unitID", getUnitID())
+				.append("cashInCount", getCashInCount())
+				.append("count", getCount())
+				.append("maximum", getMaximum())
+				.append("pStatus", getStatus())
+				.append("hardwareSensors", isHardwareSensors())
+				.append("extra", getExtra())
+				.toString();
 	}
 }

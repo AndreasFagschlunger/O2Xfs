@@ -38,12 +38,38 @@ import at.o2xfs.win32.USHORT;
 
 public class NoteNumber3 extends Struct {
 
-	protected final USHORT noteID = new USHORT();
+	public static class Builder {
+
+		private final int noteId;
+		private long count;
+
+		public Builder(int noteId) {
+			this.noteId = noteId;
+		}
+
+		public Builder count(long count) {
+			this.count = count;
+			return this;
+		}
+
+		public NoteNumber3 build() {
+			return new NoteNumber3(this);
+		}
+	}
+
+	protected final USHORT noteId = new USHORT();
 	protected final ULONG count = new ULONG();
 
 	protected NoteNumber3() {
-		add(noteID);
+		add(noteId);
 		add(count);
+	}
+
+	protected NoteNumber3(Builder builder) {
+		this();
+		allocate();
+		noteId.set(builder.noteId);
+		count.set(builder.count);
 	}
 
 	public NoteNumber3(Pointer p) {
@@ -58,12 +84,12 @@ public class NoteNumber3 extends Struct {
 	}
 
 	protected void set(NoteNumber3 copy) {
-		noteID.set(copy.getNoteID());
+		noteId.set(copy.getNoteId());
 		count.set(copy.getCount());
 	}
 
-	public int getNoteID() {
-		return noteID.get();
+	public int getNoteId() {
+		return noteId.get();
 	}
 
 	public long getCount() {
@@ -72,20 +98,23 @@ public class NoteNumber3 extends Struct {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getNoteID()).append(getCount()).toHashCode();
+		return new HashCodeBuilder().append(getNoteId()).append(getCount()).toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof NoteNumber3) {
 			NoteNumber3 noteNumber3 = (NoteNumber3) obj;
-			return new EqualsBuilder().append(getNoteID(), noteNumber3.getNoteID()).append(getCount(), noteNumber3.getCount()).isEquals();
+			return new EqualsBuilder()
+					.append(getNoteId(), noteNumber3.getNoteId())
+					.append(getCount(), noteNumber3.getCount())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("noteID", getNoteID()).append("count", getCount()).toString();
+		return new ToStringBuilder(this).append("noteId", getNoteId()).append("count", getCount()).toString();
 	}
 }

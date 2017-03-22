@@ -29,9 +29,15 @@ package at.o2xfs.xfs.cim.v3_00;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.EnumSet;
+import java.util.Optional;
+
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
+import at.o2xfs.xfs.cim.CashInItemType;
+import at.o2xfs.xfs.cim.CashInType;
+import at.o2xfs.xfs.cim.CashUnitStatus;
 import at.o2xfs.xfs.v3_00.BaseXfs3Test;
 
 public class CashInfo3Test extends BaseXfs3Test {
@@ -45,4 +51,20 @@ public class CashInfo3Test extends BaseXfs3Test {
 	}
 
 	private native Buffer buildCashInfo3();
+
+	@Test
+	public void testBuild() {
+		NoteNumber3[] noteNumbers = new NoteNumber3[1];
+		noteNumbers[0] = new NoteNumber3.Builder(1).count(1234).build();
+		NoteNumberList3 noteNumberList = new NoteNumberList3.Builder(noteNumbers).build();
+		PhysicalCashUnit3[] physicalCashUnits = new PhysicalCashUnit3[1];
+		physicalCashUnits[0] = new PhysicalCashUnit3.Builder("SLOT1", new char[] { '1', '2', '3', '4', '5' },
+				CashUnitStatus.OK).build();
+		CashIn3[] cashIn = new CashIn3[1];
+		cashIn[0] = new CashIn3.Builder(1, CashInType.RECYCLING, EnumSet.of(CashInItemType.INDIVIDUAL),
+				new char[] { '1', '2', '3', '4', '5' }, new char[] { 'E', 'U', 'R' }, CashUnitStatus.OK,
+				physicalCashUnits).value(10000L).noteNumberList(Optional.of(noteNumberList)).build();
+		CashInfo3 cashInfo = new CashInfo3.Builder(cashIn).build();
+		System.out.println(cashInfo);
+	}
 }

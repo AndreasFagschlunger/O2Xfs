@@ -37,12 +37,32 @@ import at.o2xfs.win32.USHORT;
 
 public class NoteNumberList3 extends Struct {
 
+	public static class Builder {
+
+		private final NoteNumber3[] noteNumbers;
+
+		public Builder(NoteNumber3[] noteNumbers) {
+			this.noteNumbers = noteNumbers;
+		}
+
+		public NoteNumberList3 build() {
+			return new NoteNumberList3(this);
+		}
+	}
+
 	protected final USHORT numOfNoteNumbers = new USHORT();
 	protected final Pointer noteNumber = new Pointer();
 
 	protected NoteNumberList3() {
 		add(numOfNoteNumbers);
 		add(noteNumber);
+	}
+
+	protected NoteNumberList3(Builder builder) {
+		this();
+		allocate();
+		numOfNoteNumbers.set(builder.noteNumbers.length);
+		noteNumber.pointTo(new NoteNumber3Array(builder.noteNumbers));
 	}
 
 	public NoteNumberList3(Pointer p) {
@@ -78,13 +98,19 @@ public class NoteNumberList3 extends Struct {
 	public boolean equals(Object obj) {
 		if (obj instanceof NoteNumberList3) {
 			NoteNumberList3 noteNumberList3 = (NoteNumberList3) obj;
-			return new EqualsBuilder().append(getNumOfNoteNumbers(), noteNumberList3.getNumOfNoteNumbers()).append(getNoteNumber(), noteNumberList3.getNoteNumber()).isEquals();
+			return new EqualsBuilder()
+					.append(getNumOfNoteNumbers(), noteNumberList3.getNumOfNoteNumbers())
+					.append(getNoteNumber(), noteNumberList3.getNoteNumber())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("numOfNoteNumbers", getNumOfNoteNumbers()).append("noteNumber", getNoteNumber()).toString();
+		return new ToStringBuilder(this)
+				.append("numOfNoteNumbers", getNumOfNoteNumbers())
+				.append("noteNumber", getNoteNumber())
+				.toString();
 	}
 }

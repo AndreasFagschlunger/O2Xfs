@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.cim.v3_00;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -51,12 +52,86 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class CashIn3 extends Struct {
 
+	public static class Builder {
+		private final int number;
+		private final CashInType type;
+		private final Set<CashInItemType> itemType;
+		private final char[] unitID;
+		private final char[] currencyID;
+		private long value;
+		private long cashInCount;
+		private long count;
+		private long maximum;
+		private final CashUnitStatus status;
+		private boolean appLock;
+		private Optional<NoteNumberList3> noteNumberList;
+		private final PhysicalCashUnit3[] physicalCashUnits;
+		private Map<String, String> extra;
+
+		public Builder(int number, CashInType type, Set<CashInItemType> itemType, char[] unitID, char[] currencyID,
+				CashUnitStatus status, PhysicalCashUnit3[] physicalCashUnits) {
+			this.number = number;
+			this.type = type;
+			this.itemType = itemType;
+			this.unitID = unitID;
+			this.currencyID = currencyID;
+			value = 0L;
+			cashInCount = 0L;
+			count = 0L;
+			maximum = 0L;
+			this.status = status;
+			this.appLock = false;
+			this.noteNumberList = Optional.empty();
+			this.physicalCashUnits = physicalCashUnits;
+			this.extra = Collections.emptyMap();
+		}
+
+		public Builder value(long value) {
+			this.value = value;
+			return this;
+		}
+
+		public Builder cashInCount(long cashInCount) {
+			this.cashInCount = cashInCount;
+			return this;
+		}
+
+		public Builder count(long count) {
+			this.count = count;
+			return this;
+		}
+
+		public Builder maximum(long maximum) {
+			this.maximum = maximum;
+			return this;
+		}
+
+		public Builder appLock(boolean appLock) {
+			this.appLock = appLock;
+			return this;
+		}
+
+		public Builder noteNumberList(Optional<NoteNumberList3> noteNumberList) {
+			this.noteNumberList = noteNumberList;
+			return this;
+		}
+
+		public Builder extra(Map<String, String> extra) {
+			this.extra = extra;
+			return this;
+		}
+
+		public CashIn3 build() {
+			return new CashIn3(this);
+		}
+	}
+
 	protected final USHORT number = new USHORT();
 	protected final XfsDWord<CashInType> type = new XfsDWord<>(CashInType.class);
 	protected final XfsDWordBitmask<CashInItemType> itemType = new XfsDWordBitmask<>(CashInItemType.class);
 	protected final XfsCharArray unitID = new XfsCharArray(5);
 	protected final XfsCharArray currencyID = new XfsCharArray(3);
-	protected final ULONG values = new ULONG();
+	protected final ULONG value = new ULONG();
 	protected final ULONG cashInCount = new ULONG();
 	protected final ULONG count = new ULONG();
 	protected final ULONG maximum = new ULONG();
@@ -73,7 +148,7 @@ public class CashIn3 extends Struct {
 		add(itemType);
 		add(unitID);
 		add(currencyID);
-		add(values);
+		add(value);
 		add(cashInCount);
 		add(count);
 		add(maximum);
@@ -83,6 +158,28 @@ public class CashIn3 extends Struct {
 		add(numPhysicalCUs);
 		add(physical);
 		add(extra);
+	}
+
+	protected CashIn3(Builder builder) {
+		this();
+		allocate();
+		number.set(builder.number);
+		type.set(builder.type);
+		itemType.set(builder.itemType);
+		unitID.set(builder.unitID);
+		currencyID.set(builder.currencyID);
+		value.set(builder.value);
+		cashInCount.set(builder.cashInCount);
+		count.set(builder.count);
+		maximum.set(builder.maximum);
+		status.set(builder.status);
+		appLock.set(builder.appLock);
+		if (builder.noteNumberList.isPresent()) {
+			noteNumberList.pointTo(builder.noteNumberList.get());
+		}
+		numPhysicalCUs.set(builder.physicalCashUnits.length);
+		physical.pointTo(new PhysicalCashUnits3(builder.physicalCashUnits));
+		extra.set(builder.extra);
 	}
 
 	public CashIn3(Pointer p) {
@@ -102,7 +199,7 @@ public class CashIn3 extends Struct {
 		itemType.set(copy.getItemType());
 		unitID.set(copy.getUnitID());
 		currencyID.set(copy.getCurrencyID());
-		values.set(copy.getValues());
+		value.set(copy.getValue());
 		cashInCount.set(copy.getCashInCount());
 		count.set(copy.getCount());
 		maximum.set(copy.getMaximum());
@@ -137,8 +234,8 @@ public class CashIn3 extends Struct {
 		return currencyID.get();
 	}
 
-	public long getValues() {
-		return values.get();
+	public long getValue() {
+		return value.get();
 	}
 
 	public long getCashInCount() {
@@ -183,20 +280,45 @@ public class CashIn3 extends Struct {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getNumber()).append(getType()).append(getItemType()).append(getUnitID()).append(getCurrencyID()).append(getValues())
-				.append(getCashInCount()).append(getCount()).append(getMaximum()).append(getStatus()).append(isAppLock()).append(getNoteNumberList()).append(getNumPhysicalCUs())
-				.append(getPhysicalCashUnits()).append(getExtra()).toHashCode();
+		return new HashCodeBuilder()
+				.append(getNumber())
+				.append(getType())
+				.append(getItemType())
+				.append(getUnitID())
+				.append(getCurrencyID())
+				.append(getValue())
+				.append(getCashInCount())
+				.append(getCount())
+				.append(getMaximum())
+				.append(getStatus())
+				.append(isAppLock())
+				.append(getNoteNumberList())
+				.append(getNumPhysicalCUs())
+				.append(getPhysicalCashUnits())
+				.append(getExtra())
+				.toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof CashIn3) {
 			CashIn3 cashIn3 = (CashIn3) obj;
-			return new EqualsBuilder().append(getNumber(), cashIn3.getNumber()).append(getType(), cashIn3.getType()).append(getItemType(), cashIn3.getItemType())
-					.append(getUnitID(), cashIn3.getUnitID()).append(getCurrencyID(), cashIn3.getCurrencyID()).append(getValues(), cashIn3.getValues())
-					.append(getCashInCount(), cashIn3.getCashInCount()).append(getCount(), cashIn3.getCount()).append(getMaximum(), cashIn3.getMaximum())
-					.append(getStatus(), cashIn3.getStatus()).append(isAppLock(), cashIn3.isAppLock()).append(getNoteNumberList(), cashIn3.getNoteNumberList())
-					.append(getNumPhysicalCUs(), cashIn3.getNumPhysicalCUs()).append(getPhysicalCashUnits(), cashIn3.getPhysicalCashUnits()).append(getExtra(), cashIn3.getExtra())
+			return new EqualsBuilder()
+					.append(getNumber(), cashIn3.getNumber())
+					.append(getType(), cashIn3.getType())
+					.append(getItemType(), cashIn3.getItemType())
+					.append(getUnitID(), cashIn3.getUnitID())
+					.append(getCurrencyID(), cashIn3.getCurrencyID())
+					.append(getValue(), cashIn3.getValue())
+					.append(getCashInCount(), cashIn3.getCashInCount())
+					.append(getCount(), cashIn3.getCount())
+					.append(getMaximum(), cashIn3.getMaximum())
+					.append(getStatus(), cashIn3.getStatus())
+					.append(isAppLock(), cashIn3.isAppLock())
+					.append(getNoteNumberList(), cashIn3.getNoteNumberList())
+					.append(getNumPhysicalCUs(), cashIn3.getNumPhysicalCUs())
+					.append(getPhysicalCashUnits(), cashIn3.getPhysicalCashUnits())
+					.append(getExtra(), cashIn3.getExtra())
 					.isEquals();
 		}
 		return false;
@@ -204,9 +326,22 @@ public class CashIn3 extends Struct {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("number", getNumber()).append("type", getType()).append("itemType", getItemType()).append("unitID", getUnitID())
-				.append("currencyID", getCurrencyID()).append("values", getValues()).append("cashInCount", getCashInCount()).append("count", getCount())
-				.append("maximum", getMaximum()).append("status", getStatus()).append("appLock", isAppLock()).append("noteNumberList", getNoteNumberList())
-				.append("numPhysicalCUs", getNumPhysicalCUs()).append("physical", getPhysicalCashUnits()).append("extra", getExtra()).toString();
+		return new ToStringBuilder(this)
+				.append("number", getNumber())
+				.append("type", getType())
+				.append("itemType", getItemType())
+				.append("unitID", getUnitID())
+				.append("currencyID", getCurrencyID())
+				.append("value", getValue())
+				.append("cashInCount", getCashInCount())
+				.append("count", getCount())
+				.append("maximum", getMaximum())
+				.append("status", getStatus())
+				.append("appLock", isAppLock())
+				.append("noteNumberList", getNoteNumberList())
+				.append("numPhysicalCUs", getNumPhysicalCUs())
+				.append("physical", getPhysicalCashUnits())
+				.append("extra", getExtra())
+				.toString();
 	}
 }

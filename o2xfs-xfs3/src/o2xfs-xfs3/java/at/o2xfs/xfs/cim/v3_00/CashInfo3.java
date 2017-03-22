@@ -37,12 +37,32 @@ import at.o2xfs.win32.USHORT;
 
 public class CashInfo3 extends Struct {
 
+	public static class Builder {
+
+		private final CashIn3[] cashIn;
+
+		public Builder(CashIn3[] cashIn) {
+			this.cashIn = cashIn;
+		}
+
+		public CashInfo3 build() {
+			return new CashInfo3(this);
+		}
+	}
+
 	protected final USHORT count = new USHORT();
 	protected final Pointer cashIn = new Pointer();
 
 	protected CashInfo3() {
 		add(count);
 		add(cashIn);
+	}
+
+	protected CashInfo3(Builder builder) {
+		this();
+		allocate();
+		count.set(builder.cashIn.length);
+		cashIn.pointTo(new CashIn3Array(builder.cashIn));
 	}
 
 	public CashInfo3(Pointer p) {
@@ -78,7 +98,10 @@ public class CashInfo3 extends Struct {
 	public boolean equals(Object obj) {
 		if (obj instanceof CashInfo3) {
 			CashInfo3 cashInfo3 = (CashInfo3) obj;
-			return new EqualsBuilder().append(getCount(), cashInfo3.getCount()).append(getCashIn(), cashInfo3.getCashIn()).isEquals();
+			return new EqualsBuilder()
+					.append(getCount(), cashInfo3.getCount())
+					.append(getCashIn(), cashInfo3.getCashIn())
+					.isEquals();
 		}
 		return false;
 	}

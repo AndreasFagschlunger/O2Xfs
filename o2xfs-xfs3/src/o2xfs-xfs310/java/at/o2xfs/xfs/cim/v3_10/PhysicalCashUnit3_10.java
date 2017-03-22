@@ -27,15 +27,91 @@
 
 package at.o2xfs.xfs.cim.v3_10;
 
+import java.util.Map;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.ULONG;
+import at.o2xfs.xfs.cim.CashUnitStatus;
 import at.o2xfs.xfs.cim.v3_00.PhysicalCashUnit3;
 
 public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
+
+	public static class Builder extends PhysicalCashUnit3.Builder {
+
+		private long initialCount;
+		private long dispensedCount;
+		private long presentedCount;
+		private long retractedCount;
+		private long rejectCount;
+
+		public Builder(String physicalPositionName, char[] unitID, CashUnitStatus status) {
+			super(physicalPositionName, unitID, status);
+		}
+
+		@Override
+		public Builder cashInCount(long cashInCount) {
+			this.cashInCount = cashInCount;
+			return this;
+		}
+
+		@Override
+		public Builder count(long count) {
+			this.count = count;
+			return this;
+		}
+
+		@Override
+		public Builder maximum(long maximum) {
+			this.maximum = maximum;
+			return this;
+		}
+
+		@Override
+		public Builder hardwareSensors(boolean hardwareSensors) {
+			this.hardwareSensors = hardwareSensors;
+			return this;
+		}
+
+		@Override
+		public Builder extra(Map<String, String> extra) {
+			this.extra = extra;
+			return this;
+		}
+
+		public Builder initialCount(long initialCount) {
+			this.initialCount = initialCount;
+			return this;
+		}
+
+		public Builder dispensedCount(long dispensedCount) {
+			this.dispensedCount = dispensedCount;
+			return this;
+		}
+
+		public Builder presentedCount(long presentedCount) {
+			this.presentedCount = presentedCount;
+			return this;
+		}
+
+		public Builder retractedCount(long retractedCount) {
+			this.retractedCount = retractedCount;
+			return this;
+		}
+
+		public Builder rejectCount(long rejectCount) {
+			this.rejectCount = rejectCount;
+			return this;
+		}
+
+		@Override
+		public PhysicalCashUnit3_10 build() {
+			return new PhysicalCashUnit3_10(this);
+		}
+	}
 
 	protected final ULONG initialCount = new ULONG();
 	protected final ULONG dispensedCount = new ULONG();
@@ -49,6 +125,15 @@ public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
 		add(presentedCount);
 		add(retractedCount);
 		add(rejectCount);
+	}
+
+	protected PhysicalCashUnit3_10(Builder builder) {
+		super(builder);
+		initialCount.set(builder.initialCount);
+		dispensedCount.set(builder.dispensedCount);
+		presentedCount.set(builder.presentedCount);
+		retractedCount.set(builder.retractedCount);
+		rejectCount.set(builder.rejectCount);
 	}
 
 	public PhysicalCashUnit3_10(Pointer p) {
@@ -93,24 +178,41 @@ public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().appendSuper(super.hashCode()).append(getInitialCount()).append(getDispensedCount()).append(getPresentedCount()).append(getRetractedCount())
-				.append(getRejectCount()).toHashCode();
+		return new HashCodeBuilder()
+				.appendSuper(super.hashCode())
+				.append(getInitialCount())
+				.append(getDispensedCount())
+				.append(getPresentedCount())
+				.append(getRetractedCount())
+				.append(getRejectCount())
+				.toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof PhysicalCashUnit3_10) {
 			PhysicalCashUnit3_10 physicalCashUnit3_10 = (PhysicalCashUnit3_10) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getInitialCount(), physicalCashUnit3_10.getInitialCount())
-					.append(getDispensedCount(), physicalCashUnit3_10.getDispensedCount()).append(getPresentedCount(), physicalCashUnit3_10.getPresentedCount())
-					.append(getRetractedCount(), physicalCashUnit3_10.getRetractedCount()).append(getRejectCount(), physicalCashUnit3_10.getRejectCount()).isEquals();
+			return new EqualsBuilder()
+					.appendSuper(super.equals(obj))
+					.append(getInitialCount(), physicalCashUnit3_10.getInitialCount())
+					.append(getDispensedCount(), physicalCashUnit3_10.getDispensedCount())
+					.append(getPresentedCount(), physicalCashUnit3_10.getPresentedCount())
+					.append(getRetractedCount(), physicalCashUnit3_10.getRetractedCount())
+					.append(getRejectCount(), physicalCashUnit3_10.getRejectCount())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).appendSuper(super.toString()).append("initialCount", getInitialCount()).append("dispensedCount", getDispensedCount())
-				.append("presentedCount", getPresentedCount()).append("retractedCount", getRetractedCount()).append("rejectCount", getRejectCount()).toString();
+		return new ToStringBuilder(this)
+				.appendSuper(super.toString())
+				.append("initialCount", getInitialCount())
+				.append("dispensedCount", getDispensedCount())
+				.append("presentedCount", getPresentedCount())
+				.append("retractedCount", getRetractedCount())
+				.append("rejectCount", getRejectCount())
+				.toString();
 	}
 }
