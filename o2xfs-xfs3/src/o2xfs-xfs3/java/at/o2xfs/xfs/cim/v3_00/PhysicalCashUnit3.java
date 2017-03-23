@@ -121,14 +121,7 @@ public class PhysicalCashUnit3 extends Struct {
 	protected PhysicalCashUnit3(Builder builder) {
 		this();
 		allocate();
-		physicalPositionName.set(builder.physicalPositionName);
-		unitID.set(builder.unitID);
-		cashInCount.set(builder.cashInCount);
-		count.set(builder.count);
-		maximum.set(builder.maximum);
-		status.set(builder.status);
-		hardwareSensors.set(builder.hardwareSensors);
-		extra.set(builder.extra);
+		set(builder);
 	}
 
 	public PhysicalCashUnit3(Pointer p) {
@@ -140,6 +133,17 @@ public class PhysicalCashUnit3 extends Struct {
 		this();
 		allocate();
 		set(copy);
+	}
+
+	protected void set(Builder builder) {
+		physicalPositionName.set(builder.physicalPositionName);
+		unitID.set(builder.unitID);
+		cashInCount.set(builder.cashInCount);
+		count.set(builder.count);
+		maximum.set(builder.maximum);
+		status.set(builder.status);
+		hardwareSensors.set(builder.hardwareSensors);
+		extra.set(builder.extra);
 	}
 
 	protected void set(PhysicalCashUnit3 copy) {

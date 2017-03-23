@@ -27,6 +27,10 @@
 
 package at.o2xfs.xfs.cim.v3_10;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -35,13 +39,125 @@ import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.xfs.cdm.CdmType;
+import at.o2xfs.xfs.cim.CashInItemType;
+import at.o2xfs.xfs.cim.CashInType;
+import at.o2xfs.xfs.cim.CashUnitStatus;
 import at.o2xfs.xfs.cim.v3_00.CashIn3;
 import at.o2xfs.xfs.cim.v3_00.NoteIDs;
+import at.o2xfs.xfs.cim.v3_00.NoteNumberList3;
 import at.o2xfs.xfs.win32.XfsWord;
 
 public class CashIn3_10 extends CashIn3 {
 
-	protected final Pointer noteIDs = new Pointer();
+	public static class Builder extends CashIn3.Builder {
+
+		private int[] noteIds;
+		private final CdmType cdmType;
+		private Optional<String> cashUnitName;
+		private long initialCount;
+		private long dispensedCount;
+		private long presentedCount;
+		private long retractedCount;
+		private long rejectCount;
+		private long minimum;
+
+		public Builder(int number, CashInType type, Set<CashInItemType> itemType, char[] unitID, char[] currencyID,
+				CashUnitStatus status, PhysicalCashUnit3_10[] physicalCashUnits, CdmType cdmType) {
+			super(number, type, itemType, unitID, currencyID, status, physicalCashUnits);
+			noteIds = new int[0];
+			this.cdmType = cdmType;
+			cashUnitName = Optional.empty();
+		}
+
+		@Override
+		public Builder value(long value) {
+			super.value(value);
+			return this;
+		}
+
+		@Override
+		public Builder cashInCount(long cashInCount) {
+			super.cashInCount(cashInCount);
+			return this;
+		}
+
+		@Override
+		public Builder count(long count) {
+			super.count(count);
+			return this;
+		}
+
+		@Override
+		public Builder maximum(long maximum) {
+			super.maximum(maximum);
+			return this;
+		}
+
+		@Override
+		public Builder appLock(boolean appLock) {
+			super.appLock(appLock);
+			return this;
+		}
+
+		@Override
+		public Builder noteNumberList(Optional<NoteNumberList3> noteNumberList) {
+			super.noteNumberList(noteNumberList);
+			return this;
+		}
+
+		@Override
+		public Builder extra(Map<String, String> extra) {
+			super.extra(extra);
+			return this;
+		}
+
+		public Builder noteIds(int[] noteIds) {
+			this.noteIds = noteIds;
+			return this;
+		}
+
+		public Builder cashUnitName(Optional<String> cashUnitName) {
+			this.cashUnitName = cashUnitName;
+			return this;
+		}
+
+		public Builder initialCount(long initialCount) {
+			this.initialCount = initialCount;
+			return this;
+		}
+
+		public Builder dispensedCount(long dispensedCount) {
+			this.dispensedCount = dispensedCount;
+			return this;
+		}
+
+		public Builder presentedCount(long presentedCount) {
+			this.presentedCount = presentedCount;
+			return this;
+		}
+
+		public Builder retractedCount(long retractedCount) {
+			this.retractedCount = retractedCount;
+			return this;
+		}
+
+		public Builder rejectCount(long rejectCount) {
+			this.rejectCount = rejectCount;
+			return this;
+		}
+
+		public Builder minimum(long minimum) {
+			this.minimum = minimum;
+			return this;
+		}
+
+		@Override
+		public CashIn3_10 build() {
+			return new CashIn3_10(this);
+		}
+	}
+
+	protected final Pointer noteIds = new Pointer();
 	protected final XfsWord<CdmType> cdmType = new XfsWord<>(CdmType.class);
 	protected final LPSTR cashUnitName = new LPSTR();
 	protected final ULONG initialCount = new ULONG();
@@ -52,7 +168,7 @@ public class CashIn3_10 extends CashIn3 {
 	protected final ULONG minimum = new ULONG();
 
 	protected CashIn3_10() {
-		add(noteIDs);
+		add(noteIds);
 		add(cdmType);
 		add(cashUnitName);
 		add(initialCount);
@@ -61,6 +177,21 @@ public class CashIn3_10 extends CashIn3 {
 		add(retractedCount);
 		add(rejectCount);
 		add(minimum);
+	}
+
+	protected CashIn3_10(Builder builder) {
+		this();
+		allocate();
+		super.set(builder);
+		noteIds.pointTo(new NoteIDs(builder.noteIds));
+		cdmType.set(builder.cdmType);
+		cashUnitName.set(builder.cashUnitName.orElse(null));
+		initialCount.set(builder.initialCount);
+		dispensedCount.set(builder.dispensedCount);
+		presentedCount.set(builder.presentedCount);
+		retractedCount.set(builder.retractedCount);
+		rejectCount.set(builder.rejectCount);
+		minimum.set(builder.minimum);
 	}
 
 	public CashIn3_10(Pointer p) {
@@ -76,9 +207,9 @@ public class CashIn3_10 extends CashIn3 {
 
 	protected void set(CashIn3_10 copy) {
 		super.set(copy);
-		noteIDs.pointTo(new NoteIDs(copy.getNoteIDs()));
+		noteIds.pointTo(new NoteIDs(copy.getNoteIds()));
 		cdmType.set(copy.getCdmType());
-		cashUnitName.set(copy.getCashUnitName());
+		cashUnitName.set(copy.getCashUnitName().orElse(null));
 		initialCount.set(copy.getInitialCount());
 		dispensedCount.set(copy.getDispensedCount());
 		presentedCount.set(copy.getPresentedCount());
@@ -87,16 +218,21 @@ public class CashIn3_10 extends CashIn3 {
 		minimum.set(copy.getMinimum());
 	}
 
-	public int[] getNoteIDs() {
-		return new NoteIDs(noteIDs).get();
+	@Override
+	public PhysicalCashUnit3_10[] getPhysicalCashUnits() {
+		return new PhysicalCashUnits3_10(physical, getNumPhysicalCUs()).get();
+	}
+
+	public int[] getNoteIds() {
+		return new NoteIDs(noteIds).get();
 	}
 
 	public CdmType getCdmType() {
 		return cdmType.get();
 	}
 
-	public String getCashUnitName() {
-		return cashUnitName.get();
+	public Optional<String> getCashUnitName() {
+		return Optional.ofNullable(cashUnitName.get());
 	}
 
 	public long getInitialCount() {
@@ -125,18 +261,35 @@ public class CashIn3_10 extends CashIn3 {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().appendSuper(super.hashCode()).append(getNoteIDs()).append(getCdmType()).append(getCashUnitName()).append(getInitialCount())
-				.append(getDispensedCount()).append(getPresentedCount()).append(getRetractedCount()).append(getRejectCount()).append(getMinimum()).toHashCode();
+		return new HashCodeBuilder()
+				.appendSuper(super.hashCode())
+				.append(getNoteIds())
+				.append(getCdmType())
+				.append(getCashUnitName())
+				.append(getInitialCount())
+				.append(getDispensedCount())
+				.append(getPresentedCount())
+				.append(getRetractedCount())
+				.append(getRejectCount())
+				.append(getMinimum())
+				.toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof CashIn3_10) {
 			CashIn3_10 cashIn3_10 = (CashIn3_10) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getNoteIDs(), cashIn3_10.getNoteIDs()).append(getCdmType(), cashIn3_10.getCdmType())
-					.append(getCashUnitName(), cashIn3_10.getCashUnitName()).append(getInitialCount(), cashIn3_10.getInitialCount())
-					.append(getDispensedCount(), cashIn3_10.getDispensedCount()).append(getPresentedCount(), cashIn3_10.getPresentedCount())
-					.append(getRetractedCount(), cashIn3_10.getRetractedCount()).append(getRejectCount(), cashIn3_10.getRejectCount()).append(getMinimum(), cashIn3_10.getMinimum())
+			return new EqualsBuilder()
+					.appendSuper(super.equals(obj))
+					.append(getNoteIds(), cashIn3_10.getNoteIds())
+					.append(getCdmType(), cashIn3_10.getCdmType())
+					.append(getCashUnitName(), cashIn3_10.getCashUnitName())
+					.append(getInitialCount(), cashIn3_10.getInitialCount())
+					.append(getDispensedCount(), cashIn3_10.getDispensedCount())
+					.append(getPresentedCount(), cashIn3_10.getPresentedCount())
+					.append(getRetractedCount(), cashIn3_10.getRetractedCount())
+					.append(getRejectCount(), cashIn3_10.getRejectCount())
+					.append(getMinimum(), cashIn3_10.getMinimum())
 					.isEquals();
 		}
 		return false;
@@ -144,8 +297,17 @@ public class CashIn3_10 extends CashIn3 {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).appendSuper(super.toString()).append("noteIDs", getNoteIDs()).append("cdmType", getCdmType()).append("cashUnitName", getCashUnitName())
-				.append("initialCount", getInitialCount()).append("dispensedCount", getDispensedCount()).append("presentedCount", getPresentedCount())
-				.append("retractedCount", getRetractedCount()).append("rejectCount", getRejectCount()).append("minimum", getMinimum()).toString();
+		return new ToStringBuilder(this)
+				.appendSuper(super.toString())
+				.append("noteIds", getNoteIds())
+				.append("cdmType", getCdmType())
+				.append("cashUnitName", getCashUnitName())
+				.append("initialCount", getInitialCount())
+				.append("dispensedCount", getDispensedCount())
+				.append("presentedCount", getPresentedCount())
+				.append("retractedCount", getRetractedCount())
+				.append("rejectCount", getRejectCount())
+				.append("minimum", getMinimum())
+				.toString();
 	}
 }

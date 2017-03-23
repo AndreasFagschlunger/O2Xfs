@@ -128,7 +128,9 @@ public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
 	}
 
 	protected PhysicalCashUnit3_10(Builder builder) {
-		super(builder);
+		this();
+		allocate();
+		super.set(builder);
 		initialCount.set(builder.initialCount);
 		dispensedCount.set(builder.dispensedCount);
 		presentedCount.set(builder.presentedCount);

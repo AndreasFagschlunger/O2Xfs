@@ -163,6 +163,21 @@ public class CashIn3 extends Struct {
 	protected CashIn3(Builder builder) {
 		this();
 		allocate();
+		set(builder);
+	}
+
+	public CashIn3(Pointer p) {
+		this();
+		assignBuffer(p);
+	}
+
+	public CashIn3(CashIn3 copy) {
+		this();
+		allocate();
+		set(copy);
+	}
+
+	protected void set(Builder builder) {
 		number.set(builder.number);
 		type.set(builder.type);
 		itemType.set(builder.itemType);
@@ -180,17 +195,6 @@ public class CashIn3 extends Struct {
 		numPhysicalCUs.set(builder.physicalCashUnits.length);
 		physical.pointTo(new PhysicalCashUnits3(builder.physicalCashUnits));
 		extra.set(builder.extra);
-	}
-
-	public CashIn3(Pointer p) {
-		this();
-		assignBuffer(p);
-	}
-
-	public CashIn3(CashIn3 copy) {
-		this();
-		allocate();
-		set(copy);
 	}
 
 	protected void set(CashIn3 copy) {
