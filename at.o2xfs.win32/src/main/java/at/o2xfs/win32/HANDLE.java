@@ -40,11 +40,11 @@ import at.o2xfs.common.Hex;
 public class HANDLE extends BaseType {
 
 	public HANDLE() {
-		super(1 << 2);
+		super(Sizeof.POINTER);
 	}
 
-	public void put(long value) {
-		put(BitConverter.getBytes(getSize(), value));
+	public byte[] getValue() {
+		return getBytes();
 	}
 
 	@Override

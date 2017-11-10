@@ -52,7 +52,17 @@ public class INT extends NumberType<Integer> {
 	}
 
 	public void set(int value) {
-		put(BitConverter.getBytes(getSize(), value));
+		put(Bits.toByteArray(value));
+	}
+
+	@Override
+	public int intValue() {
+		return Bits.getInt(getBytes());
+	}
+
+	@Override
+	public long longValue() {
+		return intValue();
 	}
 
 	@Override

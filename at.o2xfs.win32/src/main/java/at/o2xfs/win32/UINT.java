@@ -57,6 +57,12 @@ public class UINT extends NumberType<Long> {
 		assignBuffer(p);
 	}
 
+	public UINT(long value) {
+		this();
+		allocate();
+		set(value);
+	}
+
 	public void set(UINT value) {
 		set(value.longValue());
 	}
@@ -66,13 +72,23 @@ public class UINT extends NumberType<Long> {
 		set(value.longValue());
 	}
 
+	@Override
+	public int intValue() {
+		return (int) longValue();
+	}
+
+	@Override
+	public long longValue() {
+		return Bits.getInt(getBytes()) & MAX_VALUE;
+	}
+
 	public void set(long value) {
 		if (value < MIN_VALUE) {
 			throw new IllegalArgumentException("Illegal value: " + value + ", value must be >= " + MIN_VALUE);
 		} else if (value > MAX_VALUE) {
 			throw new IllegalArgumentException("Illegal value: " + value + ", value must be <= " + MAX_VALUE);
 		}
-		put(BitConverter.getBytes(getSize(), value));
+		put(Bits.toByteArray((int) value));
 	}
 
 	@Override

@@ -63,6 +63,16 @@ public class USHORT extends NumberType<Integer> {
 		assignBuffer(p);
 	}
 
+	@Override
+	public int intValue() {
+		return Bits.getShort(getBytes()) & 0xffff;
+	}
+
+	@Override
+	public long longValue() {
+		return intValue();
+	}
+
 	public void set(USHORT value) {
 		set(value.intValue());
 	}
@@ -78,7 +88,7 @@ public class USHORT extends NumberType<Integer> {
 		} else if (value > MAX_VALUE) {
 			throw new IllegalArgumentException("Illegal value: " + value + ", value must be <= " + MAX_VALUE);
 		}
-		put(BitConverter.getBytes(getSize(), value));
+		put(Bits.toByteArray((short) value));
 	}
 
 	@Override

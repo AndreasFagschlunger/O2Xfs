@@ -43,6 +43,6 @@ public class HKEY extends HANDLE {
 
 	public HKEY(final long value) {
 		this();
-		put(value);
+		put(getSize() == 4 ? Bits.toByteArray((int) value) : Bits.toByteArray(value));
 	}
 }

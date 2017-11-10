@@ -38,7 +38,7 @@ package at.o2xfs.win32;
 public class SHORT extends NumberType<Short> {
 
 	public SHORT() {
-		super(1 << 1);
+		super(2);
 	}
 
 	public SHORT(short value) {
@@ -48,7 +48,27 @@ public class SHORT extends NumberType<Short> {
 	}
 
 	public void set(short value) {
-		put(BitConverter.getBytes(getSize(), value));
+		put(Bits.toByteArray(value));
+	}
+
+	@Override
+	public int intValue() {
+		return shortValue();
+	}
+
+	@Override
+	public long longValue() {
+		return shortValue();
+	}
+
+	@Override
+	public byte byteValue() {
+		return (byte) shortValue();
+	}
+
+	@Override
+	public short shortValue() {
+		return Bits.getShort(getBytes());
 	}
 
 	@Override

@@ -27,23 +27,21 @@
 
 package at.o2xfs.win32;
 
-public abstract class NumberType<T>
-		extends BaseType
-		implements ValueType<T> {
+public abstract class NumberType<T> extends BaseType implements ValueType<T> {
 
 	protected NumberType(int size) {
 		super(size);
 	}
 
+	public abstract int intValue();
+
+	public abstract long longValue();
+
+	public byte byteValue() {
+		return (byte) intValue();
+	}
+
 	public short shortValue() {
-		return (short) longValue();
-	}
-
-	public int intValue() {
-		return (int) longValue();
-	}
-
-	public long longValue() {
-		return BitConverter.toLong(getBytes());
+		return (short) intValue();
 	}
 }

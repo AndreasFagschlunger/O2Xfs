@@ -56,7 +56,17 @@ public class BOOL extends NumberType<Boolean> {
 	}
 
 	public void set(boolean b) {
-		put(BitConverter.getBytes(getSize(), b ? TRUE : FALSE));
+		put(Bits.toByteArray(b ? TRUE : FALSE));
+	}
+
+	@Override
+	public int intValue() {
+		return Bits.getInt(getBytes());
+	}
+
+	@Override
+	public long longValue() {
+		return intValue();
 	}
 
 	@Override

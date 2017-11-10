@@ -32,8 +32,7 @@ package at.o2xfs.win32;
  *
  * @author Andreas Fagschlunger
  */
-public class UINT8
-		extends NumberType<Integer> {
+public class UINT8 extends NumberType<Integer> {
 
 	public static final int MIN_VALUE = 0;
 
@@ -53,12 +52,22 @@ public class UINT8
 		if (value < MIN_VALUE || value > MAX_VALUE) {
 			throw new IllegalArgumentException("Illegal value: " + value);
 		}
-		put(BitConverter.getBytes(getSize(), value));
+		put(Bits.toByteArray(value));
 	}
 
 	@Override
 	public void set(Integer value) {
 		set(value.intValue());
+	}
+
+	@Override
+	public int intValue() {
+		return Bits.getInt(getBytes());
+	}
+
+	@Override
+	public long longValue() {
+		return intValue();
 	}
 
 	@Override
