@@ -33,7 +33,7 @@ package at.o2xfs.xfs.idc;
 public class NoMediaException extends IDCServiceException {
 
 	public NoMediaException() {
-		super(IDCError.NOMEDIA);
+		super(IdcError.NOMEDIA);
 	}
 
 }

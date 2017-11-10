@@ -34,6 +34,6 @@ package at.o2xfs.xfs.idc;
 public class MediaRetainedException extends IDCServiceException {
 
 	public MediaRetainedException() {
-		super(IDCError.MEDIARETAINED);
+		super(IdcError.MEDIARETAINED);
 	}
 }

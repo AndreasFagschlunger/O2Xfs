@@ -2,41 +2,36 @@ package at.o2xfs.xfs.idc;
 
 import at.o2xfs.xfs.XfsConstant;
 
-public enum IdcInfoCommand implements XfsConstant {
+public enum RetainBin implements XfsConstant {
 
 	/*
 	 * @since v3.00
 	 */
-	STATUS(201L),
+	BINOK(1L),
 
 	/*
 	 * @since v3.00
 	 */
-	CAPABILITIES(202L),
+	NOTSUPP(2L),
 
 	/*
 	 * @since v3.00
 	 */
-	FORM_LIST(203L),
+	BINFULL(3L),
 
 	/*
 	 * @since v3.00
 	 */
-	QUERY_FORM(204L),
+	BINHIGH(4L),
 
 	/*
 	 * @since v3.10
 	 */
-	QUERY_IFM_IDENTIFIER(205L),
-
-	/*
-	 * @since v3.30
-	 */
-	EMVCLESS_QUERY_APPLICATIONS(206L);
+	BINMISSING(5L);
 
 	private final long value;
 
-	private IdcInfoCommand(final long value) {
+	private RetainBin(final long value) {
 		this.value = value;
 	}
 

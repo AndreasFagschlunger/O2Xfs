@@ -30,10 +30,9 @@ package at.o2xfs.xfs.idc;
 /**
  * @author Andreas Fagschlunger
  */
-public class MediaJamException
-		extends IDCServiceException {
+public class MediaJamException extends IDCServiceException {
 
 	public MediaJamException() {
-		super(IDCError.MEDIAJAM);
+		super(IdcError.MEDIAJAM);
 	}
 }

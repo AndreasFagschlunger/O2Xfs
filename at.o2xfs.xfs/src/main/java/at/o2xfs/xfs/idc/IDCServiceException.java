@@ -29,16 +29,15 @@ package at.o2xfs.xfs.idc;
 
 import at.o2xfs.xfs.XfsException;
 
-public class IDCServiceException
-		extends XfsException {
+public class IDCServiceException extends XfsException {
 
-	protected IDCServiceException(final IDCError error) {
+	protected IDCServiceException(final IdcError error) {
 		super(error);
 	}
 
 	@Override
-	public IDCError getError() {
-		return getError(IDCError.class);
+	public IdcError getError() {
+		return getError(IdcError.class);
 	}
 
 }

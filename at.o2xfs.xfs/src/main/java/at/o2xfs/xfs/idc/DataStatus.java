@@ -2,41 +2,46 @@ package at.o2xfs.xfs.idc;
 
 import at.o2xfs.xfs.XfsConstant;
 
-public enum IdcInfoCommand implements XfsConstant {
+public enum DataStatus implements XfsConstant {
 
 	/*
 	 * @since v3.00
 	 */
-	STATUS(201L),
+	OK(0L),
 
 	/*
 	 * @since v3.00
 	 */
-	CAPABILITIES(202L),
+	MISSING(1L),
 
 	/*
 	 * @since v3.00
 	 */
-	FORM_LIST(203L),
+	INVALID(2L),
 
 	/*
 	 * @since v3.00
 	 */
-	QUERY_FORM(204L),
+	TOOLONG(3L),
 
 	/*
-	 * @since v3.10
+	 * @since v3.00
 	 */
-	QUERY_IFM_IDENTIFIER(205L),
+	TOOSHORT(4L),
 
 	/*
-	 * @since v3.30
+	 * @since v3.00
 	 */
-	EMVCLESS_QUERY_APPLICATIONS(206L);
+	SRCNOTSUPP(5L),
+
+	/*
+	 * @since v3.00
+	 */
+	SRCMISSING(6L);
 
 	private final long value;
 
-	private IdcInfoCommand(final long value) {
+	private DataStatus(final long value) {
 		this.value = value;
 	}
 
