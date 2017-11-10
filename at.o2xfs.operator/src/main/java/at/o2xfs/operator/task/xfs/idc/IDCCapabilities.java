@@ -32,7 +32,7 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.WFSIDCCAPS;
+import at.o2xfs.xfs.idc.v3_00.Capabilities3;
 import at.o2xfs.xfs.service.idc.cmd.IDCCapabilitiesCommand;
 
 public class IDCCapabilities extends IDCTask {
@@ -45,7 +45,7 @@ public class IDCCapabilities extends IDCTask {
 	protected void execute() {
 		final IDCCapabilitiesCommand command = new IDCCapabilitiesCommand(service);
 		try {
-			final WFSIDCCAPS capabilities = command.call();
+			final Capabilities3 capabilities = command.call();
 			createTable(capabilities);
 		} catch (final XfsException e) {
 			final String method = "execute()";
@@ -56,7 +56,7 @@ public class IDCCapabilities extends IDCTask {
 		}
 	}
 
-	private void createTable(final WFSIDCCAPS caps) {
+	private void createTable(final Capabilities3 caps) {
 		table = new Table(getClass(), "Capability", "Value");
 		addRow("Type", caps.getType());
 		addRow("Compound", caps.isCompound());
@@ -72,13 +72,13 @@ public class IDCCapabilities extends IDCTask {
 		addRow("WriteMode", caps.getWriteMode());
 		addRow("ChipPower", caps.getChipPower());
 		addRow("Extra", caps.getExtra());
-		addRow("DIPMode", caps.getDIPMode());
-		addRow("MemoryChipProtocols", caps.getMemoryChipProtocols());
-		addRow("GuidLights", caps.getGuidLights());
-		addRow("EjectPosition", caps.getEjectPosition());
-		addRow("PowerSaveControl", caps.isPowerSaveControl());
-		addRow("ParkingStations", caps.getParkingStations());
-		addRow("AntiFraudModule", caps.isAntiFraudModule());
+		// addRow("DIPMode", caps.getDIPMode());
+		// addRow("MemoryChipProtocols", caps.getMemoryChipProtocols());
+		// addRow("GuidLights", caps.getGuidLights());
+		// addRow("EjectPosition", caps.getEjectPosition());
+		// addRow("PowerSaveControl", caps.isPowerSaveControl());
+		// addRow("ParkingStations", caps.getParkingStations());
+		// addRow("AntiFraudModule", caps.isAntiFraudModule());
 		getContent().setUIElement(table);
 	}
 

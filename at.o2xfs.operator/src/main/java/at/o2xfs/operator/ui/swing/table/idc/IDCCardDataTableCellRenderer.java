@@ -27,35 +27,30 @@
 
 package at.o2xfs.operator.ui.swing.table.idc;
 
-import at.o2xfs.common.Hex;
-import at.o2xfs.operator.ui.swing.table.ContentTableModel;
-import at.o2xfs.operator.ui.swing.table.TextAreaCellRenderer;
-import at.o2xfs.xfs.idc.IDCTrack;
-
 import java.awt.Component;
 
 import javax.swing.JTable;
 
-public class IDCCardDataTableCellRenderer
-		extends TextAreaCellRenderer {
+import at.o2xfs.common.Hex;
+import at.o2xfs.operator.ui.swing.table.ContentTableModel;
+import at.o2xfs.operator.ui.swing.table.TextAreaCellRenderer;
+import at.o2xfs.xfs.idc.DataSource;
+
+public class IDCCardDataTableCellRenderer extends TextAreaCellRenderer {
 
 	@Override
-	public Component getTableCellRendererComponent(	JTable table,
-													Object value,
-													boolean isSelected,
-													boolean hasFocus,
-													int row,
-													int column) {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int row, int column) {
 		final ContentTableModel model = (ContentTableModel) table.getModel();
-		final IDCTrack dataSource = (IDCTrack) model.getValueAt(row, 0);
+		final DataSource dataSource = (DataSource) model.getValueAt(row, 0);
 		switch (dataSource) {
-			case TRACK1:
-			case TRACK2:
-			case TRACK3:
-				value = new String((byte[]) value);
-				break;
-			default:
-				value = Hex.encode((byte[]) value);
+		case TRACK1:
+		case TRACK2:
+		case TRACK3:
+			value = new String((byte[]) value);
+			break;
+		default:
+			value = Hex.encode((byte[]) value);
 		}
 		return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 	}

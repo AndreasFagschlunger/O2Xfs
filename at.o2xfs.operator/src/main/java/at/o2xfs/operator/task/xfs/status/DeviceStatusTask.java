@@ -37,7 +37,7 @@ import at.o2xfs.operator.task.xfs.ptr.PTRStatusTask;
 import at.o2xfs.operator.task.xfs.siu.SIUStatusTask;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.WfsIDCStatus;
+import at.o2xfs.xfs.idc.v3_00.IdcStatus3;
 import at.o2xfs.xfs.pin.WFSPINSTATUS;
 import at.o2xfs.xfs.ptr.WFSPTRSTATUS;
 import at.o2xfs.xfs.service.XfsServiceManager;
@@ -53,17 +53,15 @@ import at.o2xfs.xfs.siu.SIUStatus;
 
 public class DeviceStatusTask extends Task {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(DeviceStatusTask.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DeviceStatusTask.class);
 
 	private Table table = null;
 
 	private void addIDCService(final IDCService idcService) {
 		try {
-			WfsIDCStatus status = new IDCStatusCommand(idcService).call();
-			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager,
-					new IDCStatusTask(idcService)), idcService, status
-					.getDevice());
+			IdcStatus3 status = new IDCStatusCommand(idcService).call();
+			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager, new IDCStatusTask(idcService)), idcService,
+					status.getDeviceState());
 		} catch (XfsException e) {
 			table.addRow(idcService, e.getError());
 		}
@@ -72,9 +70,8 @@ public class DeviceStatusTask extends Task {
 	private void addPINService(final PINService pinService) {
 		try {
 			WFSPINSTATUS status = new PINStatusCommand(pinService).call();
-			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager,
-					new PINStatusTask(pinService)), pinService, status
-					.getDevice());
+			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager, new PINStatusTask(pinService)), pinService,
+					status.getDevice());
 		} catch (XfsException e) {
 			table.addRow(pinService, e.getError());
 		}
@@ -83,8 +80,8 @@ public class DeviceStatusTask extends Task {
 	private void addPTRService(final PTRService service) {
 		try {
 			WFSPTRSTATUS status = new PTRStatusCallable(service).call();
-			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager,
-					new PTRStatusTask(service)), service, status.getDevice());
+			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager, new PTRStatusTask(service)), service,
+					status.getDevice());
 		} catch (XfsException e) {
 			table.addRow(service, e.getError());
 		}
@@ -93,8 +90,8 @@ public class DeviceStatusTask extends Task {
 	private void addSIUService(final SIUService service) {
 		try {
 			SIUStatus status = new SIUStatusCallable(service).call();
-			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager,
-					new SIUStatusTask(service)), service, status.getDevice());
+			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager, new SIUStatusTask(service)), service,
+					status.getDevice());
 		} catch (XfsException e) {
 			table.addRow(service, e.getError());
 		}
@@ -106,15 +103,13 @@ public class DeviceStatusTask extends Task {
 		table = new Table(getClass(), "Device", "Status");
 		getContent().setUIElement(table);
 		final XfsServiceManager manager = XfsServiceManager.getInstance();
-		for (final IDCService idcService : manager
-				.getServices(IDCService.class)) {
+		for (final IDCService idcService : manager.getServices(IDCService.class)) {
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "idcService=" + idcService);
 			}
 			addIDCService(idcService);
 		}
-		for (final PINService pinService : manager
-				.getServices(PINService.class)) {
+		for (final PINService pinService : manager.getServices(PINService.class)) {
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "pinService=" + pinService);
 			}

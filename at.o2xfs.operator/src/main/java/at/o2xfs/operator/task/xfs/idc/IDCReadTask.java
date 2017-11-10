@@ -35,11 +35,11 @@ import at.o2xfs.operator.task.ExecuteTaskCommand;
 import at.o2xfs.operator.task.xfs.CancelCommand;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.IDCSecType;
-import at.o2xfs.xfs.idc.IDCTrack;
-import at.o2xfs.xfs.idc.WFSIDCCAPS;
-import at.o2xfs.xfs.idc.WFSIDCCARDDATA;
-import at.o2xfs.xfs.idc.WfsIDCStatus;
+import at.o2xfs.xfs.idc.DataSource;
+import at.o2xfs.xfs.idc.SecType;
+import at.o2xfs.xfs.idc.v3_00.Capabilities3;
+import at.o2xfs.xfs.idc.v3_00.CardData3;
+import at.o2xfs.xfs.idc.v3_00.IdcStatus3;
 import at.o2xfs.xfs.service.idc.cmd.IDCCapabilitiesCommand;
 import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 import at.o2xfs.xfs.service.idc.cmd.ReadCardCommand;
@@ -51,15 +51,15 @@ public class IDCReadTask extends IDCTask implements ReadCardListener {
 
 	private ReadCardCommand command = null;
 
-	private void createTable(final List<WFSIDCCARDDATA> cardDataList) {
+	private void createTable(final List<CardData3> cardDataList) {
 		final Table table = new Table(getClass(), "DataSource", "Status", "Data");
-		for (WFSIDCCARDDATA cardData : cardDataList) {
+		for (CardData3 cardData : cardDataList) {
 			table.addRow(createRow(cardData));
 		}
 		getContent().setUIElement(table);
 	}
 
-	private Object[] createRow(final WFSIDCCARDDATA cardData) {
+	private Object[] createRow(final CardData3 cardData) {
 		final Object[] row = new Object[3];
 		row[0] = cardData.getDataSource();
 		row[1] = cardData.getStatus();
@@ -76,7 +76,7 @@ public class IDCReadTask extends IDCTask implements ReadCardListener {
 	protected void execute() {
 		String method = "execute()";
 		command = new ReadCardCommand(service);
-		WFSIDCCAPS caps;
+		Capabilities3 caps;
 		try {
 			caps = new IDCCapabilitiesCommand(service).call();
 		} catch (final XfsException e) {
@@ -87,14 +87,14 @@ public class IDCReadTask extends IDCTask implements ReadCardListener {
 			setCloseCommand();
 			return;
 		}
-		for (final IDCTrack track : caps.getReadTracks()) {
+		for (final DataSource track : caps.getReadTracks()) {
 			command.addReadData(track);
 		}
 		if (!caps.getChipProtocols().isEmpty()) {
-			command.addReadData(IDCTrack.CHIP);
+			command.addReadData(DataSource.CHIP);
 		}
-		if (!IDCSecType.NOTSUPP.equals(caps.getSecType())) {
-			command.addReadData(IDCTrack.SECURITY);
+		if (!SecType.NOTSUPP.equals(caps.getSecType())) {
+			command.addReadData(DataSource.SECURITY);
 		}
 		command.addCommandListener(this);
 		command.execute();
@@ -113,23 +113,23 @@ public class IDCReadTask extends IDCTask implements ReadCardListener {
 	}
 
 	@Override
-	public void cardRead(final List<WFSIDCCARDDATA> cardDataList) {
+	public void cardRead(final List<CardData3> cardDataList) {
 		createTable(cardDataList);
 	}
 
 	private boolean isCardPresent() {
 		final String method = "isCardPresent()";
 		try {
-			final WfsIDCStatus status = new IDCStatusCommand(service).call();
+			final IdcStatus3 status = new IDCStatusCommand(service).call();
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "status=" + status);
 			}
 			switch (status.getMedia()) {
-				case JAMMED:
-				case PRESENT:
-					return true;
-				default:
-					return false;
+			case JAMMED:
+			case PRESENT:
+				return true;
+			default:
+				return false;
 			}
 		} catch (final XfsException e) {
 			LOG.error(method, "Error retrieving status", e);
