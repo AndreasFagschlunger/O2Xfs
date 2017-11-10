@@ -31,23 +31,21 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.IDCExecuteCommand;
-import at.o2xfs.xfs.idc.IDCMessage;
-import at.o2xfs.xfs.idc.WFSIDCRETAINCARD;
-import at.o2xfs.xfs.idc.WfsIDCStatus;
+import at.o2xfs.xfs.idc.IdcExecuteCommand;
+import at.o2xfs.xfs.idc.IdcMessage;
+import at.o2xfs.xfs.idc.v3_00.IdcStatus3;
+import at.o2xfs.xfs.idc.v3_00.RetainCard3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.events.XfsEventNotification;
 import at.o2xfs.xfs.service.idc.IDCService;
+import at.o2xfs.xfs.service.idc.IdcFactory;
 
-public class RetainCardCommand extends
-		AbstractAsyncCommand<RetainCardCommandListener> implements
-		XfsEventNotification {
+public class RetainCardCommand extends AbstractAsyncCommand<RetainCardCommandListener> implements XfsEventNotification {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(RetainCardCommand.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RetainCardCommand.class);
 
 	private final IDCService idcService;
 
@@ -59,8 +57,7 @@ public class RetainCardCommand extends
 
 	public RetainCardCommand(final IDCService idcService) {
 		this.idcService = idcService;
-		retainCardCommand = new XfsExecuteCommand(idcService,
-				IDCExecuteCommand.RETAIN_CARD);
+		retainCardCommand = new XfsExecuteCommand<>(idcService, IdcExecuteCommand.RETAIN_CARD);
 	}
 
 	private void notifyCardRetained() {
@@ -73,13 +70,12 @@ public class RetainCardCommand extends
 	protected void doExecute() {
 		final String method = "doExecute()";
 		try {
-			final WfsIDCStatus status = new IDCStatusCommand(idcService).call();
+			final IdcStatus3 status = new IDCStatusCommand(idcService).call();
 			cardsRetained = status.getCards();
 			retainCardCommand.execute(this);
 		} catch (final Exception e) {
 			if (LOG.isErrorEnabled()) {
-				LOG.error(method, "Error executing XfsCommand: "
-						+ retainCardCommand, e);
+				LOG.error(method, "Error executing XfsCommand: " + retainCardCommand, e);
 			}
 			notifyCommandFailed(e);
 		}
@@ -104,22 +100,21 @@ public class RetainCardCommand extends
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "wfsResult=" + wfsResult);
 			}
-			final IDCMessage eventID = wfsResult.getEventID(IDCMessage.class);
+			final IdcMessage eventID = wfsResult.getEventID(IdcMessage.class);
 			switch (eventID) {
-				case WFS_EXEE_IDC_MEDIARETAINED:
-					synchronized (this) {
-						if (!cardRetained) {
-							cardRetained = true;
-							notifyCardRetained();
-						}
+			case EXEE_MEDIARETAINED:
+				synchronized (this) {
+					if (!cardRetained) {
+						cardRetained = true;
+						notifyCardRetained();
 					}
-					break;
-				default:
-					if (LOG.isWarnEnabled()) {
-						LOG.warn(method, "Unknown intermediate event: "
-								+ wfsResult);
-					}
-					break;
+				}
+				break;
+			default:
+				if (LOG.isWarnEnabled()) {
+					LOG.warn(method, "Unknown intermediate event: " + wfsResult);
+				}
+				break;
 			}
 		} finally {
 			if (wfsResult != null) {
@@ -133,14 +128,14 @@ public class RetainCardCommand extends
 		final String method = "fireOperationCompleteEvent(WFSResult)";
 		try {
 			XfsException.throwFor(wfsResult.getResult());
-			final WFSIDCRETAINCARD retainCard = new WFSIDCRETAINCARD(
-					wfsResult.getResults());
+			final RetainCard3 retainCard = IdcFactory.create(idcService.getXfsVersion(), wfsResult.getResults(),
+					RetainCard3.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, retainCard);
 			}
 			if (retainCard.getCount() <= cardsRetained) {
-				notifyCommandFailed(new Exception("Card retained: before="
-						+ cardsRetained + ",after=" + retainCard.getCount()));
+				notifyCommandFailed(
+						new Exception("Card retained: before=" + cardsRetained + ",after=" + retainCard.getCount()));
 			} else {
 				synchronized (this) {
 					if (!cardRetained) {

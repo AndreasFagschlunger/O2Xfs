@@ -33,19 +33,17 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.IDCExecuteCommand;
-import at.o2xfs.xfs.idc.WFSIDCRETAINCARD;
+import at.o2xfs.xfs.idc.IdcExecuteCommand;
+import at.o2xfs.xfs.idc.v3_00.RetainCard3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.events.XfsEventNotification;
 import at.o2xfs.xfs.service.idc.IDCService;
 
-public class RetainCardCallable implements Callable<WFSIDCRETAINCARD>,
-		XfsEventNotification {
+public class RetainCardCallable implements Callable<RetainCard3>, XfsEventNotification {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(RetainCardCallable.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RetainCardCallable.class);
 
 	private XfsCommand retainCardCommand = null;
 
@@ -55,12 +53,11 @@ public class RetainCardCallable implements Callable<WFSIDCRETAINCARD>,
 		if (cardReader == null) {
 			throw new IllegalArgumentException("cardReader must not be null");
 		}
-		retainCardCommand = new XfsExecuteCommand(cardReader,
-				IDCExecuteCommand.RETAIN_CARD);
+		retainCardCommand = new XfsExecuteCommand<>(cardReader, IdcExecuteCommand.RETAIN_CARD);
 	}
 
 	@Override
-	public WFSIDCRETAINCARD call() throws InterruptedException, XfsException {
+	public RetainCard3 call() throws InterruptedException, XfsException {
 		final String method = "call()";
 		synchronized (this) {
 			retainCardCommand.execute(this);
@@ -73,9 +70,8 @@ public class RetainCardCallable implements Callable<WFSIDCRETAINCARD>,
 		}
 		try {
 			XfsException.throwFor(wfsResult.getResult());
-			final WFSIDCRETAINCARD retainCard = new WFSIDCRETAINCARD(
-					wfsResult.getResults());
-			return new WFSIDCRETAINCARD(retainCard);
+			final RetainCard3 retainCard = new RetainCard3(wfsResult.getResults());
+			return new RetainCard3(retainCard);
 		} finally {
 			XfsServiceManager.getInstance().free(wfsResult);
 			wfsResult = null;
@@ -106,17 +102,15 @@ public class RetainCardCallable implements Callable<WFSIDCRETAINCARD>,
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "wfsResult=" + wfsResult);
 		}
-		final IDCExecuteCommand commandCode = wfsResult
-				.getCommandCode(IDCExecuteCommand.class);
-		if (IDCExecuteCommand.RETAIN_CARD.equals(commandCode)) {
+		final IdcExecuteCommand commandCode = wfsResult.getCommandCode(IdcExecuteCommand.class);
+		if (IdcExecuteCommand.RETAIN_CARD.equals(commandCode)) {
 			synchronized (this) {
 				this.wfsResult = wfsResult;
 				notifyAll();
 			}
 		} else {
 			if (LOG.isErrorEnabled()) {
-				LOG.error(method, "Unknown operation complete event: "
-						+ wfsResult);
+				LOG.error(method, "Unknown operation complete event: " + wfsResult);
 			}
 			XfsServiceManager.getInstance().free(wfsResult);
 		}

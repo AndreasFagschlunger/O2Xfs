@@ -33,17 +33,17 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.IDCInfoCommand;
-import at.o2xfs.xfs.idc.WFSIDCCAPS;
+import at.o2xfs.xfs.idc.IdcInfoCommand;
+import at.o2xfs.xfs.idc.v3_00.Capabilities3;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
+import at.o2xfs.xfs.service.idc.IdcFactory;
 
-public class IDCCapabilitiesCommand implements Callable<WFSIDCCAPS> {
+public class IDCCapabilitiesCommand implements Callable<Capabilities3> {
 
-	private final Logger LOG = LoggerFactory
-			.getLogger(IDCCapabilitiesCommand.class);
+	private final Logger LOG = LoggerFactory.getLogger(IDCCapabilitiesCommand.class);
 
 	private XfsService idcService = null;
 
@@ -52,29 +52,21 @@ public class IDCCapabilitiesCommand implements Callable<WFSIDCCAPS> {
 	}
 
 	@Override
-	public WFSIDCCAPS call() throws XfsException {
-		final String method = "call()";
-		final XfsCommand xfsCommand = new XfsInfoCommand(idcService,
-				IDCInfoCommand.CAPABILITIES);
+	public Capabilities3 call() throws XfsException {
+		Capabilities3 result;
+		final XfsCommand xfsCommand = new XfsInfoCommand<>(idcService, IdcInfoCommand.CAPABILITIES);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = xfsCommand.call();
-			final WFSIDCCAPS capabilities = new WFSIDCCAPS(
-					idcService.getXfsVersion(), wfsResult.getResults());
-			if (LOG.isDebugEnabled()) {
-				LOG.debug(method, "capabilities=" + capabilities);
+			result = IdcFactory.create(idcService.getXfsVersion(), wfsResult.getResults(), Capabilities3.class);
+			if (LOG.isInfoEnabled()) {
+				LOG.info("call()", result);
 			}
-			return new WFSIDCCAPS(idcService.getXfsVersion(), capabilities);
-		} catch (final XfsException e) {
-			if (LOG.isErrorEnabled()) {
-				LOG.error(method, "Error executing XfsCommand: " + xfsCommand,
-						e);
-			}
-			throw e;
 		} finally {
 			if (wfsResult != null) {
 				XfsServiceManager.getInstance().free(wfsResult);
 			}
 		}
+		return result;
 	}
 }

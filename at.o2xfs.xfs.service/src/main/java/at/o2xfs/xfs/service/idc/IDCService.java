@@ -34,8 +34,8 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsServiceClass;
-import at.o2xfs.xfs.idc.IDCMessage;
-import at.o2xfs.xfs.idc.WFSIDCCARDACT;
+import at.o2xfs.xfs.idc.IdcMessage;
+import at.o2xfs.xfs.idc.v3_00.CardAction3;
 import at.o2xfs.xfs.service.XfsService;
 
 public class IDCService extends XfsService {
@@ -69,26 +69,25 @@ public class IDCService extends XfsService {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "wfsResult=" + wfsResult);
 		}
-		final IDCMessage idcMessage = wfsResult.getEventID(IDCMessage.class);
+		final IdcMessage idcMessage = wfsResult.getEventID(IdcMessage.class);
 		switch (idcMessage) {
-			case WFS_SRVE_IDC_MEDIAREMOVED:
-				notifyCardTaken();
-				break;
-			case WFS_SRVE_IDC_CARDACTION:
-				fireCardActionEvent(wfsResult);
-				break;
+		case SRVE_MEDIAREMOVED:
+			notifyCardTaken();
+			break;
+		case SRVE_CARDACTION:
+			fireCardActionEvent(wfsResult);
+			break;
 		}
 	}
 
 	private void fireCardActionEvent(final WFSResult wfsResult) {
 		final String method = "fireCardActionEvent(WFSResult)";
-		final WFSIDCCARDACT cardAction = new WFSIDCCARDACT(
-				wfsResult.getResults());
+		final CardAction3 cardAction = IdcFactory.create(getXfsVersion(), wfsResult.getResults(), CardAction3.class);
 		if (LOG.isInfoEnabled()) {
-			LOG.info(method, "WFSIDCCARDACT: " + cardAction);
+			LOG.info(method, cardAction);
 		}
 		for (final IDCServiceListener listener : serviceListeners) {
-			listener.cardAction(new WFSIDCCARDACT(cardAction));
+			listener.cardAction(cardAction);
 		}
 	}
 

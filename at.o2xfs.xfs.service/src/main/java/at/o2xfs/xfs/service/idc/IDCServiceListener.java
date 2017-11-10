@@ -27,19 +27,11 @@
 
 package at.o2xfs.xfs.service.idc;
 
-import at.o2xfs.xfs.idc.IDCMessage;
-import at.o2xfs.xfs.idc.WFSIDCCARDACT;
+import at.o2xfs.xfs.idc.v3_00.CardAction3;
 
 public interface IDCServiceListener {
 
-	/**
-	 * @see IDCMessage#WFS_SRVE_IDC_MEDIAREMOVED
-	 */
 	public void cardTaken();
 
-	/**
-	 * @param cardAction
-	 * @see IDCMessage#WFS_SRVE_IDC_CARDACTION
-	 */
-	public void cardAction(final WFSIDCCARDACT cardAction);
+	public void cardAction(final CardAction3 cardAction);
 }

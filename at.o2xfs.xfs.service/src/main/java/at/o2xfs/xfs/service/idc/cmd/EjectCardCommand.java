@@ -36,9 +36,9 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsCancelledException;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.IDCExecuteCommand;
+import at.o2xfs.xfs.idc.IdcExecuteCommand;
 import at.o2xfs.xfs.idc.MediaRetainedException;
-import at.o2xfs.xfs.idc.WFSIDCCARDACT;
+import at.o2xfs.xfs.idc.v3_00.CardAction3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
@@ -49,8 +49,7 @@ import at.o2xfs.xfs.service.idc.IDCServiceListener;
 /**
  * @author Andreas Fagschlunger
  */
-public class EjectCardCommand extends AbstractAsyncCommand<EjectCardListener>
-		implements IDCServiceListener {
+public class EjectCardCommand extends AbstractAsyncCommand<EjectCardListener> implements IDCServiceListener {
 
 	private class RetainCardHelper implements RetainCardCommandListener {
 
@@ -99,11 +98,9 @@ public class EjectCardCommand extends AbstractAsyncCommand<EjectCardListener>
 
 	}
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(EjectCardCommand.class);
+	private final static Logger LOG = LoggerFactory.getLogger(EjectCardCommand.class);
 
-	private final XfsServiceManager serviceManager = XfsServiceManager
-			.getInstance();
+	private final XfsServiceManager serviceManager = XfsServiceManager.getInstance();
 
 	private final IDCService idcService;
 
@@ -190,8 +187,7 @@ public class EjectCardCommand extends AbstractAsyncCommand<EjectCardListener>
 				return;
 			}
 		}
-		final RetainCardHelper retainCardHelper = new RetainCardHelper(
-				idcService);
+		final RetainCardHelper retainCardHelper = new RetainCardHelper(idcService);
 		retainCardHelper.retainCard();
 	}
 
@@ -204,8 +200,7 @@ public class EjectCardCommand extends AbstractAsyncCommand<EjectCardListener>
 	}
 
 	private void ejectCard() throws Exception {
-		ejectCardCommand = new XfsExecuteCommand(idcService,
-				IDCExecuteCommand.EJECT_CARD);
+		ejectCardCommand = new XfsExecuteCommand<>(idcService, IdcExecuteCommand.EJECT_CARD);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = ejectCardCommand.call();
@@ -285,8 +280,8 @@ public class EjectCardCommand extends AbstractAsyncCommand<EjectCardListener>
 	}
 
 	@Override
-	public void cardAction(final WFSIDCCARDACT cardAction) {
-		final String method = "cardAction(WFSIDCCARDACT)";
+	public void cardAction(final CardAction3 cardAction) {
+		final String method = "cardAction(CardAction3)";
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "cardAction=" + cardAction);
 		}

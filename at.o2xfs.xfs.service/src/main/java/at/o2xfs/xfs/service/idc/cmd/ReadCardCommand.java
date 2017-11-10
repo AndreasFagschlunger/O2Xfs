@@ -40,10 +40,10 @@ import at.o2xfs.win32.ZList;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsCancelledException;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.IDCExecuteCommand;
-import at.o2xfs.xfs.idc.IDCMessage;
-import at.o2xfs.xfs.idc.IDCTrack;
-import at.o2xfs.xfs.idc.WFSIDCCARDDATA;
+import at.o2xfs.xfs.idc.DataSource;
+import at.o2xfs.xfs.idc.IdcExecuteCommand;
+import at.o2xfs.xfs.idc.IdcMessage;
+import at.o2xfs.xfs.idc.v3_00.CardData3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncCommand;
 import at.o2xfs.xfs.service.cmd.EventQueue;
@@ -51,20 +51,18 @@ import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.events.XfsEventNotification;
 import at.o2xfs.xfs.service.idc.IDCService;
+import at.o2xfs.xfs.service.idc.IdcFactory;
 import at.o2xfs.xfs.util.Bitmask;
 
-public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
-		implements XfsEventNotification {
+public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener> implements XfsEventNotification {
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(ReadCardCommand.class);
+	private final static Logger LOG = LoggerFactory.getLogger(ReadCardCommand.class);
 
-	private final XfsServiceManager serviceManager = XfsServiceManager
-			.getInstance();
+	private final XfsServiceManager serviceManager = XfsServiceManager.getInstance();
 
 	private final IDCService idcService;
 
-	private Set<IDCTrack> readData = null;
+	private Set<DataSource> readData = null;
 
 	private XfsCommand xfsCommand = null;
 
@@ -76,10 +74,10 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 		}
 		this.idcService = idcService;
 		eventQueue = new EventQueue(this);
-		readData = EnumSet.noneOf(IDCTrack.class);
+		readData = EnumSet.noneOf(DataSource.class);
 	}
 
-	public void addReadData(final IDCTrack idcTrack) {
+	public void addReadData(final DataSource idcTrack) {
 		readData.add(idcTrack);
 	}
 
@@ -95,7 +93,7 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 		}
 	}
 
-	private void notifyCardRead(final List<WFSIDCCARDDATA> cardData) {
+	private void notifyCardRead(final List<CardData3> cardData) {
 		for (final ReadCardListener listener : commandListeners) {
 			listener.cardRead(cardData);
 
@@ -105,15 +103,13 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 	@Override
 	protected void doExecute() {
 		final String method = "doExecute()";
-		xfsCommand = new XfsExecuteCommand(idcService,
-				IDCExecuteCommand.READ_RAW_DATA,
+		xfsCommand = new XfsExecuteCommand<>(idcService, IdcExecuteCommand.READ_RAW_DATA,
 				new DWORD(Bitmask.of(readData)));
 		try {
 			xfsCommand.execute(eventQueue);
 		} catch (final XfsException e) {
 			if (LOG.isErrorEnabled()) {
-				LOG.error(method, "Error executing XfsCommand: " + xfsCommand,
-						e);
+				LOG.error(method, "Error executing XfsCommand: " + xfsCommand, e);
 			}
 			notifyCommandFailed(e);
 		}
@@ -141,18 +137,18 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 			if (LOG.isInfoEnabled()) {
 				LOG.info(method, "wfsResult=" + wfsResult);
 			}
-			final IDCMessage message = wfsResult.getEventID(IDCMessage.class);
+			final IdcMessage message = wfsResult.getEventID(IdcMessage.class);
 			switch (message) {
-				case WFS_EXEE_IDC_MEDIAINSERTED:
-					notifyCardInserted();
-					break;
-				case WFS_EXEE_IDC_INVALIDMEDIA:
-					notifyCardInvalid();
-					break;
-				default:
-					if (LOG.isWarnEnabled()) {
-						LOG.warn(method, "Unknown event: " + wfsResult);
-					}
+			case EXEE_MEDIAINSERTED:
+				notifyCardInserted();
+				break;
+			case EXEE_INVALIDMEDIA:
+				notifyCardInvalid();
+				break;
+			default:
+				if (LOG.isWarnEnabled()) {
+					LOG.warn(method, "Unknown event: " + wfsResult);
+				}
 			}
 		} finally {
 			serviceManager.free(wfsResult);
@@ -167,16 +163,14 @@ public class ReadCardCommand extends AbstractAsyncCommand<ReadCardListener>
 				LOG.debug(method, "wfsResult=" + wfsResult);
 			}
 			XfsException.throwFor(wfsResult.getResult());
-			final List<WFSIDCCARDDATA> cardDataList = new ArrayList<WFSIDCCARDDATA>();
+			final List<CardData3> cardDataList = new ArrayList<CardData3>();
 			final ZList zList = new ZList(wfsResult.getResults());
 			for (final Pointer pCardData : zList) {
-				final WFSIDCCARDDATA cardData = new WFSIDCCARDDATA(
-						idcService.getXfsVersion(), pCardData);
+				final CardData3 cardData = IdcFactory.create(idcService.getXfsVersion(), pCardData, CardData3.class);
 				if (LOG.isDebugEnabled()) {
 					LOG.debug(method, "cardData=" + cardData);
 				}
-				cardDataList.add(new WFSIDCCARDDATA(idcService.getXfsVersion(),
-						cardData));
+				cardDataList.add(cardData);
 			}
 			notifyCardRead(cardDataList);
 			notifyCommandSuccessful();

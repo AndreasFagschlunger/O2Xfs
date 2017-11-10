@@ -31,8 +31,8 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.xfs.WFSResult;
-import at.o2xfs.xfs.idc.IDCExecuteCommand;
-import at.o2xfs.xfs.idc.IDCPowerOption;
+import at.o2xfs.xfs.idc.IdcExecuteCommand;
+import at.o2xfs.xfs.idc.PowerOffOption;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncCommand;
 import at.o2xfs.xfs.service.cmd.IAsyncCommandListener;
@@ -41,15 +41,13 @@ import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.util.ExceptionUtil;
 
-public class IDCResetCommand extends
-		AbstractAsyncCommand<IAsyncCommandListener> {
+public class IDCResetCommand extends AbstractAsyncCommand<IAsyncCommandListener> {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(IDCResetCommand.class);
+	private static final Logger LOG = LoggerFactory.getLogger(IDCResetCommand.class);
 
 	private IDCService idcService = null;
 
-	private IDCPowerOption cardFoundAction = null;
+	private PowerOffOption cardFoundAction = null;
 
 	private XfsCommand resetCommand = null;
 
@@ -60,8 +58,7 @@ public class IDCResetCommand extends
 		this.idcService = idcService;
 	}
 
-	public void setCardFoundAction(final IDCPowerOption cardFoundAction)
-			throws IllegalArgumentException {
+	public void setCardFoundAction(final PowerOffOption cardFoundAction) throws IllegalArgumentException {
 		this.cardFoundAction = cardFoundAction;
 	}
 
@@ -79,8 +76,7 @@ public class IDCResetCommand extends
 				notifyCommandSuccessful();
 			} catch (final Exception e) {
 				if (LOG.isErrorEnabled()) {
-					LOG.error(method, "Error executing XfsCommand: "
-							+ resetCommand, e);
+					LOG.error(method, "Error executing XfsCommand: " + resetCommand, e);
 				}
 				notifyCommandFailed(e);
 			} finally {
@@ -97,8 +93,7 @@ public class IDCResetCommand extends
 		if (cardFoundAction != null) {
 			resetIn = new DWORD(cardFoundAction.getValue());
 		}
-		resetCommand = new XfsExecuteCommand(idcService,
-				IDCExecuteCommand.RESET, resetIn);
+		resetCommand = new XfsExecuteCommand<>(idcService, IdcExecuteCommand.RESET, resetIn);
 	}
 
 	@Override

@@ -29,13 +29,16 @@ package at.o2xfs.xfs.service.idc.cmd;
 
 import java.util.concurrent.Callable;
 
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.IDCInfoCommand;
-import at.o2xfs.xfs.idc.WfsIDCStatus;
+import at.o2xfs.xfs.cim.CimInfoCommand;
+import at.o2xfs.xfs.idc.v3_00.IdcStatus3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 import at.o2xfs.xfs.service.idc.IDCService;
+import at.o2xfs.xfs.service.idc.IdcFactory;
 
 /**
  * This command reports the full range of information available, including the
@@ -47,7 +50,9 @@ import at.o2xfs.xfs.service.idc.IDCService;
  * @author Andreas Fagschlunger
  *
  */
-public class IDCStatusCommand implements Callable<WfsIDCStatus> {
+public class IDCStatusCommand implements Callable<IdcStatus3> {
+
+	private static final Logger LOG = LoggerFactory.getLogger(IDCStatusCommand.class);
 
 	private IDCService idcService = null;
 
@@ -56,16 +61,21 @@ public class IDCStatusCommand implements Callable<WfsIDCStatus> {
 	}
 
 	@Override
-	public WfsIDCStatus call() throws XfsException {
-		XfsInfoCommand infoCommand = new XfsInfoCommand(idcService,
-				IDCInfoCommand.STATUS);
-		WFSResult wfsResult = infoCommand.call();
+	public IdcStatus3 call() throws XfsException {
+		IdcStatus3 result;
+		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(idcService, CimInfoCommand.STATUS);
+		WFSResult wfsResult = null;
 		try {
-			final WfsIDCStatus idcStatus = new WfsIDCStatus(
-					idcService.getXfsVersion(), wfsResult.getResults());
-			return new WfsIDCStatus(idcService.getXfsVersion(), idcStatus);
+			wfsResult = command.call();
+			result = IdcFactory.create(idcService.getXfsVersion(), wfsResult.getResults(), IdcStatus3.class);
+			if (LOG.isInfoEnabled()) {
+				LOG.info("call()", result);
+			}
 		} finally {
-			XfsServiceManager.getInstance().free(wfsResult);
+			if (wfsResult != null) {
+				XfsServiceManager.getInstance().free(wfsResult);
+			}
 		}
+		return result;
 	}
 }

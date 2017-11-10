@@ -34,8 +34,8 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.ChipIOStruct;
-import at.o2xfs.xfs.idc.IDCExecuteCommand;
+import at.o2xfs.xfs.idc.IdcExecuteCommand;
+import at.o2xfs.xfs.idc.v3_00.ChipIo3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
@@ -46,16 +46,15 @@ import at.o2xfs.xfs.service.idc.IDCService;
  *
  * @author Andreas Fagschlunger
  */
-public class ChipIOCommand implements Callable<ChipIOStruct> {
+public class ChipIOCommand implements Callable<ChipIo3> {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ChipIOCommand.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ChipIOCommand.class);
 
 	private final IDCService service;
 
-	private final ChipIOStruct chipIoIn;
+	private final ChipIo3 chipIoIn;
 
-	public ChipIOCommand(final IDCService service, final ChipIOStruct chipIoIn) {
+	public ChipIOCommand(final IDCService service, final ChipIo3 chipIoIn) {
 		Assert.notNull(service);
 		Assert.notNull(chipIoIn);
 		this.service = service;
@@ -63,19 +62,17 @@ public class ChipIOCommand implements Callable<ChipIOStruct> {
 	}
 
 	@Override
-	public ChipIOStruct call() throws XfsException {
+	public ChipIo3 call() throws XfsException {
 		final String method = "call()";
-		XfsCommand xfsCommand = new XfsExecuteCommand(service,
-				IDCExecuteCommand.CHIP_IO, chipIoIn);
+		XfsCommand xfsCommand = new XfsExecuteCommand<>(service, IdcExecuteCommand.CHIP_IO, chipIoIn);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = xfsCommand.call();
-			final ChipIOStruct chipIoOut = new ChipIOStruct(
-					wfsResult.getResults());
+			final ChipIo3 chipIoOut = new ChipIo3(wfsResult.getResults());
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "chipIoOut=" + chipIoOut);
 			}
-			return new ChipIOStruct(chipIoOut);
+			return new ChipIo3(chipIoOut);
 		} finally {
 			if (wfsResult != null) {
 				XfsServiceManager.getInstance().free(wfsResult);
