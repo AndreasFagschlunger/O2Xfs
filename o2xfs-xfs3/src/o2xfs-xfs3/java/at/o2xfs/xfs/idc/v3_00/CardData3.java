@@ -10,15 +10,15 @@ import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
+import at.o2xfs.xfs.idc.DataSource;
 import at.o2xfs.xfs.idc.DataStatus;
-import at.o2xfs.xfs.idc.Track;
 import at.o2xfs.xfs.idc.WriteMethod;
 import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 public class CardData3 extends Struct {
 
-	protected final XfsWord<Track> dataSource = new XfsWord<>(Track.class);
+	protected final XfsWord<DataSource> dataSource = new XfsWord<>(DataSource.class);
 	protected final XfsWordBitmask<DataStatus> status = new XfsWordBitmask<>(DataStatus.class);
 	protected final ULONG dataLength = new ULONG();
 	protected final Pointer data = new Pointer();
@@ -51,7 +51,7 @@ public class CardData3 extends Struct {
 		writeMethod.set(copy.getWriteMethod());
 	}
 
-	public Track getDataSource() {
+	public DataSource getDataSource() {
 		return dataSource.get();
 	}
 

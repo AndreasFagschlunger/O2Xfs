@@ -13,10 +13,13 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.XfsServiceClass;
+import at.o2xfs.xfs.idc.ChipPowerAction;
+import at.o2xfs.xfs.idc.ChipProtocols;
+import at.o2xfs.xfs.idc.DataSource;
 import at.o2xfs.xfs.idc.PowerOffOption;
 import at.o2xfs.xfs.idc.SecType;
-import at.o2xfs.xfs.idc.Track;
 import at.o2xfs.xfs.idc.Type;
+import at.o2xfs.xfs.idc.WriteMethod;
 import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
@@ -25,17 +28,17 @@ public class Capabilities3 extends Struct {
 	protected final XfsWord<XfsServiceClass> serviceClass = new XfsWord<>(XfsServiceClass.class);
 	protected final XfsWord<Type> type = new XfsWord<>(Type.class);
 	protected final BOOL compound = new BOOL();
-	protected final XfsWordBitmask<Track> readTracks = new XfsWordBitmask<>(Track.class);
-	protected final XfsWordBitmask<Track> writeTracks = new XfsWordBitmask<>(Track.class);
-	protected final XfsWordBitmask<Track> chipProtocols = new XfsWordBitmask<>(Track.class);
+	protected final XfsWordBitmask<DataSource> readTracks = new XfsWordBitmask<>(DataSource.class);
+	protected final XfsWordBitmask<DataSource> writeTracks = new XfsWordBitmask<>(DataSource.class);
+	protected final XfsWordBitmask<ChipProtocols> chipProtocols = new XfsWordBitmask<>(ChipProtocols.class);
 	protected final USHORT cards = new USHORT();
 	protected final XfsWord<SecType> secType = new XfsWord<>(SecType.class);
 	protected final XfsWord<PowerOffOption> powerOnOption = new XfsWord<>(PowerOffOption.class);
 	protected final XfsWord<PowerOffOption> powerOffOption = new XfsWord<>(PowerOffOption.class);
 	protected final BOOL fluxSensorProgrammable = new BOOL();
 	protected final BOOL readWriteAccessFollowingEject = new BOOL();
-	protected final XfsWord<Track> writeMode = new XfsWord<>(Track.class);
-	protected final XfsWord<Track> chipPower = new XfsWord<>(Track.class);
+	protected final XfsWordBitmask<WriteMethod> writeMode = new XfsWordBitmask<>(WriteMethod.class);
+	protected final XfsWordBitmask<ChipPowerAction> chipPower = new XfsWordBitmask<>(ChipPowerAction.class);
 	protected final XfsExtra extra = new XfsExtra();
 
 	protected Capabilities3() {
@@ -97,15 +100,15 @@ public class Capabilities3 extends Struct {
 		return compound.get();
 	}
 
-	public Set<Track> getReadTracks() {
+	public Set<DataSource> getReadTracks() {
 		return readTracks.get();
 	}
 
-	public Set<Track> getWriteTracks() {
+	public Set<DataSource> getWriteTracks() {
 		return writeTracks.get();
 	}
 
-	public Set<Track> getChipProtocols() {
+	public Set<ChipProtocols> getChipProtocols() {
 		return chipProtocols.get();
 	}
 
@@ -133,11 +136,11 @@ public class Capabilities3 extends Struct {
 		return readWriteAccessFollowingEject.get();
 	}
 
-	public Track getWriteMode() {
+	public Set<WriteMethod> getWriteMode() {
 		return writeMode.get();
 	}
 
-	public Track getChipPower() {
+	public Set<ChipPowerAction> getChipPower() {
 		return chipPower.get();
 	}
 

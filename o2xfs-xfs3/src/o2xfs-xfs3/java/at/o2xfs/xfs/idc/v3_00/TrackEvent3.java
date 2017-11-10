@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPSTR;
+import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.idc.DataStatus;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
@@ -23,7 +24,7 @@ public class TrackEvent3 extends Struct {
 		add(data);
 	}
 
-	public TrackEvent3(LPSTR p) {
+	public TrackEvent3(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
