@@ -28,7 +28,6 @@
 package at.o2xfs.xfs.idc;
 
 /**
- * @see IDCError#MEDIARETAINED
  * @author Andreas Fagschlunger
  */
 public class MediaRetainedException extends IDCServiceException {

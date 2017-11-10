@@ -27,9 +27,6 @@
 
 package at.o2xfs.xfs.idc;
 
-/**
- * @see IDCError#NOMEDIA
- */
 public class NoMediaException extends IDCServiceException {
 
 	public NoMediaException() {
