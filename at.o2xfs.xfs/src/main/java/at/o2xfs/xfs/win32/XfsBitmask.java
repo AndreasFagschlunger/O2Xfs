@@ -42,18 +42,6 @@ abstract class XfsBitmask<T extends Enum<T> & XfsConstant> extends NumberType<Se
 		type = aType;
 	}
 
-	public void set(XfsBitmask<T> value) {
-		put(value.getBytes());
-	}
-
-	@Override
-	public void set(Set<T> value) {
-		long l = 0L;
-		for (T each : value) {
-			l |= each.getValue();
-		}
-	}
-
 	@Override
 	public Set<T> get() {
 		EnumSet<T> result = EnumSet.noneOf(type);

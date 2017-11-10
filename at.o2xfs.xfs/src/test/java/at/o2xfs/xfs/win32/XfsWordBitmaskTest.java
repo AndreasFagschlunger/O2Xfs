@@ -6,16 +6,15 @@ import java.util.EnumSet;
 
 import org.junit.Test;
 
-import at.o2xfs.win32.UINT;
+import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.XfsConstant;
 
-public class XfsDWordBitmaskTest {
+public class XfsWordBitmaskTest {
 
 	private enum MockEnum implements XfsConstant {
 
-		VALUE_1(1L),
-		VALUE_2(2L),
-		MAX_VALUE(UINT.MAX_VALUE);
+		MIN_VALUE(1L),
+		MAX_VALUE(USHORT.MAX_VALUE);
 
 		private long value;
 
@@ -31,7 +30,7 @@ public class XfsDWordBitmaskTest {
 
 	@Test
 	public void test() {
-		XfsDWordBitmask<MockEnum> bitmask = new XfsDWordBitmask<>(MockEnum.class, EnumSet.allOf(MockEnum.class));
+		XfsWordBitmask<MockEnum> bitmask = new XfsWordBitmask<>(MockEnum.class, EnumSet.allOf(MockEnum.class));
 		assertTrue(bitmask.get().containsAll(EnumSet.allOf(MockEnum.class)));
 	}
 }

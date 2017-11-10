@@ -27,6 +27,11 @@
 
 package at.o2xfs.xfs.cam;
 
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
@@ -36,18 +41,12 @@ import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordArray;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-public class CamCaps
-		extends Struct {
+public class CamCaps extends Struct {
 
 	private final XfsWord<XfsServiceClass> serviceClass = new XfsWord<XfsServiceClass>(XfsServiceClass.class);
 	private final XfsWord<CamType> type = new XfsWord<CamType>(CamType.class);
-	private final XfsWordArray<CameraAvailable> cameras = new XfsWordArray<>(	CameraAvailable.class,
-																				CamConstant.CAMERAS_SIZE);
+	private final XfsWordArray<CameraAvailable> cameras = new XfsWordArray<>(CameraAvailable.class,
+			CamConstant.CAMERAS_SIZE);
 	private final USHORT maxPictures = new USHORT();
 	private final XfsWordBitmask<CamData> camData = new XfsWordBitmask<CamData>(CamData.class);
 	private final USHORT maxDataLength = new USHORT();
@@ -80,9 +79,9 @@ public class CamCaps
 		type.set(caps.type);
 		cameras.set(caps.cameras);
 		maxPictures.set(caps.maxPictures);
-		camData.set(caps.camData);
+		camData.set(caps.camData.get());
 		maxDataLength.set(caps.maxDataLength);
-		charSupport.set(caps.charSupport);
+		charSupport.set(caps.charSupport.get());
 		extra.set(caps.extra);
 	}
 
@@ -120,14 +119,15 @@ public class CamCaps
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("serviceClass", getServiceClass())
-										.append("type", getType())
-										.append("cameras", getCameras())
-										.append("maxPictures", getMaxPictures())
-										.append("camData", getCamData())
-										.append("maxDataLength", getMaxDataLength())
-										.append("charSupport", getCharSupport())
-										.append("extra", getExtra())
-										.toString();
+		return new ToStringBuilder(this)
+				.append("serviceClass", getServiceClass())
+				.append("type", getType())
+				.append("cameras", getCameras())
+				.append("maxPictures", getMaxPictures())
+				.append("camData", getCamData())
+				.append("maxDataLength", getMaxDataLength())
+				.append("charSupport", getCharSupport())
+				.append("extra", getExtra())
+				.toString();
 	}
 }

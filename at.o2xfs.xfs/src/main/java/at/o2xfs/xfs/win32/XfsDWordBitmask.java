@@ -27,6 +27,8 @@
 
 package at.o2xfs.xfs.win32;
 
+import java.util.Set;
+
 import at.o2xfs.win32.Bits;
 import at.o2xfs.win32.UINT;
 import at.o2xfs.xfs.XfsConstant;
@@ -35,6 +37,21 @@ public class XfsDWordBitmask<T extends Enum<T> & XfsConstant> extends XfsBitmask
 
 	public XfsDWordBitmask(Class<T> aType) {
 		super(UINT.SIZE, aType);
+	}
+
+	public XfsDWordBitmask(Class<T> aType, Set<T> value) {
+		this(aType);
+		allocate();
+		set(value);
+	}
+
+	@Override
+	public void set(Set<T> value) {
+		long val = 0;
+		for (T each : value) {
+			val |= each.getValue();
+		}
+		put(Bits.toByteArray((int) val));
 	}
 
 	@Override
