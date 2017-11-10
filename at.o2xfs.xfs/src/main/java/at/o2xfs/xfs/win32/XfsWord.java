@@ -27,9 +27,10 @@
 
 package at.o2xfs.xfs.win32;
 
-import at.o2xfs.win32.BitConverter;
+import at.o2xfs.win32.Bits;
 import at.o2xfs.win32.NumberType;
 import at.o2xfs.win32.Pointer;
+import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.util.XfsConstants;
 
@@ -53,12 +54,22 @@ public class XfsWord<T extends Enum<T> & XfsConstant> extends NumberType<T> {
 
 	@Override
 	public void set(T value) {
-		put(BitConverter.getBytes(getSize(), value.getValue()));
+		put(Bits.toByteArray((short) value.getValue()));
 	}
 
 	@Override
 	public T get() {
 		return XfsConstants.valueOf(this, type);
+	}
+
+	@Override
+	public int intValue() {
+		return (int) longValue();
+	}
+
+	@Override
+	public long longValue() {
+		return Bits.getShort(getBytes()) & USHORT.MAX_VALUE;
 	}
 
 	public static final <T extends Enum<T> & XfsConstant> XfsWord<T> valueOf(T value) {

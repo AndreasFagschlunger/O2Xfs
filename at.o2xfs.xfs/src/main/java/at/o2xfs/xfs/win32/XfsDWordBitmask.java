@@ -27,11 +27,23 @@
 
 package at.o2xfs.xfs.win32;
 
+import at.o2xfs.win32.Bits;
+import at.o2xfs.win32.UINT;
 import at.o2xfs.xfs.XfsConstant;
 
 public class XfsDWordBitmask<T extends Enum<T> & XfsConstant> extends XfsBitmask<T> {
 
 	public XfsDWordBitmask(Class<T> aType) {
-		super(4, aType);
+		super(UINT.SIZE, aType);
+	}
+
+	@Override
+	public int intValue() {
+		return (int) longValue();
+	}
+
+	@Override
+	public long longValue() {
+		return Bits.getInt(getBytes()) & UINT.MAX_VALUE;
 	}
 }

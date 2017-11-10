@@ -30,11 +30,10 @@ package at.o2xfs.xfs.win32;
 import java.util.EnumSet;
 import java.util.Set;
 
-import at.o2xfs.win32.BitConverter;
 import at.o2xfs.win32.NumberType;
 import at.o2xfs.xfs.XfsConstant;
 
-class XfsBitmask<T extends Enum<T> & XfsConstant> extends NumberType<Set<T>> {
+abstract class XfsBitmask<T extends Enum<T> & XfsConstant> extends NumberType<Set<T>> {
 
 	private final Class<T> type;
 
@@ -53,7 +52,6 @@ class XfsBitmask<T extends Enum<T> & XfsConstant> extends NumberType<Set<T>> {
 		for (T each : value) {
 			l |= each.getValue();
 		}
-		put(BitConverter.getBytes(getSize(), l));
 	}
 
 	@Override
