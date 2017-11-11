@@ -39,7 +39,7 @@ import at.o2xfs.xfs.idc.DataSource;
 import at.o2xfs.xfs.idc.SecType;
 import at.o2xfs.xfs.idc.v3_00.Capabilities3;
 import at.o2xfs.xfs.idc.v3_00.CardData3;
-import at.o2xfs.xfs.idc.v3_00.IdcStatus3;
+import at.o2xfs.xfs.idc.v3_00.Status3;
 import at.o2xfs.xfs.service.idc.cmd.IDCCapabilitiesCommand;
 import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 import at.o2xfs.xfs.service.idc.cmd.ReadCardCommand;
@@ -120,7 +120,7 @@ public class IDCReadTask extends IDCTask implements ReadCardListener {
 	private boolean isCardPresent() {
 		final String method = "isCardPresent()";
 		try {
-			final IdcStatus3 status = new IDCStatusCommand(service).call();
+			final Status3 status = new IDCStatusCommand(service).call();
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "status=" + status);
 			}

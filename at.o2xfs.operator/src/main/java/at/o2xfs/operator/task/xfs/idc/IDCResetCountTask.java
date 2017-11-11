@@ -33,7 +33,7 @@ import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.IdcExecuteCommand;
-import at.o2xfs.xfs.idc.v3_00.IdcStatus3;
+import at.o2xfs.xfs.idc.v3_00.Status3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
@@ -50,7 +50,7 @@ public class IDCResetCountTask extends IDCTask {
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = resetCountCommand.call();
-			final IdcStatus3 status = new IDCStatusCommand(service).call();
+			final Status3 status = new IDCStatusCommand(service).call();
 			final Label label = new Label(getClass(), "CardsRetained");
 			label.setArguments(status.getCards());
 			getContent().setUIElement(label);

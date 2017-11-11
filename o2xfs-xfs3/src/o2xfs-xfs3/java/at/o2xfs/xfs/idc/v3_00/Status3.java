@@ -44,7 +44,7 @@ import at.o2xfs.xfs.idc.RetainBin;
 import at.o2xfs.xfs.idc.Security;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class IdcStatus3 extends Struct {
+public class Status3 extends Struct {
 
 	protected final XfsWord<IdcDeviceState> deviceState = new XfsWord<>(IdcDeviceState.class);
 	protected final XfsWord<Position> media = new XfsWord<>(Position.class);
@@ -54,7 +54,7 @@ public class IdcStatus3 extends Struct {
 	protected final XfsWord<ChipPower> chipPower = new XfsWord<>(ChipPower.class);
 	protected final XfsExtra extra = new XfsExtra();
 
-	protected IdcStatus3() {
+	protected Status3() {
 		add(deviceState);
 		add(media);
 		add(retainBin);
@@ -64,18 +64,18 @@ public class IdcStatus3 extends Struct {
 		add(extra);
 	}
 
-	public IdcStatus3(Pointer p) {
+	public Status3(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public IdcStatus3(IdcStatus3 copy) {
+	public Status3(Status3 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(IdcStatus3 copy) {
+	protected void set(Status3 copy) {
 		deviceState.set(copy.getDeviceState());
 		media.set(copy.getMedia());
 		retainBin.set(copy.getRetainBin());
@@ -128,8 +128,8 @@ public class IdcStatus3 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof IdcStatus3) {
-			IdcStatus3 status3 = (IdcStatus3) obj;
+		if (obj instanceof Status3) {
+			Status3 status3 = (Status3) obj;
 			return new EqualsBuilder()
 					.append(getDeviceState(), status3.getDeviceState())
 					.append(getMedia(), status3.getMedia())

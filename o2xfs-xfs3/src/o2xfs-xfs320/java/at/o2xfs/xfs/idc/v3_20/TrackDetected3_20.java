@@ -25,100 +25,62 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc;
+package at.o2xfs.xfs.idc.v3_20;
 
-import at.o2xfs.xfs.XfsConstant;
+import java.util.Set;
 
-public enum GuidLights implements XfsConstant {
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-	/*
-	 * @since v3.10
-	 */
-	NOT_AVAILABLE(0x00000000),
+import at.o2xfs.win32.Pointer;
+import at.o2xfs.win32.Struct;
+import at.o2xfs.xfs.idc.DataSource;
+import at.o2xfs.xfs.win32.XfsWordBitmask;
 
-	/*
-	 * @since v3.10
-	 */
-	OFF(0x00000001),
+public class TrackDetected3_20 extends Struct {
 
-	/*
-	 * @since v3.10
-	 */
-	ON(0x00000002),
+	protected final XfsWordBitmask<DataSource> tracks = new XfsWordBitmask<>(DataSource.class);
 
-	/*
-	 * @since v3.10
-	 */
-	SLOW_FLASH(0x00000004),
+	protected TrackDetected3_20() {
+		add(tracks);
+	}
 
-	/*
-	 * @since v3.10
-	 */
-	MEDIUM_FLASH(0x00000008),
+	public TrackDetected3_20(Pointer p) {
+		this();
+		assignBuffer(p);
+	}
 
-	/*
-	 * @since v3.10
-	 */
-	QUICK_FLASH(0x00000010),
+	public TrackDetected3_20(TrackDetected3_20 copy) {
+		this();
+		allocate();
+		set(copy);
+	}
 
-	/*
-	 * @since v3.10
-	 */
-	CONTINUOUS(0x00000080),
+	protected void set(TrackDetected3_20 copy) {
+		tracks.set(copy.getTracks());
+	}
 
-	/*
-	 * @since v3.10
-	 */
-	RED(0x00000100),
-
-	/*
-	 * @since v3.10
-	 */
-	GREEN(0x00000200),
-
-	/*
-	 * @since v3.10
-	 */
-	YELLOW(0x00000400),
-
-	/*
-	 * @since v3.10
-	 */
-	BLUE(0x00000800),
-
-	/*
-	 * @since v3.10
-	 */
-	CYAN(0x00001000),
-
-	/*
-	 * @since v3.10
-	 */
-	MAGENTA(0x00002000),
-
-	/*
-	 * @since v3.10
-	 */
-	WHITE(0x00004000),
-
-	/*
-	 * @since v3.30
-	 */
-	ENTRY(0x00100000),
-
-	/*
-	 * @since v3.30
-	 */
-	EXIT(0x00200000);
-
-	private final long value;
-
-	private GuidLights(final long value) {
-		this.value = value;
+	public Set<DataSource> getTracks() {
+		return tracks.get();
 	}
 
 	@Override
-	public long getValue() {
-		return value;
+	public int hashCode() {
+		return new HashCodeBuilder().append(getTracks()).toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof TrackDetected3_20) {
+			TrackDetected3_20 trackDetected3_20 = (TrackDetected3_20) obj;
+			return new EqualsBuilder().append(getTracks(), trackDetected3_20.getTracks()).isEquals();
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).append("tracks", getTracks()).toString();
 	}
 }

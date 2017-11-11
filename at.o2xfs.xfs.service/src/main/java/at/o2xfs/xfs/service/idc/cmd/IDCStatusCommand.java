@@ -34,7 +34,7 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cim.CimInfoCommand;
-import at.o2xfs.xfs.idc.v3_00.IdcStatus3;
+import at.o2xfs.xfs.idc.v3_00.Status3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 import at.o2xfs.xfs.service.idc.IDCService;
@@ -50,7 +50,7 @@ import at.o2xfs.xfs.service.idc.IdcFactory;
  * @author Andreas Fagschlunger
  *
  */
-public class IDCStatusCommand implements Callable<IdcStatus3> {
+public class IDCStatusCommand implements Callable<Status3> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(IDCStatusCommand.class);
 
@@ -61,13 +61,13 @@ public class IDCStatusCommand implements Callable<IdcStatus3> {
 	}
 
 	@Override
-	public IdcStatus3 call() throws XfsException {
-		IdcStatus3 result;
+	public Status3 call() throws XfsException {
+		Status3 result;
 		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(idcService, CimInfoCommand.STATUS);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
-			result = IdcFactory.create(idcService.getXfsVersion(), wfsResult.getResults(), IdcStatus3.class);
+			result = IdcFactory.create(idcService.getXfsVersion(), wfsResult.getResults(), Status3.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);
 			}

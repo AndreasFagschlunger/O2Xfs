@@ -27,6 +27,7 @@
 
 package at.o2xfs.win32;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 /**
@@ -34,7 +35,7 @@ import java.util.Arrays;
  *
  * @author Andreas Fagschlunger
  */
-public class LPZZSTR extends Pointer implements ASCII {
+public class LPZZSTR extends Pointer implements ASCII, ValueType<String[]> {
 
 	public LPZZSTR() {
 		super();
@@ -44,7 +45,30 @@ public class LPZZSTR extends Pointer implements ASCII {
 		super(p.getBuffer());
 	}
 
-	public String[] values() {
+	public LPZZSTR(String[] value) {
+		super();
+		allocate();
+		set(value);
+	}
+
+	@Override
+	public void set(String[] value) {
+		int length = 2;
+		for (String each : value) {
+			length += each.length() + 1;
+		}
+		byte[] dest = new byte[length];
+		int destPos = 0;
+		for (String each : value) {
+			byte[] src = each.getBytes(StandardCharsets.US_ASCII);
+			System.arraycopy(src, 0, dest, destPos, src.length);
+			destPos += src.length + 1;
+		}
+		pointTo(new ByteArray(dest));
+	}
+
+	@Override
+	public String[] get() {
 		final String zzString = readZZString();
 		return zzString.split("" + NUL);
 	}
@@ -55,9 +79,8 @@ public class LPZZSTR extends Pointer implements ASCII {
 		}
 		for (int length = 2;; length++) {
 			byte[] bytes = buffer(length).get();
-			if (bytes[bytes.length - 1] == NUL
-					&& bytes[bytes.length - 2] == NUL) {
-				return new String(bytes, US_ASCII);
+			if (bytes[bytes.length - 1] == NUL && bytes[bytes.length - 2] == NUL) {
+				return new String(bytes, StandardCharsets.US_ASCII);
 			}
 		}
 	}
@@ -67,6 +90,6 @@ public class LPZZSTR extends Pointer implements ASCII {
 		if (NULL.equals(this)) {
 			return "";
 		}
-		return Arrays.toString(values());
+		return Arrays.toString(get());
 	}
 }

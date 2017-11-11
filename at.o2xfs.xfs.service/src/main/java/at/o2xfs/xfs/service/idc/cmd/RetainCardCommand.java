@@ -33,7 +33,7 @@ import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.IdcExecuteCommand;
 import at.o2xfs.xfs.idc.IdcMessage;
-import at.o2xfs.xfs.idc.v3_00.IdcStatus3;
+import at.o2xfs.xfs.idc.v3_00.Status3;
 import at.o2xfs.xfs.idc.v3_00.RetainCard3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncCommand;
@@ -70,7 +70,7 @@ public class RetainCardCommand extends AbstractAsyncCommand<RetainCardCommandLis
 	protected void doExecute() {
 		final String method = "doExecute()";
 		try {
-			final IdcStatus3 status = new IDCStatusCommand(idcService).call();
+			final Status3 status = new IDCStatusCommand(idcService).call();
 			cardsRetained = status.getCards();
 			retainCardCommand.execute(this);
 		} catch (final Exception e) {

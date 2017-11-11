@@ -28,6 +28,7 @@
 package at.o2xfs.win32;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Utility <code>interface</code> for ASCII.
@@ -38,7 +39,10 @@ public interface ASCII {
 
 	/**
 	 * Charset: US-ASCII
+	 *
+	 * @deprecated use {@link StandardCharsets#US_ASCII}
 	 */
+	@Deprecated
 	final static Charset US_ASCII = Charset.forName("US-ASCII");
 
 	/**

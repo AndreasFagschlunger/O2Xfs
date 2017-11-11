@@ -34,7 +34,7 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.v3_00.IdcStatus3;
+import at.o2xfs.xfs.idc.v3_00.Status3;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 
@@ -55,7 +55,7 @@ public class IDCStatusTask extends IDCTask {
 		String method = "execute()";
 		try {
 			final Table table = new Table(getClass(), "Component", "Status");
-			final IdcStatus3 status = new IDCStatusCommand(service).call();
+			final Status3 status = new IDCStatusCommand(service).call();
 			Label rootLabel = new Label(getClass().getSimpleName());
 			table.addRow(rootLabel.append("Device"), status.getDeviceState());
 			table.addRow(rootLabel.append("Media"), status.getMedia());
