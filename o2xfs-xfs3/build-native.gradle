@@ -77,6 +77,26 @@ task 'javah-xfs3-cim'(type:Exec) {
                 'at.o2xfs.xfs.cim.v3_00.TellerUpdate3Test'
 }
 
+task 'javah-xfs3-idc'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs3-test.dll/headers/idc'),
+                 'at.o2xfs.xfs.idc.v3_00.Capabilities3Test',
+                 'at.o2xfs.xfs.idc.v3_00.CardAction3Test',
+                 'at.o2xfs.xfs.idc.v3_00.CardData3Test',
+                 'at.o2xfs.xfs.idc.v3_00.ChipIo3Test',
+                 'at.o2xfs.xfs.idc.v3_00.ChipPowerOut3Test',
+                 'at.o2xfs.xfs.idc.v3_00.Form3Test',
+                 'at.o2xfs.xfs.idc.v3_00.ParseData3Test',
+                 'at.o2xfs.xfs.idc.v3_00.RetainCard3Test',
+                 'at.o2xfs.xfs.idc.v3_00.Setkey3Test',
+                 'at.o2xfs.xfs.idc.v3_00.Status3Test',
+                 'at.o2xfs.xfs.idc.v3_00.TrackEvent3Test',
+                 'at.o2xfs.xfs.idc.v3_00.WriteTrack3Test'
+}
+
 task 'javah-xfs310'(type:Exec) {
     commandLine 'javah',
                 '-cp',
@@ -204,6 +224,7 @@ task javah
 javah.doLast {
     tasks.getByName('javah-xf3').execute()
     tasks.getByName('javah-xf3-cim').execute()
+    tasks.getByName('javah-xf3-idc').execute()
     tasks.getByName('javah-xfs310').execute()
     tasks.getByName('javah-xfs310-cim').execute()
     tasks.getByName('javah-xfs320').execute()

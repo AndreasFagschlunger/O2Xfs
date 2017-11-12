@@ -27,7 +27,7 @@
 
 package at.o2xfs.xfs.idc.v3_00;
 
-import java.util.Set;
+import java.util.Optional;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -41,12 +41,11 @@ import at.o2xfs.xfs.idc.DataSource;
 import at.o2xfs.xfs.idc.DataStatus;
 import at.o2xfs.xfs.idc.WriteMethod;
 import at.o2xfs.xfs.win32.XfsWord;
-import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 public class CardData3 extends Struct {
 
 	protected final XfsWord<DataSource> dataSource = new XfsWord<>(DataSource.class);
-	protected final XfsWordBitmask<DataStatus> status = new XfsWordBitmask<>(DataStatus.class);
+	protected final XfsWord<DataStatus> status = new XfsWord<>(DataStatus.class);
 	protected final ULONG dataLength = new ULONG();
 	protected final Pointer data = new Pointer();
 	protected final XfsWord<WriteMethod> writeMethod = new XfsWord<>(WriteMethod.class);
@@ -75,14 +74,17 @@ public class CardData3 extends Struct {
 		status.set(copy.getStatus());
 		dataLength.set(copy.dataLength);
 		data.pointTo(new ByteArray(copy.getData()));
-		writeMethod.set(copy.getWriteMethod());
+		Optional<WriteMethod> writeMethod = Optional.empty();
+		if (writeMethod.isPresent()) {
+			this.writeMethod.set(writeMethod.get());
+		}
 	}
 
 	public DataSource getDataSource() {
 		return dataSource.get();
 	}
 
-	public Set<DataStatus> getStatus() {
+	public DataStatus getStatus() {
 		return status.get();
 	}
 
@@ -90,8 +92,12 @@ public class CardData3 extends Struct {
 		return data.buffer(dataLength.intValue()).get();
 	}
 
-	public WriteMethod getWriteMethod() {
-		return writeMethod.get();
+	public Optional<WriteMethod> getWriteMethod() {
+		Optional<WriteMethod> result = Optional.empty();
+		if (writeMethod.intValue() != 0) {
+			result = Optional.ofNullable(writeMethod.get());
+		}
+		return result;
 	}
 
 	@Override
