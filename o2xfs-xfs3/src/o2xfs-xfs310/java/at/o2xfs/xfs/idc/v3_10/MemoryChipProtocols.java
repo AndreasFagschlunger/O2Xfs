@@ -46,19 +46,15 @@ public class MemoryChipProtocols extends Type implements ValueType<MemoryChipPro
 	}
 
 	public MemoryChipProtocols(Pointer aPointer) {
-		if (Pointer.NULL.equals(aPointer)) {
-			memoryChipProtocols = new WORD[0];
-		} else {
-			Buffer buffer = null;
-			for (int i = 0;; i++) {
-				buffer = aPointer.buffer((i * WORD.SIZE) + WORD.SIZE);
-				Buffer subBuffer = buffer.subBuffer(i * WORD.SIZE, WORD.SIZE);
-				WORD word = new WORD(subBuffer);
-				if (word.intValue() == 0L) {
-					memoryChipProtocols = new WORD[i];
-					assignBuffer(buffer);
-					break;
-				}
+		Buffer buffer = null;
+		for (int i = 0;; i++) {
+			buffer = aPointer.buffer((i * WORD.SIZE) + WORD.SIZE);
+			Buffer subBuffer = buffer.subBuffer(i * WORD.SIZE, WORD.SIZE);
+			WORD word = new WORD(subBuffer);
+			if (word.intValue() == 0L) {
+				memoryChipProtocols = new WORD[i];
+				assignBuffer(buffer);
+				break;
 			}
 		}
 	}

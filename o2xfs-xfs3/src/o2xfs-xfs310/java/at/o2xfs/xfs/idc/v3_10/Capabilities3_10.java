@@ -28,6 +28,7 @@
 package at.o2xfs.xfs.idc.v3_10;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -76,7 +77,10 @@ public class Capabilities3_10 extends Capabilities3 {
 	protected void set(Capabilities3_10 copy) {
 		super.set(copy);
 		dipMode.set(copy.getDIPMode());
-		memoryChipProtocols.pointTo(new MemoryChipProtocols(copy.getMemoryChipProtocols()));
+		Optional<MemoryChipProtocol[]> memoryChipProtocols = copy.getMemoryChipProtocols();
+		if (memoryChipProtocols.isPresent()) {
+			this.memoryChipProtocols.pointTo(new MemoryChipProtocols(memoryChipProtocols.get()));
+		}
 		guidLights.set(copy.getGuidLights());
 		ejectPosition.set(copy.getEjectPosition());
 		powerSaveControl.set(copy.isPowerSaveControl());
@@ -86,8 +90,12 @@ public class Capabilities3_10 extends Capabilities3 {
 		return dipMode.get();
 	}
 
-	public MemoryChipProtocol[] getMemoryChipProtocols() {
-		return new MemoryChipProtocols(memoryChipProtocols).get();
+	public Optional<MemoryChipProtocol[]> getMemoryChipProtocols() {
+		Optional<MemoryChipProtocol[]> result = Optional.empty();
+		if (!Pointer.NULL.equals(memoryChipProtocols)) {
+			result = Optional.of(new MemoryChipProtocols(memoryChipProtocols).get());
+		}
+		return result;
 	}
 
 	public List<Set<GuidLight>> getGuidLights() {

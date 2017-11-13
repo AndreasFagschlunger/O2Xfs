@@ -59,20 +59,20 @@ public class EmvClessConfigData3_30 extends Struct {
 
 	protected void set(EmvClessConfigData3_30 copy) {
 		terminalData.pointTo(new HexData3_30(copy.getTerminalData()));
-		aidData.pointTo(new AidData3_30(copy.getAIDData()));
-		keyData.pointTo(new KeyData3_30(copy.getKeyData()));
+		aidData.pointTo(new AidDataArray3_30(copy.getAIDData()));
+		keyData.pointTo(new KeyDataArray3_30(copy.getKeyData()));
 	}
 
 	public byte[] getTerminalData() {
 		return new HexData3_30(terminalData).getData();
 	}
 
-	public AidData3_30 getAIDData() {
-		return new AidData3_30(aidData);
+	public AidData3_30[] getAIDData() {
+		return new AidDataArray3_30(aidData).get();
 	}
 
-	public KeyData3_30 getKeyData() {
-		return new KeyData3_30(keyData);
+	public KeyData3_30[] getKeyData() {
+		return new KeyDataArray3_30(keyData).get();
 	}
 
 	@Override

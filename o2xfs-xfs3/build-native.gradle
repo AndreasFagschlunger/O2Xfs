@@ -114,6 +114,17 @@ task 'javah-xfs310'(type:Exec) {
                 'at.o2xfs.xfs.cdm.v3_10.SetGuidLight3_10Test'
 }
 
+
+task 'javah-xfs310-bcr'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs310-test.dll/headers/bcr'),
+                'at.o2xfs.xfs.bcr.v3_10.Capabilities3_10Test'
+}
+
+
 task 'javah-xfs310-cim'(type:Exec) {
     commandLine 'javah',
                 '-cp',
@@ -138,13 +149,20 @@ task 'javah-xfs310-cim'(type:Exec) {
                 'at.o2xfs.xfs.cim.v3_10.Status3_10Test'
 }
 
-task 'javah-xfs310-bcr'(type:Exec) {
+task 'javah-xfs310-idc'(type:Exec) {
     commandLine 'javah',
                 '-cp',
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
-                file('src/o2xfs-xfs310-test.dll/headers/bcr'),
-                'at.o2xfs.xfs.bcr.v3_10.Capabilities3_10Test'
+                file('src/o2xfs-xfs310-test.dll/headers/idc'),
+                'at.o2xfs.xfs.idc.v3_10.Capabilities3_10Test',
+                'at.o2xfs.xfs.idc.v3_10.DevicePosition3_10Test',
+                'at.o2xfs.xfs.idc.v3_10.EjectCard3_10Test',
+                'at.o2xfs.xfs.idc.v3_10.InterfaceModuleIdentifier3_10Test',
+                'at.o2xfs.xfs.idc.v3_10.PowerSaveChange3_10Test',
+                'at.o2xfs.xfs.idc.v3_10.PowerSaveControl3_10Test',
+                'at.o2xfs.xfs.idc.v3_10.SetGuidlight3_10Test',
+                'at.o2xfs.xfs.idc.v3_10.Status3_10Test'
 }
 
 task 'javah-xfs320'(type:Exec) {
@@ -179,6 +197,19 @@ task 'javah-xfs320-cim'(type:Exec) {
                 'at.o2xfs.xfs.cim.v3_20.ReplenishResult3_20Test',
                 'at.o2xfs.xfs.cim.v3_20.SetMode3_20Test',
                 'at.o2xfs.xfs.cim.v3_20.Status3_20Test'
+}
+
+task 'javah-xfs320-idc'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs320-test.dll/headers/idc'),
+                'at.o2xfs.xfs.idc.v3_20.Capabilities3_20Test',
+                'at.o2xfs.xfs.idc.v3_20.Form3_20Test',
+                'at.o2xfs.xfs.idc.v3_20.ParkCard3_20Test',
+                'at.o2xfs.xfs.idc.v3_20.Status3_20Test',
+                'at.o2xfs.xfs.idc.v3_20.TrackDetected3_20Test'
 }
 
 task 'javah-xfs330'(type:Exec) {
@@ -220,17 +251,35 @@ task 'javah-xfs330-cim'(type:Exec) {
                 'at.o2xfs.xfs.cim.v3_30.SynchronizeCommand3_30Test'
 }
 
+task 'javah-xfs330-idc'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs330-test.dll/headers/idc'),
+                'at.o2xfs.xfs.idc.v3_30.AppData3_30Test',
+                'at.o2xfs.xfs.idc.v3_30.Capabilities3_30Test',
+                'at.o2xfs.xfs.idc.v3_30.EmvClessConfigData3_30Test',
+                'at.o2xfs.xfs.idc.v3_30.EmvClessReadStatus3_30Test',
+                'at.o2xfs.xfs.idc.v3_30.EmvClessTxData3_30Test',
+                'at.o2xfs.xfs.idc.v3_30.EmvClessTxDataOutput3_30Test',
+                'at.o2xfs.xfs.idc.v3_30.SynchronizeCommand3_30Test'
+}
+
 task javah
 javah.doLast {
-    tasks.getByName('javah-xf3').execute()
-    tasks.getByName('javah-xf3-cim').execute()
-    tasks.getByName('javah-xf3-idc').execute()
+    tasks.getByName('javah-xfs3').execute()
+    tasks.getByName('javah-xfs3-cim').execute()
+    tasks.getByName('javah-xfs3-idc').execute()
     tasks.getByName('javah-xfs310').execute()
     tasks.getByName('javah-xfs310-cim').execute()
+    tasks.getByName('javah-xfs310-idc').execute()
     tasks.getByName('javah-xfs320').execute()
     tasks.getByName('javah-xfs320-cim').execute()
+    tasks.getByName('javah-xfs320-idc').execute()
     tasks.getByName('javah-xfs330').execute()
     tasks.getByName('javah-xfs330-cim').execute()
+    tasks.getByName('javah-xfs330-idc').execute()
 }
 
 model {
