@@ -27,12 +27,12 @@
 
 package at.o2xfs.xfs.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.ZSTR;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Andreas Fagschlunger
@@ -45,7 +45,7 @@ public class KeyValueMap {
 		final String separator = "=";
 		final Map<String, String> map = new HashMap<String, String>();
 		if (!Pointer.NULL.equals(lpzzStr)) {
-			for (final String s : lpzzStr.values()) {
+			for (final String s : lpzzStr.get()) {
 				final int beginIndex = s.indexOf(separator);
 				if (beginIndex == -1) {
 					map.put(s, null);
