@@ -30,6 +30,7 @@ package at.o2xfs.xfs.win32;
 import java.util.Set;
 
 import at.o2xfs.win32.Bits;
+import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.XfsConstant;
 
@@ -43,6 +44,11 @@ public class XfsWordBitmask<T extends Enum<T> & XfsConstant> extends XfsBitmask<
 		this(aType);
 		allocate();
 		set(value);
+	}
+
+	public XfsWordBitmask(Class<T> aType, Pointer p) {
+		this(aType);
+		assignBuffer(p);
 	}
 
 	@Override
