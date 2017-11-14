@@ -37,7 +37,7 @@ import at.o2xfs.operator.task.xfs.ptr.PTRStatusTask;
 import at.o2xfs.operator.task.xfs.siu.SIUStatusTask;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.v3_00.IdcStatus3;
+import at.o2xfs.xfs.idc.v3_00.Status3;
 import at.o2xfs.xfs.pin.WFSPINSTATUS;
 import at.o2xfs.xfs.ptr.WFSPTRSTATUS;
 import at.o2xfs.xfs.service.XfsServiceManager;
@@ -59,7 +59,7 @@ public class DeviceStatusTask extends Task {
 
 	private void addIDCService(final IDCService idcService) {
 		try {
-			IdcStatus3 status = new IDCStatusCommand(idcService).call();
+			Status3 status = new IDCStatusCommand(idcService).call();
 			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager, new IDCStatusTask(idcService)), idcService,
 					status.getDeviceState());
 		} catch (XfsException e) {
