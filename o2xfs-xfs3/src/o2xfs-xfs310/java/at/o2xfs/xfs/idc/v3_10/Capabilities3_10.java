@@ -129,7 +129,8 @@ public class Capabilities3_10 extends Capabilities3 {
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
 					.append(getDIPMode(), capabilities3_10.getDIPMode())
-					.append(getMemoryChipProtocols(), capabilities3_10.getMemoryChipProtocols())
+					.append(getMemoryChipProtocols().orElse(null),
+							capabilities3_10.getMemoryChipProtocols().orElse(null))
 					.append(getGuidLights(), capabilities3_10.getGuidLights())
 					.append(getEjectPosition(), capabilities3_10.getEjectPosition())
 					.append(isPowerSaveControl(), capabilities3_10.isPowerSaveControl())
