@@ -58,8 +58,6 @@ public class PINGetDataTask extends PINServiceTask implements PINTaskConfigKey, 
 
 	private final static Logger LOG = LoggerFactory.getLogger(PINGetDataTask.class);
 
-	private PINService service = null;
-
 	private PINGetDataCommand getDataCommand = null;
 
 	private List<VirtualKey> pressedKeys = null;
@@ -84,7 +82,6 @@ public class PINGetDataTask extends PINServiceTask implements PINTaskConfigKey, 
 	protected void execute() {
 		String method = "execute()";
 		try {
-			this.service = service;
 			stopUIXfsInputDevice();
 			pressedKeys = new ArrayList<VirtualKey>();
 			textInput = new TextInput();
