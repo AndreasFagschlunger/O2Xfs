@@ -143,7 +143,7 @@ public class Capabilities3_10 extends Capabilities3 {
 	public String toString() {
 		return new ToStringBuilder(this)
 				.appendSuper(super.toString())
-				.append("dIPMode", getDIPMode())
+				.append("dipMode", getDIPMode())
 				.append("memoryChipProtocols", getMemoryChipProtocols())
 				.append("guidLights", getGuidLights())
 				.append("ejectPosition", getEjectPosition())
