@@ -29,8 +29,8 @@ package at.o2xfs.common;
 
 public final class Hex {
 
-	private static final char[] DIGITS = new char[] { '0', '1', '2', '3', '4',
-			'5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	private static final char[] DIGITS = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',
+			'D', 'E', 'F' };
 
 	private Hex() {
 		throw new AssertionError();
@@ -53,19 +53,17 @@ public final class Hex {
 	}
 
 	public static final String encode(final byte[] b) {
-		final StringBuilder hex = new StringBuilder(b.length * 2);
-		for (int i = 0; i < b.length; i++) {
-			int hiNibble = b[i] >> 4 & 0xF;
-			int loNibble = b[i] & 0xF;
-			hex.append(DIGITS[hiNibble]).append(DIGITS[loNibble]);
+		final char[] cbuf = new char[b.length << 1];
+		for (int i = 0, j = 0; i < b.length; i++) {
+			cbuf[j++] = DIGITS[(b[i] & 0xF0) >>> 4];
+			cbuf[j++] = DIGITS[(b[i] & 0xF)];
 		}
-		return hex.toString();
+		return new String(cbuf);
 	}
 
 	public static final byte[] decode(final String hex) {
 		if (hex.length() > 0 && hex.length() % 2 != 0) {
-			throw new IllegalArgumentException("Odd number of characters: "
-					+ hex);
+			throw new IllegalArgumentException("Odd number of characters: " + hex);
 		}
 		final byte[] bytes = new byte[hex.length() / 2];
 		for (int i = 0, j = 0; i < bytes.length; i++) {
