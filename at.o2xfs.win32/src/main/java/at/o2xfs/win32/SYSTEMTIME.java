@@ -35,14 +35,14 @@ package at.o2xfs.win32;
  */
 public class SYSTEMTIME extends Struct {
 
-	private final WORD year = new WORD();
-	private final WORD month = new WORD();
-	private final WORD dayOfWeek = new WORD();
-	private final WORD day = new WORD();
-	private final WORD hour = new WORD();
-	private final WORD minute = new WORD();
-	private final WORD second = new WORD();
-	private final WORD milliseconds = new WORD();
+	private WORD year = new WORD();
+	private WORD month = new WORD();
+	private WORD dayOfWeek = new WORD();
+	private WORD day = new WORD();
+	private WORD hour = new WORD();
+	private WORD minute = new WORD();
+	private WORD second = new WORD();
+	private WORD milliseconds = new WORD();
 
 	public SYSTEMTIME() {
 		add(year);
@@ -55,35 +55,71 @@ public class SYSTEMTIME extends Struct {
 		add(milliseconds);
 	}
 
-	public WORD getYear() {
-		return year;
+	public void set(SYSTEMTIME value) {
+		put(value.getBytes());
 	}
 
-	public WORD getMonth() {
-		return month;
+	public int getYear() {
+		return year.intValue();
 	}
 
-	public WORD getDayOfWeek() {
-		return dayOfWeek;
+	public void setYear(int year) {
+		this.year.set(year);
 	}
 
-	public WORD getDay() {
-		return day;
+	public int getMonth() {
+		return month.intValue();
 	}
 
-	public WORD getHour() {
-		return hour;
+	public void setMonth(int month) {
+		this.month.set(month);
 	}
 
-	public WORD getMinute() {
-		return minute;
+	public int getDayOfWeek() {
+		return dayOfWeek.intValue();
 	}
 
-	public WORD getSecond() {
-		return second;
+	public void setDayOfWeek(int dayOfWeek) {
+		this.dayOfWeek.set(dayOfWeek);
 	}
 
-	public WORD getMilliseconds() {
-		return milliseconds;
+	public int getDay() {
+		return day.intValue();
+	}
+
+	public void setDay(int day) {
+		this.day.set(day);
+	}
+
+	public int getHour() {
+		return hour.intValue();
+	}
+
+	public void setHour(int hour) {
+		this.hour.set(hour);
+	}
+
+	public int getMinute() {
+		return minute.intValue();
+	}
+
+	public void setMinute(int minute) {
+		this.minute.set(minute);
+	}
+
+	public int getSecond() {
+		return second.intValue();
+	}
+
+	public void setSecond(int second) {
+		this.second.set(second);
+	}
+
+	public int getMilliseconds() {
+		return milliseconds.intValue();
+	}
+
+	public void setMilliseconds(int milliseconds) {
+		this.milliseconds.set(milliseconds);
 	}
 }

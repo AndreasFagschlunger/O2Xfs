@@ -27,6 +27,10 @@
 
 package at.o2xfs.xfs;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.INT;
 import at.o2xfs.win32.Pointer;
@@ -38,20 +42,17 @@ import at.o2xfs.xfs.type.HSERVICE;
 import at.o2xfs.xfs.type.RequestId;
 import at.o2xfs.xfs.util.XfsConstants;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 /**
  * @author Andreas Fagschlunger
  */
-public class WFSResult
-		extends Struct {
+public class WFSResult extends Struct {
 
 	private final static String COMMANDCODE = "commandCode";
 	private final static String EVENTID = "eventID";
 
 	/**
-	 * Request ID of the completed command; not used for event notifications
-	 * other than Execute events.
+	 * Request ID of the completed command; not used for event notifications other
+	 * than Execute events.
 	 */
 	private final RequestId requestID = new RequestId();
 
@@ -67,23 +68,22 @@ public class WFSResult
 	private final SYSTEMTIME timestamp = new SYSTEMTIME();
 
 	/**
-	 * Result handle (note that for synchronous WFSExecute and WFSGetInfo
-	 * commands, this value is identical to the synchronous function return
-	 * value).
+	 * Result handle (note that for synchronous WFSExecute and WFSGetInfo commands,
+	 * this value is identical to the synchronous function return value).
 	 */
 	private final INT result = new INT();
 
 	/**
-	 * WFSExecute "command" code or WFSGetInfo "category" code; not used for
-	 * other command completions.
+	 * WFSExecute "command" code or WFSGetInfo "category" code; not used for other
+	 * command completions.
 	 *
 	 * ID of the event (for unsolicited events).
 	 */
 	private Union u = new Union(new Field[] { new Field(COMMANDCODE, new DWORD()), new Field(EVENTID, new DWORD()) });
 
 	/**
-	 * Pointer to the results of the command (if any) or the contents of the
-	 * event notification.
+	 * Pointer to the results of the command (if any) or the contents of the event
+	 * notification.
 	 */
 	private Pointer buffer = new Pointer();
 
@@ -108,6 +108,16 @@ public class WFSResult
 	public WFSResult(final Pointer pResult) {
 		this();
 		assignBuffer(pResult.buffer(getSize()));
+	}
+
+	public WFSResult(WFSResult copy) {
+		this();
+		allocate();
+		this.requestID.set(copy.getRequestID());
+		this.service.set(copy.getService());
+		this.timestamp.set(copy.getTimestamp());
+		this.result.set(copy.getResult());
+		this.u.get(COMMANDCODE, DWORD.class).set(copy.u.get(COMMANDCODE, DWORD.class));
 	}
 
 	public RequestId getRequestID() {
@@ -141,13 +151,43 @@ public class WFSResult
 	}
 
 	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+				.append(requestID)
+				.append(service)
+				.append(timestamp)
+				.append(result)
+				.append(u)
+				.append(buffer)
+				.toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj instanceof WFSResult) {
+			WFSResult wfsResult = (WFSResult) obj;
+			result = new EqualsBuilder()
+					.append(requestID, wfsResult.requestID)
+					.append(service, wfsResult.service)
+					.append(timestamp, wfsResult.timestamp)
+					.append(this.result, wfsResult.result)
+					.append(u, wfsResult.u)
+					.append(buffer, wfsResult.buffer)
+					.isEquals();
+		}
+		return result;
+	}
+
+	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("requestID", requestID)
-										.append("service", service)
-										.append("timestamp", timestamp)
-										.append("result", result)
-										.append("u", u)
-										.append("buffer", buffer)
-										.toString();
+		return new ToStringBuilder(this)
+				.append("requestID", requestID)
+				.append("service", service)
+				.append("timestamp", timestamp)
+				.append("result", result)
+				.append("u", u)
+				.append("buffer", buffer)
+				.toString();
 	}
 }

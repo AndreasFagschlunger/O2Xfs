@@ -27,14 +27,14 @@
 
 package at.o2xfs.win32;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * A null-terminated ASCII string.
  *
  * @author Andreas Fagschlunger
  */
-public class ZSTR
-		extends CharArray
-		implements ASCII {
+public class ZSTR extends CharArray implements ASCII, ValueType<byte[]> {
 
 	public ZSTR(final int length) {
 		this(length, false);
@@ -52,12 +52,22 @@ public class ZSTR
 
 	public ZSTR(final String s) {
 		this(s.length() + 1, true);
-		put((s + NUL).getBytes(US_ASCII));
+		put((s + NUL).getBytes(StandardCharsets.US_ASCII));
+	}
+
+	@Override
+	public void set(byte[] value) {
+		this.put(value);
+	}
+
+	@Override
+	public byte[] get() {
+		return getBytes();
 	}
 
 	@Override
 	public String toString() {
-		String result = new String(getBytes(), US_ASCII);
+		String result = new String(getBytes(), StandardCharsets.US_ASCII);
 		if (result.indexOf(NUL) != -1) {
 			result = result.substring(0, result.indexOf(NUL));
 		}

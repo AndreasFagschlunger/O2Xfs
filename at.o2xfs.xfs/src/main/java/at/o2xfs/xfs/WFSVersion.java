@@ -27,14 +27,14 @@
 
 package at.o2xfs.xfs;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.win32.ZSTR;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-public class WFSVersion
-		extends Struct {
+public class WFSVersion extends Struct {
 
 	private final static int WFSDDESCRIPTION_LEN = 256;
 	private final static int WFSDSYSSTATUS_LEN = 256;
@@ -55,19 +55,18 @@ public class WFSVersion
 	private WORD highVersion = new WORD();
 
 	/**
-	 * A null-terminated ASCII string into which the called DLL copies a
-	 * description of the implementation. The text (up to 256 characters in
-	 * length) may contain any characters: the most likely use that an
-	 * application will make of this is to display it (possibly truncated) in a
-	 * status message.
+	 * A null-terminated ASCII string into which the called DLL copies a description
+	 * of the implementation. The text (up to 256 characters in length) may contain
+	 * any characters: the most likely use that an application will make of this is
+	 * to display it (possibly truncated) in a status message.
 	 */
 	private ZSTR description = new ZSTR(WFSDDESCRIPTION_LEN + 1);
 
 	/**
 	 * A null-terminated ASCII string into which the called DLL copies relevant
-	 * status or configuration information. Not to be considered as an extension
-	 * of the szDescription field. Used only if the information might be useful
-	 * to the user or support staff.
+	 * status or configuration information. Not to be considered as an extension of
+	 * the szDescription field. Used only if the information might be useful to the
+	 * user or support staff.
 	 */
 	private ZSTR systemStatus = new ZSTR(WFSDSYSSTATUS_LEN + 1);
 
@@ -77,6 +76,21 @@ public class WFSVersion
 		add(highVersion);
 		add(description);
 		add(systemStatus);
+	}
+
+	public WFSVersion(Pointer p) {
+		this();
+		assignBuffer(p);
+	}
+
+	public WFSVersion(WFSVersion copy) {
+		this();
+		allocate();
+		version.set(copy.version);
+		lowVersion.set(copy.lowVersion);
+		highVersion.set(copy.highVersion);
+		description.set(copy.description.get());
+		systemStatus.set(copy.systemStatus.get());
 	}
 
 	public XfsVersion getVersion() {
@@ -101,12 +115,13 @@ public class WFSVersion
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("version", getVersion())
-										.append("lowVersion", getLowVersion())
-										.append("highVersion", getHighVersion())
-										.append("description", description)
-										.append("systemStatus", systemStatus)
-										.toString();
+		return new ToStringBuilder(this)
+				.append("version", getVersion())
+				.append("lowVersion", getLowVersion())
+				.append("highVersion", getHighVersion())
+				.append("description", description)
+				.append("systemStatus", systemStatus)
+				.toString();
 
 	}
 }

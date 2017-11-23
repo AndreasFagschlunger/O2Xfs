@@ -27,78 +27,97 @@
 
 package at.o2xfs.xfs;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
-import at.o2xfs.win32.ZSTR;
-import at.o2xfs.xfs.win32.XfsWord;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import at.o2xfs.xfs.win32.XfsDWord;
 
 /**
  * @author Andreas Fagschlunger
  */
-public class WFSDEVSTATUS
-		extends Struct {
+public class WfsDevStatus extends Struct {
 
 	/**
-	 * Pointer to the physical service name of the service that changed its
-	 * state.
+	 * Pointer to the physical service name of the service that changed its state.
 	 */
 	private final LPSTR physicalName = new LPSTR();
 
 	/**
-	 * Pointer to the name of the workstation in which the logical service name
-	 * is defined.
+	 * Pointer to the name of the workstation in which the logical service name is
+	 * defined.
 	 */
 	private final LPSTR workstationName = new LPSTR();
 
 	/**
-	 * Specifies the new state of the physical device managed by the service as
-	 * one of the following: {@link XfsDeviceState}
+	 * Specifies the new state of the physical device managed by the service as one
+	 * of the following: {@link XfsDeviceState}
 	 */
-	private final XfsWord<XfsDeviceState> state = new XfsWord<XfsDeviceState>(XfsDeviceState.class);
+	private final XfsDWord<XfsDeviceState> state = new XfsDWord<>(XfsDeviceState.class);
 
-	public WFSDEVSTATUS() {
+	protected WfsDevStatus() {
 		add(physicalName);
 		add(workstationName);
 		add(state);
 	}
 
-	public WFSDEVSTATUS(final Pointer p) {
+	public WfsDevStatus(final Pointer p) {
 		this();
-		assignBuffer(p.buffer(getSize()));
+		assignBuffer(p);
+	}
+
+	public WfsDevStatus(WfsDevStatus copy) {
+		this();
+		allocate();
+		physicalName.set(copy.getPhysicalName());
+		workstationName.set(copy.getWorkstationName());
+		state.set(copy.getState());
+		;
 	}
 
 	public String getPhysicalName() {
 		return physicalName.toString();
 	}
 
-	public void setPhysicalName(final String physicalName) {
-		this.physicalName.pointTo(new ZSTR(physicalName));
-	}
-
 	public String getWorkstationName() {
 		return workstationName.toString();
-	}
-
-	public void setWorkstationName(final String workstationName) {
-		this.workstationName.pointTo(new ZSTR(workstationName));
 	}
 
 	public XfsDeviceState getState() {
 		return state.get();
 	}
 
-	public void setState(final XfsDeviceState aState) {
-		state.set(aState);
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+				.append(getPhysicalName())
+				.append(getWorkstationName())
+				.append(getState())
+				.toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof WfsDevStatus) {
+			WfsDevStatus hwError = (WfsDevStatus) obj;
+			return new EqualsBuilder()
+					.append(getPhysicalName(), hwError.getPhysicalName())
+					.append(getWorkstationName(), hwError.getWorkstationName())
+					.append(getState(), hwError.getState())
+					.isEquals();
+		}
+		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("physicalName", getPhysicalName())
-										.append("workstationName", getWorkstationName())
-										.append("state", getState())
-										.toString();
+		return new ToStringBuilder(this)
+				.append("physicalName", getPhysicalName())
+				.append("workstationName", getWorkstationName())
+				.append("state", getState())
+				.toString();
 	}
 }
