@@ -32,48 +32,50 @@ public enum XfsSystemEvent implements XfsConstant {
 	/**
 	 * Undeliverable Messages
 	 */
-	WFS_SYSE_UNDELIVERABLE_MSG(1L),
+	UNDELIVERABLE_MSG(1L),
 
 	/**
 	 * Hardware and Software Errors
 	 */
-	WFS_SYSE_HARDWARE_ERROR(2L),
+	HARDWARE_ERROR(2L),
 
 	/**
 	 * Version Negotiation Failures
 	 */
-	WFS_SYSE_VERSION_ERROR(3L),
+	VERSION_ERROR(3L),
 
 	/**
 	 * Device Status Changes
 	 */
-	WFS_SYSE_DEVICE_STATUS(4L),
+	DEVICE_STATUS(4L),
 
 	/**
 	 * Application Disconnect
 	 */
-	WFS_SYSE_APP_DISCONNECT(5L),
+	APP_DISCONNECT(5L),
 
 	/**
 	 * The error is a software error
 	 *
 	 * @since 3.00
 	 */
-	WFS_SYSE_SOFTWARE_ERROR(6L),
+	SOFTWARE_ERROR(6L),
 
 	/**
 	 * The error is a user error
 	 *
 	 * @since 3.00
 	 */
-	WFS_SYSE_USER_ERROR(7L),
+	USER_ERROR(7L),
 
 	/**
 	 * Lock Requested
 	 *
 	 * @since 3.00
 	 */
-	WFS_SYSE_LOCK_REQUESTED(8L);
+	LOCK_REQUESTED(8L),
+
+	FRAUD_ATTEMPT(9L);
 
 	private final long value;
 

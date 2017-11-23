@@ -38,7 +38,6 @@ import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.XfsServiceManager;
-import at.o2xfs.xfs.service.XfsServiceManagerException;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.pin.PINService;
@@ -61,7 +60,7 @@ public class XfsStartUpTask extends Task {
 		final XfsServiceManager serviceManager = XfsServiceManager.getInstance();
 		try {
 			serviceManager.initialize();
-		} catch (XfsServiceManagerException e) {
+		} catch (XfsException e) {
 			showException(e);
 			setDefaultTaskCommand();
 			return;
@@ -80,7 +79,7 @@ public class XfsStartUpTask extends Task {
 			Object status = null;
 			try {
 				final XfsService xfsService = serviceManager.openAndRegister(logicalName, serviceClass);
-				status = XfsError.WFS_SUCCESS;
+				status = XfsError.SUCCESS;
 				if (XfsServiceClass.SIU.equals(service.getValue())) {
 					new SIUEnableEventsCommand((SIUService) xfsService).execute();
 				}
@@ -98,20 +97,20 @@ public class XfsStartUpTask extends Task {
 
 	private Class<? extends XfsService> map(final XfsServiceClass serviceClass) {
 		switch (serviceClass) {
-			case CDM:
-				return CdmService.class;
-			case IDC:
-				return IDCService.class;
-			case PIN:
-				return PINService.class;
-			case PTR:
-				return PTRService.class;
-			case SIU:
-				return SIUService.class;
-			// case TTU:
-			// return TTUService.class;
-			default:
-				return null;
+		case CDM:
+			return CdmService.class;
+		case IDC:
+			return IDCService.class;
+		case PIN:
+			return PINService.class;
+		case PTR:
+			return PTRService.class;
+		case SIU:
+			return SIUService.class;
+		// case TTU:
+		// return TTUService.class;
+		default:
+			return null;
 		}
 	}
 }

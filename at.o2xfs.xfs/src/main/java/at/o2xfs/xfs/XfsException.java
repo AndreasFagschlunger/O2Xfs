@@ -81,7 +81,7 @@ public abstract class XfsException extends Exception {
 	}
 
 	public static void throwFor(final long errorCode) throws XfsException {
-		if (XfsError.WFS_SUCCESS.getValue() == errorCode) {
+		if (XfsError.SUCCESS.getValue() == errorCode) {
 			return;
 		}
 		final int serviceOffset = Math.abs((int) errorCode / 100);

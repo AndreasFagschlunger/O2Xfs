@@ -33,8 +33,7 @@ import at.o2xfs.xfs.util.XfsConstants;
 /**
  * @author Andreas Fagschlunger
  */
-public class XfsServiceExceptionFactory
-		extends AbstractXfsExceptionFactory {
+public class XfsServiceExceptionFactory extends AbstractXfsExceptionFactory {
 
 	protected XfsServiceExceptionFactory() {
 		super(0L);
@@ -44,12 +43,12 @@ public class XfsServiceExceptionFactory
 	public void throwException(final long errorCode) throws XfsException {
 		final XfsError xfsError = XfsConstants.valueOf(errorCode, XfsError.class);
 		switch (xfsError) {
-			case WFS_ERR_CANCELED:
-				throw new XfsCancelledException();
-			case WFS_ERR_CFG_NO_MORE_ITEMS:
-				throw new CfgNoMoreItemsException();
-			default:
-				throw new XfsServiceException(xfsError);
+		case CANCELED:
+			throw new XfsCancelledException();
+		case CFG_NO_MORE_ITEMS:
+			throw new CfgNoMoreItemsException();
+		default:
+			throw new XfsServiceException(xfsError);
 		}
 	}
 }

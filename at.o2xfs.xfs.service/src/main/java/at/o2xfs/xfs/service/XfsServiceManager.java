@@ -125,25 +125,15 @@ public class XfsServiceManager implements IXfsCallback {
 		serviceListeners.remove(e);
 	}
 
-	public void initialize() throws XfsServiceManagerException {
-		final String method = "initialize()";
-		try {
-			startUpXfs();
-		} catch (final WFSStartUpException e) {
-			throw new XfsServiceManagerException(e);
-		}
-		try {
-			hApp = xfsAPI.wfsCreateAppHandle();
-		} catch (final XfsException e) {
-			if (LOG.isErrorEnabled()) {
-				LOG.error(method, "Error creating application handle", e);
-			}
-			throw new XfsServiceManagerException(e);
-		}
+	public WFSVersion initialize() throws XfsException {
+		startUpXfs();
+		hApp = xfsAPI.wfsCreateAppHandle();
 		new OpenServiceHandler().openServices();
+		return version;
 	}
 
-	public <E extends XfsService> E openAndRegister(final String logicalName, final Class<E> serviceClass) throws XfsException {
+	public <E extends XfsService> E openAndRegister(final String logicalName, final Class<E> serviceClass)
+			throws XfsException {
 		if (hApp == null) {
 			throw new IllegalStateException("XfsServiceManager not initalized");
 		}
@@ -269,22 +259,27 @@ public class XfsServiceManager implements IXfsCallback {
 		throw new RuntimeException("Unhandled XFSCommand: " + xfsCommand);
 	}
 
-	private RequestId register(XfsRegisterCommand registerCommand, XfsEventNotification eventNotification) throws XfsException {
+	private RequestId register(XfsRegisterCommand registerCommand, XfsEventNotification eventNotification)
+			throws XfsException {
 		XfsService xfsService = registerCommand.getXFSService();
-		RequestId requestId = xfsAPI.wfsAsyncRegister(xfsService.getService(), Bitmask.of(registerCommand.getEventClasses()), hWnd, hWnd);
+		RequestId requestId = xfsAPI.wfsAsyncRegister(xfsService.getService(),
+				Bitmask.of(registerCommand.getEventClasses()), hWnd, hWnd);
 		requestQueue.addRequest(requestId, eventNotification, registerCommand, null);
 		return requestId;
 	}
 
-	private RequestId deRegister(XfsDeRegisterCommand deRegisterCommand, XfsEventNotification eventNotification) throws XfsException {
+	private RequestId deRegister(XfsDeRegisterCommand deRegisterCommand, XfsEventNotification eventNotification)
+			throws XfsException {
 		XfsService xfsService = deRegisterCommand.getXFSService();
 		XfsEventClass[] eventClasses = deRegisterCommand.getEventClasses();
-		RequestId requestId = xfsAPI.wfsAsyncDeregister(xfsService.getService(), (eventClasses != null ? Bitmask.of(eventClasses) : null), hWnd, hWnd);
+		RequestId requestId = xfsAPI.wfsAsyncDeregister(xfsService.getService(),
+				(eventClasses != null ? Bitmask.of(eventClasses) : null), hWnd, hWnd);
 		requestQueue.addRequest(requestId, eventNotification, deRegisterCommand, null);
 		return requestId;
 	}
 
-	private RequestId open(final XfsOpenCommand openCommand, final XfsEventNotification eventNotification) throws XfsException {
+	private RequestId open(final XfsOpenCommand openCommand, final XfsEventNotification eventNotification)
+			throws XfsException {
 		final String method = "open(XFSOpenCommand, IXfsEventNotification)";
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "openCommand=" + openCommand + ",eventNotification=" + eventNotification);
@@ -292,42 +287,48 @@ public class XfsServiceManager implements IXfsCallback {
 		final XfsService xfsService = openCommand.getXFSService();
 		final DWORD dwTraceLevel = null;
 		final DWORD timeOut = new DWORD(0L);
-		final RequestId requestId = xfsAPI.wfsAsyncOpen(new ZSTR(xfsService.getLogicalName()), hApp, null, dwTraceLevel, timeOut, xfsService.getService(), hWnd,
-				xfsService.getSrvcVersionsRequired(), xfsService.getSrvcVersion(), xfsService.getSPIVersion());
+		final RequestId requestId = xfsAPI.wfsAsyncOpen(new ZSTR(xfsService.getLogicalName()), hApp, null, dwTraceLevel,
+				timeOut, xfsService.getService(), hWnd, xfsService.getSrvcVersionsRequired(),
+				xfsService.getSrvcVersion(), xfsService.getSPIVersion());
 		requestQueue.addRequest(requestId, eventNotification, openCommand, Long.valueOf(timeOut.longValue()));
 		return requestId;
 	}
 
-	private RequestId close(final XfsCloseCommand closeCommand, final XfsEventNotification eventNotification) throws XfsException {
+	private RequestId close(final XfsCloseCommand closeCommand, final XfsEventNotification eventNotification)
+			throws XfsException {
 		final XfsService xfsService = closeCommand.getXFSService();
 		final RequestId requestId = xfsAPI.wfsAsyncClose(xfsService.getService(), hWnd);
 		requestQueue.addRequest(requestId, eventNotification, closeCommand, null);
 		return requestId;
 	}
 
-	private RequestId execute(final XfsExecuteCommand executeCommand, final XfsEventNotification eventNotification) throws XfsException {
+	private RequestId execute(final XfsExecuteCommand executeCommand, final XfsEventNotification eventNotification)
+			throws XfsException {
 		final DWORD command = new DWORD(((XfsConstant) executeCommand.getCommand()).getValue());
 		Long timeOut = executeCommand.getTimeOut();
 		if (timeOut == null) {
 			timeOut = config.getXfsExecuteTimeout(executeCommand);
 		}
-		final RequestId requestId = xfsAPI.wfsAsyncExecute(executeCommand.getXFSService().getService(), command, executeCommand.getCmdData(), new DWORD(timeOut.longValue()), hWnd);
+		final RequestId requestId = xfsAPI.wfsAsyncExecute(executeCommand.getXFSService().getService(), command,
+				executeCommand.getCmdData(), new DWORD(timeOut.longValue()), hWnd);
 		requestQueue.addRequest(requestId, eventNotification, executeCommand, timeOut);
 		return requestId;
 	}
 
-	private RequestId execute(final XfsInfoCommand<?> infoCommand, final XfsEventNotification eventNotification) throws XfsException {
+	private RequestId execute(final XfsInfoCommand<?> infoCommand, final XfsEventNotification eventNotification)
+			throws XfsException {
 		final DWORD category = new DWORD(((XfsConstant) infoCommand.getCategory()).getValue());
 		Long timeOut = infoCommand.getTimeOut();
 		if (timeOut == null) {
 			timeOut = config.getXfsInfoTimeout(infoCommand);
 		}
-		RequestId requestId = xfsAPI.wfsAsyncGetInfo(infoCommand.getXFSService().getService(), category, infoCommand.getQueryDetails(), new DWORD(timeOut.longValue()), hWnd);
+		RequestId requestId = xfsAPI.wfsAsyncGetInfo(infoCommand.getXFSService().getService(), category,
+				infoCommand.getQueryDetails(), new DWORD(timeOut.longValue()), hWnd);
 		requestQueue.addRequest(requestId, eventNotification, infoCommand, timeOut);
 		return requestId;
 	}
 
-	private void startUpXfs() throws WFSStartUpException {
+	private void startUpXfs() throws XfsException {
 		final String method = "startUpXfs()";
 		final XFSVersionDWORD versionsRequired = new XFSVersionDWORD();
 		versionsRequired.allocate();

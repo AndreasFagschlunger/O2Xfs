@@ -27,6 +27,9 @@
 
 package at.o2xfs.xfs.service.lookup;
 
+import java.util.Enumeration;
+import java.util.NoSuchElementException;
+
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.DWORD;
@@ -35,11 +38,7 @@ import at.o2xfs.xfs.XfsError;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.conf.O2XfsConf;
 
-import java.util.Enumeration;
-import java.util.NoSuchElementException;
-
-public class RegistryKeyEnumerator
-		implements Enumeration<String> {
+public class RegistryKeyEnumerator implements Enumeration<String> {
 
 	private final static Logger LOG = LoggerFactory.getLogger(RegistryKeyEnumerator.class);
 
@@ -65,13 +64,13 @@ public class RegistryKeyEnumerator
 			return true;
 		} catch (final XfsException e) {
 			switch ((XfsError) e.getError()) {
-				case WFS_ERR_CFG_NO_MORE_ITEMS:
-					if (LOG.isDebugEnabled()) {
-						LOG.debug(method, "No more Items: hKey=" + hKey + ", iSubKey=" + iSubKey, e);
-					}
-					break;
-				default:
-					LOG.error(method, "Error enumerating subkey: hKey=" + hKey + ", iSubKey=" + iSubKey, e);
+			case CFG_NO_MORE_ITEMS:
+				if (LOG.isDebugEnabled()) {
+					LOG.debug(method, "No more Items: hKey=" + hKey + ", iSubKey=" + iSubKey, e);
+				}
+				break;
+			default:
+				LOG.error(method, "Error enumerating subkey: hKey=" + hKey + ", iSubKey=" + iSubKey, e);
 			}
 		}
 		return false;

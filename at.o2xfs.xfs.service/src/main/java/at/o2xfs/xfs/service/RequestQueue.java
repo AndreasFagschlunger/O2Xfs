@@ -52,8 +52,7 @@ import at.o2xfs.xfs.type.RequestId;
 
 public class RequestQueue {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(RequestQueue.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RequestQueue.class);
 
 	private class Request {
 
@@ -65,9 +64,7 @@ public class RequestQueue {
 
 		private final Long timeOut;
 
-		public Request(RequestId requestId,
-				XfsEventNotification eventNotification, XfsCommand command,
-				Long timeOut) {
+		public Request(RequestId requestId, XfsEventNotification eventNotification, XfsCommand command, Long timeOut) {
 			Assert.notNull(requestId);
 			Assert.notNull(eventNotification);
 			Assert.notNull(command);
@@ -103,10 +100,8 @@ public class RequestQueue {
 		synchronized (requests) {
 			Request request = getRequestById(requestId);
 			requests.remove(request);
-			WFSResult result = new WFSResult(requestId, request.command
-					.getXFSService().getService(), new INT(
-					(int) XfsError.WFS_ERR_CANCELED.getValue()), new DWORD(
-					commandCode(request.command).getValue()));
+			WFSResult result = new WFSResult(requestId, request.command.getXFSService().getService(),
+					new INT((int) XfsError.CANCELED.getValue()), new DWORD(commandCode(request.command).getValue()));
 			if (LOG.isWarnEnabled()) {
 				LOG.warn(method, "Firing operation complete event: " + result);
 			}
@@ -132,12 +127,10 @@ public class RequestQueue {
 		}
 	}
 
-	public void addRequest(RequestId requestId,
-			XfsEventNotification eventNotification, XfsCommand command,
+	public void addRequest(RequestId requestId, XfsEventNotification eventNotification, XfsCommand command,
 			Long timeOut) {
 		synchronized (requests) {
-			requests.add(new Request(requestId, eventNotification, command,
-					timeOut));
+			requests.add(new Request(requestId, eventNotification, command, timeOut));
 			watchdog.add(requestId, timeOut);
 			requests.notifyAll();
 		}

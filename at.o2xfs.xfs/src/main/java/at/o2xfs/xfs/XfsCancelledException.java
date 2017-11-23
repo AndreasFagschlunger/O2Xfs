@@ -27,11 +27,10 @@
 
 package at.o2xfs.xfs;
 
-public class XfsCancelledException
-		extends XfsServiceException {
+public class XfsCancelledException extends XfsServiceException {
 
 	protected XfsCancelledException() {
-		super(XfsError.WFS_ERR_CANCELED);
+		super(XfsError.CANCELED);
 	}
 
 }
