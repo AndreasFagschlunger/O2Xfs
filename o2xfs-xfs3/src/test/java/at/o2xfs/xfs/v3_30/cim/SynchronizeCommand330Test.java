@@ -31,7 +31,7 @@ import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_00.cim.Retract3;
-import at.o2xfs.xfs.v3_30.BaseXfs3_30Test;
+import at.o2xfs.xfs.v3_30.BaseXfs330Test;
 
 public class SynchronizeCommand330Test extends BaseXfs330Test {
 

@@ -33,7 +33,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
-import at.o2xfs.xfs.v3_10.BaseXfs3_10Test;
+import at.o2xfs.xfs.v3_10.BaseXfs310Test;
 
 public class CashUnitError310Test extends BaseXfs310Test {
 

@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
-import at.o2xfs.xfs.v3_10.BaseXfs3_10Test;
+import at.o2xfs.xfs.v3_10.BaseXfs310Test;
 
 public class CashIn310Test extends BaseXfs310Test {
 

@@ -33,7 +33,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
-import at.o2xfs.xfs.v3_20.BaseXfs3_20Test;
+import at.o2xfs.xfs.v3_20.BaseXfs320Test;
 
 public class CdmCaps320Test extends BaseXfs320Test {
 
