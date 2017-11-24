@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_30_IncompleteDeplete3_30Test.h"
+#include "cim/at_o2xfs_xfs_v3_30_cim_IncompleteDeplete330Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -36,7 +36,7 @@ static WFSCIMDEPRES Deplete;
 static WFSCIMDEPSOURCERES DepleteSourceResults[1];
 static LPWFSCIMDEPSOURCERES lpDepleteSourceResults[2];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_130_IncompleteDeplete3_130Test_buildIncompleteDeplete3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_IncompleteDeplete3130Test_buildIncompleteDeplete3130(JNIEnv *env, jobject obj) {
 	IncompleteDeplete.lpDeplete = &Deplete;
 	Deplete.ulNumberOfItemsReceived = 1234;
 	Deplete.ulNumberOfItemsRejected = 0;

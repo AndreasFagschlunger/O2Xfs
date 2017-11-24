@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,38 +34,38 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class AppData3_30 extends Struct {
+public class AppData330 extends Struct {
 
 	protected final Pointer aid = new Pointer();
 	protected final Pointer kernelIdentifier = new Pointer();
 
-	protected AppData3_30() {
+	protected AppData330() {
 		add(aid);
 		add(kernelIdentifier);
 	}
 
-	public AppData3_30(Pointer p) {
+	public AppData330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public AppData3_30(AppData3_30 copy) {
+	public AppData330(AppData330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(AppData3_30 copy) {
-		aid.pointTo(new HexData3_30(copy.getAID()));
-		kernelIdentifier.pointTo(new HexData3_30(copy.getKernelIdentifier()));
+	protected void set(AppData330 copy) {
+		aid.pointTo(new HexData330(copy.getAID()));
+		kernelIdentifier.pointTo(new HexData330(copy.getKernelIdentifier()));
 	}
 
 	public byte[] getAID() {
-		return new HexData3_30(aid).getData();
+		return new HexData330(aid).getData();
 	}
 
 	public byte[] getKernelIdentifier() {
-		return new HexData3_30(kernelIdentifier).getData();
+		return new HexData330(kernelIdentifier).getData();
 	}
 
 	@Override
@@ -75,11 +75,11 @@ public class AppData3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof AppData3_30) {
-			AppData3_30 appData3_30 = (AppData3_30) obj;
+		if (obj instanceof AppData330) {
+			AppData330 appData330 = (AppData330) obj;
 			return new EqualsBuilder()
-					.append(getAID(), appData3_30.getAID())
-					.append(getKernelIdentifier(), appData3_30.getKernelIdentifier())
+					.append(getAID(), appData330.getAID())
+					.append(getKernelIdentifier(), appData330.getKernelIdentifier())
 					.isEquals();
 		}
 		return false;

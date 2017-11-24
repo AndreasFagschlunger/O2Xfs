@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,31 +34,31 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.cim.AntiFraudModule;
 import at.o2xfs.xfs.cim.MixedMode;
-import at.o2xfs.xfs.cim.v3_10.Status3_10;
+import at.o2xfs.xfs.v3_10.cim.Status310;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class Status3_20 extends Status3_10 {
+public class Status320 extends Status310 {
 
 	protected final XfsWord<MixedMode> mixedMode = new XfsWord<>(MixedMode.class);
 	protected final XfsWord<AntiFraudModule> antiFraudModule = new XfsWord<>(AntiFraudModule.class);
 
-	protected Status3_20() {
+	protected Status320() {
 		add(mixedMode);
 		add(antiFraudModule);
 	}
 
-	public Status3_20(Pointer p) {
+	public Status320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Status3_20(Status3_20 copy) {
+	public Status320(Status320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Status3_20 copy) {
+	protected void set(Status320 copy) {
 		super.set(copy);
 		mixedMode.set(copy.getMixedMode());
 		antiFraudModule.set(copy.getAntiFraudModule());
@@ -79,10 +79,10 @@ public class Status3_20 extends Status3_10 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Status3_20) {
-			Status3_20 status3_20 = (Status3_20) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getMixedMode(), status3_20.getMixedMode())
-					.append(getAntiFraudModule(), status3_20.getAntiFraudModule()).isEquals();
+		if (obj instanceof Status320) {
+			Status320 status320 = (Status320) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getMixedMode(), status320.getMixedMode())
+					.append(getAntiFraudModule(), status320.getAntiFraudModule()).isEquals();
 		}
 		return false;
 	}

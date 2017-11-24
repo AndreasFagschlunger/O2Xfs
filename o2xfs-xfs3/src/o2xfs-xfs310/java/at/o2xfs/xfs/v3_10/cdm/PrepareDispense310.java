@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,26 +36,26 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.cdm.PrepareDispenseAction;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class PrepareDispense3_10 extends Struct {
+public class PrepareDispense310 extends Struct {
 
 	protected final XfsWord<PrepareDispenseAction> action = new XfsWord<>(PrepareDispenseAction.class);
 
-	protected PrepareDispense3_10() {
+	protected PrepareDispense310() {
 		add(action);
 	}
 
-	public PrepareDispense3_10(Pointer p) {
+	public PrepareDispense310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public PrepareDispense3_10(PrepareDispense3_10 copy) {
+	public PrepareDispense310(PrepareDispense310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(PrepareDispense3_10 copy) {
+	protected void set(PrepareDispense310 copy) {
 		action.set(copy.getAction());
 	}
 
@@ -70,8 +70,8 @@ public class PrepareDispense3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof PrepareDispense3_10) {
-			PrepareDispense3_10 prepareDispense = (PrepareDispense3_10) obj;
+		if (obj instanceof PrepareDispense310) {
+			PrepareDispense310 prepareDispense = (PrepareDispense310) obj;
 			return new EqualsBuilder().append(getAction(), prepareDispense.getAction()).isEquals();
 		}
 		return false;

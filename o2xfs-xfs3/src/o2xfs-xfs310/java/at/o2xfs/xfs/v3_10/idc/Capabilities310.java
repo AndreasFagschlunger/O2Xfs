@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_10;
+package at.o2xfs.xfs.v3_10.idc;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,11 +41,11 @@ import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.idc.DIPMode;
 import at.o2xfs.xfs.idc.GuidLight;
 import at.o2xfs.xfs.idc.MemoryChipProtocol;
-import at.o2xfs.xfs.idc.v3_00.Capabilities3;
+import at.o2xfs.xfs.v3_00.idc.Capabilities3;
 import at.o2xfs.xfs.win32.XfsBitmaskArray;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class Capabilities3_10 extends Capabilities3 {
+public class Capabilities310 extends Capabilities3 {
 
 	private static final int GUIDLIGHTS_SIZE = 32;
 
@@ -55,7 +55,7 @@ public class Capabilities3_10 extends Capabilities3 {
 	protected final WORD ejectPosition = new WORD();
 	protected final BOOL powerSaveControl = new BOOL();
 
-	protected Capabilities3_10() {
+	protected Capabilities310() {
 		add(dipMode);
 		add(memoryChipProtocols);
 		add(guidLights);
@@ -63,18 +63,18 @@ public class Capabilities3_10 extends Capabilities3 {
 		add(powerSaveControl);
 	}
 
-	public Capabilities3_10(Pointer p) {
+	public Capabilities310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Capabilities3_10(Capabilities3_10 copy) {
+	public Capabilities310(Capabilities310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Capabilities3_10 copy) {
+	protected void set(Capabilities310 copy) {
 		super.set(copy);
 		dipMode.set(copy.getDIPMode());
 		Optional<MemoryChipProtocol[]> memoryChipProtocols = copy.getMemoryChipProtocols();
@@ -124,16 +124,16 @@ public class Capabilities3_10 extends Capabilities3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Capabilities3_10) {
-			Capabilities3_10 capabilities3_10 = (Capabilities3_10) obj;
+		if (obj instanceof Capabilities310) {
+			Capabilities310 capabilities310 = (Capabilities310) obj;
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
-					.append(getDIPMode(), capabilities3_10.getDIPMode())
+					.append(getDIPMode(), capabilities310.getDIPMode())
 					.append(getMemoryChipProtocols().orElse(null),
-							capabilities3_10.getMemoryChipProtocols().orElse(null))
-					.append(getGuidLights(), capabilities3_10.getGuidLights())
-					.append(getEjectPosition(), capabilities3_10.getEjectPosition())
-					.append(isPowerSaveControl(), capabilities3_10.isPowerSaveControl())
+							capabilities310.getMemoryChipProtocols().orElse(null))
+					.append(getGuidLights(), capabilities310.getGuidLights())
+					.append(getEjectPosition(), capabilities310.getEjectPosition())
+					.append(isPowerSaveControl(), capabilities310.isPowerSaveControl())
 					.isEquals();
 		}
 		return false;

@@ -29,7 +29,7 @@ package at.o2xfs.xfs.service.cim.cmd;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.cim.CimExecuteCommand;
-import at.o2xfs.xfs.cim.v3_00.CashInStart3;
+import at.o2xfs.xfs.v3_00.cim.CashInStart3;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;

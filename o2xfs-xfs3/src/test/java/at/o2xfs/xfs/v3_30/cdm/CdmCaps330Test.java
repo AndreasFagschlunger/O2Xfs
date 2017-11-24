@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -36,12 +36,12 @@ import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.cdm.ItemInfoType;
 import at.o2xfs.xfs.v3_30.BaseXfs3_30Test;
 
-public class CdmCaps3_30Test extends BaseXfs3_30Test {
+public class CdmCaps330Test extends BaseXfs330Test {
 
 	@Test
 	public final void test() {
-		CdmCaps3_30 expected = new CdmCaps3_30(buildCdmCaps3_30().getPointer());
-		CdmCaps3_30 actual = new CdmCaps3_30(expected);
+		CdmCaps330 expected = new CdmCaps330(buildCdmCaps330().getPointer());
+		CdmCaps330 actual = new CdmCaps330(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 		assertTrue(actual.getItemInfoTypes().contains(ItemInfoType.SIGNATURE));
@@ -49,5 +49,5 @@ public class CdmCaps3_30Test extends BaseXfs3_30Test {
 		assertTrue(actual.getSynchronizableCommands().length != 0);
 	}
 
-	private native Buffer buildCdmCaps3_30();
+	private native Buffer buildCdmCaps330();
 }

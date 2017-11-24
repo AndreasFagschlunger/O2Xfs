@@ -35,10 +35,10 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.CdmMessage;
-import at.o2xfs.xfs.cdm.v3_00.CashUnitError3;
-import at.o2xfs.xfs.cdm.v3_00.ItemPosition3;
-import at.o2xfs.xfs.cdm.v3_30.IncompleteRetract3_30;
-import at.o2xfs.xfs.cdm.v3_30.ItemInfoSummary3_30;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+import at.o2xfs.xfs.v3_00.cdm.ItemPosition3;
+import at.o2xfs.xfs.v3_30.cdm.IncompleteRetract330;
+import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cdm.CdmService;
@@ -85,10 +85,10 @@ public class ResetCommand extends AbstractAsyncXfsCommand<ResetListener, Success
 					fireInputP6();
 					break;
 				case EXEE_INFO_AVAILABLE:
-					fireInfoAvailable(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), ItemInfoSummary3_30.class));
+					fireInfoAvailable(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), ItemInfoSummary330.class));
 					break;
 				case EXEE_INCOMPLETERETRACT:
-					fireIncompleteRetract(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), IncompleteRetract3_30.class));
+					fireIncompleteRetract(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), IncompleteRetract330.class));
 					break;
 				default:
 					throw new IllegalArgumentException("CdmMessage: " + message);
@@ -118,8 +118,8 @@ public class ResetCommand extends AbstractAsyncXfsCommand<ResetListener, Success
 		}
 	}
 
-	private void fireInfoAvailable(ItemInfoSummary3_30 itemInfoSummary) {
-		String method = "fireInfoAvailable(ItemInfoSummary3_30)";
+	private void fireInfoAvailable(ItemInfoSummary330 itemInfoSummary) {
+		String method = "fireInfoAvailable(ItemInfoSummary330)";
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, itemInfoSummary);
 		}
@@ -128,8 +128,8 @@ public class ResetCommand extends AbstractAsyncXfsCommand<ResetListener, Success
 		}
 	}
 
-	private void fireIncompleteRetract(IncompleteRetract3_30 incompleteRetract) {
-		String method = "fireIncompleteRetract(IncompleteRetract3_30)";
+	private void fireIncompleteRetract(IncompleteRetract330 incompleteRetract) {
+		String method = "fireIncompleteRetract(IncompleteRetract330)";
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, incompleteRetract);
 		}

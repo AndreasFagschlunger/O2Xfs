@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import java.util.Map;
 
@@ -39,7 +39,7 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.XfsExtra;
 
-public class CashUnitCapabilities3_20 extends Struct {
+public class CashUnitCapabilities320 extends Struct {
 
 	protected final USHORT number = new USHORT();
 	protected final USHORT numPhysicalCUs = new USHORT();
@@ -47,7 +47,7 @@ public class CashUnitCapabilities3_20 extends Struct {
 	protected final BOOL retractNoteCountThresholds = new BOOL();
 	protected final XfsExtra extra = new XfsExtra();
 
-	protected CashUnitCapabilities3_20() {
+	protected CashUnitCapabilities320() {
 		add(number);
 		add(numPhysicalCUs);
 		add(physical);
@@ -55,21 +55,21 @@ public class CashUnitCapabilities3_20 extends Struct {
 		add(extra);
 	}
 
-	public CashUnitCapabilities3_20(Pointer p) {
+	public CashUnitCapabilities320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public CashUnitCapabilities3_20(CashUnitCapabilities3_20 copy) {
+	public CashUnitCapabilities320(CashUnitCapabilities320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(CashUnitCapabilities3_20 copy) {
+	protected void set(CashUnitCapabilities320 copy) {
 		number.set(copy.getNumber());
 		numPhysicalCUs.set(copy.getNumPhysicalCUs());
-		physical.pointTo(new PhysicalCashUnitCapabilities3_20Array(copy.getPhysical()));
+		physical.pointTo(new PhysicalCashUnitCapabilities320Array(copy.getPhysical()));
 		retractNoteCountThresholds.set(copy.isRetractNoteCountThresholds());
 		extra.set(copy.getExtra());
 	}
@@ -82,8 +82,8 @@ public class CashUnitCapabilities3_20 extends Struct {
 		return numPhysicalCUs.get();
 	}
 
-	public PhysicalCashUnitCapabilities3_20[] getPhysical() {
-		return new PhysicalCashUnitCapabilities3_20Array(physical, getNumPhysicalCUs()).get();
+	public PhysicalCashUnitCapabilities320[] getPhysical() {
+		return new PhysicalCashUnitCapabilities320Array(physical, getNumPhysicalCUs()).get();
 	}
 
 	public boolean isRetractNoteCountThresholds() {
@@ -101,11 +101,11 @@ public class CashUnitCapabilities3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CashUnitCapabilities3_20) {
-			CashUnitCapabilities3_20 cashUnitCapabilities3_20 = (CashUnitCapabilities3_20) obj;
-			return new EqualsBuilder().append(getNumber(), cashUnitCapabilities3_20.getNumber()).append(getNumPhysicalCUs(), cashUnitCapabilities3_20.getNumPhysicalCUs())
-					.append(getPhysical(), cashUnitCapabilities3_20.getPhysical()).append(isRetractNoteCountThresholds(), cashUnitCapabilities3_20.isRetractNoteCountThresholds())
-					.append(getExtra(), cashUnitCapabilities3_20.getExtra()).isEquals();
+		if (obj instanceof CashUnitCapabilities320) {
+			CashUnitCapabilities320 cashUnitCapabilities320 = (CashUnitCapabilities320) obj;
+			return new EqualsBuilder().append(getNumber(), cashUnitCapabilities320.getNumber()).append(getNumPhysicalCUs(), cashUnitCapabilities320.getNumPhysicalCUs())
+					.append(getPhysical(), cashUnitCapabilities320.getPhysical()).append(isRetractNoteCountThresholds(), cashUnitCapabilities320.isRetractNoteCountThresholds())
+					.append(getExtra(), cashUnitCapabilities320.getExtra()).isEquals();
 		}
 		return false;
 	}

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_10;
+package at.o2xfs.xfs.v3_10.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,26 +36,26 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.idc.EjectPosition;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class EjectCard3_10 extends Struct {
+public class EjectCard310 extends Struct {
 
 	protected final XfsWord<EjectPosition> ejectPosition = new XfsWord<>(EjectPosition.class);
 
-	protected EjectCard3_10() {
+	protected EjectCard310() {
 		add(ejectPosition);
 	}
 
-	public EjectCard3_10(Pointer p) {
+	public EjectCard310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public EjectCard3_10(EjectCard3_10 copy) {
+	public EjectCard310(EjectCard310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(EjectCard3_10 copy) {
+	protected void set(EjectCard310 copy) {
 		ejectPosition.set(copy.getEjectPosition());
 	}
 
@@ -70,9 +70,9 @@ public class EjectCard3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof EjectCard3_10) {
-			EjectCard3_10 ejectCard3_10 = (EjectCard3_10) obj;
-			return new EqualsBuilder().append(getEjectPosition(), ejectCard3_10.getEjectPosition()).isEquals();
+		if (obj instanceof EjectCard310) {
+			EjectCard310 ejectCard310 = (EjectCard310) obj;
+			return new EqualsBuilder().append(getEjectPosition(), ejectCard310.getEjectPosition()).isEquals();
 		}
 		return false;
 	}

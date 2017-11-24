@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_10;
+package at.o2xfs.xfs.v3_10.idc;
 
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.win32.Pointer;

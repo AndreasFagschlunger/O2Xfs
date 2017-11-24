@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,28 +37,28 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.cim.LockStatus;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class CashUnitLock3_20 extends Struct {
+public class CashUnitLock320 extends Struct {
 
 	protected final LPSTR physicalPositionName = new LPSTR();
 	protected final XfsWord<LockStatus> cashUnitLockStatus = new XfsWord<>(LockStatus.class);
 
-	protected CashUnitLock3_20() {
+	protected CashUnitLock320() {
 		add(physicalPositionName);
 		add(cashUnitLockStatus);
 	}
 
-	public CashUnitLock3_20(Pointer p) {
+	public CashUnitLock320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public CashUnitLock3_20(CashUnitLock3_20 copy) {
+	public CashUnitLock320(CashUnitLock320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(CashUnitLock3_20 copy) {
+	protected void set(CashUnitLock320 copy) {
 		physicalPositionName.set(copy.getPhysicalPositionName());
 		cashUnitLockStatus.set(copy.getCashUnitLockStatus());
 	}
@@ -78,10 +78,10 @@ public class CashUnitLock3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CashUnitLock3_20) {
-			CashUnitLock3_20 cashUnitLock3_20 = (CashUnitLock3_20) obj;
-			return new EqualsBuilder().append(getPhysicalPositionName(), cashUnitLock3_20.getPhysicalPositionName())
-					.append(getCashUnitLockStatus(), cashUnitLock3_20.getCashUnitLockStatus()).isEquals();
+		if (obj instanceof CashUnitLock320) {
+			CashUnitLock320 cashUnitLock320 = (CashUnitLock320) obj;
+			return new EqualsBuilder().append(getPhysicalPositionName(), cashUnitLock320.getPhysicalPositionName())
+					.append(getCashUnitLockStatus(), cashUnitLock320.getCashUnitLockStatus()).isEquals();
 		}
 		return false;
 	}

@@ -37,10 +37,10 @@ import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cim.CimExecuteCommand;
 import at.o2xfs.xfs.cim.CimMessage;
 import at.o2xfs.xfs.cim.Reason;
-import at.o2xfs.xfs.cim.v3_00.CashUnitError3;
-import at.o2xfs.xfs.cim.v3_00.NoteNumberList3;
-import at.o2xfs.xfs.cim.v3_00.P6Info3;
-import at.o2xfs.xfs.cim.v3_10.ItemInfoSummary3_10;
+import at.o2xfs.xfs.v3_00.cim.CashUnitError3;
+import at.o2xfs.xfs.v3_00.cim.NoteNumberList3;
+import at.o2xfs.xfs.v3_00.cim.P6Info3;
+import at.o2xfs.xfs.v3_10.cim.ItemInfoSummary310;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cim.CimFactory;
 import at.o2xfs.xfs.service.cim.CimService;
@@ -92,7 +92,7 @@ public final class CashInCommand extends AbstractAsyncXfsCommand<CashInListener,
 				break;
 			case EXEE_INFO_AVAILABLE:
 				fireInfoAvailable(CimFactory.fromNullTerminatedArray(cimService.getXfsVersion(), wfsResult.getResults(),
-						ItemInfoSummary3_10.class));
+						ItemInfoSummary310.class));
 				break;
 			case EXEE_INSERTITEMS:
 				fireInsertItems();
@@ -100,12 +100,12 @@ public final class CashInCommand extends AbstractAsyncXfsCommand<CashInListener,
 			// case EXEE_INCOMPLETEREPLENISH:
 			// fireIncompleteReplenish(CimFactory.create(cimService.getXfsVersion(),
 			// wfsResult.getResults(),
-			// IncompleteReplenish3_20.class));
+			// IncompleteReplenish320.class));
 			// break;
 			// case EXEE_INCOMPLETEDEPLETE:
 			// fireIncompleteDeplete(CimFactory.create(cimService.getXfsVersion(),
 			// wfsResult.getResults(),
-			// IncompleteDeplete3_30.class));
+			// IncompleteDeplete330.class));
 			// break;
 			default:
 				throw new IllegalArgumentException(message.toString());
@@ -160,7 +160,7 @@ public final class CashInCommand extends AbstractAsyncXfsCommand<CashInListener,
 		}
 	};
 
-	private void fireInfoAvailable(List<ItemInfoSummary3_10> itemInfoSummaries) {
+	private void fireInfoAvailable(List<ItemInfoSummary310> itemInfoSummaries) {
 		if (LOG.isInfoEnabled()) {
 			LOG.info("fireInfoAvailable(Pointer)", "itemInfoSummaries=" + itemInfoSummaries);
 		}

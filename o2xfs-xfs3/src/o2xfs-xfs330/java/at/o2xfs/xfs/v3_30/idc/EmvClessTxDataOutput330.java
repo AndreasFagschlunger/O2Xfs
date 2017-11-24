@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import java.util.Optional;
 
@@ -40,7 +40,7 @@ import at.o2xfs.xfs.idc.DataSource;
 import at.o2xfs.xfs.idc.TxOutcome;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class EmvClessTxDataOutput3_30 extends Struct {
+public class EmvClessTxDataOutput330 extends Struct {
 
 	protected final XfsWord<DataSource> dataSource = new XfsWord<>(DataSource.class);
 	protected final XfsWord<TxOutcome> txOutcome = new XfsWord<>(TxOutcome.class);
@@ -48,7 +48,7 @@ public class EmvClessTxDataOutput3_30 extends Struct {
 	protected final Pointer dataRead = new Pointer();
 	protected final Pointer clessOutcome = new Pointer();
 
-	protected EmvClessTxDataOutput3_30() {
+	protected EmvClessTxDataOutput330() {
 		add(dataSource);
 		add(txOutcome);
 		add(cardholderAction);
@@ -56,25 +56,25 @@ public class EmvClessTxDataOutput3_30 extends Struct {
 		add(clessOutcome);
 	}
 
-	public EmvClessTxDataOutput3_30(Pointer p) {
+	public EmvClessTxDataOutput330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public EmvClessTxDataOutput3_30(EmvClessTxDataOutput3_30 copy) {
+	public EmvClessTxDataOutput330(EmvClessTxDataOutput330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(EmvClessTxDataOutput3_30 copy) {
+	protected void set(EmvClessTxDataOutput330 copy) {
 		dataSource.set(copy.getDataSource());
 		txOutcome.set(copy.getTxOutcome());
 		cardholderAction.set(copy.getCardholderAction());
-		dataRead.pointTo(new HexData3_30(copy.getDataRead()));
-		Optional<EmvClessOutcome3_30> clessOutcome = copy.getClessOutcome();
+		dataRead.pointTo(new HexData330(copy.getDataRead()));
+		Optional<EmvClessOutcome330> clessOutcome = copy.getClessOutcome();
 		if (clessOutcome.isPresent()) {
-			this.clessOutcome.pointTo(new EmvClessOutcome3_30(clessOutcome.get()));
+			this.clessOutcome.pointTo(new EmvClessOutcome330(clessOutcome.get()));
 		}
 	}
 
@@ -91,13 +91,13 @@ public class EmvClessTxDataOutput3_30 extends Struct {
 	}
 
 	public byte[] getDataRead() {
-		return new HexData3_30(dataRead).getData();
+		return new HexData330(dataRead).getData();
 	}
 
-	public Optional<EmvClessOutcome3_30> getClessOutcome() {
-		Optional<EmvClessOutcome3_30> result = Optional.empty();
+	public Optional<EmvClessOutcome330> getClessOutcome() {
+		Optional<EmvClessOutcome330> result = Optional.empty();
 		if (!Pointer.NULL.equals(clessOutcome)) {
-			result = Optional.of(new EmvClessOutcome3_30(clessOutcome));
+			result = Optional.of(new EmvClessOutcome330(clessOutcome));
 		}
 		return result;
 	}
@@ -115,14 +115,14 @@ public class EmvClessTxDataOutput3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof EmvClessTxDataOutput3_30) {
-			EmvClessTxDataOutput3_30 emvClessTxDataOutput3_30 = (EmvClessTxDataOutput3_30) obj;
+		if (obj instanceof EmvClessTxDataOutput330) {
+			EmvClessTxDataOutput330 emvClessTxDataOutput330 = (EmvClessTxDataOutput330) obj;
 			return new EqualsBuilder()
-					.append(getDataSource(), emvClessTxDataOutput3_30.getDataSource())
-					.append(getTxOutcome(), emvClessTxDataOutput3_30.getTxOutcome())
-					.append(getCardholderAction(), emvClessTxDataOutput3_30.getCardholderAction())
-					.append(getDataRead(), emvClessTxDataOutput3_30.getDataRead())
-					.append(getClessOutcome(), emvClessTxDataOutput3_30.getClessOutcome())
+					.append(getDataSource(), emvClessTxDataOutput330.getDataSource())
+					.append(getTxOutcome(), emvClessTxDataOutput330.getTxOutcome())
+					.append(getCardholderAction(), emvClessTxDataOutput330.getCardholderAction())
+					.append(getDataRead(), emvClessTxDataOutput330.getDataRead())
+					.append(getClessOutcome(), emvClessTxDataOutput330.getClessOutcome())
 					.isEquals();
 		}
 		return false;

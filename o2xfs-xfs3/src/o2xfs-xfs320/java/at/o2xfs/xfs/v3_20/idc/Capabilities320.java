@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_20;
+package at.o2xfs.xfs.v3_20.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,30 +34,30 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.USHORT;
-import at.o2xfs.xfs.idc.v3_10.Capabilities3_10;
+import at.o2xfs.xfs.v3_10.idc.Capabilities310;
 
-public class Capabilities3_20 extends Capabilities3_10 {
+public class Capabilities320 extends Capabilities310 {
 
 	protected final USHORT parkingStations = new USHORT();
 	protected final BOOL antiFraudModule = new BOOL();
 
-	protected Capabilities3_20() {
+	protected Capabilities320() {
 		add(parkingStations);
 		add(antiFraudModule);
 	}
 
-	public Capabilities3_20(Pointer p) {
+	public Capabilities320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Capabilities3_20(Capabilities3_20 copy) {
+	public Capabilities320(Capabilities320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Capabilities3_20 copy) {
+	protected void set(Capabilities320 copy) {
 		super.set(copy);
 		parkingStations.set(copy.getParkingStations());
 		antiFraudModule.set(copy.isAntiFraudModule());
@@ -82,12 +82,12 @@ public class Capabilities3_20 extends Capabilities3_10 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Capabilities3_20) {
-			Capabilities3_20 capabilities3_20 = (Capabilities3_20) obj;
+		if (obj instanceof Capabilities320) {
+			Capabilities320 capabilities320 = (Capabilities320) obj;
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
-					.append(getParkingStations(), capabilities3_20.getParkingStations())
-					.append(isAntiFraudModule(), capabilities3_20.isAntiFraudModule())
+					.append(getParkingStations(), capabilities320.getParkingStations())
+					.append(isAntiFraudModule(), capabilities320.isAntiFraudModule())
 					.isEquals();
 		}
 		return false;

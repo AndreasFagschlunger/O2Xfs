@@ -1,4 +1,4 @@
-#include "idc/at_o2xfs_xfs_idc_v3_20_Form3_20Test.h"
+#include "idc/at_o2xfs_xfs_v3_20_idc_Form320Test.h"
 
 #include <Windows.h>
 #include <XFSIDC.H>
@@ -13,7 +13,7 @@ static LPSTR lpszFrontTrack1Fields = "F1\0F2\0";
 static LPSTR lpszJIS1Track1Fields = "F3\0F4\0";
 static LPSTR lpszJIS1Track3Fields = "F5\0F6\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_idc_v3_120_Form3_120Test_buildForm3_120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_idc_Form3120Test_buildForm3120(JNIEnv *env, jobject obj) {
 	Form.lpszFormName = FormName;
 	Form.cFieldSeparatorTrack1 = '=';
 	Form.cFieldSeparatorTrack2 = '=';

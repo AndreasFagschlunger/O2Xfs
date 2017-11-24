@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,35 +36,35 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 
-public class HexData3_30 extends Struct {
+public class HexData330 extends Struct {
 
 	protected final ULONG length = new ULONG();
 	protected final Pointer data = new Pointer();
 
-	protected HexData3_30() {
+	protected HexData330() {
 		add(length);
 		add(data);
 	}
 
-	public HexData3_30(Pointer p) {
+	public HexData330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public HexData3_30(HexData3_30 copy) {
+	public HexData330(HexData330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	public HexData3_30(byte[] copy) {
+	public HexData330(byte[] copy) {
 		this();
 		allocate();
 		length.set(copy.length);
 		data.pointTo(new ByteArray(copy));
 	}
 
-	protected void set(HexData3_30 copy) {
+	protected void set(HexData330 copy) {
 		length.set(copy.length);
 		data.pointTo(new ByteArray(copy.getData()));
 	}
@@ -80,9 +80,9 @@ public class HexData3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof HexData3_30) {
-			HexData3_30 hexData3_30 = (HexData3_30) obj;
-			return new EqualsBuilder().append(getData(), hexData3_30.getData()).isEquals();
+		if (obj instanceof HexData330) {
+			HexData330 hexData330 = (HexData330) obj;
+			return new EqualsBuilder().append(getData(), hexData330.getData()).isEquals();
 		}
 		return false;
 	}

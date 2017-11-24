@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,28 +33,28 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.cim.v3_10.PositionCapability3_10;
+import at.o2xfs.xfs.v3_10.cim.PositionCapability310;
 
-public class PositionCapability3_20 extends PositionCapability3_10 {
+public class PositionCapability320 extends PositionCapability310 {
 
 	protected final BOOL presentControl = new BOOL();
 
-	protected PositionCapability3_20() {
+	protected PositionCapability320() {
 		add(presentControl);
 	}
 
-	public PositionCapability3_20(Pointer p) {
+	public PositionCapability320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public PositionCapability3_20(PositionCapability3_20 copy) {
+	public PositionCapability320(PositionCapability320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(PositionCapability3_20 copy) {
+	protected void set(PositionCapability320 copy) {
 		super.set(copy);
 		presentControl.set(copy.isPresentControl());
 	}
@@ -70,9 +70,9 @@ public class PositionCapability3_20 extends PositionCapability3_10 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof PositionCapability3_20) {
-			PositionCapability3_20 posCaps3_20 = (PositionCapability3_20) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(isPresentControl(), posCaps3_20.isPresentControl()).isEquals();
+		if (obj instanceof PositionCapability320) {
+			PositionCapability320 posCaps320 = (PositionCapability320) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(isPresentControl(), posCaps320.isPresentControl()).isEquals();
 		}
 		return false;
 	}

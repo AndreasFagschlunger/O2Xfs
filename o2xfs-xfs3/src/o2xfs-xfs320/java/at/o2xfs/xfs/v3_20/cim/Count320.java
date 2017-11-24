@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,28 +36,28 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.UShortArray;
 
-public class Count3_20 extends Struct {
+public class Count320 extends Struct {
 
 	protected final USHORT count = new USHORT();
 	protected final Pointer cashUnitsNumList = new Pointer();
 
-	protected Count3_20() {
+	protected Count320() {
 		add(count);
 		add(cashUnitsNumList);
 	}
 
-	public Count3_20(Pointer p) {
+	public Count320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Count3_20(Count3_20 copy) {
+	public Count320(Count320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Count3_20 copy) {
+	protected void set(Count320 copy) {
 		count.set(copy.getCount());
 		cashUnitsNumList.pointTo(new UShortArray(copy.getCashUnitsNumList()));
 	}
@@ -77,9 +77,9 @@ public class Count3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Count3_20) {
-			Count3_20 count3_20 = (Count3_20) obj;
-			return new EqualsBuilder().append(getCount(), count3_20.getCount()).append(getCashUnitsNumList(), count3_20.getCashUnitsNumList()).isEquals();
+		if (obj instanceof Count320) {
+			Count320 count320 = (Count320) obj;
+			return new EqualsBuilder().append(getCount(), count320.getCount()).append(getCashUnitsNumList(), count320.getCashUnitsNumList()).isEquals();
 		}
 		return false;
 	}

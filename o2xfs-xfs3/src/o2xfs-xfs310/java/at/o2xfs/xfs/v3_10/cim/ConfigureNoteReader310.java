@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,26 +35,26 @@ import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class ConfigureNoteReader3_10 extends Struct {
+public class ConfigureNoteReader310 extends Struct {
 
 	protected final BOOL loadAlways = new BOOL();
 
-	protected ConfigureNoteReader3_10() {
+	protected ConfigureNoteReader310() {
 		add(loadAlways);
 	}
 
-	public ConfigureNoteReader3_10(Pointer p) {
+	public ConfigureNoteReader310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ConfigureNoteReader3_10(ConfigureNoteReader3_10 copy) {
+	public ConfigureNoteReader310(ConfigureNoteReader310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ConfigureNoteReader3_10 copy) {
+	protected void set(ConfigureNoteReader310 copy) {
 		loadAlways.set(copy.isLoadAlways());
 	}
 
@@ -69,9 +69,9 @@ public class ConfigureNoteReader3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ConfigureNoteReader3_10) {
-			ConfigureNoteReader3_10 configureNoteReader3_10 = (ConfigureNoteReader3_10) obj;
-			return new EqualsBuilder().append(isLoadAlways(), configureNoteReader3_10.isLoadAlways()).isEquals();
+		if (obj instanceof ConfigureNoteReader310) {
+			ConfigureNoteReader310 configureNoteReader310 = (ConfigureNoteReader310) obj;
+			return new EqualsBuilder().append(isLoadAlways(), configureNoteReader310.isLoadAlways()).isEquals();
 		}
 		return false;
 	}

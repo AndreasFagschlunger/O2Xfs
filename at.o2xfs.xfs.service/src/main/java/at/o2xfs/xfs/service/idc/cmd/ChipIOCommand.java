@@ -35,7 +35,7 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.IdcExecuteCommand;
-import at.o2xfs.xfs.idc.v3_00.ChipIo3;
+import at.o2xfs.xfs.v3_00.idc.ChipIo3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;

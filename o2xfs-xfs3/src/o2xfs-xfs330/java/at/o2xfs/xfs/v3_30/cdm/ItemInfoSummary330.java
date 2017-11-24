@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,28 +37,28 @@ import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.cdm.Level;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class ItemInfoSummary3_30 extends Struct {
+public class ItemInfoSummary330 extends Struct {
 
 	protected final XfsWord<Level> level = new XfsWord<>(Level.class);
 	protected final USHORT numOfItems = new USHORT();
 
-	protected ItemInfoSummary3_30() {
+	protected ItemInfoSummary330() {
 		add(level);
 		add(numOfItems);
 	}
 
-	public ItemInfoSummary3_30(Pointer p) {
+	public ItemInfoSummary330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemInfoSummary3_30(ItemInfoSummary3_30 copy) {
+	public ItemInfoSummary330(ItemInfoSummary330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ItemInfoSummary3_30 copy) {
+	protected void set(ItemInfoSummary330 copy) {
 		level.set(copy.getLevel());
 		numOfItems.set(copy.getNumOfItems());
 	}
@@ -78,8 +78,8 @@ public class ItemInfoSummary3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemInfoSummary3_30) {
-			ItemInfoSummary3_30 itemInfoSummary = (ItemInfoSummary3_30) obj;
+		if (obj instanceof ItemInfoSummary330) {
+			ItemInfoSummary330 itemInfoSummary = (ItemInfoSummary330) obj;
 			return new EqualsBuilder().append(getLevel(), itemInfoSummary.getLevel()).append(getNumOfItems(), itemInfoSummary.getNumOfItems()).isEquals();
 		}
 		return false;

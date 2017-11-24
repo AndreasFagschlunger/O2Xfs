@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,30 +33,30 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
-import at.o2xfs.xfs.cim.v3_00.P6Signature3;
+import at.o2xfs.xfs.v3_00.cim.P6Signature3;
 
-public class P6CompareSignature3_10 extends Struct {
+public class P6CompareSignature310 extends Struct {
 
 	protected final Pointer p6ReferenceSignatures = new Pointer();
 	protected final Pointer p6Signatures = new Pointer();
 
-	protected P6CompareSignature3_10() {
+	protected P6CompareSignature310() {
 		add(p6ReferenceSignatures);
 		add(p6Signatures);
 	}
 
-	public P6CompareSignature3_10(Pointer p) {
+	public P6CompareSignature310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public P6CompareSignature3_10(P6CompareSignature3_10 copy) {
+	public P6CompareSignature310(P6CompareSignature310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(P6CompareSignature3_10 copy) {
+	protected void set(P6CompareSignature310 copy) {
 		p6ReferenceSignatures.pointTo(new P6Signatures(copy.getP6ReferenceSignatures()));
 		p6Signatures.pointTo(new P6Signatures(copy.getP6Signatures()));
 	}
@@ -76,10 +76,10 @@ public class P6CompareSignature3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof P6CompareSignature3_10) {
-			P6CompareSignature3_10 p6CompareSignature3_10 = (P6CompareSignature3_10) obj;
-			return new EqualsBuilder().append(getP6ReferenceSignatures(), p6CompareSignature3_10.getP6ReferenceSignatures())
-					.append(getP6Signatures(), p6CompareSignature3_10.getP6Signatures()).isEquals();
+		if (obj instanceof P6CompareSignature310) {
+			P6CompareSignature310 p6CompareSignature310 = (P6CompareSignature310) obj;
+			return new EqualsBuilder().append(getP6ReferenceSignatures(), p6CompareSignature310.getP6ReferenceSignatures())
+					.append(getP6Signatures(), p6CompareSignature310.getP6Signatures()).isEquals();
 		}
 		return false;
 	}

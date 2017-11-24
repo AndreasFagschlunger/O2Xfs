@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +42,7 @@ import at.o2xfs.xfs.cim.Level;
 import at.o2xfs.xfs.win32.XfsDWordBitmask;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class GetItemInfo3_10 extends Struct {
+public class GetItemInfo310 extends Struct {
 
 	public static class Builder {
 
@@ -61,8 +61,8 @@ public class GetItemInfo3_10 extends Struct {
 			return this;
 		}
 
-		public GetItemInfo3_10 build() {
-			return new GetItemInfo3_10(this);
+		public GetItemInfo310 build() {
+			return new GetItemInfo310(this);
 		}
 	}
 
@@ -70,13 +70,13 @@ public class GetItemInfo3_10 extends Struct {
 	protected final USHORT index = new USHORT();
 	protected final XfsDWordBitmask<ItemInfoType> itemInfoType = new XfsDWordBitmask<>(ItemInfoType.class);
 
-	protected GetItemInfo3_10() {
+	protected GetItemInfo310() {
 		add(level);
 		add(index);
 		add(itemInfoType);
 	}
 
-	protected GetItemInfo3_10(Builder builder) {
+	protected GetItemInfo310(Builder builder) {
 		this();
 		allocate();
 		level.set(builder.level);
@@ -84,18 +84,18 @@ public class GetItemInfo3_10 extends Struct {
 		itemInfoType.set(builder.itemInfoTypes);
 	}
 
-	public GetItemInfo3_10(Pointer p) {
+	public GetItemInfo310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public GetItemInfo3_10(GetItemInfo3_10 copy) {
+	public GetItemInfo310(GetItemInfo310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(GetItemInfo3_10 copy) {
+	protected void set(GetItemInfo310 copy) {
 		level.set(copy.getLevel());
 		index.set(copy.getIndex());
 		itemInfoType.set(copy.getItemInfoType());
@@ -120,12 +120,12 @@ public class GetItemInfo3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof GetItemInfo3_10) {
-			GetItemInfo3_10 getItemInfo3_10 = (GetItemInfo3_10) obj;
+		if (obj instanceof GetItemInfo310) {
+			GetItemInfo310 getItemInfo310 = (GetItemInfo310) obj;
 			return new EqualsBuilder()
-					.append(getLevel(), getItemInfo3_10.getLevel())
-					.append(getIndex(), getItemInfo3_10.getIndex())
-					.append(getItemInfoType(), getItemInfo3_10.getItemInfoType())
+					.append(getLevel(), getItemInfo310.getLevel())
+					.append(getIndex(), getItemInfo310.getIndex())
+					.append(getItemInfoType(), getItemInfo310.getItemInfoType())
 					.isEquals();
 		}
 		return false;

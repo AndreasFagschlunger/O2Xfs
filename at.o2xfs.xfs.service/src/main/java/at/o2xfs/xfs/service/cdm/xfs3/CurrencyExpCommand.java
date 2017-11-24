@@ -38,7 +38,7 @@ import at.o2xfs.win32.ZList;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.cdm.v3_00.CurrencyExp3;
+import at.o2xfs.xfs.v3_00.cdm.CurrencyExp3;
 import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cdm.CdmService;

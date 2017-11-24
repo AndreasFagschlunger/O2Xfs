@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,31 +34,31 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class IncompleteDeplete3_30 extends Struct {
+public class IncompleteDeplete330 extends Struct {
 
 	protected final Pointer deplete = new Pointer();
 
-	protected IncompleteDeplete3_30() {
+	protected IncompleteDeplete330() {
 		add(deplete);
 	}
 
-	public IncompleteDeplete3_30(Pointer p) {
+	public IncompleteDeplete330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public IncompleteDeplete3_30(IncompleteDeplete3_30 copy) {
+	public IncompleteDeplete330(IncompleteDeplete330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(IncompleteDeplete3_30 copy) {
-		deplete.pointTo(new DepleteResult3_30(copy.getDeplete()));
+	protected void set(IncompleteDeplete330 copy) {
+		deplete.pointTo(new DepleteResult330(copy.getDeplete()));
 	}
 
-	public DepleteResult3_30 getDeplete() {
-		return new DepleteResult3_30(deplete);
+	public DepleteResult330 getDeplete() {
+		return new DepleteResult330(deplete);
 	}
 
 	@Override
@@ -68,9 +68,9 @@ public class IncompleteDeplete3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof IncompleteDeplete3_30) {
-			IncompleteDeplete3_30 incompleteDeplete3_30 = (IncompleteDeplete3_30) obj;
-			return new EqualsBuilder().append(getDeplete(), incompleteDeplete3_30.getDeplete()).isEquals();
+		if (obj instanceof IncompleteDeplete330) {
+			IncompleteDeplete330 incompleteDeplete330 = (IncompleteDeplete330) obj;
+			return new EqualsBuilder().append(getDeplete(), incompleteDeplete330.getDeplete()).isEquals();
 		}
 		return false;
 	}

@@ -38,9 +38,9 @@ import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cdm.Position;
-import at.o2xfs.xfs.cdm.v3_00.CdmCaps3;
-import at.o2xfs.xfs.cdm.v3_00.CdmStatus3;
-import at.o2xfs.xfs.cdm.v3_30.ItemInfoSummary3_30;
+import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
+import at.o2xfs.xfs.v3_00.cdm.CdmStatus3;
+import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cdm.CdmServiceAdapter;
 import at.o2xfs.xfs.service.cdm.CdmServiceListener;
@@ -189,7 +189,7 @@ public class PresentTask extends XfsServiceTask<CdmService> implements PresentLi
 	}
 
 	@Override
-	public void onInfoAvailable(ItemInfoSummary3_30 itemInfoSummary) {
+	public void onInfoAvailable(ItemInfoSummary330 itemInfoSummary) {
 
 	}
 

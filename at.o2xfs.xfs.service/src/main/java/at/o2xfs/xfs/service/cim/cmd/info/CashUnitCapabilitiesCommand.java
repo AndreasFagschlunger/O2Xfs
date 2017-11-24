@@ -34,14 +34,14 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cim.CimInfoCommand;
-import at.o2xfs.xfs.cim.v3_20.CashUnitCapabilities3_20;
+import at.o2xfs.xfs.v3_20.cim.CashUnitCapabilities320;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cim.CimFactory;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.cmd.XfsCallable;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 
-public final class CashUnitCapabilitiesCommand implements Callable<CashUnitCapabilities3_20> {
+public final class CashUnitCapabilitiesCommand implements Callable<CashUnitCapabilities320> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CashUnitCapabilitiesCommand.class);
 
@@ -52,15 +52,15 @@ public final class CashUnitCapabilitiesCommand implements Callable<CashUnitCapab
 	}
 
 	@Override
-	public CashUnitCapabilities3_20 call() throws XfsException {
-		CashUnitCapabilities3_20 result;
+	public CashUnitCapabilities320 call() throws XfsException {
+		CashUnitCapabilities320 result;
 		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService,
 				CimInfoCommand.CASH_UNIT_CAPABILITIES);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(),
-					CashUnitCapabilities3_20.class);
+					CashUnitCapabilities320.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);
 			}

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import java.util.Set;
 
@@ -38,11 +38,11 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.cim.CashInLimit;
 import at.o2xfs.xfs.cim.CountAction;
 import at.o2xfs.xfs.cim.MixedMode;
-import at.o2xfs.xfs.cim.v3_10.Capabilities3_10;
+import at.o2xfs.xfs.v3_10.cim.Capabilities310;
 import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
-public class Capabilities3_20 extends Capabilities3_10 {
+public class Capabilities320 extends Capabilities310 {
 
 	protected final BOOL replenish = new BOOL();
 	protected final XfsWordBitmask<CashInLimit> cashInLimit = new XfsWordBitmask<>(CashInLimit.class);
@@ -52,7 +52,7 @@ public class Capabilities3_20 extends Capabilities3_10 {
 	protected final BOOL mixedDepositAndRollback = new BOOL();
 	protected final BOOL antiFraudModule = new BOOL();
 
-	protected Capabilities3_20() {
+	protected Capabilities320() {
 		add(replenish);
 		add(cashInLimit);
 		add(countActions);
@@ -62,18 +62,18 @@ public class Capabilities3_20 extends Capabilities3_10 {
 		add(antiFraudModule);
 	}
 
-	public Capabilities3_20(Pointer p) {
+	public Capabilities320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Capabilities3_20(Capabilities3_20 copy) {
+	public Capabilities320(Capabilities320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Capabilities3_20 copy) {
+	protected void set(Capabilities320 copy) {
 		super.set(copy);
 		replenish.set(copy.isReplenish());
 		cashInLimit.set(copy.getCashInLimit());
@@ -120,12 +120,12 @@ public class Capabilities3_20 extends Capabilities3_10 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Capabilities3_20) {
-			Capabilities3_20 capabilities3_20 = (Capabilities3_20) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(isReplenish(), capabilities3_20.isReplenish())
-					.append(getCashInLimit(), capabilities3_20.getCashInLimit()).append(getCountActions(), capabilities3_20.getCountActions())
-					.append(isDeviceLockControl(), capabilities3_20.isDeviceLockControl()).append(getMixedMode(), capabilities3_20.getMixedMode())
-					.append(isMixedDepositAndRollback(), capabilities3_20.isMixedDepositAndRollback()).append(isAntiFraudModule(), capabilities3_20.isAntiFraudModule()).isEquals();
+		if (obj instanceof Capabilities320) {
+			Capabilities320 capabilities320 = (Capabilities320) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(isReplenish(), capabilities320.isReplenish())
+					.append(getCashInLimit(), capabilities320.getCashInLimit()).append(getCountActions(), capabilities320.getCountActions())
+					.append(isDeviceLockControl(), capabilities320.isDeviceLockControl()).append(getMixedMode(), capabilities320.getMixedMode())
+					.append(isMixedDepositAndRollback(), capabilities320.isMixedDepositAndRollback()).append(isAntiFraudModule(), capabilities320.isAntiFraudModule()).isEquals();
 		}
 		return false;
 	}

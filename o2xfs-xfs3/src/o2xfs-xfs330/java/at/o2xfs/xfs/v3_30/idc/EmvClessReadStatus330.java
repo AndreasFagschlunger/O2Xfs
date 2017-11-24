@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,31 +34,31 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class EmvClessReadStatus3_30 extends Struct {
+public class EmvClessReadStatus330 extends Struct {
 
 	protected final Pointer clessUI = new Pointer();
 
-	protected EmvClessReadStatus3_30() {
+	protected EmvClessReadStatus330() {
 		add(clessUI);
 	}
 
-	public EmvClessReadStatus3_30(Pointer p) {
+	public EmvClessReadStatus330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public EmvClessReadStatus3_30(EmvClessReadStatus3_30 copy) {
+	public EmvClessReadStatus330(EmvClessReadStatus330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(EmvClessReadStatus3_30 copy) {
-		clessUI.pointTo(new EmvClessUI3_30(copy.getClessUI()));
+	protected void set(EmvClessReadStatus330 copy) {
+		clessUI.pointTo(new EmvClessUI330(copy.getClessUI()));
 	}
 
-	public EmvClessUI3_30 getClessUI() {
-		return new EmvClessUI3_30(clessUI);
+	public EmvClessUI330 getClessUI() {
+		return new EmvClessUI330(clessUI);
 	}
 
 	@Override
@@ -68,9 +68,9 @@ public class EmvClessReadStatus3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof EmvClessReadStatus3_30) {
-			EmvClessReadStatus3_30 emvClessReadStatus3_30 = (EmvClessReadStatus3_30) obj;
-			return new EqualsBuilder().append(getClessUI(), emvClessReadStatus3_30.getClessUI()).isEquals();
+		if (obj instanceof EmvClessReadStatus330) {
+			EmvClessReadStatus330 emvClessReadStatus330 = (EmvClessReadStatus330) obj;
+			return new EqualsBuilder().append(getClessUI(), emvClessReadStatus330.getClessUI()).isEquals();
 		}
 		return false;
 	}

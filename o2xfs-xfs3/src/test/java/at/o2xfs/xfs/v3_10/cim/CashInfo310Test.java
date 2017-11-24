@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import java.util.EnumSet;
 
@@ -36,12 +36,12 @@ import at.o2xfs.xfs.cim.CashInItemType;
 import at.o2xfs.xfs.cim.CashInType;
 import at.o2xfs.xfs.cim.CashUnitStatus;
 
-public class CashInfo3_10Test {
+public class CashInfo310Test {
 
 	@Test
 	public final void testBuilder() {
-		PhysicalCashUnit3_10[] physicalCashUnits = new PhysicalCashUnit3_10[1];
-		physicalCashUnits[0] = new PhysicalCashUnit3_10.Builder("SLOT1", new char[] { '1', '2', '3', '4', '5' },
+		PhysicalCashUnit310[] physicalCashUnits = new PhysicalCashUnit310[1];
+		physicalCashUnits[0] = new PhysicalCashUnit310.Builder("SLOT1", new char[] { '1', '2', '3', '4', '5' },
 				CashUnitStatus.OK)
 						.initialCount(1L)
 						.dispensedCount(2L)
@@ -49,7 +49,7 @@ public class CashInfo3_10Test {
 						.retractedCount(4L)
 						.rejectCount(5L)
 						.build();
-		CashIn3_10 cashIn = new CashIn3_10.Builder(9, CashInType.CDMSPECIFIC, EnumSet.of(CashInItemType.INDIVIDUAL),
+		CashIn310 cashIn = new CashIn310.Builder(9, CashInType.CDMSPECIFIC, EnumSet.of(CashInItemType.INDIVIDUAL),
 				new char[] { '1', '2', '3', '4', '5' }, new char[] { 'E', 'U', 'R' }, CashUnitStatus.OK,
 				physicalCashUnits, CdmType.SELFSERVICEBILL).build();
 		System.out.println(cashIn);

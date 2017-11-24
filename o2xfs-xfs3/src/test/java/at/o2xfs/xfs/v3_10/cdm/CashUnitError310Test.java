@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -35,17 +35,17 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_10.BaseXfs3_10Test;
 
-public class CashUnitError3_10Test extends BaseXfs3_10Test {
+public class CashUnitError310Test extends BaseXfs310Test {
 
 	@Test
 	public final void test() {
-		CashUnitError3_10 expected = new CashUnitError3_10(buildCashUnitError3_10().getPointer());
-		CashUnitError3_10 actual = new CashUnitError3_10(expected);
+		CashUnitError310 expected = new CashUnitError310(buildCashUnitError310().getPointer());
+		CashUnitError310 actual = new CashUnitError310(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 		assertTrue(actual.getCashUnit().isPresent());
-		assertTrue(actual.getCashUnit().get() instanceof CashUnit3_10);
+		assertTrue(actual.getCashUnit().get() instanceof CashUnit310);
 	}
 
-	private native Buffer buildCashUnitError3_10();
+	private native Buffer buildCashUnitError310();
 }

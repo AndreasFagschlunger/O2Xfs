@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,31 +34,31 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class IncompleteReplenish3_20 extends Struct {
+public class IncompleteReplenish320 extends Struct {
 
 	protected final Pointer replenish = new Pointer();
 
-	protected IncompleteReplenish3_20() {
+	protected IncompleteReplenish320() {
 		add(replenish);
 	}
 
-	public IncompleteReplenish3_20(Pointer p) {
+	public IncompleteReplenish320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public IncompleteReplenish3_20(IncompleteReplenish3_20 copy) {
+	public IncompleteReplenish320(IncompleteReplenish320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(IncompleteReplenish3_20 copy) {
-		replenish.pointTo(new ReplenishResult3_20(copy.getReplenish()));
+	protected void set(IncompleteReplenish320 copy) {
+		replenish.pointTo(new ReplenishResult320(copy.getReplenish()));
 	}
 
-	public ReplenishResult3_20 getReplenish() {
-		return new ReplenishResult3_20(replenish);
+	public ReplenishResult320 getReplenish() {
+		return new ReplenishResult320(replenish);
 	}
 
 	@Override
@@ -68,9 +68,9 @@ public class IncompleteReplenish3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof IncompleteReplenish3_20) {
-			IncompleteReplenish3_20 incompleteReplenish3_20 = (IncompleteReplenish3_20) obj;
-			return new EqualsBuilder().append(getReplenish(), incompleteReplenish3_20.getReplenish()).isEquals();
+		if (obj instanceof IncompleteReplenish320) {
+			IncompleteReplenish320 incompleteReplenish320 = (IncompleteReplenish320) obj;
+			return new EqualsBuilder().append(getReplenish(), incompleteReplenish320.getReplenish()).isEquals();
 		}
 		return false;
 	}

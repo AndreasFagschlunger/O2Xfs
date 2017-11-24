@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,28 +37,28 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.cim.LockStatus;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class UnitLockControl3_20 extends Struct {
+public class UnitLockControl320 extends Struct {
 
 	protected final LPSTR physicalPositionName = new LPSTR();
 	protected final XfsWord<LockStatus> unitAction = new XfsWord<>(LockStatus.class);
 
-	protected UnitLockControl3_20() {
+	protected UnitLockControl320() {
 		add(physicalPositionName);
 		add(unitAction);
 	}
 
-	public UnitLockControl3_20(Pointer p) {
+	public UnitLockControl320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public UnitLockControl3_20(UnitLockControl3_20 copy) {
+	public UnitLockControl320(UnitLockControl320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(UnitLockControl3_20 copy) {
+	protected void set(UnitLockControl320 copy) {
 		physicalPositionName.set(copy.getPhysicalPositionName());
 		unitAction.set(copy.getUnitAction());
 	}
@@ -78,9 +78,9 @@ public class UnitLockControl3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof UnitLockControl3_20) {
-			UnitLockControl3_20 unitLockControl3_20 = (UnitLockControl3_20) obj;
-			return new EqualsBuilder().append(getPhysicalPositionName(), unitLockControl3_20.getPhysicalPositionName()).append(getUnitAction(), unitLockControl3_20.getUnitAction())
+		if (obj instanceof UnitLockControl320) {
+			UnitLockControl320 unitLockControl320 = (UnitLockControl320) obj;
+			return new EqualsBuilder().append(getPhysicalPositionName(), unitLockControl320.getPhysicalPositionName()).append(getUnitAction(), unitLockControl320.getUnitAction())
 					.isEquals();
 		}
 		return false;

@@ -25,14 +25,14 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsZPointerArray;
 
-class ReplenishInfoTargets extends XfsZPointerArray<ReplenishInfoTarget3_20> {
+class ReplenishInfoTargets extends XfsZPointerArray<ReplenishInfoTarget320> {
 
-	public ReplenishInfoTargets(ReplenishInfoTarget3_20[] array) {
+	public ReplenishInfoTargets(ReplenishInfoTarget320[] array) {
 		super(array);
 	}
 
@@ -41,15 +41,15 @@ class ReplenishInfoTargets extends XfsZPointerArray<ReplenishInfoTarget3_20> {
 	}
 
 	@Override
-	public ReplenishInfoTarget3_20 copy(ReplenishInfoTarget3_20 copy) {
-		return new ReplenishInfoTarget3_20(copy);
+	public ReplenishInfoTarget320 copy(ReplenishInfoTarget320 copy) {
+		return new ReplenishInfoTarget320(copy);
 	}
 
 	@Override
-	public ReplenishInfoTarget3_20[] get() {
-		ReplenishInfoTarget3_20[] result = new ReplenishInfoTarget3_20[pointers.length];
+	public ReplenishInfoTarget320[] get() {
+		ReplenishInfoTarget320[] result = new ReplenishInfoTarget320[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new ReplenishInfoTarget3_20(pointers[i]));
+			result[i] = copy(new ReplenishInfoTarget320(pointers[i]));
 		}
 		return result;
 	}

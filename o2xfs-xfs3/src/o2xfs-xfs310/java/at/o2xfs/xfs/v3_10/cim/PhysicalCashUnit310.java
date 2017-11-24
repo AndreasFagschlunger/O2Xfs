@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import java.util.Map;
 
@@ -36,9 +36,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.xfs.cim.CashUnitStatus;
-import at.o2xfs.xfs.cim.v3_00.PhysicalCashUnit3;
+import at.o2xfs.xfs.v3_00.cim.PhysicalCashUnit3;
 
-public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
+public class PhysicalCashUnit310 extends PhysicalCashUnit3 {
 
 	public static class Builder extends PhysicalCashUnit3.Builder {
 
@@ -108,8 +108,8 @@ public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
 		}
 
 		@Override
-		public PhysicalCashUnit3_10 build() {
-			return new PhysicalCashUnit3_10(this);
+		public PhysicalCashUnit310 build() {
+			return new PhysicalCashUnit310(this);
 		}
 	}
 
@@ -119,7 +119,7 @@ public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
 	protected final ULONG retractedCount = new ULONG();
 	protected final ULONG rejectCount = new ULONG();
 
-	protected PhysicalCashUnit3_10() {
+	protected PhysicalCashUnit310() {
 		add(initialCount);
 		add(dispensedCount);
 		add(presentedCount);
@@ -127,7 +127,7 @@ public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
 		add(rejectCount);
 	}
 
-	protected PhysicalCashUnit3_10(Builder builder) {
+	protected PhysicalCashUnit310(Builder builder) {
 		this();
 		allocate();
 		super.set(builder);
@@ -138,18 +138,18 @@ public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
 		rejectCount.set(builder.rejectCount);
 	}
 
-	public PhysicalCashUnit3_10(Pointer p) {
+	public PhysicalCashUnit310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public PhysicalCashUnit3_10(PhysicalCashUnit3_10 copy) {
+	public PhysicalCashUnit310(PhysicalCashUnit310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(PhysicalCashUnit3_10 copy) {
+	protected void set(PhysicalCashUnit310 copy) {
 		super.set(copy);
 		initialCount.set(copy.getInitialCount());
 		dispensedCount.set(copy.getDispensedCount());
@@ -192,15 +192,15 @@ public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof PhysicalCashUnit3_10) {
-			PhysicalCashUnit3_10 physicalCashUnit3_10 = (PhysicalCashUnit3_10) obj;
+		if (obj instanceof PhysicalCashUnit310) {
+			PhysicalCashUnit310 physicalCashUnit310 = (PhysicalCashUnit310) obj;
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
-					.append(getInitialCount(), physicalCashUnit3_10.getInitialCount())
-					.append(getDispensedCount(), physicalCashUnit3_10.getDispensedCount())
-					.append(getPresentedCount(), physicalCashUnit3_10.getPresentedCount())
-					.append(getRetractedCount(), physicalCashUnit3_10.getRetractedCount())
-					.append(getRejectCount(), physicalCashUnit3_10.getRejectCount())
+					.append(getInitialCount(), physicalCashUnit310.getInitialCount())
+					.append(getDispensedCount(), physicalCashUnit310.getDispensedCount())
+					.append(getPresentedCount(), physicalCashUnit310.getPresentedCount())
+					.append(getRetractedCount(), physicalCashUnit310.getRetractedCount())
+					.append(getRejectCount(), physicalCashUnit310.getRejectCount())
 					.isEquals();
 		}
 		return false;

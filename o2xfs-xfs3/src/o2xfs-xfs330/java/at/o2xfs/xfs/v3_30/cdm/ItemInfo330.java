@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import java.util.Optional;
 
@@ -41,7 +41,7 @@ import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.win32.XfsCharArray;
 
-public class ItemInfo3_30 extends Struct {
+public class ItemInfo330 extends Struct {
 
 	protected final XfsCharArray currencyID = new XfsCharArray(3);
 	protected final ULONG value = new ULONG();
@@ -50,7 +50,7 @@ public class ItemInfo3_30 extends Struct {
 	protected final Pointer signature = new Pointer();
 	protected final LPSTR imageFileName = new LPSTR();
 
-	protected ItemInfo3_30() {
+	protected ItemInfo330() {
 		add(currencyID);
 		add(value);
 		add(release);
@@ -59,25 +59,25 @@ public class ItemInfo3_30 extends Struct {
 		add(imageFileName);
 	}
 
-	public ItemInfo3_30(Pointer p) {
+	public ItemInfo330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemInfo3_30(ItemInfo3_30 copy) {
+	public ItemInfo330(ItemInfo330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ItemInfo3_30 copy) {
+	protected void set(ItemInfo330 copy) {
 		currencyID.set(copy.getCurrencyID());
 		value.set(copy.getValue());
 		release.set(copy.getRelease());
 		serialNumber.set(copy.getSerialNumber());
-		Optional<Signature3_30> signature = copy.getSignature();
+		Optional<Signature330> signature = copy.getSignature();
 		if (signature.isPresent()) {
-			this.signature.pointTo(new Signature3_30(signature.get()));
+			this.signature.pointTo(new Signature330(signature.get()));
 		}
 		imageFileName.set(copy.getImageFileName());
 	}
@@ -98,10 +98,10 @@ public class ItemInfo3_30 extends Struct {
 		return serialNumber.get();
 	}
 
-	public Optional<Signature3_30> getSignature() {
-		Optional<Signature3_30> result = Optional.empty();
+	public Optional<Signature330> getSignature() {
+		Optional<Signature330> result = Optional.empty();
 		if (!Pointer.NULL.equals(signature)) {
-			result = Optional.of(new Signature3_30(signature));
+			result = Optional.of(new Signature330(signature));
 		}
 		return result;
 	}
@@ -118,8 +118,8 @@ public class ItemInfo3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemInfo3_30) {
-			ItemInfo3_30 itemInfo = (ItemInfo3_30) obj;
+		if (obj instanceof ItemInfo330) {
+			ItemInfo330 itemInfo = (ItemInfo330) obj;
 			return new EqualsBuilder().append(getCurrencyID(), itemInfo.getCurrencyID()).append(getValue(), itemInfo.getValue()).append(getRelease(), itemInfo.getRelease())
 					.append(getSerialNumber(), itemInfo.getSerialNumber()).append(getSignature(), itemInfo.getSignature()).append(getImageFileName(), itemInfo.getImageFileName())
 					.isEquals();

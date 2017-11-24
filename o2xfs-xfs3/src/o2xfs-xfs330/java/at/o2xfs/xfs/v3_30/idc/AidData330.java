@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,7 +36,7 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 
-public class AidData3_30 extends Struct {
+public class AidData330 extends Struct {
 
 	protected final Pointer aid = new Pointer();
 	protected final BOOL partialSelection = new BOOL();
@@ -44,7 +44,7 @@ public class AidData3_30 extends Struct {
 	protected final Pointer kernelIdentifier = new Pointer();
 	protected final Pointer configData = new Pointer();
 
-	protected AidData3_30() {
+	protected AidData330() {
 		add(aid);
 		add(partialSelection);
 		add(transactionType);
@@ -52,27 +52,27 @@ public class AidData3_30 extends Struct {
 		add(configData);
 	}
 
-	public AidData3_30(Pointer p) {
+	public AidData330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public AidData3_30(AidData3_30 copy) {
+	public AidData330(AidData330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(AidData3_30 copy) {
-		aid.pointTo(new HexData3_30(copy.getAID()));
+	protected void set(AidData330 copy) {
+		aid.pointTo(new HexData330(copy.getAID()));
 		partialSelection.set(copy.isPartialSelection());
 		transactionType.set(copy.getTransactionType());
-		kernelIdentifier.pointTo(new HexData3_30(copy.getKernelIdentifier()));
-		configData.pointTo(new HexData3_30(copy.getConfigData()));
+		kernelIdentifier.pointTo(new HexData330(copy.getKernelIdentifier()));
+		configData.pointTo(new HexData330(copy.getConfigData()));
 	}
 
 	public byte[] getAID() {
-		return new HexData3_30(aid).getData();
+		return new HexData330(aid).getData();
 	}
 
 	public boolean isPartialSelection() {
@@ -84,11 +84,11 @@ public class AidData3_30 extends Struct {
 	}
 
 	public byte[] getKernelIdentifier() {
-		return new HexData3_30(kernelIdentifier).getData();
+		return new HexData330(kernelIdentifier).getData();
 	}
 
 	public byte[] getConfigData() {
-		return new HexData3_30(configData).getData();
+		return new HexData330(configData).getData();
 	}
 
 	@Override
@@ -104,14 +104,14 @@ public class AidData3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof AidData3_30) {
-			AidData3_30 aidData3_30 = (AidData3_30) obj;
+		if (obj instanceof AidData330) {
+			AidData330 aidData330 = (AidData330) obj;
 			return new EqualsBuilder()
-					.append(getAID(), aidData3_30.getAID())
-					.append(isPartialSelection(), aidData3_30.isPartialSelection())
-					.append(getTransactionType(), aidData3_30.getTransactionType())
-					.append(getKernelIdentifier(), aidData3_30.getKernelIdentifier())
-					.append(getConfigData(), aidData3_30.getConfigData())
+					.append(getAID(), aidData330.getAID())
+					.append(isPartialSelection(), aidData330.isPartialSelection())
+					.append(getTransactionType(), aidData330.getTransactionType())
+					.append(getKernelIdentifier(), aidData330.getKernelIdentifier())
+					.append(getConfigData(), aidData330.getConfigData())
 					.isEquals();
 		}
 		return false;

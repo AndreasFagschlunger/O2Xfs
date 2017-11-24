@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import java.util.Optional;
 
@@ -39,32 +39,32 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 
-public class P6SignaturesIndex3_10 extends Struct {
+public class P6SignaturesIndex310 extends Struct {
 
 	protected final USHORT index = new USHORT();
 	protected final USHORT confidenceLevel = new USHORT();
 	protected final ULONG length = new ULONG();
 	protected final Pointer comparisonData = new Pointer();
 
-	protected P6SignaturesIndex3_10() {
+	protected P6SignaturesIndex310() {
 		add(index);
 		add(confidenceLevel);
 		add(length);
 		add(comparisonData);
 	}
 
-	public P6SignaturesIndex3_10(Pointer p) {
+	public P6SignaturesIndex310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public P6SignaturesIndex3_10(P6SignaturesIndex3_10 copy) {
+	public P6SignaturesIndex310(P6SignaturesIndex310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(P6SignaturesIndex3_10 copy) {
+	protected void set(P6SignaturesIndex310 copy) {
 		index.set(copy.getIndex());
 		confidenceLevel.set(copy.getConfidenceLevel());
 		length.set(copy.getLength());
@@ -100,10 +100,10 @@ public class P6SignaturesIndex3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof P6SignaturesIndex3_10) {
-			P6SignaturesIndex3_10 p6SignaturesIndex3_10 = (P6SignaturesIndex3_10) obj;
-			return new EqualsBuilder().append(getIndex(), p6SignaturesIndex3_10.getIndex()).append(getConfidenceLevel(), p6SignaturesIndex3_10.getConfidenceLevel())
-					.append(getLength(), p6SignaturesIndex3_10.getLength()).append(getComparisonData().orElse(null), p6SignaturesIndex3_10.getComparisonData().orElse(null))
+		if (obj instanceof P6SignaturesIndex310) {
+			P6SignaturesIndex310 p6SignaturesIndex310 = (P6SignaturesIndex310) obj;
+			return new EqualsBuilder().append(getIndex(), p6SignaturesIndex310.getIndex()).append(getConfidenceLevel(), p6SignaturesIndex310.getConfidenceLevel())
+					.append(getLength(), p6SignaturesIndex310.getLength()).append(getComparisonData().orElse(null), p6SignaturesIndex310.getComparisonData().orElse(null))
 					.isEquals();
 		}
 		return false;

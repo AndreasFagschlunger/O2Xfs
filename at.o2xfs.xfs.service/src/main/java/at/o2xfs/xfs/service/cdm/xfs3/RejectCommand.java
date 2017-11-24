@@ -33,8 +33,8 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.CdmMessage;
-import at.o2xfs.xfs.cdm.v3_00.CashUnitError3;
-import at.o2xfs.xfs.cdm.v3_30.ItemInfoSummary3_30;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cdm.CdmService;
@@ -74,7 +74,7 @@ public class RejectCommand extends AbstractAsyncXfsCommand<RejectListener, Succe
 					fireInputP6();
 					break;
 				case EXEE_INFO_AVAILABLE:
-					fireInfoAvailable(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), ItemInfoSummary3_30.class));
+					fireInfoAvailable(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), ItemInfoSummary330.class));
 					break;
 				default:
 					throw new IllegalArgumentException("CdmMessage: " + message);
@@ -104,8 +104,8 @@ public class RejectCommand extends AbstractAsyncXfsCommand<RejectListener, Succe
 		}
 	}
 
-	private void fireInfoAvailable(ItemInfoSummary3_30 itemInfoSummary) {
-		String method = "fireInfoAvailable(ItemInfoSummary3_30)";
+	private void fireInfoAvailable(ItemInfoSummary330 itemInfoSummary) {
+		String method = "fireInfoAvailable(ItemInfoSummary330)";
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, itemInfoSummary);
 		}

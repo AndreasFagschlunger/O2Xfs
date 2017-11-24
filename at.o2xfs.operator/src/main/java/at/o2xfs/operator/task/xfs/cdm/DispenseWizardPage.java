@@ -36,8 +36,8 @@ import at.o2xfs.operator.ui.convert.LongConverter;
 import at.o2xfs.operator.ui.events.ModifyListener;
 import at.o2xfs.operator.ui.validator.LongRangeValidator;
 import at.o2xfs.operator.ui.validator.ValidatorException;
-import at.o2xfs.xfs.cdm.v3_00.CashUnit3;
-import at.o2xfs.xfs.cdm.v3_00.CurrencyExp3;
+import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
+import at.o2xfs.xfs.v3_00.cdm.CurrencyExp3;
 
 public class DispenseWizardPage implements ModifyListener {
 

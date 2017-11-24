@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,28 +36,28 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.xfs.win32.XfsData;
 
-public class Signature3_30 extends Struct {
+public class Signature330 extends Struct {
 
 	protected final ULONG length = new ULONG();
 	protected final Pointer data = new Pointer();
 
-	protected Signature3_30() {
+	protected Signature330() {
 		add(length);
 		add(data);
 	}
 
-	public Signature3_30(Pointer p) {
+	public Signature330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Signature3_30(Signature3_30 copy) {
+	public Signature330(Signature330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Signature3_30 copy) {
+	protected void set(Signature330 copy) {
 		length.set(copy.getLength());
 		data.pointTo(new XfsData(copy.getData()));
 	}
@@ -77,9 +77,9 @@ public class Signature3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Signature3_30) {
-			Signature3_30 signature3_30 = (Signature3_30) obj;
-			return new EqualsBuilder().append(getLength(), signature3_30.getLength()).append(getData(), signature3_30.getData()).isEquals();
+		if (obj instanceof Signature330) {
+			Signature330 signature330 = (Signature330) obj;
+			return new EqualsBuilder().append(getLength(), signature330.getLength()).append(getData(), signature330.getData()).isEquals();
 		}
 		return false;
 	}

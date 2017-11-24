@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import java.util.Set;
 
@@ -36,15 +36,15 @@ import at.o2xfs.xfs.idc.DataSource;
 import at.o2xfs.xfs.v3_30.BaseXfs3_30Test;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
-public class SynchronizeCommand3_30Test extends BaseXfs3_30Test {
+public class SynchronizeCommand330Test extends BaseXfs330Test {
 
 	@Test
 	public final void test() {
-		SynchronizeCommand3_30 expected = new SynchronizeCommand3_30(buildSynchronizeCommand3_30().getPointer());
+		SynchronizeCommand330 expected = new SynchronizeCommand330(buildSynchronizeCommand330().getPointer());
 		System.out.println(expected);
 		Set<DataSource> sources = new XfsWordBitmask<>(DataSource.class, expected.getCmdData()).get();
 		System.out.println(sources);
 	}
 
-	private native Buffer buildSynchronizeCommand3_30();
+	private native Buffer buildSynchronizeCommand330();
 }

@@ -29,7 +29,7 @@ package at.o2xfs.xfs.service.cim.cmd;
 
 import java.util.Objects;
 
-import at.o2xfs.xfs.cim.v3_00.CashInfo3;
+import at.o2xfs.xfs.v3_00.cim.CashInfo3;
 import at.o2xfs.xfs.service.cmd.event.CompleteEvent;
 
 public final class CashInEndCompleteEvent implements CompleteEvent {

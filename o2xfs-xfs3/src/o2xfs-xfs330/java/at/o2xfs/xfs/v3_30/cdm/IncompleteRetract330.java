@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,37 +34,37 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.cdm.IncompleteRetractReason;
-import at.o2xfs.xfs.cdm.v3_20.ItemNumberList3_20;
+import at.o2xfs.xfs.v3_20.cdm.ItemNumberList320;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class IncompleteRetract3_30 extends Struct {
+public class IncompleteRetract330 extends Struct {
 
-	protected final ItemNumberList3_20 itemNumberList = new ItemNumberList3_20();
+	protected final ItemNumberList320 itemNumberList = new ItemNumberList320();
 	protected final XfsWord<IncompleteRetractReason> reason = new XfsWord<>(IncompleteRetractReason.class);
 
-	protected IncompleteRetract3_30() {
+	protected IncompleteRetract330() {
 		add(itemNumberList);
 		add(reason);
 	}
 
-	public IncompleteRetract3_30(Pointer p) {
+	public IncompleteRetract330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public IncompleteRetract3_30(IncompleteRetract3_30 copy) {
+	public IncompleteRetract330(IncompleteRetract330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(IncompleteRetract3_30 copy) {
+	protected void set(IncompleteRetract330 copy) {
 		itemNumberList.set(copy.getItemNumberList());
 		reason.set(copy.getReason());
 	}
 
-	public ItemNumberList3_20 getItemNumberList() {
-		return new ItemNumberList3_20(itemNumberList);
+	public ItemNumberList320 getItemNumberList() {
+		return new ItemNumberList320(itemNumberList);
 	}
 
 	public IncompleteRetractReason getReason() {
@@ -78,8 +78,8 @@ public class IncompleteRetract3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof IncompleteRetract3_30) {
-			IncompleteRetract3_30 incompleteRetract = (IncompleteRetract3_30) obj;
+		if (obj instanceof IncompleteRetract330) {
+			IncompleteRetract330 incompleteRetract = (IncompleteRetract330) obj;
 			return new EqualsBuilder().append(getItemNumberList(), incompleteRetract.getItemNumberList()).append(getReason(), incompleteRetract.getReason()).isEquals();
 		}
 		return false;

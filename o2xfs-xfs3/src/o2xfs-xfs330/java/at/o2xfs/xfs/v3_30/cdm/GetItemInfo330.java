@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -39,19 +39,19 @@ import at.o2xfs.xfs.cdm.Level;
 import at.o2xfs.xfs.win32.XfsDWord;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class GetItemInfo3_30 extends Struct {
+public class GetItemInfo330 extends Struct {
 
 	protected final XfsWord<Level> level = new XfsWord<>(Level.class);
 	protected final USHORT index = new USHORT();
 	protected final XfsDWord<ItemInfoType> itemInfoType = new XfsDWord<>(ItemInfoType.class);
 
-	protected GetItemInfo3_30() {
+	protected GetItemInfo330() {
 		add(level);
 		add(index);
 		add(itemInfoType);
 	}
 
-	public GetItemInfo3_30(Level level, int index, ItemInfoType itemInfoType) {
+	public GetItemInfo330(Level level, int index, ItemInfoType itemInfoType) {
 		this();
 		allocate();
 		this.level.set(level);
@@ -59,18 +59,18 @@ public class GetItemInfo3_30 extends Struct {
 		this.itemInfoType.set(itemInfoType);
 	}
 
-	public GetItemInfo3_30(Pointer p) {
+	public GetItemInfo330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public GetItemInfo3_30(GetItemInfo3_30 copy) {
+	public GetItemInfo330(GetItemInfo330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(GetItemInfo3_30 copy) {
+	protected void set(GetItemInfo330 copy) {
 		level.set(copy.getLevel());
 		index.set(copy.getIndex());
 		itemInfoType.set(copy.getItemInfoType());
@@ -95,8 +95,8 @@ public class GetItemInfo3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof GetItemInfo3_30) {
-			GetItemInfo3_30 getItemInfo = (GetItemInfo3_30) obj;
+		if (obj instanceof GetItemInfo330) {
+			GetItemInfo330 getItemInfo = (GetItemInfo330) obj;
 			return new EqualsBuilder().append(getLevel(), getItemInfo.getLevel()).append(getIndex(), getItemInfo.getIndex())
 					.append(getItemInfoType(), getItemInfo.getItemInfoType()).isEquals();
 		}

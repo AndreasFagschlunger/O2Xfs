@@ -25,31 +25,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsPointerArray;
 
-class PhysicalCashUnitCapabilities3_20Array extends XfsPointerArray<PhysicalCashUnitCapabilities3_20> {
+class PhysicalCashUnitCapabilities320Array extends XfsPointerArray<PhysicalCashUnitCapabilities320> {
 
-	public PhysicalCashUnitCapabilities3_20Array(PhysicalCashUnitCapabilities3_20[] array) {
+	public PhysicalCashUnitCapabilities320Array(PhysicalCashUnitCapabilities320[] array) {
 		super(array);
 	}
 
-	public PhysicalCashUnitCapabilities3_20Array(Pointer p, int length) {
+	public PhysicalCashUnitCapabilities320Array(Pointer p, int length) {
 		super(p, length);
 	}
 
 	@Override
-	public PhysicalCashUnitCapabilities3_20 copy(PhysicalCashUnitCapabilities3_20 copy) {
-		return new PhysicalCashUnitCapabilities3_20(copy);
+	public PhysicalCashUnitCapabilities320 copy(PhysicalCashUnitCapabilities320 copy) {
+		return new PhysicalCashUnitCapabilities320(copy);
 	}
 
 	@Override
-	public PhysicalCashUnitCapabilities3_20[] get() {
-		PhysicalCashUnitCapabilities3_20[] result = new PhysicalCashUnitCapabilities3_20[pointers.length];
+	public PhysicalCashUnitCapabilities320[] get() {
+		PhysicalCashUnitCapabilities320[] result = new PhysicalCashUnitCapabilities320[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new PhysicalCashUnitCapabilities3_20(pointers[i]));
+			result[i] = copy(new PhysicalCashUnitCapabilities320(pointers[i]));
 		}
 		return result;
 	}

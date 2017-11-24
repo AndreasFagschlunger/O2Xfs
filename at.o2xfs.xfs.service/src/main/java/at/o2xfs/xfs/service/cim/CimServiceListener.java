@@ -29,13 +29,13 @@ package at.o2xfs.xfs.service.cim;
 
 import java.util.Optional;
 
-import at.o2xfs.xfs.cim.v3_00.CashIn3;
-import at.o2xfs.xfs.cim.v3_00.CountsChanged3;
-import at.o2xfs.xfs.cim.v3_00.ItemPosition3;
-import at.o2xfs.xfs.cim.v3_10.DevicePosition3_10;
-import at.o2xfs.xfs.cim.v3_10.PositionInfo3_10;
-import at.o2xfs.xfs.cim.v3_10.PowerSaveChange3_10;
-import at.o2xfs.xfs.cim.v3_30.ShutterStatusChanged3_30;
+import at.o2xfs.xfs.v3_00.cim.CashIn3;
+import at.o2xfs.xfs.v3_00.cim.CountsChanged3;
+import at.o2xfs.xfs.v3_00.cim.ItemPosition3;
+import at.o2xfs.xfs.v3_10.cim.DevicePosition310;
+import at.o2xfs.xfs.v3_10.cim.PositionInfo310;
+import at.o2xfs.xfs.v3_10.cim.PowerSaveChange310;
+import at.o2xfs.xfs.v3_30.cim.ShutterStatusChanged330;
 
 public interface CimServiceListener {
 
@@ -47,19 +47,19 @@ public interface CimServiceListener {
 
 	public void onTellerInfoChanged(int tellerId);
 
-	public void onItemsTaken(Optional<PositionInfo3_10> positionInfo);
+	public void onItemsTaken(Optional<PositionInfo310> positionInfo);
 
 	public void onCountsChanged(CountsChanged3 countsChanged);
 
-	public void onItemsPresented(Optional<PositionInfo3_10> positionInfo);
+	public void onItemsPresented(Optional<PositionInfo310> positionInfo);
 
-	public void onItemsInserted(Optional<PositionInfo3_10> positionInfo);
+	public void onItemsInserted(Optional<PositionInfo310> positionInfo);
 
 	public void onMediaDetected(Optional<ItemPosition3> itemPosition);
 
-	public void onDevicePosition(DevicePosition3_10 devicePosition);
+	public void onDevicePosition(DevicePosition310 devicePosition);
 
-	public void onPowerSaveChange(PowerSaveChange3_10 powerSaveChange);
+	public void onPowerSaveChange(PowerSaveChange310 powerSaveChange);
 
-	public void onShutterStatusChanged(ShutterStatusChanged3_30 shutterStatusChanged);
+	public void onShutterStatusChanged(ShutterStatusChanged330 shutterStatusChanged);
 }

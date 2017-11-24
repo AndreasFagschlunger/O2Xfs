@@ -25,14 +25,14 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsZPointerArray;
 
-class DepleteSourceResults extends XfsZPointerArray<DepleteSourceResult3_30> {
+class DepleteSourceResults extends XfsZPointerArray<DepleteSourceResult330> {
 
-	public DepleteSourceResults(DepleteSourceResult3_30[] array) {
+	public DepleteSourceResults(DepleteSourceResult330[] array) {
 		super(array);
 	}
 
@@ -41,15 +41,15 @@ class DepleteSourceResults extends XfsZPointerArray<DepleteSourceResult3_30> {
 	}
 
 	@Override
-	public DepleteSourceResult3_30 copy(DepleteSourceResult3_30 copy) {
-		return new DepleteSourceResult3_30(copy);
+	public DepleteSourceResult330 copy(DepleteSourceResult330 copy) {
+		return new DepleteSourceResult330(copy);
 	}
 
 	@Override
-	public DepleteSourceResult3_30[] get() {
-		DepleteSourceResult3_30[] result = new DepleteSourceResult3_30[pointers.length];
+	public DepleteSourceResult330[] get() {
+		DepleteSourceResult330[] result = new DepleteSourceResult330[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new DepleteSourceResult3_30(pointers[i]));
+			result[i] = copy(new DepleteSourceResult330(pointers[i]));
 		}
 		return result;
 	}

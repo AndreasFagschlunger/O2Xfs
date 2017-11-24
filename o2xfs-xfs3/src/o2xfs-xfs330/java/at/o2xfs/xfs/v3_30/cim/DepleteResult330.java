@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,30 +35,30 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 
-public class DepleteResult3_30 extends Struct {
+public class DepleteResult330 extends Struct {
 
 	protected final ULONG numberOfItemsReceived = new ULONG();
 	protected final ULONG numberOfItemsRejected = new ULONG();
 	protected final Pointer depleteSourceResults = new Pointer();
 
-	protected DepleteResult3_30() {
+	protected DepleteResult330() {
 		add(numberOfItemsReceived);
 		add(numberOfItemsRejected);
 		add(depleteSourceResults);
 	}
 
-	public DepleteResult3_30(Pointer p) {
+	public DepleteResult330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public DepleteResult3_30(DepleteResult3_30 copy) {
+	public DepleteResult330(DepleteResult330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(DepleteResult3_30 copy) {
+	protected void set(DepleteResult330 copy) {
 		numberOfItemsReceived.set(copy.getNumberOfItemsReceived());
 		numberOfItemsRejected.set(copy.getNumberOfItemsRejected());
 		depleteSourceResults.pointTo(new DepleteSourceResults(copy.getDepleteSourceResults()));
@@ -72,7 +72,7 @@ public class DepleteResult3_30 extends Struct {
 		return numberOfItemsRejected.get();
 	}
 
-	public DepleteSourceResult3_30[] getDepleteSourceResults() {
+	public DepleteSourceResult330[] getDepleteSourceResults() {
 		return new DepleteSourceResults(depleteSourceResults).get();
 	}
 
@@ -83,10 +83,10 @@ public class DepleteResult3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DepleteResult3_30) {
-			DepleteResult3_30 depleteResult3_30 = (DepleteResult3_30) obj;
-			return new EqualsBuilder().append(getNumberOfItemsReceived(), depleteResult3_30.getNumberOfItemsReceived())
-					.append(getNumberOfItemsRejected(), depleteResult3_30.getNumberOfItemsRejected()).append(getDepleteSourceResults(), depleteResult3_30.getDepleteSourceResults())
+		if (obj instanceof DepleteResult330) {
+			DepleteResult330 depleteResult330 = (DepleteResult330) obj;
+			return new EqualsBuilder().append(getNumberOfItemsReceived(), depleteResult330.getNumberOfItemsReceived())
+					.append(getNumberOfItemsRejected(), depleteResult330.getNumberOfItemsRejected()).append(getDepleteSourceResults(), depleteResult330.getDepleteSourceResults())
 					.isEquals();
 		}
 		return false;

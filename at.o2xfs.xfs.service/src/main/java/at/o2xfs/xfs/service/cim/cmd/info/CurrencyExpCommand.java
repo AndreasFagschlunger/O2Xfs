@@ -34,7 +34,7 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cim.CimInfoCommand;
-import at.o2xfs.xfs.cim.v3_00.CurrencyExp3;
+import at.o2xfs.xfs.v3_00.cim.CurrencyExp3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cim.CimFactory;
 import at.o2xfs.xfs.service.cim.CimService;

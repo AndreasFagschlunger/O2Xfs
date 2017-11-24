@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,45 +34,45 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class EmvClessConfigData3_30 extends Struct {
+public class EmvClessConfigData330 extends Struct {
 
 	protected final Pointer terminalData = new Pointer();
 	protected final Pointer aidData = new Pointer();
 	protected final Pointer keyData = new Pointer();
 
-	protected EmvClessConfigData3_30() {
+	protected EmvClessConfigData330() {
 		add(terminalData);
 		add(aidData);
 		add(keyData);
 	}
 
-	public EmvClessConfigData3_30(Pointer p) {
+	public EmvClessConfigData330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public EmvClessConfigData3_30(EmvClessConfigData3_30 copy) {
+	public EmvClessConfigData330(EmvClessConfigData330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(EmvClessConfigData3_30 copy) {
-		terminalData.pointTo(new HexData3_30(copy.getTerminalData()));
-		aidData.pointTo(new AidDataArray3_30(copy.getAIDData()));
-		keyData.pointTo(new KeyDataArray3_30(copy.getKeyData()));
+	protected void set(EmvClessConfigData330 copy) {
+		terminalData.pointTo(new HexData330(copy.getTerminalData()));
+		aidData.pointTo(new AidDataArray330(copy.getAIDData()));
+		keyData.pointTo(new KeyDataArray330(copy.getKeyData()));
 	}
 
 	public byte[] getTerminalData() {
-		return new HexData3_30(terminalData).getData();
+		return new HexData330(terminalData).getData();
 	}
 
-	public AidData3_30[] getAIDData() {
-		return new AidDataArray3_30(aidData).get();
+	public AidData330[] getAIDData() {
+		return new AidDataArray330(aidData).get();
 	}
 
-	public KeyData3_30[] getKeyData() {
-		return new KeyDataArray3_30(keyData).get();
+	public KeyData330[] getKeyData() {
+		return new KeyDataArray330(keyData).get();
 	}
 
 	@Override
@@ -82,12 +82,12 @@ public class EmvClessConfigData3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof EmvClessConfigData3_30) {
-			EmvClessConfigData3_30 emvClessConfigData3_30 = (EmvClessConfigData3_30) obj;
+		if (obj instanceof EmvClessConfigData330) {
+			EmvClessConfigData330 emvClessConfigData330 = (EmvClessConfigData330) obj;
 			return new EqualsBuilder()
-					.append(getTerminalData(), emvClessConfigData3_30.getTerminalData())
-					.append(getAIDData(), emvClessConfigData3_30.getAIDData())
-					.append(getKeyData(), emvClessConfigData3_30.getKeyData())
+					.append(getTerminalData(), emvClessConfigData330.getTerminalData())
+					.append(getAIDData(), emvClessConfigData330.getAIDData())
+					.append(getKeyData(), emvClessConfigData330.getKeyData())
 					.isEquals();
 		}
 		return false;

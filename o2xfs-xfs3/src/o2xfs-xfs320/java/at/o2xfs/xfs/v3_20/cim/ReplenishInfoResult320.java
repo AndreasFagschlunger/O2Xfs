@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,30 +34,30 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class ReplenishInfoResult3_20 extends Struct {
+public class ReplenishInfoResult320 extends Struct {
 
 	protected final Pointer replenishTargets = new Pointer();
 
-	protected ReplenishInfoResult3_20() {
+	protected ReplenishInfoResult320() {
 		add(replenishTargets);
 	}
 
-	public ReplenishInfoResult3_20(Pointer p) {
+	public ReplenishInfoResult320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ReplenishInfoResult3_20(ReplenishInfoResult3_20 copy) {
+	public ReplenishInfoResult320(ReplenishInfoResult320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ReplenishInfoResult3_20 copy) {
+	protected void set(ReplenishInfoResult320 copy) {
 		replenishTargets.pointTo(new ReplenishInfoTargets(copy.getReplenishTargets()));
 	}
 
-	public ReplenishInfoTarget3_20[] getReplenishTargets() {
+	public ReplenishInfoTarget320[] getReplenishTargets() {
 		return new ReplenishInfoTargets(replenishTargets).get();
 	}
 
@@ -68,9 +68,9 @@ public class ReplenishInfoResult3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ReplenishInfoResult3_20) {
-			ReplenishInfoResult3_20 replenishInfoResult3_20 = (ReplenishInfoResult3_20) obj;
-			return new EqualsBuilder().append(getReplenishTargets(), replenishInfoResult3_20.getReplenishTargets()).isEquals();
+		if (obj instanceof ReplenishInfoResult320) {
+			ReplenishInfoResult320 replenishInfoResult320 = (ReplenishInfoResult320) obj;
+			return new EqualsBuilder().append(getReplenishTargets(), replenishInfoResult320.getReplenishTargets()).isEquals();
 		}
 		return false;
 	}

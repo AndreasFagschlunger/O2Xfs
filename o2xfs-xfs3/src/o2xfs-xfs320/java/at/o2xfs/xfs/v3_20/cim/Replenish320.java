@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,28 +35,28 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class Replenish3_20 extends Struct {
+public class Replenish320 extends Struct {
 
 	protected final USHORT numberSource = new USHORT();
 	protected final Pointer replenishTargets = new Pointer();
 
-	protected Replenish3_20() {
+	protected Replenish320() {
 		add(numberSource);
 		add(replenishTargets);
 	}
 
-	public Replenish3_20(Pointer p) {
+	public Replenish320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Replenish3_20(Replenish3_20 copy) {
+	public Replenish320(Replenish320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Replenish3_20 copy) {
+	protected void set(Replenish320 copy) {
 		numberSource.set(copy.getNumberSource());
 		replenishTargets.pointTo(new ReplenishTargets(copy.getReplenishTargets()));
 	}
@@ -65,7 +65,7 @@ public class Replenish3_20 extends Struct {
 		return numberSource.get();
 	}
 
-	public ReplenishTarget3_20[] getReplenishTargets() {
+	public ReplenishTarget320[] getReplenishTargets() {
 		return new ReplenishTargets(replenishTargets).get();
 	}
 
@@ -76,9 +76,9 @@ public class Replenish3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Replenish3_20) {
-			Replenish3_20 replenish3_20 = (Replenish3_20) obj;
-			return new EqualsBuilder().append(getNumberSource(), replenish3_20.getNumberSource()).append(getReplenishTargets(), replenish3_20.getReplenishTargets()).isEquals();
+		if (obj instanceof Replenish320) {
+			Replenish320 replenish320 = (Replenish320) obj;
+			return new EqualsBuilder().append(getNumberSource(), replenish320.getNumberSource()).append(getReplenishTargets(), replenish320.getReplenishTargets()).isEquals();
 		}
 		return false;
 	}

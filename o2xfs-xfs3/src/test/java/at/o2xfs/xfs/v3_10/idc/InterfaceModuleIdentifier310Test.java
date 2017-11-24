@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_10;
+package at.o2xfs.xfs.v3_10.idc;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,16 +34,16 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_10.BaseXfs3_10Test;
 
-public class InterfaceModuleIdentifier3_10Test extends BaseXfs3_10Test {
+public class InterfaceModuleIdentifier310Test extends BaseXfs310Test {
 
 	@Test
 	public final void test() {
-		InterfaceModuleIdentifier3_10 expected = new InterfaceModuleIdentifier3_10(
-				buildInterfaceModuleIdentifier3_10().getPointer());
-		InterfaceModuleIdentifier3_10 actual = new InterfaceModuleIdentifier3_10(expected);
+		InterfaceModuleIdentifier310 expected = new InterfaceModuleIdentifier310(
+				buildInterfaceModuleIdentifier310().getPointer());
+		InterfaceModuleIdentifier310 actual = new InterfaceModuleIdentifier310(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildInterfaceModuleIdentifier3_10();
+	private native Buffer buildInterfaceModuleIdentifier310();
 }

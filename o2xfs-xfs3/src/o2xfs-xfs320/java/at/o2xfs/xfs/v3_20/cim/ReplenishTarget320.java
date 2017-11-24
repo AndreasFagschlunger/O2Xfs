@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,30 +37,30 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 
-public class ReplenishTarget3_20 extends Struct {
+public class ReplenishTarget320 extends Struct {
 
 	protected final USHORT numberTarget = new USHORT();
 	protected final ULONG numberOfItemsToMove = new ULONG();
 	protected final BOOL removeAll = new BOOL();
 
-	protected ReplenishTarget3_20() {
+	protected ReplenishTarget320() {
 		add(numberTarget);
 		add(numberOfItemsToMove);
 		add(removeAll);
 	}
 
-	public ReplenishTarget3_20(Pointer p) {
+	public ReplenishTarget320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ReplenishTarget3_20(ReplenishTarget3_20 copy) {
+	public ReplenishTarget320(ReplenishTarget320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ReplenishTarget3_20 copy) {
+	protected void set(ReplenishTarget320 copy) {
 		numberTarget.set(copy.getNumberTarget());
 		numberOfItemsToMove.set(copy.getNumberOfItemsToMove());
 		removeAll.set(copy.isRemoveAll());
@@ -85,10 +85,10 @@ public class ReplenishTarget3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ReplenishTarget3_20) {
-			ReplenishTarget3_20 replenishTarget3_20 = (ReplenishTarget3_20) obj;
-			return new EqualsBuilder().append(getNumberTarget(), replenishTarget3_20.getNumberTarget())
-					.append(getNumberOfItemsToMove(), replenishTarget3_20.getNumberOfItemsToMove()).append(isRemoveAll(), replenishTarget3_20.isRemoveAll()).isEquals();
+		if (obj instanceof ReplenishTarget320) {
+			ReplenishTarget320 replenishTarget320 = (ReplenishTarget320) obj;
+			return new EqualsBuilder().append(getNumberTarget(), replenishTarget320.getNumberTarget())
+					.append(getNumberOfItemsToMove(), replenishTarget320.getNumberOfItemsToMove()).append(isRemoveAll(), replenishTarget320.isRemoveAll()).isEquals();
 		}
 		return false;
 	}

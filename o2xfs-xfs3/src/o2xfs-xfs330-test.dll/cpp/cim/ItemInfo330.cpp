@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_30_ItemInfo3_30Test.h"
+#include "cim/at_o2xfs_xfs_v3_30_cim_ItemInfo330Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -37,7 +37,7 @@ static WFSCIMP6SIGNATURE P6Signature;
 static LPSTR lpszImageFileName = "C:\\note.png";
 static char lpSignature[] = { 'C', 'A', 'F', 'E' };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_130_ItemInfo3_130Test_buildItemInfo3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_ItemInfo3130Test_buildItemInfo3130(JNIEnv *env, jobject obj) {
 	ItemInfo.usNoteID = 1;
 	ItemInfo.lpszSerialNumber = lpszSerialNumber;
 	ItemInfo.lpP6Signature = &P6Signature;

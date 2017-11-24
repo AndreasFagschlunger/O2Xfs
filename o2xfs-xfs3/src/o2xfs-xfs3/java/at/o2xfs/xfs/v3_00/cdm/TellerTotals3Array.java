@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_00;
+package at.o2xfs.xfs.v3_00.cdm;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsZPointerArray;

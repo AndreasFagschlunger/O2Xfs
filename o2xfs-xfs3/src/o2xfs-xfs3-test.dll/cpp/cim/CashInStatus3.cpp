@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_00_CashInStatus3Test.h"
+#include "cim/at_o2xfs_xfs_v3_00_cim_CashInStatus3Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -36,7 +36,7 @@ static WFSCIMNOTENUMBERLIST NoteNumberList;
 static LPWFSCIMNOTENUMBER lppNoteNumber[1];
 static WFSCIMNOTENUMBER NoteNumber[1];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_100_CashInStatus3Test_buildCashInStatus3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cim_CashInStatus3Test_buildCashInStatus3(JNIEnv *env, jobject obj) {
 	lppNoteNumber[0] = &NoteNumber[0];
 
 	CashInStatus.wStatus = WFS_CIM_CIOK;

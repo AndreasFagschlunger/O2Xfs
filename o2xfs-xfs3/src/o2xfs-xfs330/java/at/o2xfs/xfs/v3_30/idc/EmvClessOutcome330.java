@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -39,7 +39,7 @@ import at.o2xfs.xfs.idc.AlternateInterface;
 import at.o2xfs.xfs.idc.CVM;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class EmvClessOutcome3_30 extends Struct {
+public class EmvClessOutcome330 extends Struct {
 
 	protected final XfsWord<CVM> cvm = new XfsWord<>(CVM.class);
 	protected final XfsWord<AlternateInterface> alternateInterface = new XfsWord<>(AlternateInterface.class);
@@ -50,7 +50,7 @@ public class EmvClessOutcome3_30 extends Struct {
 	protected final ULONG cardRemovalTimeoutValue = new ULONG();
 	protected final Pointer discretionaryData = new Pointer();
 
-	protected EmvClessOutcome3_30() {
+	protected EmvClessOutcome330() {
 		add(cvm);
 		add(alternateInterface);
 		add(receipt);
@@ -61,26 +61,26 @@ public class EmvClessOutcome3_30 extends Struct {
 		add(discretionaryData);
 	}
 
-	public EmvClessOutcome3_30(Pointer p) {
+	public EmvClessOutcome330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public EmvClessOutcome3_30(EmvClessOutcome3_30 copy) {
+	public EmvClessOutcome330(EmvClessOutcome330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(EmvClessOutcome3_30 copy) {
+	protected void set(EmvClessOutcome330 copy) {
 		cvm.set(copy.getCVM());
 		alternateInterface.set(copy.getAlternateInterface());
 		receipt.set(copy.isReceipt());
-		clessUIOutcome.pointTo(new EmvClessUI3_30(copy.getClessUIOutcome()));
-		clessUIRestart.pointTo(new EmvClessUI3_30(copy.getClessUIRestart()));
+		clessUIOutcome.pointTo(new EmvClessUI330(copy.getClessUIOutcome()));
+		clessUIRestart.pointTo(new EmvClessUI330(copy.getClessUIRestart()));
 		clessFieldOffHoldTime.set(copy.getClessFieldOffHoldTime());
 		cardRemovalTimeoutValue.set(copy.getCardRemovalTimeoutValue());
-		discretionaryData.pointTo(new HexData3_30(copy.getDiscretionaryData()));
+		discretionaryData.pointTo(new HexData330(copy.getDiscretionaryData()));
 	}
 
 	public CVM getCVM() {
@@ -95,12 +95,12 @@ public class EmvClessOutcome3_30 extends Struct {
 		return receipt.get();
 	}
 
-	public EmvClessUI3_30 getClessUIOutcome() {
-		return new EmvClessUI3_30(clessUIOutcome);
+	public EmvClessUI330 getClessUIOutcome() {
+		return new EmvClessUI330(clessUIOutcome);
 	}
 
-	public EmvClessUI3_30 getClessUIRestart() {
-		return new EmvClessUI3_30(clessUIRestart);
+	public EmvClessUI330 getClessUIRestart() {
+		return new EmvClessUI330(clessUIRestart);
 	}
 
 	public long getClessFieldOffHoldTime() {
@@ -112,7 +112,7 @@ public class EmvClessOutcome3_30 extends Struct {
 	}
 
 	public byte[] getDiscretionaryData() {
-		return new HexData3_30(discretionaryData).getData();
+		return new HexData330(discretionaryData).getData();
 	}
 
 	@Override
@@ -131,17 +131,17 @@ public class EmvClessOutcome3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof EmvClessOutcome3_30) {
-			EmvClessOutcome3_30 emvClessOutcome3_30 = (EmvClessOutcome3_30) obj;
+		if (obj instanceof EmvClessOutcome330) {
+			EmvClessOutcome330 emvClessOutcome330 = (EmvClessOutcome330) obj;
 			return new EqualsBuilder()
-					.append(getCVM(), emvClessOutcome3_30.getCVM())
-					.append(getAlternateInterface(), emvClessOutcome3_30.getAlternateInterface())
-					.append(isReceipt(), emvClessOutcome3_30.isReceipt())
-					.append(getClessUIOutcome(), emvClessOutcome3_30.getClessUIOutcome())
-					.append(getClessUIRestart(), emvClessOutcome3_30.getClessUIRestart())
-					.append(getClessFieldOffHoldTime(), emvClessOutcome3_30.getClessFieldOffHoldTime())
-					.append(getCardRemovalTimeoutValue(), emvClessOutcome3_30.getCardRemovalTimeoutValue())
-					.append(getDiscretionaryData(), emvClessOutcome3_30.getDiscretionaryData())
+					.append(getCVM(), emvClessOutcome330.getCVM())
+					.append(getAlternateInterface(), emvClessOutcome330.getAlternateInterface())
+					.append(isReceipt(), emvClessOutcome330.isReceipt())
+					.append(getClessUIOutcome(), emvClessOutcome330.getClessUIOutcome())
+					.append(getClessUIRestart(), emvClessOutcome330.getClessUIRestart())
+					.append(getClessFieldOffHoldTime(), emvClessOutcome330.getClessFieldOffHoldTime())
+					.append(getCardRemovalTimeoutValue(), emvClessOutcome330.getCardRemovalTimeoutValue())
+					.append(getDiscretionaryData(), emvClessOutcome330.getDiscretionaryData())
 					.isEquals();
 		}
 		return false;

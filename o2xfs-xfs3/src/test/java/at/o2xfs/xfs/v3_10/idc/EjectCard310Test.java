@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_10;
+package at.o2xfs.xfs.v3_10.idc;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_10.BaseXfs3_10Test;
 
-public class EjectCard3_10Test extends BaseXfs3_10Test {
+public class EjectCard310Test extends BaseXfs310Test {
 
 	@Test
 	public final void test() {
-		EjectCard3_10 expected = new EjectCard3_10(buildEjectCard3_10().getPointer());
-		EjectCard3_10 actual = new EjectCard3_10(expected);
+		EjectCard310 expected = new EjectCard310(buildEjectCard310().getPointer());
+		EjectCard310 actual = new EjectCard310(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildEjectCard3_10();
+	private native Buffer buildEjectCard310();
 }

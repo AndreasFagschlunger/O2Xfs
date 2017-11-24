@@ -25,31 +25,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsPointerArray;
 
-class P6SignaturesIndex3_10Array extends XfsPointerArray<P6SignaturesIndex3_10> {
+class P6SignaturesIndex310Array extends XfsPointerArray<P6SignaturesIndex310> {
 
-	public P6SignaturesIndex3_10Array(P6SignaturesIndex3_10[] array) {
+	public P6SignaturesIndex310Array(P6SignaturesIndex310[] array) {
 		super(array);
 	}
 
-	public P6SignaturesIndex3_10Array(Pointer p, int length) {
+	public P6SignaturesIndex310Array(Pointer p, int length) {
 		super(p, length);
 	}
 
 	@Override
-	public P6SignaturesIndex3_10 copy(P6SignaturesIndex3_10 copy) {
-		return new P6SignaturesIndex3_10(copy);
+	public P6SignaturesIndex310 copy(P6SignaturesIndex310 copy) {
+		return new P6SignaturesIndex310(copy);
 	}
 
 	@Override
-	public P6SignaturesIndex3_10[] get() {
-		P6SignaturesIndex3_10[] result = new P6SignaturesIndex3_10[pointers.length];
+	public P6SignaturesIndex310[] get() {
+		P6SignaturesIndex310[] result = new P6SignaturesIndex310[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new P6SignaturesIndex3_10(pointers[i]));
+			result[i] = copy(new P6SignaturesIndex310(pointers[i]));
 		}
 		return result;
 	}

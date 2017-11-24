@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_20;
+package at.o2xfs.xfs.v3_20.idc;
 
 import java.util.Set;
 
@@ -38,26 +38,26 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.idc.DataSource;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
-public class TrackDetected3_20 extends Struct {
+public class TrackDetected320 extends Struct {
 
 	protected final XfsWordBitmask<DataSource> tracks = new XfsWordBitmask<>(DataSource.class);
 
-	protected TrackDetected3_20() {
+	protected TrackDetected320() {
 		add(tracks);
 	}
 
-	public TrackDetected3_20(Pointer p) {
+	public TrackDetected320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public TrackDetected3_20(TrackDetected3_20 copy) {
+	public TrackDetected320(TrackDetected320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(TrackDetected3_20 copy) {
+	protected void set(TrackDetected320 copy) {
 		tracks.set(copy.getTracks());
 	}
 
@@ -72,9 +72,9 @@ public class TrackDetected3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof TrackDetected3_20) {
-			TrackDetected3_20 trackDetected3_20 = (TrackDetected3_20) obj;
-			return new EqualsBuilder().append(getTracks(), trackDetected3_20.getTracks()).isEquals();
+		if (obj instanceof TrackDetected320) {
+			TrackDetected320 trackDetected320 = (TrackDetected320) obj;
+			return new EqualsBuilder().append(getTracks(), trackDetected320.getTracks()).isEquals();
 		}
 		return false;
 	}

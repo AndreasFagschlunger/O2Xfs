@@ -34,37 +34,37 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cim.CimInfoCommand;
-import at.o2xfs.xfs.cim.v3_20.ReplenishInfo3_20;
-import at.o2xfs.xfs.cim.v3_20.ReplenishInfoResult3_20;
+import at.o2xfs.xfs.v3_20.cim.ReplenishInfo320;
+import at.o2xfs.xfs.v3_20.cim.ReplenishInfoResult320;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cim.CimFactory;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.cmd.XfsCallable;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 
-public final class ReplenishTargetCommand implements Callable<ReplenishInfoResult3_20> {
+public final class ReplenishTargetCommand implements Callable<ReplenishInfoResult320> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ReplenishTargetCommand.class);
 
 	private final CimService cimService;
 
-	private final ReplenishInfo3_20 replenishInfo;
+	private final ReplenishInfo320 replenishInfo;
 
-	public ReplenishTargetCommand(CimService cimService, ReplenishInfo3_20 replenishInfo) {
+	public ReplenishTargetCommand(CimService cimService, ReplenishInfo320 replenishInfo) {
 		this.cimService = cimService;
 		this.replenishInfo = replenishInfo;
 	}
 
 	@Override
-	public ReplenishInfoResult3_20 call() throws XfsException {
-		ReplenishInfoResult3_20 result;
+	public ReplenishInfoResult320 call() throws XfsException {
+		ReplenishInfoResult320 result;
 		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService,
 				CimInfoCommand.REPLENISH_TARGET, replenishInfo);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(),
-					ReplenishInfoResult3_20.class);
+					ReplenishInfoResult320.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);
 			}

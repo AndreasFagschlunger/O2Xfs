@@ -25,10 +25,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.cim.v3_00.P6Signature3;
+import at.o2xfs.xfs.v3_00.cim.P6Signature3;
 import at.o2xfs.xfs.win32.XfsZPointerArray;
 
 class P6Signatures extends XfsZPointerArray<P6Signature3> {

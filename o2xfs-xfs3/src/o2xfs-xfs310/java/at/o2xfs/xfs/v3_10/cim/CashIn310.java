@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import java.util.Map;
 import java.util.Optional;
@@ -42,12 +42,12 @@ import at.o2xfs.xfs.cdm.CdmType;
 import at.o2xfs.xfs.cim.CashInItemType;
 import at.o2xfs.xfs.cim.CashInType;
 import at.o2xfs.xfs.cim.CashUnitStatus;
-import at.o2xfs.xfs.cim.v3_00.CashIn3;
-import at.o2xfs.xfs.cim.v3_00.NoteIDs;
-import at.o2xfs.xfs.cim.v3_00.NoteNumberList3;
+import at.o2xfs.xfs.v3_00.cim.CashIn3;
+import at.o2xfs.xfs.v3_00.cim.NoteIDs;
+import at.o2xfs.xfs.v3_00.cim.NoteNumberList3;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class CashIn3_10 extends CashIn3 {
+public class CashIn310 extends CashIn3 {
 
 	public static class Builder extends CashIn3.Builder {
 
@@ -62,7 +62,7 @@ public class CashIn3_10 extends CashIn3 {
 		private long minimum;
 
 		public Builder(int number, CashInType type, Set<CashInItemType> itemType, char[] unitID, char[] currencyID,
-				CashUnitStatus status, PhysicalCashUnit3_10[] physicalCashUnits, CdmType cdmType) {
+				CashUnitStatus status, PhysicalCashUnit310[] physicalCashUnits, CdmType cdmType) {
 			super(number, type, itemType, unitID, currencyID, status, physicalCashUnits);
 			noteIds = new int[0];
 			this.cdmType = cdmType;
@@ -152,8 +152,8 @@ public class CashIn3_10 extends CashIn3 {
 		}
 
 		@Override
-		public CashIn3_10 build() {
-			return new CashIn3_10(this);
+		public CashIn310 build() {
+			return new CashIn310(this);
 		}
 	}
 
@@ -167,7 +167,7 @@ public class CashIn3_10 extends CashIn3 {
 	protected final ULONG rejectCount = new ULONG();
 	protected final ULONG minimum = new ULONG();
 
-	protected CashIn3_10() {
+	protected CashIn310() {
 		add(noteIds);
 		add(cdmType);
 		add(cashUnitName);
@@ -179,7 +179,7 @@ public class CashIn3_10 extends CashIn3 {
 		add(minimum);
 	}
 
-	protected CashIn3_10(Builder builder) {
+	protected CashIn310(Builder builder) {
 		this();
 		allocate();
 		super.set(builder);
@@ -194,18 +194,18 @@ public class CashIn3_10 extends CashIn3 {
 		minimum.set(builder.minimum);
 	}
 
-	public CashIn3_10(Pointer p) {
+	public CashIn310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public CashIn3_10(CashIn3_10 copy) {
+	public CashIn310(CashIn310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(CashIn3_10 copy) {
+	protected void set(CashIn310 copy) {
 		super.set(copy);
 		noteIds.pointTo(new NoteIDs(copy.getNoteIds()));
 		cdmType.set(copy.getCdmType());
@@ -219,8 +219,8 @@ public class CashIn3_10 extends CashIn3 {
 	}
 
 	@Override
-	public PhysicalCashUnit3_10[] getPhysicalCashUnits() {
-		return new PhysicalCashUnits3_10(physical, getNumPhysicalCUs()).get();
+	public PhysicalCashUnit310[] getPhysicalCashUnits() {
+		return new PhysicalCashUnits310(physical, getNumPhysicalCUs()).get();
 	}
 
 	public int[] getNoteIds() {
@@ -277,19 +277,19 @@ public class CashIn3_10 extends CashIn3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CashIn3_10) {
-			CashIn3_10 cashIn3_10 = (CashIn3_10) obj;
+		if (obj instanceof CashIn310) {
+			CashIn310 cashIn310 = (CashIn310) obj;
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
-					.append(getNoteIds(), cashIn3_10.getNoteIds())
-					.append(getCdmType(), cashIn3_10.getCdmType())
-					.append(getCashUnitName(), cashIn3_10.getCashUnitName())
-					.append(getInitialCount(), cashIn3_10.getInitialCount())
-					.append(getDispensedCount(), cashIn3_10.getDispensedCount())
-					.append(getPresentedCount(), cashIn3_10.getPresentedCount())
-					.append(getRetractedCount(), cashIn3_10.getRetractedCount())
-					.append(getRejectCount(), cashIn3_10.getRejectCount())
-					.append(getMinimum(), cashIn3_10.getMinimum())
+					.append(getNoteIds(), cashIn310.getNoteIds())
+					.append(getCdmType(), cashIn310.getCdmType())
+					.append(getCashUnitName(), cashIn310.getCashUnitName())
+					.append(getInitialCount(), cashIn310.getInitialCount())
+					.append(getDispensedCount(), cashIn310.getDispensedCount())
+					.append(getPresentedCount(), cashIn310.getPresentedCount())
+					.append(getRetractedCount(), cashIn310.getRetractedCount())
+					.append(getRejectCount(), cashIn310.getRejectCount())
+					.append(getMinimum(), cashIn310.getMinimum())
 					.isEquals();
 		}
 		return false;

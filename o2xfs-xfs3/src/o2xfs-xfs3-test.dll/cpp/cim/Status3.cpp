@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_00_Status3Test.h"
+#include "cim/at_o2xfs_xfs_v3_00_cim_Status3Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -36,7 +36,7 @@ static WFSCIMINPOS Positions[2];
 static LPWFSCIMINPOS lppPositions[3];
 static LPSTR lpszExtra = "LASTERROR=StClass=00000000\0StCode=00000000\0LastErrorText=OK:none\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_100_Status3Test_buildStatus3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cim_Status3Test_buildStatus3(JNIEnv *env, jobject obj) {
 	Status.fwDevice = WFS_CIM_DEVONLINE;
 	Status.fwSafeDoor = WFS_CIM_DOORCLOSED;
 	Status.fwAcceptor = WFS_CIM_ACCOK;

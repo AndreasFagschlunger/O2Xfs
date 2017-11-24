@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_10.BaseXfs3_10Test;
 
-public class ConfigureNoteReader3_10Test extends BaseXfs3_10Test {
+public class ConfigureNoteReader310Test extends BaseXfs310Test {
 
 	@Test
 	public final void test() {
-		ConfigureNoteReader3_10 expected = new ConfigureNoteReader3_10(buildConfigureNoteReader3_10().getPointer());
-		ConfigureNoteReader3_10 actual = new ConfigureNoteReader3_10(expected);
+		ConfigureNoteReader310 expected = new ConfigureNoteReader310(buildConfigureNoteReader310().getPointer());
+		ConfigureNoteReader310 actual = new ConfigureNoteReader310(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildConfigureNoteReader3_10();
+	private native Buffer buildConfigureNoteReader310();
 }

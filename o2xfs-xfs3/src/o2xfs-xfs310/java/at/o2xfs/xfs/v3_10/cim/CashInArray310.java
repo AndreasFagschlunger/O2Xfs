@@ -25,31 +25,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsPointerArray;
 
-final class CashInArray3_10 extends XfsPointerArray<CashIn3_10> {
+final class CashInArray310 extends XfsPointerArray<CashIn310> {
 
-	public CashInArray3_10(CashIn3_10[] array) {
+	public CashInArray310(CashIn310[] array) {
 		super(array);
 	}
 
-	public CashInArray3_10(Pointer p, int length) {
+	public CashInArray310(Pointer p, int length) {
 		super(p, length);
 	}
 
 	@Override
-	public CashIn3_10 copy(CashIn3_10 copy) {
-		return new CashIn3_10(copy);
+	public CashIn310 copy(CashIn310 copy) {
+		return new CashIn310(copy);
 	}
 
 	@Override
-	public CashIn3_10[] get() {
-		CashIn3_10[] result = new CashIn3_10[pointers.length];
+	public CashIn310[] get() {
+		CashIn310[] result = new CashIn310[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new CashIn3_10(pointers[i]));
+			result[i] = copy(new CashIn310(pointers[i]));
 		}
 		return result;
 	}

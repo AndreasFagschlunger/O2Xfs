@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import java.util.Optional;
 
@@ -37,32 +37,32 @@ import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
-import at.o2xfs.xfs.cim.v3_00.P6Signature3;
+import at.o2xfs.xfs.v3_00.cim.P6Signature3;
 
-public class ItemInfo3_10 extends Struct {
+public class ItemInfo310 extends Struct {
 
 	protected final USHORT noteID = new USHORT();
 	protected final LPSTR serialNumber = new LPSTR();
 	protected final Pointer p6Signature = new Pointer();
 
-	protected ItemInfo3_10() {
+	protected ItemInfo310() {
 		add(noteID);
 		add(serialNumber);
 		add(p6Signature);
 	}
 
-	public ItemInfo3_10(Pointer p) {
+	public ItemInfo310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemInfo3_10(ItemInfo3_10 copy) {
+	public ItemInfo310(ItemInfo310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ItemInfo3_10 copy) {
+	protected void set(ItemInfo310 copy) {
 		noteID.set(copy.getNoteID());
 		Optional<String> serialNumber = copy.getSerialNumber();
 		if (serialNumber.isPresent()) {
@@ -101,10 +101,10 @@ public class ItemInfo3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemInfo3_10) {
-			ItemInfo3_10 itemInfo3_10 = (ItemInfo3_10) obj;
-			return new EqualsBuilder().append(getNoteID(), itemInfo3_10.getNoteID()).append(getSerialNumber(), itemInfo3_10.getSerialNumber())
-					.append(getP6Signature(), itemInfo3_10.getP6Signature()).isEquals();
+		if (obj instanceof ItemInfo310) {
+			ItemInfo310 itemInfo310 = (ItemInfo310) obj;
+			return new EqualsBuilder().append(getNoteID(), itemInfo310.getNoteID()).append(getSerialNumber(), itemInfo310.getSerialNumber())
+					.append(getP6Signature(), itemInfo310.getP6Signature()).isEquals();
 		}
 		return false;
 	}

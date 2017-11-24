@@ -34,14 +34,14 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cim.CimInfoCommand;
-import at.o2xfs.xfs.cim.v3_30.Blacklist3_30;
+import at.o2xfs.xfs.v3_30.cim.Blacklist330;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cim.CimFactory;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.cmd.XfsCallable;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 
-public final class GetBlacklistCommand implements Callable<Blacklist3_30> {
+public final class GetBlacklistCommand implements Callable<Blacklist330> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(GetBlacklistCommand.class);
 
@@ -52,14 +52,14 @@ public final class GetBlacklistCommand implements Callable<Blacklist3_30> {
 	}
 
 	@Override
-	public Blacklist3_30 call() throws XfsException {
-		Blacklist3_30 result;
+	public Blacklist330 call() throws XfsException {
+		Blacklist330 result;
 		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService,
 				CimInfoCommand.GET_BLACKLIST);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
-			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), Blacklist3_30.class);
+			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), Blacklist330.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);
 			}

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_30_ItemInfoSummary3_30Test.h"
+#include "at_o2xfs_xfs_v3_30_cdm_ItemInfoSummary330Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -33,7 +33,7 @@
 
 static WFSCDMITEMINFOSUMMARY ItemInfoSummary;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_130_ItemInfoSummary3_130Test_buildItemInfoSummary3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_ItemInfoSummary3130Test_buildItemInfoSummary3130(JNIEnv *env, jobject obj) {
 	ItemInfoSummary.usLevel = WFS_CDM_LEVEL_3;
 	ItemInfoSummary.usNumOfItems = 3;
 	return NewBuffer(env, &ItemInfoSummary, sizeof(WFSCDMITEMINFOSUMMARY));

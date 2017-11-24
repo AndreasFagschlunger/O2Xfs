@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_10;
+package at.o2xfs.xfs.v3_10.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,28 +37,28 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.idc.IFMAuthority;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class InterfaceModuleIdentifier3_10 extends Struct {
+public class InterfaceModuleIdentifier310 extends Struct {
 
 	protected final XfsWord<IFMAuthority> ifmAuthority = new XfsWord<>(IFMAuthority.class);
 	protected final LPSTR ifmIdentifier = new LPSTR();
 
-	protected InterfaceModuleIdentifier3_10() {
+	protected InterfaceModuleIdentifier310() {
 		add(ifmAuthority);
 		add(ifmIdentifier);
 	}
 
-	public InterfaceModuleIdentifier3_10(Pointer p) {
+	public InterfaceModuleIdentifier310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public InterfaceModuleIdentifier3_10(InterfaceModuleIdentifier3_10 copy) {
+	public InterfaceModuleIdentifier310(InterfaceModuleIdentifier310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(InterfaceModuleIdentifier3_10 copy) {
+	protected void set(InterfaceModuleIdentifier310 copy) {
 		ifmAuthority.set(copy.getIfmAuthority());
 		ifmIdentifier.set(copy.getIfmIdentifier());
 	}
@@ -78,11 +78,11 @@ public class InterfaceModuleIdentifier3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof InterfaceModuleIdentifier3_10) {
-			InterfaceModuleIdentifier3_10 interfaceModuleIdentifier3_10 = (InterfaceModuleIdentifier3_10) obj;
+		if (obj instanceof InterfaceModuleIdentifier310) {
+			InterfaceModuleIdentifier310 interfaceModuleIdentifier310 = (InterfaceModuleIdentifier310) obj;
 			return new EqualsBuilder()
-					.append(getIfmAuthority(), interfaceModuleIdentifier3_10.getIfmAuthority())
-					.append(getIfmIdentifier(), interfaceModuleIdentifier3_10.getIfmIdentifier())
+					.append(getIfmAuthority(), interfaceModuleIdentifier310.getIfmAuthority())
+					.append(getIfmIdentifier(), interfaceModuleIdentifier310.getIfmIdentifier())
 					.isEquals();
 		}
 		return false;

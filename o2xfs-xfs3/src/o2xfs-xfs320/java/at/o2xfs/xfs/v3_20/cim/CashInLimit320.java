@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import java.util.Optional;
 
@@ -37,30 +37,30 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 
-public class CashInLimit3_20 extends Struct {
+public class CashInLimit320 extends Struct {
 
 	protected final ULONG totalItemsLimit = new ULONG();
 	protected final Pointer amountLimit = new Pointer();
 
-	protected CashInLimit3_20() {
+	protected CashInLimit320() {
 		add(totalItemsLimit);
 		add(amountLimit);
 	}
 
-	public CashInLimit3_20(Pointer p) {
+	public CashInLimit320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public CashInLimit3_20(CashInLimit3_20 copy) {
+	public CashInLimit320(CashInLimit320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(CashInLimit3_20 copy) {
+	protected void set(CashInLimit320 copy) {
 		totalItemsLimit.set(copy.getTotalItemsLimit());
-		Optional<AmountLimit3_20> amountLimit = copy.getAmountLimit();
+		Optional<AmountLimit320> amountLimit = copy.getAmountLimit();
 		if (amountLimit.isPresent()) {
 			this.amountLimit.pointTo(amountLimit.get());
 		}
@@ -70,10 +70,10 @@ public class CashInLimit3_20 extends Struct {
 		return totalItemsLimit.get();
 	}
 
-	public Optional<AmountLimit3_20> getAmountLimit() {
-		Optional<AmountLimit3_20> result = Optional.empty();
+	public Optional<AmountLimit320> getAmountLimit() {
+		Optional<AmountLimit320> result = Optional.empty();
 		if (!Pointer.NULL.equals(amountLimit)) {
-			result = Optional.of(new AmountLimit3_20(amountLimit));
+			result = Optional.of(new AmountLimit320(amountLimit));
 		}
 		return result;
 	}
@@ -85,9 +85,9 @@ public class CashInLimit3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CashInLimit3_20) {
-			CashInLimit3_20 cashInLimit3_20 = (CashInLimit3_20) obj;
-			return new EqualsBuilder().append(getTotalItemsLimit(), cashInLimit3_20.getTotalItemsLimit()).append(getAmountLimit(), cashInLimit3_20.getAmountLimit()).isEquals();
+		if (obj instanceof CashInLimit320) {
+			CashInLimit320 cashInLimit320 = (CashInLimit320) obj;
+			return new EqualsBuilder().append(getTotalItemsLimit(), cashInLimit320.getTotalItemsLimit()).append(getAmountLimit(), cashInLimit320.getAmountLimit()).isEquals();
 		}
 		return false;
 	}

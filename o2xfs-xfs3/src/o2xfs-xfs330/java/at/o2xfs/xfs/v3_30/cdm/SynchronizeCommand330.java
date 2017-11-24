@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,17 +35,17 @@ import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class SynchronizeCommand3_30 extends Struct {
+public class SynchronizeCommand330 extends Struct {
 
 	protected final DWORD command = new DWORD();
 	protected final Pointer cmdData = new Pointer();
 
-	protected SynchronizeCommand3_30() {
+	protected SynchronizeCommand330() {
 		add(command);
 		add(cmdData);
 	}
 
-	public SynchronizeCommand3_30(Pointer p) {
+	public SynchronizeCommand330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
@@ -65,8 +65,8 @@ public class SynchronizeCommand3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof SynchronizeCommand3_30) {
-			SynchronizeCommand3_30 synchronizeCommand = (SynchronizeCommand3_30) obj;
+		if (obj instanceof SynchronizeCommand330) {
+			SynchronizeCommand330 synchronizeCommand = (SynchronizeCommand330) obj;
 			return new EqualsBuilder().append(getCommand(), synchronizeCommand.getCommand()).append(getCmdData(), synchronizeCommand.getCmdData()).isEquals();
 		}
 		return false;

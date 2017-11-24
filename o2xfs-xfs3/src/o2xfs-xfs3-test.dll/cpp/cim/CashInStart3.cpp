@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_00_CashInStart3Test.h"
+#include "cim/at_o2xfs_xfs_v3_00_cim_CashInStart3Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -33,7 +33,7 @@
 
 static WFSCIMCASHINSTART CashInStart;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_100_CashInStart3Test_buildCashInStart3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cim_CashInStart3Test_buildCashInStart3(JNIEnv *env, jobject obj) {
 	CashInStart.usTellerID = 0;
 	CashInStart.bUseRecycleUnits = TRUE;
 	CashInStart.fwOutputPosition = WFS_CIM_POSOUTTOP;

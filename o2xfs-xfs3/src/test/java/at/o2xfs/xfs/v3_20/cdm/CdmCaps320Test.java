@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_20;
+package at.o2xfs.xfs.v3_20.cdm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -35,16 +35,16 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_20.BaseXfs3_20Test;
 
-public class CdmCaps3_20Test extends BaseXfs3_20Test {
+public class CdmCaps320Test extends BaseXfs320Test {
 
 	@Test
 	public final void test() {
-		CdmCaps3_20 expected = new CdmCaps3_20(buildCdmCaps3_20().getPointer());
-		CdmCaps3_20 actual = new CdmCaps3_20(expected);
+		CdmCaps320 expected = new CdmCaps320(buildCdmCaps320().getPointer());
+		CdmCaps320 actual = new CdmCaps320(expected);
 		System.out.println(actual);
 		assertTrue(actual.isAntiFraudModule());
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildCdmCaps3_20();
+	private native Buffer buildCdmCaps320();
 }

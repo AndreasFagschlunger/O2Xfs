@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,30 +35,30 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 
-public class ReplenishResult3_20 extends Struct {
+public class ReplenishResult320 extends Struct {
 
 	protected final ULONG numberOfItemsRemoved = new ULONG();
 	protected final ULONG numberOfItemsRejected = new ULONG();
 	protected final Pointer replenishTargetResults = new Pointer();
 
-	protected ReplenishResult3_20() {
+	protected ReplenishResult320() {
 		add(numberOfItemsRemoved);
 		add(numberOfItemsRejected);
 		add(replenishTargetResults);
 	}
 
-	public ReplenishResult3_20(Pointer p) {
+	public ReplenishResult320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ReplenishResult3_20(ReplenishResult3_20 copy) {
+	public ReplenishResult320(ReplenishResult320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ReplenishResult3_20 copy) {
+	protected void set(ReplenishResult320 copy) {
 		numberOfItemsRemoved.set(copy.getNumberOfItemsRemoved());
 		numberOfItemsRejected.set(copy.getNumberOfItemsRejected());
 		replenishTargetResults.pointTo(new ReplenishTargetResults(copy.getReplenishTargetResults()));
@@ -72,7 +72,7 @@ public class ReplenishResult3_20 extends Struct {
 		return numberOfItemsRejected.get();
 	}
 
-	public ReplenishTargetResult3_20[] getReplenishTargetResults() {
+	public ReplenishTargetResult320[] getReplenishTargetResults() {
 		return new ReplenishTargetResults(replenishTargetResults).get();
 	}
 
@@ -83,11 +83,11 @@ public class ReplenishResult3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ReplenishResult3_20) {
-			ReplenishResult3_20 replenishResult3_20 = (ReplenishResult3_20) obj;
-			return new EqualsBuilder().append(getNumberOfItemsRemoved(), replenishResult3_20.getNumberOfItemsRemoved())
-					.append(getNumberOfItemsRejected(), replenishResult3_20.getNumberOfItemsRejected())
-					.append(getReplenishTargetResults(), replenishResult3_20.getReplenishTargetResults()).isEquals();
+		if (obj instanceof ReplenishResult320) {
+			ReplenishResult320 replenishResult320 = (ReplenishResult320) obj;
+			return new EqualsBuilder().append(getNumberOfItemsRemoved(), replenishResult320.getNumberOfItemsRemoved())
+					.append(getNumberOfItemsRejected(), replenishResult320.getNumberOfItemsRejected())
+					.append(getReplenishTargetResults(), replenishResult320.getReplenishTargetResults()).isEquals();
 		}
 		return false;
 	}

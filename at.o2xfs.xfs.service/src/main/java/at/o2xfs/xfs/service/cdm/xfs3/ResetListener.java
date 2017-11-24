@@ -27,11 +27,11 @@
 
 package at.o2xfs.xfs.service.cdm.xfs3;
 
-import at.o2xfs.xfs.cdm.v3_30.IncompleteRetract3_30;
+import at.o2xfs.xfs.v3_30.cdm.IncompleteRetract330;
 import at.o2xfs.xfs.service.cmd.event.CommandListener;
 import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 
 public interface ResetListener extends CommandListener<SuccessEvent>, CashUnitErrorListener, InputP6Listener, InfoAvailableListener {
 
-	void onIncompleteRetract(IncompleteRetract3_30 incompleteRetract);
+	void onIncompleteRetract(IncompleteRetract330 incompleteRetract);
 }

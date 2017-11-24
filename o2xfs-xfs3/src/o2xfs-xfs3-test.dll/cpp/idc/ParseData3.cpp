@@ -1,4 +1,4 @@
-#include "idc/at_o2xfs_xfs_idc_v3_00_ParseData3Test.h"
+#include "idc/at_o2xfs_xfs_v3_00_idc_ParseData3Test.h"
 
 #include <Windows.h>
 #include <XFSIDC.H>
@@ -10,7 +10,7 @@ static WFSIDCCARDDATA CardData[3];
 static LPWFSIDCCARDDATA lppCardData[4];
 static LPSTR Data[] = { "11111=11111111=111111", "1111111111111111111=11111111111111111", "111111111=111111111111=1111111111111111111111111111111111111111===1=111111111111111111111111111111111111" };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_idc_v3_100_ParseData3Test_buildParseData3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_idc_ParseData3Test_buildParseData3(JNIEnv *env, jobject obj) {
 	ParseData.lpstrFormName = FormName;
 	ParseData.lppCardData = lppCardData;
 	int length = sizeof(CardData) / sizeof(WFSIDCCARDDATA);

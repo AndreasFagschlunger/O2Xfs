@@ -37,7 +37,7 @@ import at.o2xfs.operator.task.xfs.ptr.PTRStatusTask;
 import at.o2xfs.operator.task.xfs.siu.SIUStatusTask;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.v3_00.Status3;
+import at.o2xfs.xfs.v3_00.idc.Status3;
 import at.o2xfs.xfs.pin.WFSPINSTATUS;
 import at.o2xfs.xfs.ptr.WFSPTRSTATUS;
 import at.o2xfs.xfs.service.XfsServiceManager;

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -36,16 +36,16 @@ import at.o2xfs.common.Hex;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_30.BaseXfs3_30Test;
 
-public class ItemInfo3_30Test extends BaseXfs3_30Test {
+public class ItemInfo330Test extends BaseXfs330Test {
 
 	@Test
 	public final void test() {
-		ItemInfo3_30 expected = new ItemInfo3_30(buildItemInfo3_30().getPointer());
-		ItemInfo3_30 actual = new ItemInfo3_30(expected);
+		ItemInfo330 expected = new ItemInfo330(buildItemInfo330().getPointer());
+		ItemInfo330 actual = new ItemInfo330(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 		assertArrayEquals(Hex.decode("ABCDEF"), actual.getSignature().get().getData());
 	}
 
-	private native Buffer buildItemInfo3_30();
+	private native Buffer buildItemInfo330();
 }

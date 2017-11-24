@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,28 +33,28 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.idc.IdcExecuteCommand;
-import at.o2xfs.xfs.idc.v3_20.Capabilities3_20;
+import at.o2xfs.xfs.v3_20.idc.Capabilities320;
 
-public class Capabilities3_30 extends Capabilities3_20 {
+public class Capabilities330 extends Capabilities320 {
 
 	protected final Pointer synchronizableCommands = new Pointer();
 
-	protected Capabilities3_30() {
+	protected Capabilities330() {
 		add(synchronizableCommands);
 	}
 
-	public Capabilities3_30(Pointer p) {
+	public Capabilities330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Capabilities3_30(Capabilities3_30 copy) {
+	public Capabilities330(Capabilities330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Capabilities3_30 copy) {
+	protected void set(Capabilities330 copy) {
 		super.set(copy);
 		synchronizableCommands.pointTo(new SynchronizableCommands(copy.getSynchronizableCommands()));
 	}
@@ -70,11 +70,11 @@ public class Capabilities3_30 extends Capabilities3_20 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Capabilities3_30) {
-			Capabilities3_30 capabilities3_30 = (Capabilities3_30) obj;
+		if (obj instanceof Capabilities330) {
+			Capabilities330 capabilities330 = (Capabilities330) obj;
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
-					.append(getSynchronizableCommands(), capabilities3_30.getSynchronizableCommands())
+					.append(getSynchronizableCommands(), capabilities330.getSynchronizableCommands())
 					.isEquals();
 		}
 		return false;

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_00_MixType3Test.h"
+#include "at_o2xfs_xfs_v3_00_cdm_MixType3Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -35,7 +35,7 @@ static WFSCDMMIXTYPE mixTypes[2];
 static LPSTR szNames[2] = { "Foo", "Bar" };
 static LPWFSCDMMIXTYPE lpMixTypes[3];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_MixType3Test_buildMixTypes3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cdm_MixType3Test_buildMixTypes3(JNIEnv *env, jobject obj) {
 	mixTypes[0].usMixNumber = 1;
 	mixTypes[0].usMixType = WFS_CDM_MIXALGORITHM;
 	mixTypes[0].usSubType = WFS_CDM_MIX_EQUAL_EMPTYING_OF_CASH_UNITS;

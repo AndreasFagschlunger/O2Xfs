@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,38 +35,38 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class CashCapabilities3_20 extends Struct {
+public class CashCapabilities320 extends Struct {
 
 	protected final USHORT count = new USHORT();
 	protected final Pointer cashUnitCaps = new Pointer();
 
-	protected CashCapabilities3_20() {
+	protected CashCapabilities320() {
 		add(count);
 		add(cashUnitCaps);
 	}
 
-	public CashCapabilities3_20(Pointer p) {
+	public CashCapabilities320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public CashCapabilities3_20(CashCapabilities3_20 copy) {
+	public CashCapabilities320(CashCapabilities320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(CashCapabilities3_20 copy) {
+	protected void set(CashCapabilities320 copy) {
 		count.set(copy.getCount());
-		cashUnitCaps.pointTo(new CashUnitCapabilities3_20Array(copy.getCashUnitCaps()));
+		cashUnitCaps.pointTo(new CashUnitCapabilities320Array(copy.getCashUnitCaps()));
 	}
 
 	private int getCount() {
 		return count.get();
 	}
 
-	public CashUnitCapabilities3_20[] getCashUnitCaps() {
-		return new CashUnitCapabilities3_20Array(cashUnitCaps, getCount()).get();
+	public CashUnitCapabilities320[] getCashUnitCaps() {
+		return new CashUnitCapabilities320Array(cashUnitCaps, getCount()).get();
 	}
 
 	@Override
@@ -76,9 +76,9 @@ public class CashCapabilities3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CashCapabilities3_20) {
-			CashCapabilities3_20 cashCapabilities3_20 = (CashCapabilities3_20) obj;
-			return new EqualsBuilder().append(getCount(), cashCapabilities3_20.getCount()).append(getCashUnitCaps(), cashCapabilities3_20.getCashUnitCaps()).isEquals();
+		if (obj instanceof CashCapabilities320) {
+			CashCapabilities320 cashCapabilities320 = (CashCapabilities320) obj;
+			return new EqualsBuilder().append(getCount(), cashCapabilities320.getCount()).append(getCashUnitCaps(), cashCapabilities320.getCashUnitCaps()).isEquals();
 		}
 		return false;
 	}

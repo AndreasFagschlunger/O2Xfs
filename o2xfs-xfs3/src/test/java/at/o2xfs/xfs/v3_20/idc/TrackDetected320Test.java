@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_20;
+package at.o2xfs.xfs.v3_20.idc;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_20.BaseXfs3_20Test;
 
-public class TrackDetected3_20Test extends BaseXfs3_20Test {
+public class TrackDetected320Test extends BaseXfs320Test {
 
 	@Test
 	public final void test() {
-		TrackDetected3_20 expected = new TrackDetected3_20(buildTrackDetected3_20().getPointer());
-		TrackDetected3_20 actual = new TrackDetected3_20(expected);
+		TrackDetected320 expected = new TrackDetected320(buildTrackDetected320().getPointer());
+		TrackDetected320 actual = new TrackDetected320(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildTrackDetected3_20();
+	private native Buffer buildTrackDetected320();
 }

@@ -25,31 +25,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsPointerArray;
 
-class CashUnitCapabilities3_20Array extends XfsPointerArray<CashUnitCapabilities3_20> {
+class CashUnitCapabilities320Array extends XfsPointerArray<CashUnitCapabilities320> {
 
-	public CashUnitCapabilities3_20Array(CashUnitCapabilities3_20[] array) {
+	public CashUnitCapabilities320Array(CashUnitCapabilities320[] array) {
 		super(array);
 	}
 
-	public CashUnitCapabilities3_20Array(Pointer p, int length) {
+	public CashUnitCapabilities320Array(Pointer p, int length) {
 		super(p, length);
 	}
 
 	@Override
-	public CashUnitCapabilities3_20 copy(CashUnitCapabilities3_20 copy) {
-		return new CashUnitCapabilities3_20(copy);
+	public CashUnitCapabilities320 copy(CashUnitCapabilities320 copy) {
+		return new CashUnitCapabilities320(copy);
 	}
 
 	@Override
-	public CashUnitCapabilities3_20[] get() {
-		CashUnitCapabilities3_20[] result = new CashUnitCapabilities3_20[pointers.length];
+	public CashUnitCapabilities320[] get() {
+		CashUnitCapabilities320[] result = new CashUnitCapabilities320[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new CashUnitCapabilities3_20(pointers[i]));
+			result[i] = copy(new CashUnitCapabilities320(pointers[i]));
 		}
 		return result;
 	}

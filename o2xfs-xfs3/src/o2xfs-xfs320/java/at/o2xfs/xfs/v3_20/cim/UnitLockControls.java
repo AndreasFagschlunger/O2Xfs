@@ -25,14 +25,14 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsZPointerArray;
 
-class UnitLockControls extends XfsZPointerArray<UnitLockControl3_20> {
+class UnitLockControls extends XfsZPointerArray<UnitLockControl320> {
 
-	public UnitLockControls(UnitLockControl3_20[] array) {
+	public UnitLockControls(UnitLockControl320[] array) {
 		super(array);
 	}
 
@@ -41,15 +41,15 @@ class UnitLockControls extends XfsZPointerArray<UnitLockControl3_20> {
 	}
 
 	@Override
-	public UnitLockControl3_20 copy(UnitLockControl3_20 copy) {
-		return new UnitLockControl3_20(copy);
+	public UnitLockControl320 copy(UnitLockControl320 copy) {
+		return new UnitLockControl320(copy);
 	}
 
 	@Override
-	public UnitLockControl3_20[] get() {
-		UnitLockControl3_20[] result = new UnitLockControl3_20[pointers.length];
+	public UnitLockControl320[] get() {
+		UnitLockControl320[] result = new UnitLockControl320[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new UnitLockControl3_20(pointers[i]));
+			result[i] = copy(new UnitLockControl320(pointers[i]));
 		}
 		return result;
 	}

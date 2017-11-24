@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_10_CashUnitError3_10Test.h"
+#include "at_o2xfs_xfs_v3_10_cdm_CashUnitError310Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -37,7 +37,7 @@ static WFSCDMPHCU PhysicalCUs[2];
 static LPWFSCDMPHCU lppPhysical[2];
 static LPSTR PhysicalPositionName[] = { "SLOT1", "SLOT2" };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_110_CashUnitError3_110Test_buildCashUnitError3_110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CashUnitError3110Test_buildCashUnitError3110(JNIEnv *env, jobject obj) {
 	CashUnitError.wFailure = WFS_CDM_CASHUNITERROR;
 	CashUnitError.lpCashUnit = &CashUnit;
 

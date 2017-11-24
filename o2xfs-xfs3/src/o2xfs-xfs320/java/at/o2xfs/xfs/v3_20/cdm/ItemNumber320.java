@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_20;
+package at.o2xfs.xfs.v3_20.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,7 +37,7 @@ import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.win32.XfsCharArray;
 
-public class ItemNumber3_20 extends Struct {
+public class ItemNumber320 extends Struct {
 
 	protected final XfsCharArray currencyID = new XfsCharArray(3);
 	protected final ULONG values = new ULONG();
@@ -45,7 +45,7 @@ public class ItemNumber3_20 extends Struct {
 	protected final ULONG count = new ULONG();
 	protected final USHORT number = new USHORT();
 
-	protected ItemNumber3_20() {
+	protected ItemNumber320() {
 		add(currencyID);
 		add(values);
 		add(release);
@@ -53,18 +53,18 @@ public class ItemNumber3_20 extends Struct {
 		add(number);
 	}
 
-	public ItemNumber3_20(Pointer p) {
+	public ItemNumber320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemNumber3_20(ItemNumber3_20 copy) {
+	public ItemNumber320(ItemNumber320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ItemNumber3_20 copy) {
+	protected void set(ItemNumber320 copy) {
 		currencyID.set(copy.getCurrencyID());
 		values.set(copy.getValues());
 		release.set(copy.getRelease());
@@ -99,8 +99,8 @@ public class ItemNumber3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemNumber3_20) {
-			ItemNumber3_20 itemNumber = (ItemNumber3_20) obj;
+		if (obj instanceof ItemNumber320) {
+			ItemNumber320 itemNumber = (ItemNumber320) obj;
 			return new EqualsBuilder().append(getCurrencyID(), itemNumber.getCurrencyID()).append(getValues(), itemNumber.getValues()).append(getRelease(), itemNumber.getRelease())
 					.append(getCount(), itemNumber.getCount()).append(getNumber(), itemNumber.getNumber()).isEquals();
 		}

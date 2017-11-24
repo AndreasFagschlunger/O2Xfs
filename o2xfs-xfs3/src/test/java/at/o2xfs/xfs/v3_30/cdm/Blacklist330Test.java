@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_30.BaseXfs3_30Test;
 
-public class Blacklist3_30Test extends BaseXfs3_30Test {
+public class Blacklist330Test extends BaseXfs330Test {
 
 	@Test
 	public final void test() {
-		Blacklist3_30 expected = new Blacklist3_30(buildBlacklist3_30().getPointer());
-		Blacklist3_30 actual = new Blacklist3_30(expected);
+		Blacklist330 expected = new Blacklist330(buildBlacklist330().getPointer());
+		Blacklist330 actual = new Blacklist330(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildBlacklist3_30();
+	private native Buffer buildBlacklist330();
 }

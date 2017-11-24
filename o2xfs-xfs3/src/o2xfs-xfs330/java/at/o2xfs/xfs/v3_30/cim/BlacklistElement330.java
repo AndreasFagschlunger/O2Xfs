@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,30 +37,30 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.xfs.win32.XfsCharArray;
 
-public class BlacklistElement3_30 extends Struct {
+public class BlacklistElement330 extends Struct {
 
 	protected final LPWSTR serialNumber = new LPWSTR();
 	protected final XfsCharArray currencyID = new XfsCharArray(3);
 	protected final ULONG value = new ULONG();
 
-	protected BlacklistElement3_30() {
+	protected BlacklistElement330() {
 		add(serialNumber);
 		add(currencyID);
 		add(value);
 	}
 
-	public BlacklistElement3_30(Pointer p) {
+	public BlacklistElement330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public BlacklistElement3_30(BlacklistElement3_30 copy) {
+	public BlacklistElement330(BlacklistElement330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(BlacklistElement3_30 copy) {
+	protected void set(BlacklistElement330 copy) {
 		serialNumber.set(copy.getSerialNumber());
 		currencyID.set(copy.getCurrencyID());
 		value.set(copy.getValue());
@@ -85,10 +85,10 @@ public class BlacklistElement3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof BlacklistElement3_30) {
-			BlacklistElement3_30 blacklistElement3_30 = (BlacklistElement3_30) obj;
-			return new EqualsBuilder().append(getSerialNumber(), blacklistElement3_30.getSerialNumber()).append(getCurrencyID(), blacklistElement3_30.getCurrencyID())
-					.append(getValue(), blacklistElement3_30.getValue()).isEquals();
+		if (obj instanceof BlacklistElement330) {
+			BlacklistElement330 blacklistElement330 = (BlacklistElement330) obj;
+			return new EqualsBuilder().append(getSerialNumber(), blacklistElement330.getSerialNumber()).append(getCurrencyID(), blacklistElement330.getCurrencyID())
+					.append(getValue(), blacklistElement330.getValue()).isEquals();
 		}
 		return false;
 	}

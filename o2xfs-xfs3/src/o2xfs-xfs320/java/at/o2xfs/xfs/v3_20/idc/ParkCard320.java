@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_20;
+package at.o2xfs.xfs.v3_20.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,28 +37,28 @@ import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.idc.Direction;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class ParkCard3_20 extends Struct {
+public class ParkCard320 extends Struct {
 
 	protected final XfsWord<Direction> direction = new XfsWord<>(Direction.class);
 	protected final USHORT parkingStation = new USHORT();
 
-	protected ParkCard3_20() {
+	protected ParkCard320() {
 		add(direction);
 		add(parkingStation);
 	}
 
-	public ParkCard3_20(Pointer p) {
+	public ParkCard320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ParkCard3_20(ParkCard3_20 copy) {
+	public ParkCard320(ParkCard320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ParkCard3_20 copy) {
+	protected void set(ParkCard320 copy) {
 		direction.set(copy.getDirection());
 		parkingStation.set(copy.getParkingStation());
 	}
@@ -78,11 +78,11 @@ public class ParkCard3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ParkCard3_20) {
-			ParkCard3_20 parkCard3_20 = (ParkCard3_20) obj;
+		if (obj instanceof ParkCard320) {
+			ParkCard320 parkCard320 = (ParkCard320) obj;
 			return new EqualsBuilder()
-					.append(getDirection(), parkCard3_20.getDirection())
-					.append(getParkingStation(), parkCard3_20.getParkingStation())
+					.append(getDirection(), parkCard320.getDirection())
+					.append(getParkingStation(), parkCard320.getParkingStation())
 					.isEquals();
 		}
 		return false;

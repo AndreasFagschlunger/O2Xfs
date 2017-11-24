@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_20_CdmCaps3_20Test.h"
+#include "at_o2xfs_xfs_v3_20_cdm_CdmCaps320Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -34,7 +34,7 @@
 static WFSCDMCAPS caps;
 static LPSTR lpszExtra = "Key1=Value1\0Key2=Value2\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_120_CdmCaps3_120Test_buildCdmCaps3_120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cdm_CdmCaps3120Test_buildCdmCaps3120(JNIEnv *env, jobject obj) {
 	caps.wClass = WFS_SERVICE_CLASS_CDM;
 	caps.fwType = WFS_CDM_SELFSERVICEBILL;
 	caps.wMaxDispenseItems = 40;

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,26 +35,26 @@ import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class ConfigureNoteReaderOut3_10 extends Struct {
+public class ConfigureNoteReaderOut310 extends Struct {
 
 	protected final BOOL rebootNecessary = new BOOL();
 
-	protected ConfigureNoteReaderOut3_10() {
+	protected ConfigureNoteReaderOut310() {
 		add(rebootNecessary);
 	}
 
-	public ConfigureNoteReaderOut3_10(Pointer p) {
+	public ConfigureNoteReaderOut310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ConfigureNoteReaderOut3_10(ConfigureNoteReaderOut3_10 copy) {
+	public ConfigureNoteReaderOut310(ConfigureNoteReaderOut310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ConfigureNoteReaderOut3_10 copy) {
+	protected void set(ConfigureNoteReaderOut310 copy) {
 		rebootNecessary.set(copy.isRebootNecessary());
 	}
 
@@ -69,9 +69,9 @@ public class ConfigureNoteReaderOut3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ConfigureNoteReaderOut3_10) {
-			ConfigureNoteReaderOut3_10 configureNoteReaderOut3_10 = (ConfigureNoteReaderOut3_10) obj;
-			return new EqualsBuilder().append(isRebootNecessary(), configureNoteReaderOut3_10.isRebootNecessary()).isEquals();
+		if (obj instanceof ConfigureNoteReaderOut310) {
+			ConfigureNoteReaderOut310 configureNoteReaderOut310 = (ConfigureNoteReaderOut310) obj;
+			return new EqualsBuilder().append(isRebootNecessary(), configureNoteReaderOut310.isRebootNecessary()).isEquals();
 		}
 		return false;
 	}

@@ -25,32 +25,32 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsPointerArray;
 
-class PhysicalCashUnits3_10 extends XfsPointerArray<PhysicalCashUnit3_10> {
+class PhysicalCashUnits310 extends XfsPointerArray<PhysicalCashUnit310> {
 
-	public PhysicalCashUnits3_10(PhysicalCashUnit3_10[] array) {
+	public PhysicalCashUnits310(PhysicalCashUnit310[] array) {
 		super(array);
 	}
 
-	public PhysicalCashUnits3_10(Pointer aPointer, int length) {
+	public PhysicalCashUnits310(Pointer aPointer, int length) {
 		super(aPointer, length);
 	}
 
 	@Override
-	public PhysicalCashUnit3_10[] get() {
-		PhysicalCashUnit3_10[] result = new PhysicalCashUnit3_10[pointers.length];
+	public PhysicalCashUnit310[] get() {
+		PhysicalCashUnit310[] result = new PhysicalCashUnit310[pointers.length];
 		for (int i = 0; i < result.length; i++) {
-			result[i] = copy(new PhysicalCashUnit3_10(pointers[i]));
+			result[i] = copy(new PhysicalCashUnit310(pointers[i]));
 		}
 		return result;
 	}
 
 	@Override
-	public PhysicalCashUnit3_10 copy(PhysicalCashUnit3_10 copy) {
-		return new PhysicalCashUnit3_10(copy);
+	public PhysicalCashUnit310 copy(PhysicalCashUnit310 copy) {
+		return new PhysicalCashUnit310(copy);
 	}
 }

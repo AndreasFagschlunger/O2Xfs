@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_00_StartEx3Test.h"
+#include "at_o2xfs_xfs_v3_00_cdm_StartEx3Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -34,7 +34,7 @@
 static WFSCDMSTARTEX startEx;
 static USHORT usCUNumList[] = { 1, 2, 3 };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_StartEx3Test_buildStartEx3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cdm_StartEx3Test_buildStartEx3(JNIEnv *env, jobject obj) {
 	startEx.fwExchangeType = WFS_CDM_EXBYHAND;
 	startEx.usTellerID = 0;
 	startEx.usCount = 3;

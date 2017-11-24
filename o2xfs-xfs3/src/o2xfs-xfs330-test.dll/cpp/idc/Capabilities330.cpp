@@ -1,4 +1,4 @@
-#include "idc/at_o2xfs_xfs_idc_v3_30_Capabilities3_30Test.h"
+#include "idc/at_o2xfs_xfs_v3_30_idc_Capabilities330Test.h"
 
 #include <Windows.h>
 #include <XFSIDC.H>
@@ -8,7 +8,7 @@ static WFSIDCCAPS Caps;
 static LPSTR lpszExtra = "XFS_MIB_VERSION=<0x00000001>\0";
 static DWORD dwSynchronizableCommands[] = { WFS_CMD_IDC_CHIP_IO, WFS_CMD_IDC_READ_TRACK, 0 };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_idc_v3_130_Capabilities3_130Test_buildCapabilities3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_Capabilities3130Test_buildCapabilities3130(JNIEnv *env, jobject obj) {
 	Caps.wClass = WFS_SERVICE_CLASS_IDC;
 	Caps.fwType = WFS_IDC_TYPEMOTOR;
 	Caps.bCompound = FALSE;

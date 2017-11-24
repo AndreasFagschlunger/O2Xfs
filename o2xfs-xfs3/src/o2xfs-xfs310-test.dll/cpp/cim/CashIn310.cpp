@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_10_CashIn3_10Test.h"
+#include "cim/at_o2xfs_xfs_v3_10_cim_CashIn310Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -41,7 +41,7 @@ static LPWFSCIMPHCU pPhysical[1];
 static LPSTR lpPhysicalPositionName = "COMPARTMENT2";
 static USHORT usNoteIDs[] = { 1, 2, 3, 4, 0 };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_110_CashIn3_110Test_buildCashIn3_110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_CashIn3110Test_buildCashIn3110(JNIEnv *env, jobject obj) {
 	CashIn.usNumber = 9;
 	CashIn.fwType = WFS_CIM_TYPECDMSPECIFIC;
 	strcpy(CashIn.cUnitID, "66889");

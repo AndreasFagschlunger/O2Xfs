@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_10_ItemInfo3_10Test.h"
+#include "cim/at_o2xfs_xfs_v3_10_cim_ItemInfo310Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -34,7 +34,7 @@
 WFSCIMITEMINFO ItemInfo;
 LPWSTR lpszSerialNumber = L"1234-5678";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_110_ItemInfo3_110Test_buildItemInfo3_110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_ItemInfo3110Test_buildItemInfo3110(JNIEnv *env, jobject obj) {
 	ItemInfo.usNoteID = 1234;
 	ItemInfo.lpszSerialNumber = lpszSerialNumber;
 	ItemInfo.lpP6Signature = NULL;

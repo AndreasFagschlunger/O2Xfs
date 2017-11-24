@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,26 +35,26 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class ReplenishInfoTarget3_20 extends Struct {
+public class ReplenishInfoTarget320 extends Struct {
 
 	protected final USHORT numberTarget = new USHORT();
 
-	protected ReplenishInfoTarget3_20() {
+	protected ReplenishInfoTarget320() {
 		add(numberTarget);
 	}
 
-	public ReplenishInfoTarget3_20(Pointer p) {
+	public ReplenishInfoTarget320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ReplenishInfoTarget3_20(ReplenishInfoTarget3_20 copy) {
+	public ReplenishInfoTarget320(ReplenishInfoTarget320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ReplenishInfoTarget3_20 copy) {
+	protected void set(ReplenishInfoTarget320 copy) {
 		numberTarget.set(copy.getNumberTarget());
 	}
 
@@ -69,9 +69,9 @@ public class ReplenishInfoTarget3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ReplenishInfoTarget3_20) {
-			ReplenishInfoTarget3_20 replenishInfoTarget3_20 = (ReplenishInfoTarget3_20) obj;
-			return new EqualsBuilder().append(getNumberTarget(), replenishInfoTarget3_20.getNumberTarget()).isEquals();
+		if (obj instanceof ReplenishInfoTarget320) {
+			ReplenishInfoTarget320 replenishInfoTarget320 = (ReplenishInfoTarget320) obj;
+			return new EqualsBuilder().append(getNumberTarget(), replenishInfoTarget320.getNumberTarget()).isEquals();
 		}
 		return false;
 	}

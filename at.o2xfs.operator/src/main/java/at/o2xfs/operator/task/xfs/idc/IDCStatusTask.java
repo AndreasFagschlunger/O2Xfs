@@ -34,7 +34,7 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.idc.v3_00.Status3;
+import at.o2xfs.xfs.v3_00.idc.Status3;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
 

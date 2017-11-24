@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_20.BaseXfs3_20Test;
 
-public class CashInLimit3_20Test extends BaseXfs3_20Test {
+public class CashInLimit320Test extends BaseXfs320Test {
 
 	@Test
 	public final void test() {
-		CashInLimit3_20 expected = new CashInLimit3_20(buildCashInLimit3_20().getPointer());
-		CashInLimit3_20 actual = new CashInLimit3_20(expected);
+		CashInLimit320 expected = new CashInLimit320(buildCashInLimit320().getPointer());
+		CashInLimit320 actual = new CashInLimit320(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildCashInLimit3_20();
+	private native Buffer buildCashInLimit320();
 }

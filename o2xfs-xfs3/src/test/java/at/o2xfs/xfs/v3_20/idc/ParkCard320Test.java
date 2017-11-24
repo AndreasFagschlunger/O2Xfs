@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_20;
+package at.o2xfs.xfs.v3_20.idc;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_20.BaseXfs3_20Test;
 
-public class ParkCard3_20Test extends BaseXfs3_20Test {
+public class ParkCard320Test extends BaseXfs320Test {
 
 	@Test
 	public final void test() {
-		ParkCard3_20 expected = new ParkCard3_20(buildParkCard3_20().getPointer());
-		ParkCard3_20 actual = new ParkCard3_20(expected);
+		ParkCard320 expected = new ParkCard320(buildParkCard320().getPointer());
+		ParkCard320 actual = new ParkCard320(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildParkCard3_20();
+	private native Buffer buildParkCard320();
 }

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import java.util.Optional;
 
@@ -44,7 +44,7 @@ import at.o2xfs.xfs.cim.Orientation;
 import at.o2xfs.xfs.win32.XfsDWord;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class ItemInfoAll3_30 extends Struct {
+public class ItemInfoAll330 extends Struct {
 
 	protected final XfsWord<Level> level = new XfsWord<>(Level.class);
 	protected final USHORT noteID = new USHORT();
@@ -56,7 +56,7 @@ public class ItemInfoAll3_30 extends Struct {
 	protected final XfsWord<ItemLocation> itemLocation = new XfsWord<>(ItemLocation.class);
 	protected final USHORT number = new USHORT();
 
-	protected ItemInfoAll3_30() {
+	protected ItemInfoAll330() {
 		add(level);
 		add(noteID);
 		add(serialNumber);
@@ -68,18 +68,18 @@ public class ItemInfoAll3_30 extends Struct {
 		add(number);
 	}
 
-	public ItemInfoAll3_30(Pointer p) {
+	public ItemInfoAll330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemInfoAll3_30(ItemInfoAll3_30 copy) {
+	public ItemInfoAll330(ItemInfoAll330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ItemInfoAll3_30 copy) {
+	protected void set(ItemInfoAll330 copy) {
 		level.set(copy.getLevel());
 		noteID.set(copy.getNoteID());
 		Optional<String> serialNumber = copy.getSerialNumber();
@@ -144,13 +144,13 @@ public class ItemInfoAll3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemInfoAll3_30) {
-			ItemInfoAll3_30 itemInfoAll3_30 = (ItemInfoAll3_30) obj;
-			return new EqualsBuilder().append(getLevel(), itemInfoAll3_30.getLevel()).append(getNoteID(), itemInfoAll3_30.getNoteID())
-					.append(getSerialNumber(), itemInfoAll3_30.getSerialNumber()).append(getOrientation(), itemInfoAll3_30.getOrientation())
-					.append(getP6SignatureFileName(), itemInfoAll3_30.getP6SignatureFileName()).append(getImageFileName(), itemInfoAll3_30.getImageFileName())
-					.append(getOnBlacklist(), itemInfoAll3_30.getOnBlacklist()).append(getItemLocation(), itemInfoAll3_30.getItemLocation())
-					.append(getNumber(), itemInfoAll3_30.getNumber()).isEquals();
+		if (obj instanceof ItemInfoAll330) {
+			ItemInfoAll330 itemInfoAll330 = (ItemInfoAll330) obj;
+			return new EqualsBuilder().append(getLevel(), itemInfoAll330.getLevel()).append(getNoteID(), itemInfoAll330.getNoteID())
+					.append(getSerialNumber(), itemInfoAll330.getSerialNumber()).append(getOrientation(), itemInfoAll330.getOrientation())
+					.append(getP6SignatureFileName(), itemInfoAll330.getP6SignatureFileName()).append(getImageFileName(), itemInfoAll330.getImageFileName())
+					.append(getOnBlacklist(), itemInfoAll330.getOnBlacklist()).append(getItemLocation(), itemInfoAll330.getItemLocation())
+					.append(getNumber(), itemInfoAll330.getNumber()).isEquals();
 		}
 		return false;
 	}

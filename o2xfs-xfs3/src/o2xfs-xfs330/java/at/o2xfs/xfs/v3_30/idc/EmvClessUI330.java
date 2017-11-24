@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,7 +37,7 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.WORD;
 
-public class EmvClessUI3_30 extends Struct {
+public class EmvClessUI330 extends Struct {
 
 	protected final WORD messageId = new WORD();
 	protected final WORD status = new WORD();
@@ -47,7 +47,7 @@ public class EmvClessUI3_30 extends Struct {
 	protected final LPSTR currencyCode = new LPSTR();
 	protected final LPSTR languagePreferenceData = new LPSTR();
 
-	protected EmvClessUI3_30() {
+	protected EmvClessUI330() {
 		add(messageId);
 		add(status);
 		add(holdTime);
@@ -57,18 +57,18 @@ public class EmvClessUI3_30 extends Struct {
 		add(languagePreferenceData);
 	}
 
-	public EmvClessUI3_30(Pointer p) {
+	public EmvClessUI330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public EmvClessUI3_30(EmvClessUI3_30 copy) {
+	public EmvClessUI330(EmvClessUI330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(EmvClessUI3_30 copy) {
+	protected void set(EmvClessUI330 copy) {
 		messageId.set(copy.getMessageId());
 		status.set(copy.getStatus());
 		holdTime.set(copy.getHoldTime());
@@ -121,16 +121,16 @@ public class EmvClessUI3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof EmvClessUI3_30) {
-			EmvClessUI3_30 emvClessUI3_30 = (EmvClessUI3_30) obj;
+		if (obj instanceof EmvClessUI330) {
+			EmvClessUI330 emvClessUI330 = (EmvClessUI330) obj;
 			return new EqualsBuilder()
-					.append(getMessageId(), emvClessUI3_30.getMessageId())
-					.append(getStatus(), emvClessUI3_30.getStatus())
-					.append(getHoldTime(), emvClessUI3_30.getHoldTime())
-					.append(getValueQualifier(), emvClessUI3_30.getValueQualifier())
-					.append(getValue(), emvClessUI3_30.getValue())
-					.append(getCurrencyCode(), emvClessUI3_30.getCurrencyCode())
-					.append(getLanguagePreferenceData(), emvClessUI3_30.getLanguagePreferenceData())
+					.append(getMessageId(), emvClessUI330.getMessageId())
+					.append(getStatus(), emvClessUI330.getStatus())
+					.append(getHoldTime(), emvClessUI330.getHoldTime())
+					.append(getValueQualifier(), emvClessUI330.getValueQualifier())
+					.append(getValue(), emvClessUI330.getValue())
+					.append(getCurrencyCode(), emvClessUI330.getCurrencyCode())
+					.append(getLanguagePreferenceData(), emvClessUI330.getLanguagePreferenceData())
 					.isEquals();
 		}
 		return false;

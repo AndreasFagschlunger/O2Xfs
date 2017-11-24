@@ -1,4 +1,4 @@
-#include "idc/at_o2xfs_xfs_idc_v3_30_EmvClessTxDataOutput3_30Test.h"
+#include "idc/at_o2xfs_xfs_v3_30_idc_EmvClessTxDataOutput330Test.h"
 
 #include <Windows.h>
 #include <XFSIDC.H>
@@ -14,7 +14,7 @@ static LPSTR CurrencyCode = "EUR";
 static LPSTR LanguagePreferenceData = "deen";
 static WFSIDCHEXDATA DiscretionaryData;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_idc_v3_130_EmvClessTxDataOutput3_130Test_buildEmvClessTxDataOutput3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_EmvClessTxDataOutput3130Test_buildEmvClessTxDataOutput3130(JNIEnv *env, jobject obj) {
 	ClessTxDataOutput.wDataSource = WFS_IDC_CHIP;
 	ClessTxDataOutput.wTxOutcome = WFS_IDC_CLESS_APPROVE;
 	ClessTxDataOutput.wCardholderAction = WFS_IDC_CLESS_NOACTION;

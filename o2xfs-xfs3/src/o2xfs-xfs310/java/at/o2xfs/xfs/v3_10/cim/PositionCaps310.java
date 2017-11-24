@@ -25,31 +25,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsZPointerArray;
 
-public class PositionCaps3_10 extends XfsZPointerArray<PositionCapability3_10> {
+public class PositionCaps310 extends XfsZPointerArray<PositionCapability310> {
 
-	public PositionCaps3_10(Pointer aPointer) {
+	public PositionCaps310(Pointer aPointer) {
 		super(aPointer);
 	}
 
-	public PositionCaps3_10(PositionCapability3_10[] array) {
+	public PositionCaps310(PositionCapability310[] array) {
 		super(array);
 	}
 
 	@Override
-	public PositionCapability3_10 copy(PositionCapability3_10 copy) {
-		return new PositionCapability3_10(copy);
+	public PositionCapability310 copy(PositionCapability310 copy) {
+		return new PositionCapability310(copy);
 	}
 
 	@Override
-	public PositionCapability3_10[] get() {
-		PositionCapability3_10[] result = new PositionCapability3_10[pointers.length];
+	public PositionCapability310[] get() {
+		PositionCapability310[] result = new PositionCapability310[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new PositionCapability3_10(pointers[i]));
+			result[i] = copy(new PositionCapability310(pointers[i]));
 		}
 		return result;
 	}

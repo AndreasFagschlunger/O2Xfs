@@ -1,4 +1,4 @@
-#include "idc/at_o2xfs_xfs_idc_v3_30_EmvClessReadStatus3_30Test.h"
+#include "idc/at_o2xfs_xfs_v3_30_idc_EmvClessReadStatus330Test.h"
 
 #include <Windows.h>
 #include <XFSIDC.H>
@@ -10,7 +10,7 @@ static LPSTR Value = "100";
 static LPSTR CurrencyCode = "EUR";
 static LPSTR LanguagePreferenceData = "deen";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_idc_v3_130_EmvClessReadStatus3_130Test_buildEmvClessReadStatus3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_EmvClessReadStatus3130Test_buildEmvClessReadStatus3130(JNIEnv *env, jobject obj) {
 	ClessUI.wMessageId = 0;
 	ClessUI.wStatus = WFS_IDC_CLESS_PROCESSING;
 	ClessUI.ulHoldTime = 10;

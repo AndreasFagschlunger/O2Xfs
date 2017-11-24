@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_00_CurrencyExp3Test.h"
+#include "cim/at_o2xfs_xfs_v3_00_cim_CurrencyExp3Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -34,7 +34,7 @@
 static WFSCIMCURRENCYEXP currencyExp[2];
 static LPWFSCIMCURRENCYEXP lppCurrencyExp[3];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_100_CurrencyExp3Test_buildCurrencyExp3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cim_CurrencyExp3Test_buildCurrencyExp3(JNIEnv *env, jobject obj) {
 	strcpy(currencyExp[0].cCurrencyID, "EUR");
 	currencyExp[0].sExponent = -2;
 	lppCurrencyExp[0] = &currencyExp[0];

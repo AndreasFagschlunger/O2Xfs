@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_20_DeviceLockControl3_20Test.h"
+#include "cim/at_o2xfs_xfs_v3_20_cim_DeviceLockControl320Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -36,7 +36,7 @@ static WFSCIMUNITLOCKCONTROL UnitLockControl[1];
 static LPWFSCIMUNITLOCKCONTROL lpUnitLockControl[2];
 static LPSTR lpPhysicalPositionName = "COMPARTMENT1";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_DeviceLockControl3_120Test_buildDeviceLockControl3_120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_DeviceLockControl3120Test_buildDeviceLockControl3120(JNIEnv *env, jobject obj) {
 	DeviceLockControl.wDeviceAction = WFS_CIM_LOCK;
 	DeviceLockControl.wCashUnitAction = WFS_CIM_LOCKINDIVIDUAL;
 	DeviceLockControl.lppUnitLockControl = lpUnitLockControl;

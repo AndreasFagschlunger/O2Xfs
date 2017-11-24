@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,28 +36,28 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.cim.LockStatus;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class DeviceLockStatus3_20 extends Struct {
+public class DeviceLockStatus320 extends Struct {
 
 	protected final XfsWord<LockStatus> deviceLockStatus = new XfsWord<>(LockStatus.class);
 	protected final Pointer cashUnitLock = new Pointer();
 
-	protected DeviceLockStatus3_20() {
+	protected DeviceLockStatus320() {
 		add(deviceLockStatus);
 		add(cashUnitLock);
 	}
 
-	public DeviceLockStatus3_20(Pointer p) {
+	public DeviceLockStatus320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public DeviceLockStatus3_20(DeviceLockStatus3_20 copy) {
+	public DeviceLockStatus320(DeviceLockStatus320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(DeviceLockStatus3_20 copy) {
+	protected void set(DeviceLockStatus320 copy) {
 		deviceLockStatus.set(copy.getDeviceLockStatus());
 		cashUnitLock.pointTo(new CashUnitLocks(copy.getCashUnitLock()));
 	}
@@ -66,7 +66,7 @@ public class DeviceLockStatus3_20 extends Struct {
 		return deviceLockStatus.get();
 	}
 
-	public CashUnitLock3_20[] getCashUnitLock() {
+	public CashUnitLock320[] getCashUnitLock() {
 		return new CashUnitLocks(cashUnitLock).get();
 	}
 
@@ -77,9 +77,9 @@ public class DeviceLockStatus3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DeviceLockStatus3_20) {
-			DeviceLockStatus3_20 deviceLockStatus3_20 = (DeviceLockStatus3_20) obj;
-			return new EqualsBuilder().append(getDeviceLockStatus(), deviceLockStatus3_20.getDeviceLockStatus()).append(getCashUnitLock(), deviceLockStatus3_20.getCashUnitLock())
+		if (obj instanceof DeviceLockStatus320) {
+			DeviceLockStatus320 deviceLockStatus320 = (DeviceLockStatus320) obj;
+			return new EqualsBuilder().append(getDeviceLockStatus(), deviceLockStatus320.getDeviceLockStatus()).append(getCashUnitLock(), deviceLockStatus320.getCashUnitLock())
 					.isEquals();
 		}
 		return false;

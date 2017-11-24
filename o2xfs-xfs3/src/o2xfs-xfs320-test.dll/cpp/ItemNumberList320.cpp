@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_20_ItemNumberList3_20Test.h"
+#include "at_o2xfs_xfs_v3_20_cdm_ItemNumberList320Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -35,7 +35,7 @@ static WFSCDMITEMNUMBERLIST ItemNumberList;
 static WFSCDMITEMNUMBER ItemNumber[3];
 static LPWFSCDMITEMNUMBER lppItemNumber[3];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_120_ItemNumberList3_120Test_buildItemNumberList3_120(JNIEnv *env, jobject object) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cdm_ItemNumberList3120Test_buildItemNumberList3120(JNIEnv *env, jobject object) {
 	ItemNumberList.usNumOfItemNumbers = 3;
 	ItemNumberList.lppItemNumber = lppItemNumber;
 

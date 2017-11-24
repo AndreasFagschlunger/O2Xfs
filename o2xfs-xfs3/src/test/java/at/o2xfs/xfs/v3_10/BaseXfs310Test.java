@@ -29,7 +29,7 @@ package at.o2xfs.xfs.v3_10;
 
 import at.o2xfs.common.Library;
 
-public class BaseXfs3_10Test {
+public class BaseXfs310Test {
 
 	static {
 		Library.loadLibrary("at.o2xfs.win32");

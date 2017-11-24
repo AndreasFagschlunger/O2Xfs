@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_20.BaseXfs3_20Test;
 
-public class SetMode3_20Test extends BaseXfs3_20Test {
+public class SetMode320Test extends BaseXfs320Test {
 
 	@Test
 	public final void test() {
-		SetMode3_20 expected = new SetMode3_20(buildSetMode3_20().getPointer());
-		SetMode3_20 actual = new SetMode3_20(expected);
+		SetMode320 expected = new SetMode320(buildSetMode320().getPointer());
+		SetMode320 actual = new SetMode320(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildSetMode3_20();
+	private native Buffer buildSetMode320();
 }

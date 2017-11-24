@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_00_NoteTypeList3Test.h"
+#include "cim/at_o2xfs_xfs_v3_00_cim_NoteTypeList3Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -35,7 +35,7 @@ static WFSCIMNOTETYPELIST NoteTypeList;
 static WFSCIMNOTETYPE NoteTypes[8];
 static LPWFSCIMNOTETYPE lppNoteTypes[8];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_100_NoteTypeList3Test_buildNoteTypeList3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cim_NoteTypeList3Test_buildNoteTypeList3(JNIEnv *env, jobject obj) {
 	NoteTypeList.usNumOfNoteTypes = 8;
 	NoteTypeList.lppNoteTypes = lppNoteTypes;
 

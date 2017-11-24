@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,28 +36,28 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.xfs.win32.XfsCharArray;
 
-public class AmountLimit3_20 extends Struct {
+public class AmountLimit320 extends Struct {
 
 	protected final XfsCharArray currencyID = new XfsCharArray(3);
 	protected final ULONG amount = new ULONG();
 
-	protected AmountLimit3_20() {
+	protected AmountLimit320() {
 		add(currencyID);
 		add(amount);
 	}
 
-	public AmountLimit3_20(Pointer p) {
+	public AmountLimit320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public AmountLimit3_20(AmountLimit3_20 copy) {
+	public AmountLimit320(AmountLimit320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(AmountLimit3_20 copy) {
+	protected void set(AmountLimit320 copy) {
 		currencyID.set(copy.getCurrencyID());
 		amount.set(copy.getAmount());
 	}
@@ -77,9 +77,9 @@ public class AmountLimit3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof AmountLimit3_20) {
-			AmountLimit3_20 amountLimit3_20 = (AmountLimit3_20) obj;
-			return new EqualsBuilder().append(getCurrencyID(), amountLimit3_20.getCurrencyID()).append(getAmount(), amountLimit3_20.getAmount()).isEquals();
+		if (obj instanceof AmountLimit320) {
+			AmountLimit320 amountLimit320 = (AmountLimit320) obj;
+			return new EqualsBuilder().append(getCurrencyID(), amountLimit320.getCurrencyID()).append(getAmount(), amountLimit320.getAmount()).isEquals();
 		}
 		return false;
 	}

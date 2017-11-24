@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_30_AllItemsInfo3_30Test.h"
+#include "at_o2xfs_xfs_v3_30_cdm_AllItemsInfo330Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -37,7 +37,7 @@ static LPWFSCDMITEMINFOALL lppItemsList[3];
 static LPWSTR SerialNumber[] = { L"123", L"456", L"789" };
 static LPSTR ImageFileName[] = { "file1.jpg", "file2.jpg", NULL };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_130_AllItemsInfo3_130Test_buildAllItemsInfo3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_AllItemsInfo3130Test_buildAllItemsInfo3130(JNIEnv *env, jobject obj) {
 	int index = 0;
 	ItemsList[index].usLevel = WFS_CDM_LEVEL_2;
 	strcpy(ItemsList[index].cCurrencyID, "EUR");

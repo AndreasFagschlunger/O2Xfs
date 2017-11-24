@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_20.BaseXfs3_20Test;
 
-public class DeviceLockStatus3_20Test extends BaseXfs3_20Test {
+public class DeviceLockStatus320Test extends BaseXfs320Test {
 
 	@Test
 	public final void test() {
-		DeviceLockStatus3_20 expected = new DeviceLockStatus3_20(buildDeviceLockStatus3_20().getPointer());
-		DeviceLockStatus3_20 actual = new DeviceLockStatus3_20(expected);
+		DeviceLockStatus320 expected = new DeviceLockStatus320(buildDeviceLockStatus320().getPointer());
+		DeviceLockStatus320 actual = new DeviceLockStatus320(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildDeviceLockStatus3_20();
+	private native Buffer buildDeviceLockStatus320();
 }

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_00_MixTable3Test.h"
+#include "at_o2xfs_xfs_v3_00_cdm_MixTable3Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -38,7 +38,7 @@ static WFSCDMMIXROW mixRows[1];
 static LPWFSCDMMIXROW lpMixRows[1];
 static USHORT usMixture[3] = {1, 2, 1};
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_MixTable3Test_buildMixTable3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cdm_MixTable3Test_buildMixTable3(JNIEnv *env, jobject obj) {
 	mixTable.usMixNumber = 1;
 	mixTable.lpszName = szName;
 	mixTable.usRows = 1;

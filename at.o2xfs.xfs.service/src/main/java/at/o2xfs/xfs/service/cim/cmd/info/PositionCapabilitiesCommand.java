@@ -34,14 +34,14 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cim.CimInfoCommand;
-import at.o2xfs.xfs.cim.v3_10.PositionCapabilities3_10;
+import at.o2xfs.xfs.v3_10.cim.PositionCapabilities310;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cim.CimFactory;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.cmd.XfsCallable;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 
-public final class PositionCapabilitiesCommand implements Callable<PositionCapabilities3_10> {
+public final class PositionCapabilitiesCommand implements Callable<PositionCapabilities310> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(PositionCapabilitiesCommand.class);
 
@@ -52,15 +52,15 @@ public final class PositionCapabilitiesCommand implements Callable<PositionCapab
 	}
 
 	@Override
-	public PositionCapabilities3_10 call() throws XfsException {
-		PositionCapabilities3_10 result;
+	public PositionCapabilities310 call() throws XfsException {
+		PositionCapabilities310 result;
 		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService,
 				CimInfoCommand.POSITION_CAPABILITIES);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
 			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(),
-					PositionCapabilities3_10.class);
+					PositionCapabilities310.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);
 			}

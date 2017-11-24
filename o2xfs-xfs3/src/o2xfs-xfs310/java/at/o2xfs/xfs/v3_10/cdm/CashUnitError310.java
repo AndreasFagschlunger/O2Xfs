@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import java.util.Optional;
 
@@ -35,22 +35,22 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.cdm.Failure;
-import at.o2xfs.xfs.cdm.v3_00.CashUnit3;
-import at.o2xfs.xfs.cdm.v3_00.CashUnitError3;
+import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
 
-public class CashUnitError3_10 extends CashUnitError3 {
+public class CashUnitError310 extends CashUnitError3 {
 
-	public CashUnitError3_10(Pointer p) {
+	public CashUnitError310(Pointer p) {
 		super(p);
 	}
 
-	public CashUnitError3_10(CashUnitError3_10 copy) {
+	public CashUnitError310(CashUnitError310 copy) {
 		super();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(CashUnitError3_10 copy) {
+	protected void set(CashUnitError310 copy) {
 		failure.set(copy.getFailure());
 		Optional<CashUnit3> cashUnit = copy.getCashUnit();
 		if (cashUnit.isPresent()) {
@@ -67,7 +67,7 @@ public class CashUnitError3_10 extends CashUnitError3 {
 	public Optional<CashUnit3> getCashUnit() {
 		Optional<CashUnit3> result = Optional.empty();
 		if (!Pointer.NULL.equals(cashUnit)) {
-			result = Optional.of(new CashUnit3_10(new CashUnit3_10(cashUnit)));
+			result = Optional.of(new CashUnit310(new CashUnit310(cashUnit)));
 		}
 		return result;
 	}
@@ -79,8 +79,8 @@ public class CashUnitError3_10 extends CashUnitError3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CashUnitError3_10) {
-			CashUnitError3_10 cashUnitError = (CashUnitError3_10) obj;
+		if (obj instanceof CashUnitError310) {
+			CashUnitError310 cashUnitError = (CashUnitError310) obj;
 			return new EqualsBuilder().append(getFailure(), cashUnitError.getFailure()).append(getCashUnit(), cashUnitError.getCashUnit()).isEquals();
 		}
 		return false;

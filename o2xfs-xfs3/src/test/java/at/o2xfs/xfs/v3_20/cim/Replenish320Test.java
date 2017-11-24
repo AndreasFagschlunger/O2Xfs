@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_20.BaseXfs3_20Test;
 
-public class Replenish3_20Test extends BaseXfs3_20Test {
+public class Replenish320Test extends BaseXfs320Test {
 
 	@Test
 	public final void test() {
-		Replenish3_20 expected = new Replenish3_20(buildReplenish3_20().getPointer());
-		Replenish3_20 actual = new Replenish3_20(expected);
+		Replenish320 expected = new Replenish320(buildReplenish320().getPointer());
+		Replenish320 actual = new Replenish320(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildReplenish3_20();
+	private native Buffer buildReplenish320();
 }

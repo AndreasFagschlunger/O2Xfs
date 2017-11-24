@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,30 +37,30 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 
-public class DepleteSource3_30 extends Struct {
+public class DepleteSource330 extends Struct {
 
 	protected final USHORT numberSource = new USHORT();
 	protected final ULONG numberOfItemsToMove = new ULONG();
 	protected final BOOL removeAll = new BOOL();
 
-	protected DepleteSource3_30() {
+	protected DepleteSource330() {
 		add(numberSource);
 		add(numberOfItemsToMove);
 		add(removeAll);
 	}
 
-	public DepleteSource3_30(Pointer p) {
+	public DepleteSource330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public DepleteSource3_30(DepleteSource3_30 copy) {
+	public DepleteSource330(DepleteSource330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(DepleteSource3_30 copy) {
+	protected void set(DepleteSource330 copy) {
 		numberSource.set(copy.getNumberSource());
 		numberOfItemsToMove.set(copy.getNumberOfItemsToMove());
 		removeAll.set(copy.isRemoveAll());
@@ -85,10 +85,10 @@ public class DepleteSource3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DepleteSource3_30) {
-			DepleteSource3_30 depleteSources3_30 = (DepleteSource3_30) obj;
-			return new EqualsBuilder().append(getNumberSource(), depleteSources3_30.getNumberSource()).append(getNumberOfItemsToMove(), depleteSources3_30.getNumberOfItemsToMove())
-					.append(isRemoveAll(), depleteSources3_30.isRemoveAll()).isEquals();
+		if (obj instanceof DepleteSource330) {
+			DepleteSource330 depleteSources330 = (DepleteSource330) obj;
+			return new EqualsBuilder().append(getNumberSource(), depleteSources330.getNumberSource()).append(getNumberOfItemsToMove(), depleteSources330.getNumberOfItemsToMove())
+					.append(isRemoveAll(), depleteSources330.isRemoveAll()).isEquals();
 		}
 		return false;
 	}

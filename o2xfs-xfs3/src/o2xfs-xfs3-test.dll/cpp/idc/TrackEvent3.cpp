@@ -1,4 +1,4 @@
-#include "idc/at_o2xfs_xfs_idc_v3_00_TrackEvent3Test.h"
+#include "idc/at_o2xfs_xfs_v3_00_idc_TrackEvent3Test.h"
 
 #include <Windows.h>
 #include <XFSIDC.H>
@@ -8,7 +8,7 @@ static WFSIDCTRACKEVENT TrackEvent;
 static LPSTR lpstrTrack  = "TRACK3";
 static LPSTR lpstrData = "1234567890";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_idc_v3_100_TrackEvent3Test_buildTrackEvent3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_idc_TrackEvent3Test_buildTrackEvent3(JNIEnv *env, jobject obj) {
 	TrackEvent.fwStatus = WFS_IDC_DATAOK;
 	TrackEvent.lpstrTrack = lpstrTrack;
 	TrackEvent.lpstrData = lpstrData;

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_00;
+package at.o2xfs.xfs.v3_00.cim;
 
 import java.util.Collections;
 import java.util.Map;

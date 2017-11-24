@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,26 +33,26 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.ULONG;
-import at.o2xfs.xfs.cdm.v3_00.CashUnit3;
+import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
 
-public class CashUnit3_10 extends CashUnit3 {
+public class CashUnit310 extends CashUnit3 {
 
 	protected final ULONG dispensedCount = new ULONG();
 	protected final ULONG presentedCount = new ULONG();
 	protected final ULONG retractedCount = new ULONG();
 
-	protected CashUnit3_10() {
+	protected CashUnit310() {
 		add(dispensedCount);
 		add(presentedCount);
 		add(retractedCount);
 	}
 
-	public CashUnit3_10(Pointer p) {
+	public CashUnit310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public CashUnit3_10(CashUnit3_10 copy) {
+	public CashUnit310(CashUnit310 copy) {
 		this();
 		allocate();
 		number.set(copy.getNumber());
@@ -69,15 +69,15 @@ public class CashUnit3_10 extends CashUnit3 {
 		appLock.set(copy.isAppLock());
 		status.set(copy.getStatus());
 		numPhysicalCUs.set(copy.getNumPhysicalCUs());
-		physical.pointTo(new PhysicalCashUnits3_10(copy.getPhysical()));
+		physical.pointTo(new PhysicalCashUnits310(copy.getPhysical()));
 		dispensedCount.set(copy.getDispensedCount());
 		presentedCount.set(copy.getPresentedCount());
 		retractedCount.set(copy.getRetractedCount());
 	}
 
 	@Override
-	public PhysicalCashUnit3_10[] getPhysical() {
-		return new PhysicalCashUnits3_10(physical, getNumPhysicalCUs()).get();
+	public PhysicalCashUnit310[] getPhysical() {
+		return new PhysicalCashUnits310(physical, getNumPhysicalCUs()).get();
 	}
 
 	public long getDispensedCount() {
@@ -99,10 +99,10 @@ public class CashUnit3_10 extends CashUnit3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CashUnit3_10) {
-			CashUnit3_10 cashUnit3_10 = (CashUnit3_10) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getDispensedCount(), cashUnit3_10.getDispensedCount())
-					.append(getPresentedCount(), cashUnit3_10.getPresentedCount()).append(getRetractedCount(), cashUnit3_10.getRetractedCount()).isEquals();
+		if (obj instanceof CashUnit310) {
+			CashUnit310 cashUnit310 = (CashUnit310) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getDispensedCount(), cashUnit310.getDispensedCount())
+					.append(getPresentedCount(), cashUnit310.getPresentedCount()).append(getRetractedCount(), cashUnit310.getRetractedCount()).isEquals();
 		}
 		return false;
 	}

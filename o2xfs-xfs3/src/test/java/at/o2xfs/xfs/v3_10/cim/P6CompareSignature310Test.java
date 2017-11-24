@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_10.BaseXfs3_10Test;
 
-public class P6CompareSignature3_10Test extends BaseXfs3_10Test {
+public class P6CompareSignature310Test extends BaseXfs310Test {
 
 	@Test
 	public final void test() {
-		P6CompareSignature3_10 expected = new P6CompareSignature3_10(buildP6CompareSignature3_10().getPointer());
-		P6CompareSignature3_10 actual = new P6CompareSignature3_10(expected);
+		P6CompareSignature310 expected = new P6CompareSignature310(buildP6CompareSignature310().getPointer());
+		P6CompareSignature310 actual = new P6CompareSignature310(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildP6CompareSignature3_10();
+	private native Buffer buildP6CompareSignature310();
 }

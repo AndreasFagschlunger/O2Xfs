@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_30_DepleteInfo3_30Test.h"
+#include "cim/at_o2xfs_xfs_v3_30_cim_DepleteInfo330Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -33,7 +33,7 @@
 
 static WFSCIMDEPINFO DepleteInfo;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_130_DepleteInfo3_130Test_buildDepleteInfo3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_DepleteInfo3130Test_buildDepleteInfo3130(JNIEnv *env, jobject obj) {
 	DepleteInfo.usNumberTarget = 1;
 	return NewBuffer(env, &DepleteInfo, sizeof(WFSCIMDEPINFO));
 }

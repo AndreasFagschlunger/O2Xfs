@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_20;
+package at.o2xfs.xfs.v3_20.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,28 +33,28 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.cdm.v3_10.CdmCaps3_10;
+import at.o2xfs.xfs.v3_10.cdm.CdmCaps310;
 
-public class CdmCaps3_20 extends CdmCaps3_10 {
+public class CdmCaps320 extends CdmCaps310 {
 
 	protected final BOOL antiFraudModule = new BOOL();
 
-	protected CdmCaps3_20() {
+	protected CdmCaps320() {
 		add(antiFraudModule);
 	}
 
-	public CdmCaps3_20(Pointer p) {
+	public CdmCaps320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public CdmCaps3_20(CdmCaps3_20 copy) {
+	public CdmCaps320(CdmCaps320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(CdmCaps3_20 copy) {
+	protected void set(CdmCaps320 copy) {
 		super.set(copy);
 		antiFraudModule.set(copy.isAntiFraudModule());
 	}
@@ -70,9 +70,9 @@ public class CdmCaps3_20 extends CdmCaps3_10 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CdmCaps3_20) {
-			CdmCaps3_20 cdmCaps3_20 = (CdmCaps3_20) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(isAntiFraudModule(), cdmCaps3_20.isAntiFraudModule()).isEquals();
+		if (obj instanceof CdmCaps320) {
+			CdmCaps320 cdmCaps320 = (CdmCaps320) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(isAntiFraudModule(), cdmCaps320.isAntiFraudModule()).isEquals();
 		}
 		return false;
 	}

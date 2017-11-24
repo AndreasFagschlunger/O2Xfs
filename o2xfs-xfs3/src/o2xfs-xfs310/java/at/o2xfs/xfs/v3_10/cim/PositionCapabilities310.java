@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,31 +34,31 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class PositionCapabilities3_10 extends Struct {
+public class PositionCapabilities310 extends Struct {
 
 	protected final Pointer posCapabilities = new Pointer();
 
-	protected PositionCapabilities3_10() {
+	protected PositionCapabilities310() {
 		add(posCapabilities);
 	}
 
-	public PositionCapabilities3_10(Pointer p) {
+	public PositionCapabilities310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public PositionCapabilities3_10(PositionCapabilities3_10 copy) {
+	public PositionCapabilities310(PositionCapabilities310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(PositionCapabilities3_10 copy) {
-		posCapabilities.pointTo(new PositionCaps3_10(copy.getPosCapabilities()));
+	protected void set(PositionCapabilities310 copy) {
+		posCapabilities.pointTo(new PositionCaps310(copy.getPosCapabilities()));
 	}
 
-	public PositionCapability3_10[] getPosCapabilities() {
-		return new PositionCaps3_10(posCapabilities).get();
+	public PositionCapability310[] getPosCapabilities() {
+		return new PositionCaps310(posCapabilities).get();
 	}
 
 	@Override
@@ -68,9 +68,9 @@ public class PositionCapabilities3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof PositionCapabilities3_10) {
-			PositionCapabilities3_10 posCapabilities3_10 = (PositionCapabilities3_10) obj;
-			return new EqualsBuilder().append(getPosCapabilities(), posCapabilities3_10.getPosCapabilities()).isEquals();
+		if (obj instanceof PositionCapabilities310) {
+			PositionCapabilities310 posCapabilities310 = (PositionCapabilities310) obj;
+			return new EqualsBuilder().append(getPosCapabilities(), posCapabilities310.getPosCapabilities()).isEquals();
 		}
 		return false;
 	}

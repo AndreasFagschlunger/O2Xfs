@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -42,7 +42,7 @@ import at.o2xfs.xfs.cdm.OnBlacklist;
 import at.o2xfs.xfs.win32.XfsCharArray;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class ItemInfoAll3_30 extends Struct {
+public class ItemInfoAll330 extends Struct {
 
 	protected final USHORT level = new USHORT();
 	protected final XfsCharArray currencyID = new XfsCharArray(3);
@@ -54,7 +54,7 @@ public class ItemInfoAll3_30 extends Struct {
 	protected final XfsWord<ItemLocation> itemLocation = new XfsWord<>(ItemLocation.class);
 	protected final USHORT number = new USHORT();
 
-	protected ItemInfoAll3_30() {
+	protected ItemInfoAll330() {
 		add(level);
 		add(currencyID);
 		add(value);
@@ -66,18 +66,18 @@ public class ItemInfoAll3_30 extends Struct {
 		add(number);
 	}
 
-	public ItemInfoAll3_30(Pointer p) {
+	public ItemInfoAll330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemInfoAll3_30(ItemInfoAll3_30 copy) {
+	public ItemInfoAll330(ItemInfoAll330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ItemInfoAll3_30 copy) {
+	protected void set(ItemInfoAll330 copy) {
 		level.set(copy.getLevel());
 		currencyID.set(copy.getCurrencyID());
 		value.set(copy.getValue());
@@ -133,8 +133,8 @@ public class ItemInfoAll3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemInfoAll3_30) {
-			ItemInfoAll3_30 itemInfoAll = (ItemInfoAll3_30) obj;
+		if (obj instanceof ItemInfoAll330) {
+			ItemInfoAll330 itemInfoAll = (ItemInfoAll330) obj;
 			return new EqualsBuilder().append(getLevel(), itemInfoAll.getLevel()).append(getCurrencyID(), itemInfoAll.getCurrencyID()).append(getValue(), itemInfoAll.getValue())
 					.append(getRelease(), itemInfoAll.getRelease()).append(getSerialNumber(), itemInfoAll.getSerialNumber())
 					.append(getImageFileName(), itemInfoAll.getImageFileName()).append(getOnBlacklist(), itemInfoAll.getOnBlacklist())

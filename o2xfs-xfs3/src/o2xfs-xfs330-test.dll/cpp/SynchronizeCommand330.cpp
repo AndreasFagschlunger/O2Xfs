@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_30_SynchronizeCommand3_30Test.h"
+#include "at_o2xfs_xfs_v3_30_cdm_SynchronizeCommand330Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -34,7 +34,7 @@
 static WFSCDMSYNCHRONIZECOMMAND SynchronizeCommand;
 static WFSCDMRETRACT CmdData;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_130_SynchronizeCommand3_130Test_buildSynchronizeCommand3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_SynchronizeCommand3130Test_buildSynchronizeCommand3130(JNIEnv *env, jobject obj) {
 	SynchronizeCommand.dwCommand = WFS_CMD_CDM_RETRACT;
 	CmdData.fwOutputPosition = WFS_CDM_POSFRONT;
 	CmdData.usRetractArea = WFS_CDM_RA_RETRACT;

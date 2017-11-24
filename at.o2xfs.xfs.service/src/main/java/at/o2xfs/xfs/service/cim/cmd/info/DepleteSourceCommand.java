@@ -35,37 +35,37 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cim.CimInfoCommand;
-import at.o2xfs.xfs.cim.v3_30.DepleteInfo3_30;
-import at.o2xfs.xfs.cim.v3_30.DepleteInfoResult3_30;
+import at.o2xfs.xfs.v3_30.cim.DepleteInfo330;
+import at.o2xfs.xfs.v3_30.cim.DepleteInfoResult330;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cim.CimFactory;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.cmd.XfsCallable;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 
-public final class DepleteSourceCommand implements Callable<List<DepleteInfoResult3_30>> {
+public final class DepleteSourceCommand implements Callable<List<DepleteInfoResult330>> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DepleteSourceCommand.class);
 
 	private final CimService cimService;
 
-	private final DepleteInfo3_30 depleteInfo;
+	private final DepleteInfo330 depleteInfo;
 
-	public DepleteSourceCommand(CimService cimService, DepleteInfo3_30 depleteInfo) {
+	public DepleteSourceCommand(CimService cimService, DepleteInfo330 depleteInfo) {
 		this.cimService = cimService;
 		this.depleteInfo = depleteInfo;
 	}
 
 	@Override
-	public List<DepleteInfoResult3_30> call() throws XfsException {
-		List<DepleteInfoResult3_30> result;
+	public List<DepleteInfoResult330> call() throws XfsException {
+		List<DepleteInfoResult330> result;
 		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService,
 				CimInfoCommand.DEPLETE_SOURCE, depleteInfo);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
 			result = CimFactory.fromNullTerminatedArray(cimService.getXfsVersion(), wfsResult.getResults(),
-					DepleteInfoResult3_30.class);
+					DepleteInfoResult330.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);
 			}

@@ -40,14 +40,14 @@ import at.o2xfs.operator.task.xfs.XfsServiceTask;
 import at.o2xfs.operator.task.xfs.cdm.DispenseWizard.Status;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cdm.NoteErrorReason;
-import at.o2xfs.xfs.cdm.v3_00.CashUnit3;
-import at.o2xfs.xfs.cdm.v3_00.CashUnitError3;
-import at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3;
-import at.o2xfs.xfs.cdm.v3_00.CdmCaps3;
-import at.o2xfs.xfs.cdm.v3_00.CurrencyExp3;
-import at.o2xfs.xfs.cdm.v3_00.Denomination3;
-import at.o2xfs.xfs.cdm.v3_00.Dispense3;
-import at.o2xfs.xfs.cdm.v3_30.ItemInfoSummary3_30;
+import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitInfo3;
+import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
+import at.o2xfs.xfs.v3_00.cdm.CurrencyExp3;
+import at.o2xfs.xfs.v3_00.cdm.Denomination3;
+import at.o2xfs.xfs.v3_00.cdm.Dispense3;
+import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cdm.xfs3.CashUnitInfoCommand;
 import at.o2xfs.xfs.service.cdm.xfs3.DenominationEvent;
@@ -183,7 +183,7 @@ public class DispenseTask extends XfsServiceTask<CdmService> implements Dispense
 	}
 
 	@Override
-	public void onInfoAvailable(ItemInfoSummary3_30 itemInfoSummary) {
+	public void onInfoAvailable(ItemInfoSummary330 itemInfoSummary) {
 
 	}
 

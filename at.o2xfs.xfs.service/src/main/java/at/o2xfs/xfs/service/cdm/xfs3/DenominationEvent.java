@@ -27,7 +27,7 @@
 
 package at.o2xfs.xfs.service.cdm.xfs3;
 
-import at.o2xfs.xfs.cdm.v3_00.Denomination3;
+import at.o2xfs.xfs.v3_00.cdm.Denomination3;
 import at.o2xfs.xfs.service.cmd.event.CompleteEvent;
 
 public final class DenominationEvent implements CompleteEvent {

@@ -2,40 +2,40 @@ package at.o2xfs.xfs.service.idc;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.XfsVersion;
-import at.o2xfs.xfs.idc.v3_00.Capabilities3;
-import at.o2xfs.xfs.idc.v3_00.CardAction3;
-import at.o2xfs.xfs.idc.v3_00.CardData3;
-import at.o2xfs.xfs.idc.v3_00.ChipIo3;
-import at.o2xfs.xfs.idc.v3_00.ChipPowerOut3;
-import at.o2xfs.xfs.idc.v3_00.Form3;
-import at.o2xfs.xfs.idc.v3_00.ParseData3;
-import at.o2xfs.xfs.idc.v3_00.RetainCard3;
-import at.o2xfs.xfs.idc.v3_00.Setkey3;
-import at.o2xfs.xfs.idc.v3_00.Status3;
-import at.o2xfs.xfs.idc.v3_00.TrackEvent3;
-import at.o2xfs.xfs.idc.v3_00.WriteTrack3;
-import at.o2xfs.xfs.idc.v3_10.Capabilities3_10;
-import at.o2xfs.xfs.idc.v3_10.DevicePosition3_10;
-import at.o2xfs.xfs.idc.v3_10.EjectCard3_10;
-import at.o2xfs.xfs.idc.v3_10.InterfaceModuleIdentifier3_10;
-import at.o2xfs.xfs.idc.v3_10.PowerSaveChange3_10;
-import at.o2xfs.xfs.idc.v3_10.PowerSaveControl3_10;
-import at.o2xfs.xfs.idc.v3_10.SetGuidlight3_10;
-import at.o2xfs.xfs.idc.v3_10.Status3_10;
-import at.o2xfs.xfs.idc.v3_20.Form3_20;
-import at.o2xfs.xfs.idc.v3_20.ParkCard3_20;
-import at.o2xfs.xfs.idc.v3_20.Status3_20;
-import at.o2xfs.xfs.idc.v3_20.TrackDetected3_20;
-import at.o2xfs.xfs.idc.v3_30.AidData3_30;
-import at.o2xfs.xfs.idc.v3_30.AppData3_30;
-import at.o2xfs.xfs.idc.v3_30.Capabilities3_30;
-import at.o2xfs.xfs.idc.v3_30.EmvClessConfigData3_30;
-import at.o2xfs.xfs.idc.v3_30.EmvClessOutcome3_30;
-import at.o2xfs.xfs.idc.v3_30.EmvClessReadStatus3_30;
-import at.o2xfs.xfs.idc.v3_30.EmvClessTxData3_30;
-import at.o2xfs.xfs.idc.v3_30.EmvClessUI3_30;
-import at.o2xfs.xfs.idc.v3_30.HexData3_30;
-import at.o2xfs.xfs.idc.v3_30.KeyData3_30;
+import at.o2xfs.xfs.v3_00.idc.Capabilities3;
+import at.o2xfs.xfs.v3_00.idc.CardAction3;
+import at.o2xfs.xfs.v3_00.idc.CardData3;
+import at.o2xfs.xfs.v3_00.idc.ChipIo3;
+import at.o2xfs.xfs.v3_00.idc.ChipPowerOut3;
+import at.o2xfs.xfs.v3_00.idc.Form3;
+import at.o2xfs.xfs.v3_00.idc.ParseData3;
+import at.o2xfs.xfs.v3_00.idc.RetainCard3;
+import at.o2xfs.xfs.v3_00.idc.Setkey3;
+import at.o2xfs.xfs.v3_00.idc.Status3;
+import at.o2xfs.xfs.v3_00.idc.TrackEvent3;
+import at.o2xfs.xfs.v3_00.idc.WriteTrack3;
+import at.o2xfs.xfs.v3_10.idc.Capabilities310;
+import at.o2xfs.xfs.v3_10.idc.DevicePosition310;
+import at.o2xfs.xfs.v3_10.idc.EjectCard310;
+import at.o2xfs.xfs.v3_10.idc.InterfaceModuleIdentifier310;
+import at.o2xfs.xfs.v3_10.idc.PowerSaveChange310;
+import at.o2xfs.xfs.v3_10.idc.PowerSaveControl310;
+import at.o2xfs.xfs.v3_10.idc.SetGuidlight310;
+import at.o2xfs.xfs.v3_10.idc.Status310;
+import at.o2xfs.xfs.v3_20.idc.Form320;
+import at.o2xfs.xfs.v3_20.idc.ParkCard320;
+import at.o2xfs.xfs.v3_20.idc.Status320;
+import at.o2xfs.xfs.v3_20.idc.TrackDetected320;
+import at.o2xfs.xfs.v3_30.idc.AidData330;
+import at.o2xfs.xfs.v3_30.idc.AppData330;
+import at.o2xfs.xfs.v3_30.idc.Capabilities330;
+import at.o2xfs.xfs.v3_30.idc.EmvClessConfigData330;
+import at.o2xfs.xfs.v3_30.idc.EmvClessOutcome330;
+import at.o2xfs.xfs.v3_30.idc.EmvClessReadStatus330;
+import at.o2xfs.xfs.v3_30.idc.EmvClessTxData330;
+import at.o2xfs.xfs.v3_30.idc.EmvClessUI330;
+import at.o2xfs.xfs.v3_30.idc.HexData330;
+import at.o2xfs.xfs.v3_30.idc.KeyData330;
 
 public enum IdcFactory {
 
@@ -43,10 +43,10 @@ public enum IdcFactory {
 
 	private <T> T doCreate(XfsVersion xfsVersion, Pointer p, Class<T> type) {
 		Object result;
-		if (AidData3_30.class.equals(type)) {
-			result = new AidData3_30(new AidData3_30(p));
-		} else if (AppData3_30.class.equals(type)) {
-			result = new AppData3_30(new AppData3_30(p));
+		if (AidData330.class.equals(type)) {
+			result = new AidData330(new AidData330(p));
+		} else if (AppData330.class.equals(type)) {
+			result = new AppData330(new AppData330(p));
 		} else if (Capabilities3.class.equals(type)) {
 			result = createCapabilities(xfsVersion, p);
 		} else if (CardAction3.class.equals(type)) {
@@ -57,48 +57,48 @@ public enum IdcFactory {
 			result = new ChipIo3(new ChipIo3(p));
 		} else if (ChipPowerOut3.class.equals(type)) {
 			result = new ChipPowerOut3(new ChipPowerOut3(p));
-		} else if (DevicePosition3_10.class.equals(type)) {
-			result = new DevicePosition3_10(new DevicePosition3_10(p));
-		} else if (EjectCard3_10.class.equals(type)) {
-			result = new EjectCard3_10(new EjectCard3_10(p));
-		} else if (EmvClessConfigData3_30.class.equals(type)) {
-			result = new EmvClessConfigData3_30(new EmvClessConfigData3_30(p));
-		} else if (EmvClessOutcome3_30.class.equals(type)) {
-			result = new EmvClessOutcome3_30(new EmvClessOutcome3_30(p));
-		} else if (EmvClessReadStatus3_30.class.equals(type)) {
-			result = new EmvClessReadStatus3_30(new EmvClessReadStatus3_30(p));
-		} else if (EmvClessTxData3_30.class.equals(type)) {
-			result = new EmvClessTxData3_30(new EmvClessTxData3_30(p));
-		} else if (EmvClessUI3_30.class.equals(type)) {
-			result = new EmvClessUI3_30(new EmvClessUI3_30(p));
-		} else if (EmvClessOutcome3_30.class.equals(type)) {
-			result = new EmvClessOutcome3_30(new EmvClessOutcome3_30(p));
+		} else if (DevicePosition310.class.equals(type)) {
+			result = new DevicePosition310(new DevicePosition310(p));
+		} else if (EjectCard310.class.equals(type)) {
+			result = new EjectCard310(new EjectCard310(p));
+		} else if (EmvClessConfigData330.class.equals(type)) {
+			result = new EmvClessConfigData330(new EmvClessConfigData330(p));
+		} else if (EmvClessOutcome330.class.equals(type)) {
+			result = new EmvClessOutcome330(new EmvClessOutcome330(p));
+		} else if (EmvClessReadStatus330.class.equals(type)) {
+			result = new EmvClessReadStatus330(new EmvClessReadStatus330(p));
+		} else if (EmvClessTxData330.class.equals(type)) {
+			result = new EmvClessTxData330(new EmvClessTxData330(p));
+		} else if (EmvClessUI330.class.equals(type)) {
+			result = new EmvClessUI330(new EmvClessUI330(p));
+		} else if (EmvClessOutcome330.class.equals(type)) {
+			result = new EmvClessOutcome330(new EmvClessOutcome330(p));
 		} else if (Form3.class.equals(type)) {
 			result = createForm(xfsVersion, p);
-		} else if (HexData3_30.class.equals(type)) {
-			result = new HexData3_30(new HexData3_30(p));
-		} else if (KeyData3_30.class.equals(type)) {
-			result = new KeyData3_30(new KeyData3_30(p));
+		} else if (HexData330.class.equals(type)) {
+			result = new HexData330(new HexData330(p));
+		} else if (KeyData330.class.equals(type)) {
+			result = new KeyData330(new KeyData330(p));
 		} else if (Status3.class.equals(type)) {
 			result = createStatus(xfsVersion, p);
-		} else if (InterfaceModuleIdentifier3_10.class.equals(type)) {
-			result = new InterfaceModuleIdentifier3_10(new InterfaceModuleIdentifier3_10(p));
-		} else if (ParkCard3_20.class.equals(type)) {
-			result = new ParkCard3_20(new ParkCard3_20(p));
+		} else if (InterfaceModuleIdentifier310.class.equals(type)) {
+			result = new InterfaceModuleIdentifier310(new InterfaceModuleIdentifier310(p));
+		} else if (ParkCard320.class.equals(type)) {
+			result = new ParkCard320(new ParkCard320(p));
 		} else if (ParseData3.class.equals(type)) {
 			result = new ParseData3(new ParseData3(p));
-		} else if (PowerSaveChange3_10.class.equals(type)) {
-			result = new PowerSaveChange3_10(new PowerSaveChange3_10(p));
-		} else if (PowerSaveControl3_10.class.equals(type)) {
-			result = new PowerSaveControl3_10(new PowerSaveControl3_10(p));
+		} else if (PowerSaveChange310.class.equals(type)) {
+			result = new PowerSaveChange310(new PowerSaveChange310(p));
+		} else if (PowerSaveControl310.class.equals(type)) {
+			result = new PowerSaveControl310(new PowerSaveControl310(p));
 		} else if (RetainCard3.class.equals(type)) {
 			result = new RetainCard3(new RetainCard3(p));
-		} else if (SetGuidlight3_10.class.equals(type)) {
-			result = new SetGuidlight3_10(new SetGuidlight3_10(p));
+		} else if (SetGuidlight310.class.equals(type)) {
+			result = new SetGuidlight310(new SetGuidlight310(p));
 		} else if (Setkey3.class.equals(type)) {
 			result = new Setkey3(new Setkey3(p));
-		} else if (TrackDetected3_20.class.equals(type)) {
-			result = new TrackDetected3_20(new TrackDetected3_20(p));
+		} else if (TrackDetected320.class.equals(type)) {
+			result = new TrackDetected320(new TrackDetected320(p));
 		} else if (TrackEvent3.class.equals(type)) {
 			result = new TrackEvent3(new TrackEvent3(p));
 		} else if (WriteTrack3.class.equals(type)) {
@@ -112,9 +112,9 @@ public enum IdcFactory {
 	private Capabilities3 createCapabilities(XfsVersion xfsVersion, Pointer p) {
 		Capabilities3 result;
 		if (XfsVersion.V3_30.compareTo(xfsVersion) >= 0) {
-			result = new Capabilities3_30(new Capabilities3_30(p));
+			result = new Capabilities330(new Capabilities330(p));
 		} else if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
-			result = new Capabilities3_10(new Capabilities3_10(p));
+			result = new Capabilities310(new Capabilities310(p));
 		} else {
 			result = new Capabilities3(new Capabilities3(p));
 		}
@@ -124,7 +124,7 @@ public enum IdcFactory {
 	private Form3 createForm(XfsVersion xfsVersion, Pointer p) {
 		Form3 result;
 		if (XfsVersion.V3_20.compareTo(xfsVersion) >= 0) {
-			result = new Form3_20(new Form3_20(p));
+			result = new Form320(new Form320(p));
 		} else {
 			result = new Form3(new Form3(p));
 		}
@@ -134,9 +134,9 @@ public enum IdcFactory {
 	private Status3 createStatus(XfsVersion xfsVersion, Pointer p) {
 		Status3 result;
 		if (XfsVersion.V3_20.compareTo(xfsVersion) >= 0) {
-			result = new Status3_20(new Status3_20(p));
+			result = new Status320(new Status320(p));
 		} else if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
-			result = new Status3_10(new Status3_10(p));
+			result = new Status310(new Status310(p));
 		} else {
 			result = new Status3(new Status3(p));
 		}

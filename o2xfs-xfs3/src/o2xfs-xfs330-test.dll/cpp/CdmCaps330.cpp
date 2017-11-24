@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_30_CdmCaps3_30Test.h"
+#include "at_o2xfs_xfs_v3_30_cdm_CdmCaps330Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -43,7 +43,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
 	return JNI_VERSION_1_6;
 }
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_130_CdmCaps3_130Test_buildCdmCaps3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_CdmCaps3130Test_buildCdmCaps3130(JNIEnv *env, jobject obj) {
 	caps.wClass = WFS_SERVICE_CLASS_CDM;
 	caps.fwType = WFS_CDM_SELFSERVICEBILL;
 	caps.wMaxDispenseItems = 40;

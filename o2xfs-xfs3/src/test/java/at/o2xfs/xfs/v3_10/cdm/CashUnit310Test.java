@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_10.BaseXfs3_10Test;
 
-public class CashUnit3_10Test extends BaseXfs3_10Test {
+public class CashUnit310Test extends BaseXfs310Test {
 
 	@Test
 	public final void test() {
-		CashUnit3_10 expected = new CashUnit3_10(buildCashUnit3_10().getPointer());
-		CashUnit3_10 actual = new CashUnit3_10(expected);
+		CashUnit310 expected = new CashUnit310(buildCashUnit310().getPointer());
+		CashUnit310 actual = new CashUnit310(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildCashUnit3_10();
+	private native Buffer buildCashUnit310();
 }

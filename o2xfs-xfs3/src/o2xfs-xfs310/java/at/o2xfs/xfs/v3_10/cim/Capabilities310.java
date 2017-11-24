@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import java.util.List;
 import java.util.Set;
@@ -38,36 +38,36 @@ import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.cim.GuidLight;
 import at.o2xfs.xfs.cim.ItemInfoType;
-import at.o2xfs.xfs.cim.v3_00.Capabilities3;
+import at.o2xfs.xfs.v3_00.cim.Capabilities3;
 import at.o2xfs.xfs.win32.XfsBitmaskArray;
 import at.o2xfs.xfs.win32.XfsDWordBitmask;
 
-public class Capabilities3_10 extends Capabilities3 {
+public class Capabilities310 extends Capabilities3 {
 
 	protected final XfsBitmaskArray<GuidLight> guidLights = new XfsBitmaskArray<>(32, GuidLight.class);
 	protected final XfsDWordBitmask<ItemInfoType> itemInfoTypes = new XfsDWordBitmask<>(ItemInfoType.class);
 	protected final BOOL compareSignatures = new BOOL();
 	protected final BOOL powerSaveControl = new BOOL();
 
-	protected Capabilities3_10() {
+	protected Capabilities310() {
 		add(guidLights);
 		add(itemInfoTypes);
 		add(compareSignatures);
 		add(powerSaveControl);
 	}
 
-	public Capabilities3_10(Pointer p) {
+	public Capabilities310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Capabilities3_10(Capabilities3_10 copy) {
+	public Capabilities310(Capabilities310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Capabilities3_10 copy) {
+	protected void set(Capabilities310 copy) {
 		super.set(copy);
 		guidLights.set(copy.getGuidLights());
 		itemInfoTypes.set(copy.getItemInfoTypes());
@@ -99,11 +99,11 @@ public class Capabilities3_10 extends Capabilities3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Capabilities3_10) {
-			Capabilities3_10 capabilities3_10 = (Capabilities3_10) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getGuidLights(), capabilities3_10.getGuidLights())
-					.append(getItemInfoTypes(), capabilities3_10.getItemInfoTypes()).append(isCompareSignatures(), capabilities3_10.isCompareSignatures())
-					.append(isPowerSaveControl(), capabilities3_10.isPowerSaveControl()).isEquals();
+		if (obj instanceof Capabilities310) {
+			Capabilities310 capabilities310 = (Capabilities310) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getGuidLights(), capabilities310.getGuidLights())
+					.append(getItemInfoTypes(), capabilities310.getItemInfoTypes()).append(isCompareSignatures(), capabilities310.isCompareSignatures())
+					.append(isPowerSaveControl(), capabilities310.isPowerSaveControl()).isEquals();
 		}
 		return false;
 	}

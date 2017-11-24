@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import java.util.Optional;
 
@@ -35,28 +35,28 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.cim.v3_10.ItemInfo3_10;
+import at.o2xfs.xfs.v3_10.cim.ItemInfo310;
 
-public class ItemInfo3_30 extends ItemInfo3_10 {
+public class ItemInfo330 extends ItemInfo310 {
 
 	protected final LPSTR imageFileName = new LPSTR();
 
-	protected ItemInfo3_30() {
+	protected ItemInfo330() {
 		add(imageFileName);
 	}
 
-	public ItemInfo3_30(Pointer p) {
+	public ItemInfo330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemInfo3_30(ItemInfo3_30 copy) {
+	public ItemInfo330(ItemInfo330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ItemInfo3_30 copy) {
+	protected void set(ItemInfo330 copy) {
 		super.set(copy);
 		Optional<String> imageFileName = copy.getImageFileName();
 		if (imageFileName.isPresent()) {
@@ -75,9 +75,9 @@ public class ItemInfo3_30 extends ItemInfo3_10 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemInfo3_30) {
-			ItemInfo3_30 itemInfo3_30 = (ItemInfo3_30) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getImageFileName(), itemInfo3_30.getImageFileName()).isEquals();
+		if (obj instanceof ItemInfo330) {
+			ItemInfo330 itemInfo330 = (ItemInfo330) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getImageFileName(), itemInfo330.getImageFileName()).isEquals();
 		}
 		return false;
 	}

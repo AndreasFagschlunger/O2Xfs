@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,26 +33,26 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.ULONG;
-import at.o2xfs.xfs.cdm.v3_00.PhysicalCashUnit3;
+import at.o2xfs.xfs.v3_00.cdm.PhysicalCashUnit3;
 
-public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
+public class PhysicalCashUnit310 extends PhysicalCashUnit3 {
 
 	protected final ULONG dispensedCount = new ULONG();
 	protected final ULONG presentedCount = new ULONG();
 	protected final ULONG retractedCount = new ULONG();
 
-	protected PhysicalCashUnit3_10() {
+	protected PhysicalCashUnit310() {
 		add(dispensedCount);
 		add(presentedCount);
 		add(retractedCount);
 	}
 
-	public PhysicalCashUnit3_10(Pointer p) {
+	public PhysicalCashUnit310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public PhysicalCashUnit3_10(PhysicalCashUnit3_10 copy) {
+	public PhysicalCashUnit310(PhysicalCashUnit310 copy) {
 		this();
 		allocate();
 		physicalPositionName.set(copy.getPhysicalPositionName());
@@ -87,10 +87,10 @@ public class PhysicalCashUnit3_10 extends PhysicalCashUnit3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof PhysicalCashUnit3_10) {
-			PhysicalCashUnit3_10 physicalCashUnit3_10 = (PhysicalCashUnit3_10) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getDispensedCount(), physicalCashUnit3_10.getDispensedCount())
-					.append(getPresentedCount(), physicalCashUnit3_10.getPresentedCount()).append(getRetractedCount(), physicalCashUnit3_10.getRetractedCount()).isEquals();
+		if (obj instanceof PhysicalCashUnit310) {
+			PhysicalCashUnit310 physicalCashUnit310 = (PhysicalCashUnit310) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getDispensedCount(), physicalCashUnit310.getDispensedCount())
+					.append(getPresentedCount(), physicalCashUnit310.getPresentedCount()).append(getRetractedCount(), physicalCashUnit310.getRetractedCount()).isEquals();
 		}
 		return false;
 	}

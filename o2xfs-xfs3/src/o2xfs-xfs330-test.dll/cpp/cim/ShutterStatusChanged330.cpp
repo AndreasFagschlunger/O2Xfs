@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_30_ShutterStatusChanged3_30Test.h"
+#include "cim/at_o2xfs_xfs_v3_30_cim_ShutterStatusChanged330Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -33,7 +33,7 @@
 
 static WFSCIMSHUTTERSTATUSCHANGED ShutterStatusChanged;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_130_ShutterStatusChanged3_130Test_buildShutterStatusChanged3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_ShutterStatusChanged3130Test_buildShutterStatusChanged3130(JNIEnv *env, jobject obj) {
 	ShutterStatusChanged.fwPosition = WFS_CIM_POSOUTFRONT;
 	ShutterStatusChanged.fwShutter = WFS_CIM_SHTJAMMED;
 	return NewBuffer(env, &ShutterStatusChanged, sizeof(WFSCIMSHUTTERSTATUSCHANGED));

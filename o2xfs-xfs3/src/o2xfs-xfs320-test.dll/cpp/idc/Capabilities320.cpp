@@ -1,4 +1,4 @@
-#include "idc/at_o2xfs_xfs_idc_v3_20_Capabilities3_20Test.h"
+#include "idc/at_o2xfs_xfs_v3_20_idc_Capabilities320Test.h"
 
 #include <Windows.h>
 #include <XFSIDC.H>
@@ -7,7 +7,7 @@
 static WFSIDCCAPS Caps;
 static LPSTR lpszExtra = "XFS_MIB_VERSION=<0x00000001>\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_idc_v3_120_Capabilities3_120Test_buildCapabilities3_120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_idc_Capabilities3120Test_buildCapabilities3120(JNIEnv *env, jobject obj) {
 	Caps.wClass = WFS_SERVICE_CLASS_IDC;
 	Caps.fwType = WFS_IDC_TYPEMOTOR;
 	Caps.bCompound = FALSE;

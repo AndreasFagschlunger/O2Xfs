@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_10_PrepareDispense3_10Test.h"
+#include "at_o2xfs_xfs_v3_10_cdm_PrepareDispense310Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -33,7 +33,7 @@
 
 static WFSCDMPREPAREDISPENSE PrepareDispense;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_110_PrepareDispense3_110Test_buildPrepareDispense3_110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_PrepareDispense3110Test_buildPrepareDispense3110(JNIEnv *env, jobject obj) {
 	PrepareDispense.wAction = WFS_CDM_START;
 	return NewBuffer(env, &PrepareDispense, sizeof(WFSCDMPREPAREDISPENSE));
 }

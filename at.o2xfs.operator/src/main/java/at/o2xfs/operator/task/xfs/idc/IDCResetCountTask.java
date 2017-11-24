@@ -33,7 +33,7 @@ import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.IdcExecuteCommand;
-import at.o2xfs.xfs.idc.v3_00.Status3;
+import at.o2xfs.xfs.v3_00.idc.Status3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;

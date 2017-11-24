@@ -39,15 +39,15 @@ import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.cim.CimMessage;
-import at.o2xfs.xfs.cim.v3_00.Capabilities3;
-import at.o2xfs.xfs.cim.v3_00.CashIn3;
-import at.o2xfs.xfs.cim.v3_00.CountsChanged3;
-import at.o2xfs.xfs.cim.v3_00.ItemPosition3;
-import at.o2xfs.xfs.cim.v3_00.NoteTypeList3;
-import at.o2xfs.xfs.cim.v3_10.DevicePosition3_10;
-import at.o2xfs.xfs.cim.v3_10.PositionInfo3_10;
-import at.o2xfs.xfs.cim.v3_10.PowerSaveChange3_10;
-import at.o2xfs.xfs.cim.v3_30.ShutterStatusChanged3_30;
+import at.o2xfs.xfs.v3_00.cim.Capabilities3;
+import at.o2xfs.xfs.v3_00.cim.CashIn3;
+import at.o2xfs.xfs.v3_00.cim.CountsChanged3;
+import at.o2xfs.xfs.v3_00.cim.ItemPosition3;
+import at.o2xfs.xfs.v3_00.cim.NoteTypeList3;
+import at.o2xfs.xfs.v3_10.cim.DevicePosition310;
+import at.o2xfs.xfs.v3_10.cim.PositionInfo310;
+import at.o2xfs.xfs.v3_10.cim.PowerSaveChange310;
+import at.o2xfs.xfs.v3_30.cim.ShutterStatusChanged330;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.cim.cmd.info.CimCapabilitiesCommand;
 
@@ -133,14 +133,14 @@ public class CimService extends XfsService {
 			fireMediaDetected(wfsResult.getResults());
 			break;
 		case SRVE_DEVICEPOSITION:
-			fireDevicePosition(CimFactory.create(getXfsVersion(), wfsResult.getResults(), DevicePosition3_10.class));
+			fireDevicePosition(CimFactory.create(getXfsVersion(), wfsResult.getResults(), DevicePosition310.class));
 			break;
 		case SRVE_POWER_SAVE_CHANGE:
-			firePowerSaveChange(CimFactory.create(getXfsVersion(), wfsResult.getResults(), PowerSaveChange3_10.class));
+			firePowerSaveChange(CimFactory.create(getXfsVersion(), wfsResult.getResults(), PowerSaveChange310.class));
 			break;
 		case SRVE_SHUTTERSTATUSCHANGED:
 			fireShutterStatusChanged(
-					CimFactory.create(getXfsVersion(), wfsResult.getResults(), ShutterStatusChanged3_30.class));
+					CimFactory.create(getXfsVersion(), wfsResult.getResults(), ShutterStatusChanged330.class));
 			break;
 		default:
 			throw new IllegalArgumentException(cimMessage.toString());
@@ -179,9 +179,9 @@ public class CimService extends XfsService {
 	};
 
 	private void fireItemsTaken(Pointer p) {
-		Optional<PositionInfo3_10> positionInfo = Optional.empty();
+		Optional<PositionInfo310> positionInfo = Optional.empty();
 		if (!Pointer.NULL.equals(p)) {
-			positionInfo = Optional.of(CimFactory.create(getXfsVersion(), p, PositionInfo3_10.class));
+			positionInfo = Optional.of(CimFactory.create(getXfsVersion(), p, PositionInfo310.class));
 		}
 		if (LOG.isInfoEnabled()) {
 			LOG.info("fireItemsTaken(Pointer)", "positionInfo=" + positionInfo);
@@ -201,9 +201,9 @@ public class CimService extends XfsService {
 	};
 
 	private void fireItemsPresented(Pointer p) {
-		Optional<PositionInfo3_10> positionInfo = Optional.empty();
+		Optional<PositionInfo310> positionInfo = Optional.empty();
 		if (!Pointer.NULL.equals(p)) {
-			positionInfo = Optional.of(CimFactory.create(getXfsVersion(), p, PositionInfo3_10.class));
+			positionInfo = Optional.of(CimFactory.create(getXfsVersion(), p, PositionInfo310.class));
 		}
 		if (LOG.isInfoEnabled()) {
 			LOG.info("fireItemsPresented(Pointer)", "positionInfo=" + positionInfo);
@@ -214,9 +214,9 @@ public class CimService extends XfsService {
 	};
 
 	private void fireItemsInserted(Pointer p) {
-		Optional<PositionInfo3_10> positionInfo = Optional.empty();
+		Optional<PositionInfo310> positionInfo = Optional.empty();
 		if (!Pointer.NULL.equals(p)) {
-			positionInfo = Optional.of(CimFactory.create(getXfsVersion(), p, PositionInfo3_10.class));
+			positionInfo = Optional.of(CimFactory.create(getXfsVersion(), p, PositionInfo310.class));
 		}
 		if (LOG.isInfoEnabled()) {
 			LOG.info("fireItemsInserted(Pointer)", "positionInfo=" + positionInfo);
@@ -239,27 +239,27 @@ public class CimService extends XfsService {
 		}
 	};
 
-	private void fireDevicePosition(DevicePosition3_10 devicePosition) {
+	private void fireDevicePosition(DevicePosition310 devicePosition) {
 		if (LOG.isInfoEnabled()) {
-			LOG.info("fireDevicePosition(DevicePosition3_10)", "devicePosition=" + devicePosition);
+			LOG.info("fireDevicePosition(DevicePosition310)", "devicePosition=" + devicePosition);
 		}
 		for (CimServiceListener each : serviceListeners) {
 			each.onDevicePosition(devicePosition);
 		}
 	};
 
-	private void firePowerSaveChange(PowerSaveChange3_10 powerSaveChange) {
+	private void firePowerSaveChange(PowerSaveChange310 powerSaveChange) {
 		if (LOG.isInfoEnabled()) {
-			LOG.info("firePowerSaveChange(PowerSaveChange3_10)", "powerSaveChange=" + powerSaveChange);
+			LOG.info("firePowerSaveChange(PowerSaveChange310)", "powerSaveChange=" + powerSaveChange);
 		}
 		for (CimServiceListener each : serviceListeners) {
 			each.onPowerSaveChange(powerSaveChange);
 		}
 	};
 
-	private void fireShutterStatusChanged(ShutterStatusChanged3_30 shutterStatusChanged) {
+	private void fireShutterStatusChanged(ShutterStatusChanged330 shutterStatusChanged) {
 		if (LOG.isInfoEnabled()) {
-			LOG.info("fireShutterStatusChanged(ShutterStatusChanged3_30)", shutterStatusChanged);
+			LOG.info("fireShutterStatusChanged(ShutterStatusChanged330)", shutterStatusChanged);
 		}
 		for (CimServiceListener each : serviceListeners) {
 			each.onShutterStatusChanged(shutterStatusChanged);

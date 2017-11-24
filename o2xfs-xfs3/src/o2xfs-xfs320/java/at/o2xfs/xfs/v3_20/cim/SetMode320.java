@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,26 +36,26 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.cim.MixedMode;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class SetMode3_20 extends Struct {
+public class SetMode320 extends Struct {
 
 	protected final XfsWord<MixedMode> mixedMode = new XfsWord<>(MixedMode.class);
 
-	protected SetMode3_20() {
+	protected SetMode320() {
 		add(mixedMode);
 	}
 
-	public SetMode3_20(Pointer p) {
+	public SetMode320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public SetMode3_20(SetMode3_20 copy) {
+	public SetMode320(SetMode320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(SetMode3_20 copy) {
+	protected void set(SetMode320 copy) {
 		mixedMode.set(copy.getMixedMode());
 	}
 
@@ -70,9 +70,9 @@ public class SetMode3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof SetMode3_20) {
-			SetMode3_20 mode3_20 = (SetMode3_20) obj;
-			return new EqualsBuilder().append(getMixedMode(), mode3_20.getMixedMode()).isEquals();
+		if (obj instanceof SetMode320) {
+			SetMode320 mode320 = (SetMode320) obj;
+			return new EqualsBuilder().append(getMixedMode(), mode320.getMixedMode()).isEquals();
 		}
 		return false;
 	}

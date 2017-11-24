@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_30.BaseXfs3_30Test;
 
-public class Capabilities3_30Test extends BaseXfs3_30Test {
+public class Capabilities330Test extends BaseXfs330Test {
 
 	@Test
 	public final void test() {
-		Capabilities3_30 expected = new Capabilities3_30(buildCapabilities3_30().getPointer());
-		Capabilities3_30 actual = new Capabilities3_30(expected);
+		Capabilities330 expected = new Capabilities330(buildCapabilities330().getPointer());
+		Capabilities330 actual = new Capabilities330(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildCapabilities3_30();
+	private native Buffer buildCapabilities330();
 }

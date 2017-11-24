@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,26 +36,26 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.cim.Position;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class Present3_20 extends Struct {
+public class Present320 extends Struct {
 
 	protected final XfsWord<Position> position = new XfsWord<>(Position.class);
 
-	protected Present3_20() {
+	protected Present320() {
 		add(position);
 	}
 
-	public Present3_20(Pointer p) {
+	public Present320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Present3_20(Present3_20 copy) {
+	public Present320(Present320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Present3_20 copy) {
+	protected void set(Present320 copy) {
 		position.set(copy.getPosition());
 	}
 
@@ -70,9 +70,9 @@ public class Present3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Present3_20) {
-			Present3_20 present3_20 = (Present3_20) obj;
-			return new EqualsBuilder().append(getPosition(), present3_20.getPosition()).isEquals();
+		if (obj instanceof Present320) {
+			Present320 present320 = (Present320) obj;
+			return new EqualsBuilder().append(getPosition(), present320.getPosition()).isEquals();
 		}
 		return false;
 	}

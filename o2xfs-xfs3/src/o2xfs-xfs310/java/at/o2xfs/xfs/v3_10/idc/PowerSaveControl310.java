@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_10;
+package at.o2xfs.xfs.v3_10.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,26 +35,26 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class PowerSaveControl3_10 extends Struct {
+public class PowerSaveControl310 extends Struct {
 
 	protected final USHORT maxPowerSaveRecoveryTime = new USHORT();
 
-	protected PowerSaveControl3_10() {
+	protected PowerSaveControl310() {
 		add(maxPowerSaveRecoveryTime);
 	}
 
-	public PowerSaveControl3_10(Pointer p) {
+	public PowerSaveControl310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public PowerSaveControl3_10(PowerSaveControl3_10 copy) {
+	public PowerSaveControl310(PowerSaveControl310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(PowerSaveControl3_10 copy) {
+	protected void set(PowerSaveControl310 copy) {
 		maxPowerSaveRecoveryTime.set(copy.getMaxPowerSaveRecoveryTime());
 	}
 
@@ -69,10 +69,10 @@ public class PowerSaveControl3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof PowerSaveControl3_10) {
-			PowerSaveControl3_10 powerSaveControl3_10 = (PowerSaveControl3_10) obj;
+		if (obj instanceof PowerSaveControl310) {
+			PowerSaveControl310 powerSaveControl310 = (PowerSaveControl310) obj;
 			return new EqualsBuilder()
-					.append(getMaxPowerSaveRecoveryTime(), powerSaveControl3_10.getMaxPowerSaveRecoveryTime())
+					.append(getMaxPowerSaveRecoveryTime(), powerSaveControl310.getMaxPowerSaveRecoveryTime())
 					.isEquals();
 		}
 		return false;

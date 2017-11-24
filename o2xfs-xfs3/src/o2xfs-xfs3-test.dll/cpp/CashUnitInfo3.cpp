@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_00_CashUnitInfo3Test.h"
+#include "at_o2xfs_xfs_v3_00_cdm_CashUnitInfo3Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -38,7 +38,7 @@ static WFSCDMPHCU physicalCUs[6];
 static LPWFSCDMPHCU lppPhysical[6];
 static LPSTR physicalPositionNames[6] = {"COMPARTMENT1", "COMPARTMENT2", "SLOT1", "SLOT2", "SLOT3", "SLOT4"};
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_CashUnitInfo3Test_buildCashUnitInfo3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cdm_CashUnitInfo3Test_buildCashUnitInfo3(JNIEnv *env, jobject obj) {
 	cashUnitInfo.usTellerID = 0;
 	cashUnitInfo.usCount = 6;
 	cashUnitInfo.lppList = lppList;

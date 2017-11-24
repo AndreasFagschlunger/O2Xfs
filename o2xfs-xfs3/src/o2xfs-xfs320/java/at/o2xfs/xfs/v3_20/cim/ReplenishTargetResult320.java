@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,30 +36,30 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 
-public class ReplenishTargetResult3_20 extends Struct {
+public class ReplenishTargetResult320 extends Struct {
 
 	protected final USHORT numberTarget = new USHORT();
 	protected final USHORT noteID = new USHORT();
 	protected final ULONG numberOfItemsReceived = new ULONG();
 
-	protected ReplenishTargetResult3_20() {
+	protected ReplenishTargetResult320() {
 		add(numberTarget);
 		add(noteID);
 		add(numberOfItemsReceived);
 	}
 
-	public ReplenishTargetResult3_20(Pointer p) {
+	public ReplenishTargetResult320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ReplenishTargetResult3_20(ReplenishTargetResult3_20 copy) {
+	public ReplenishTargetResult320(ReplenishTargetResult320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ReplenishTargetResult3_20 copy) {
+	protected void set(ReplenishTargetResult320 copy) {
 		numberTarget.set(copy.getNumberTarget());
 		noteID.set(copy.getNoteID());
 		numberOfItemsReceived.set(copy.getNumberOfItemsReceived());
@@ -84,10 +84,10 @@ public class ReplenishTargetResult3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ReplenishTargetResult3_20) {
-			ReplenishTargetResult3_20 replenishTargetResult3_20 = (ReplenishTargetResult3_20) obj;
-			return new EqualsBuilder().append(getNumberTarget(), replenishTargetResult3_20.getNumberTarget()).append(getNoteID(), replenishTargetResult3_20.getNoteID())
-					.append(getNumberOfItemsReceived(), replenishTargetResult3_20.getNumberOfItemsReceived()).isEquals();
+		if (obj instanceof ReplenishTargetResult320) {
+			ReplenishTargetResult320 replenishTargetResult320 = (ReplenishTargetResult320) obj;
+			return new EqualsBuilder().append(getNumberTarget(), replenishTargetResult320.getNumberTarget()).append(getNoteID(), replenishTargetResult320.getNoteID())
+					.append(getNumberOfItemsReceived(), replenishTargetResult320.getNumberOfItemsReceived()).isEquals();
 		}
 		return false;
 	}

@@ -25,31 +25,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsZPointerArray;
 
-public class AidDataArray3_30 extends XfsZPointerArray<AidData3_30> {
+public class AidDataArray330 extends XfsZPointerArray<AidData330> {
 
-	public AidDataArray3_30(AidData3_30[] array) {
+	public AidDataArray330(AidData330[] array) {
 		super(array);
 	}
 
-	public AidDataArray3_30(Pointer aPointer) {
+	public AidDataArray330(Pointer aPointer) {
 		super(aPointer);
 	}
 
 	@Override
-	public AidData3_30 copy(AidData3_30 copy) {
-		return new AidData3_30(copy);
+	public AidData330 copy(AidData330 copy) {
+		return new AidData330(copy);
 	}
 
 	@Override
-	public AidData3_30[] get() {
-		AidData3_30[] result = new AidData3_30[pointers.length];
+	public AidData330[] get() {
+		AidData330[] result = new AidData330[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new AidData3_30(pointers[i]));
+			result[i] = copy(new AidData330(pointers[i]));
 		}
 		return result;
 	}

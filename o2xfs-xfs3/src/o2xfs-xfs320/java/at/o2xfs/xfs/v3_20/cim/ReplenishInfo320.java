@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,7 +35,7 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class ReplenishInfo3_20 extends Struct {
+public class ReplenishInfo320 extends Struct {
 
 	public static class Builder {
 
@@ -45,35 +45,35 @@ public class ReplenishInfo3_20 extends Struct {
 			this.numberSource = numberSource;
 		}
 
-		public ReplenishInfo3_20 build() {
-			return new ReplenishInfo3_20(this);
+		public ReplenishInfo320 build() {
+			return new ReplenishInfo320(this);
 		}
 	}
 
 	protected final USHORT numberSource = new USHORT();
 
-	protected ReplenishInfo3_20() {
+	protected ReplenishInfo320() {
 		add(numberSource);
 	}
 
-	protected ReplenishInfo3_20(Builder builder) {
+	protected ReplenishInfo320(Builder builder) {
 		this();
 		allocate();
 		numberSource.set(builder.numberSource);
 	}
 
-	public ReplenishInfo3_20(Pointer p) {
+	public ReplenishInfo320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ReplenishInfo3_20(ReplenishInfo3_20 copy) {
+	public ReplenishInfo320(ReplenishInfo320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ReplenishInfo3_20 copy) {
+	protected void set(ReplenishInfo320 copy) {
 		numberSource.set(copy.getNumberSource());
 	}
 
@@ -88,9 +88,9 @@ public class ReplenishInfo3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ReplenishInfo3_20) {
-			ReplenishInfo3_20 replenishInfo3_20 = (ReplenishInfo3_20) obj;
-			return new EqualsBuilder().append(getNumberSource(), replenishInfo3_20.getNumberSource()).isEquals();
+		if (obj instanceof ReplenishInfo320) {
+			ReplenishInfo320 replenishInfo320 = (ReplenishInfo320) obj;
+			return new EqualsBuilder().append(getNumberSource(), replenishInfo320.getNumberSource()).isEquals();
 		}
 		return false;
 	}

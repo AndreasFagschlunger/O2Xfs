@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import java.util.Set;
 
@@ -39,28 +39,28 @@ import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.cdm.CdmGuidLights;
 import at.o2xfs.xfs.win32.XfsDWordBitmask;
 
-public class SetGuidLight3_10 extends Struct {
+public class SetGuidLight310 extends Struct {
 
 	protected final WORD guidLight = new WORD();
 	protected final XfsDWordBitmask<CdmGuidLights> command = new XfsDWordBitmask<>(CdmGuidLights.class);
 
-	protected SetGuidLight3_10() {
+	protected SetGuidLight310() {
 		add(guidLight);
 		add(command);
 	}
 
-	public SetGuidLight3_10(Pointer p) {
+	public SetGuidLight310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public SetGuidLight3_10(SetGuidLight3_10 copy) {
+	public SetGuidLight310(SetGuidLight310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(SetGuidLight3_10 copy) {
+	protected void set(SetGuidLight310 copy) {
 		guidLight.set(copy.getGuidLight());
 		command.set(copy.getCommand());
 	}
@@ -80,8 +80,8 @@ public class SetGuidLight3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof SetGuidLight3_10) {
-			SetGuidLight3_10 setGuidLight = (SetGuidLight3_10) obj;
+		if (obj instanceof SetGuidLight310) {
+			SetGuidLight310 setGuidLight = (SetGuidLight310) obj;
 			return new EqualsBuilder().append(getGuidLight(), setGuidLight.getGuidLight()).append(getCommand(), setGuidLight.getCommand()).isEquals();
 		}
 		return false;

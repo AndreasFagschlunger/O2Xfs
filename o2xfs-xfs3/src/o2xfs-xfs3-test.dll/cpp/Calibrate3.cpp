@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_00_Calibrate3Test.h"
+#include "at_o2xfs_xfs_v3_00_cdm_Calibrate3Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -36,7 +36,7 @@ static WFSCDMITEMPOSITION position;
 static LPWFSCDMITEMPOSITION lpPosition = &position;
 static WFSCDMRETRACT retractArea;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_Calibrate3Test_buildCalibrate3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cdm_Calibrate3Test_buildCalibrate3(JNIEnv *env, jobject obj) {
 	calibrate.usNumber = 1;
 	calibrate.usNumOfBills = 8;
 	calibrate.lpPosition = &lpPosition;

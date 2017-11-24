@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,30 +36,30 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.cim.LockStatus;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class DeviceLockControl3_20 extends Struct {
+public class DeviceLockControl320 extends Struct {
 
 	protected final XfsWord<LockStatus> deviceAction = new XfsWord<>(LockStatus.class);
 	protected final XfsWord<LockStatus> cashUnitAction = new XfsWord<>(LockStatus.class);
 	protected final Pointer unitLockControl = new Pointer();
 
-	protected DeviceLockControl3_20() {
+	protected DeviceLockControl320() {
 		add(deviceAction);
 		add(cashUnitAction);
 		add(unitLockControl);
 	}
 
-	public DeviceLockControl3_20(Pointer p) {
+	public DeviceLockControl320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public DeviceLockControl3_20(DeviceLockControl3_20 copy) {
+	public DeviceLockControl320(DeviceLockControl320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(DeviceLockControl3_20 copy) {
+	protected void set(DeviceLockControl320 copy) {
 		deviceAction.set(copy.getDeviceAction());
 		cashUnitAction.set(copy.getCashUnitAction());
 		unitLockControl.pointTo(new UnitLockControls(copy.getUnitLockControl()));
@@ -73,7 +73,7 @@ public class DeviceLockControl3_20 extends Struct {
 		return cashUnitAction.get();
 	}
 
-	public UnitLockControl3_20[] getUnitLockControl() {
+	public UnitLockControl320[] getUnitLockControl() {
 		return new UnitLockControls(unitLockControl).get();
 	}
 
@@ -84,10 +84,10 @@ public class DeviceLockControl3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DeviceLockControl3_20) {
-			DeviceLockControl3_20 deviceLockControl3_20 = (DeviceLockControl3_20) obj;
-			return new EqualsBuilder().append(getDeviceAction(), deviceLockControl3_20.getDeviceAction()).append(getCashUnitAction(), deviceLockControl3_20.getCashUnitAction())
-					.append(getUnitLockControl(), deviceLockControl3_20.getUnitLockControl()).isEquals();
+		if (obj instanceof DeviceLockControl320) {
+			DeviceLockControl320 deviceLockControl320 = (DeviceLockControl320) obj;
+			return new EqualsBuilder().append(getDeviceAction(), deviceLockControl320.getDeviceAction()).append(getCashUnitAction(), deviceLockControl320.getCashUnitAction())
+					.append(getUnitLockControl(), deviceLockControl320.getUnitLockControl()).isEquals();
 		}
 		return false;
 	}

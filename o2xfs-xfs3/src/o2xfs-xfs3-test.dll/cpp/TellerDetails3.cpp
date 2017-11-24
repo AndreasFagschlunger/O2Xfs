@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_00_TellerDetails3Test.h"
+#include "at_o2xfs_xfs_v3_00_cdm_TellerDetails3Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -35,7 +35,7 @@ static WFSCDMTELLERDETAILS tellerDetails;
 static WFSCDMTELLERTOTALS tellerTotals[2];
 static LPWFSCDMTELLERTOTALS lppTellerTotals[2];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_TellerDetails3Test_buildTellerDetails3(JNIEnv *env, jobject object) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cdm_TellerDetails3Test_buildTellerDetails3(JNIEnv *env, jobject object) {
 	tellerDetails.usTellerID = 1;
 	tellerDetails.ulInputPosition = WFS_CDM_POSINFRONT;
 	tellerDetails.fwOutputPosition = WFS_CDM_POSTOP;

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import java.util.List;
 import java.util.Set;
@@ -38,35 +38,35 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.cim.DevicePosition;
 import at.o2xfs.xfs.cim.GuidLight;
-import at.o2xfs.xfs.cim.v3_00.Status3;
+import at.o2xfs.xfs.v3_00.cim.Status3;
 import at.o2xfs.xfs.win32.XfsBitmaskArray;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class Status3_10 extends Status3 {
+public class Status310 extends Status3 {
 
 	private static final int GUIDLIGHTS_SIZE = 32;
 	protected final XfsBitmaskArray<GuidLight> guidLights = new XfsBitmaskArray<>(GUIDLIGHTS_SIZE, GuidLight.class);
 	protected final XfsWord<DevicePosition> devicePosition = new XfsWord<>(DevicePosition.class);
 	protected final USHORT powerSaveRecoveryTime = new USHORT();
 
-	protected Status3_10() {
+	protected Status310() {
 		add(guidLights);
 		add(devicePosition);
 		add(powerSaveRecoveryTime);
 	}
 
-	public Status3_10(Pointer p) {
+	public Status310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Status3_10(Status3_10 copy) {
+	public Status310(Status310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Status3_10 copy) {
+	protected void set(Status310 copy) {
 		super.set(copy);
 		guidLights.set(copy.getGuidLights());
 		devicePosition.set(copy.getDevicePosition());
@@ -92,10 +92,10 @@ public class Status3_10 extends Status3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Status3_10) {
-			Status3_10 status3_10 = (Status3_10) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getGuidLights(), status3_10.getGuidLights())
-					.append(getDevicePosition(), status3_10.getDevicePosition()).append(getPowerSaveRecoveryTime(), status3_10.getPowerSaveRecoveryTime()).isEquals();
+		if (obj instanceof Status310) {
+			Status310 status310 = (Status310) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getGuidLights(), status310.getGuidLights())
+					.append(getDevicePosition(), status310.getDevicePosition()).append(getPowerSaveRecoveryTime(), status310.getPowerSaveRecoveryTime()).isEquals();
 		}
 		return false;
 	}

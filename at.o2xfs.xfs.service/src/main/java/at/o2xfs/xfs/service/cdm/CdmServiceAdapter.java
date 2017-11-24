@@ -30,12 +30,12 @@ package at.o2xfs.xfs.service.cdm;
 import java.util.Optional;
 
 import at.o2xfs.xfs.cdm.Position;
-import at.o2xfs.xfs.cdm.v3_00.CashUnit3;
-import at.o2xfs.xfs.cdm.v3_00.CountsChanged3;
-import at.o2xfs.xfs.cdm.v3_00.ItemPosition3;
-import at.o2xfs.xfs.cdm.v3_10.DevicePosition3_10;
-import at.o2xfs.xfs.cdm.v3_10.PowerSaveChange3_10;
-import at.o2xfs.xfs.cdm.v3_30.ShutterStatusChanged3_30;
+import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
+import at.o2xfs.xfs.v3_00.cdm.CountsChanged3;
+import at.o2xfs.xfs.v3_00.cdm.ItemPosition3;
+import at.o2xfs.xfs.v3_10.cdm.DevicePosition310;
+import at.o2xfs.xfs.v3_10.cdm.PowerSaveChange310;
+import at.o2xfs.xfs.v3_30.cdm.ShutterStatusChanged330;
 
 public class CdmServiceAdapter implements CdmServiceListener {
 
@@ -85,17 +85,17 @@ public class CdmServiceAdapter implements CdmServiceListener {
 	}
 
 	@Override
-	public void onDevicePosition(DevicePosition3_10 devicePosition) {
+	public void onDevicePosition(DevicePosition310 devicePosition) {
 
 	}
 
 	@Override
-	public void onPowerSaveChange(PowerSaveChange3_10 powerSaveChange) {
+	public void onPowerSaveChange(PowerSaveChange310 powerSaveChange) {
 
 	}
 
 	@Override
-	public void onShutterStatusChanged(ShutterStatusChanged3_30 shutterStatusChanged) {
+	public void onShutterStatusChanged(ShutterStatusChanged330 shutterStatusChanged) {
 
 	}
 }

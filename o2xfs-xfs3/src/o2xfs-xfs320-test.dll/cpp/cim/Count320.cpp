@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_20_Count3_20Test.h"
+#include "cim/at_o2xfs_xfs_v3_20_cim_Count320Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -34,7 +34,7 @@
 static WFSCIMCOUNT Count;
 static USHORT usCUNumList[] = { 1, 2, 3 };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_Count3_120Test_buildCount3_120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_Count3120Test_buildCount3120(JNIEnv *env, jobject obj) {
 	Count.usCount = 3;
 	Count.lpusCUNumList = usCUNumList;
 	return NewBuffer(env, &Count, sizeof(WFSCIMCOUNT));

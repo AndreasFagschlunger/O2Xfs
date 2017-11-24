@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_10_CashUnit3_10Test.h"
+#include "at_o2xfs_xfs_v3_10_cdm_CashUnit310Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -36,7 +36,7 @@ static LPSTR cashUnitName = "BIN_1\0";
 static WFSCDMPHCU physicalCashUnit;
 static LPWFSCDMPHCU lppPhysical = &physicalCashUnit;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_110_CashUnit3_110Test_buildCashUnit3_110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CashUnit3110Test_buildCashUnit3110(JNIEnv *env, jobject obj) {
 	cashUnit.usNumber = 1;
 	cashUnit.usType = WFS_CDM_TYPEBILLCASSETTE;
 	cashUnit.lpszCashUnitName = cashUnitName;

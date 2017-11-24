@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_10_PowerSaveChange3_10Test.h"
+#include "at_o2xfs_xfs_v3_10_cdm_PowerSaveChange310Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -33,7 +33,7 @@
 
 static WFSCDMPOWERSAVECHANGE PowerSaveChange;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_110_PowerSaveChange3_110Test_buildPowerSaveChange3_110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_PowerSaveChange3110Test_buildPowerSaveChange3110(JNIEnv *env, jobject obj) {
 	PowerSaveChange.usPowerSaveRecoveryTime = 5;
 	return NewBuffer(env, &PowerSaveChange, sizeof(WFSCDMPOWERSAVECHANGE));
 }

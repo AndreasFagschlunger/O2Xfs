@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import java.util.List;
 import java.util.Set;
@@ -37,10 +37,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.cdm.CdmGuidLights;
-import at.o2xfs.xfs.cdm.v3_00.CdmCaps3;
+import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
 import at.o2xfs.xfs.win32.XfsBitmaskArray;
 
-public class CdmCaps3_10 extends CdmCaps3 {
+public class CdmCaps310 extends CdmCaps3 {
 
 	private static final int GUIDLIGHTS_SIZE = 32;
 
@@ -48,24 +48,24 @@ public class CdmCaps3_10 extends CdmCaps3 {
 	protected final BOOL powerSaveControl = new BOOL();
 	protected final BOOL prepareDispense = new BOOL();
 
-	protected CdmCaps3_10() {
+	protected CdmCaps310() {
 		add(guidLights);
 		add(powerSaveControl);
 		add(prepareDispense);
 	}
 
-	public CdmCaps3_10(Pointer p) {
+	public CdmCaps310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public CdmCaps3_10(CdmCaps3_10 copy) {
+	public CdmCaps310(CdmCaps310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(CdmCaps3_10 copy) {
+	protected void set(CdmCaps310 copy) {
 		super.set(copy);
 		guidLights.set(copy.getGuidLights());
 		powerSaveControl.set(copy.isPowerSaveControl());
@@ -91,10 +91,10 @@ public class CdmCaps3_10 extends CdmCaps3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CdmCaps3_10) {
-			CdmCaps3_10 cdmCaps3_10 = (CdmCaps3_10) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getGuidLights(), cdmCaps3_10.getGuidLights())
-					.append(isPowerSaveControl(), cdmCaps3_10.isPowerSaveControl()).append(isPrepareDispense(), cdmCaps3_10.isPrepareDispense()).isEquals();
+		if (obj instanceof CdmCaps310) {
+			CdmCaps310 cdmCaps310 = (CdmCaps310) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getGuidLights(), cdmCaps310.getGuidLights())
+					.append(isPowerSaveControl(), cdmCaps310.isPowerSaveControl()).append(isPrepareDispense(), cdmCaps310.isPrepareDispense()).isEquals();
 		}
 		return false;
 	}

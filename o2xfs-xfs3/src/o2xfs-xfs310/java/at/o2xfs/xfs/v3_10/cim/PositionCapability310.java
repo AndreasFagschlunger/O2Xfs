@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import java.util.Map;
 import java.util.Set;
@@ -44,7 +44,7 @@ import at.o2xfs.xfs.cim.Usage;
 import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
-public class PositionCapability3_10 extends Struct {
+public class PositionCapability310 extends Struct {
 
 	protected final XfsWord<Position> position = new XfsWord<>(Position.class);
 	protected final XfsWordBitmask<Usage> usage = new XfsWordBitmask<>(Usage.class);
@@ -54,7 +54,7 @@ public class PositionCapability3_10 extends Struct {
 	protected final XfsWordBitmask<RetractArea> retractAreas = new XfsWordBitmask<>(RetractArea.class);
 	protected final XfsExtra extra = new XfsExtra();
 
-	protected PositionCapability3_10() {
+	protected PositionCapability310() {
 		add(position);
 		add(usage);
 		add(shutterControl);
@@ -64,18 +64,18 @@ public class PositionCapability3_10 extends Struct {
 		add(extra);
 	}
 
-	public PositionCapability3_10(Pointer p) {
+	public PositionCapability310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public PositionCapability3_10(PositionCapability3_10 copy) {
+	public PositionCapability310(PositionCapability310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(PositionCapability3_10 copy) {
+	protected void set(PositionCapability310 copy) {
 		position.set(copy.getPosition());
 		usage.set(copy.getUsage());
 		shutterControl.set(copy.isShutterControl());
@@ -121,12 +121,12 @@ public class PositionCapability3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof PositionCapability3_10) {
-			PositionCapability3_10 posCaps3_10 = (PositionCapability3_10) obj;
-			return new EqualsBuilder().append(getPosition(), posCaps3_10.getPosition()).append(getUsage(), posCaps3_10.getUsage())
-					.append(isShutterControl(), posCaps3_10.isShutterControl()).append(isItemsTakenSensor(), posCaps3_10.isItemsTakenSensor())
-					.append(isItemsInsertedSensor(), posCaps3_10.isItemsInsertedSensor()).append(getRetractAreas(), posCaps3_10.getRetractAreas())
-					.append(getExtra(), posCaps3_10.getExtra()).isEquals();
+		if (obj instanceof PositionCapability310) {
+			PositionCapability310 posCaps310 = (PositionCapability310) obj;
+			return new EqualsBuilder().append(getPosition(), posCaps310.getPosition()).append(getUsage(), posCaps310.getUsage())
+					.append(isShutterControl(), posCaps310.isShutterControl()).append(isItemsTakenSensor(), posCaps310.isItemsTakenSensor())
+					.append(isItemsInsertedSensor(), posCaps310.isItemsInsertedSensor()).append(getRetractAreas(), posCaps310.getRetractAreas())
+					.append(getExtra(), posCaps310.getExtra()).isEquals();
 		}
 		return false;
 	}

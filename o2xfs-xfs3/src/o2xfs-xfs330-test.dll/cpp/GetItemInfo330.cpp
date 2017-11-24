@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_30_GetItemInfo3_30Test.h"
+#include "at_o2xfs_xfs_v3_30_cdm_GetItemInfo330Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -33,7 +33,7 @@
 
 static WFSCDMGETITEMINFO GetItemInfo;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_130_GetItemInfo3_130Test_buildGetItemInfo3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_GetItemInfo3130Test_buildGetItemInfo3130(JNIEnv *env, jobject obj) {
 	GetItemInfo.usLevel = WFS_CDM_LEVEL_2;
 	GetItemInfo.usIndex = 0;
 	GetItemInfo.dwItemInfoType = WFS_CDM_ITEM_SERIALNUMBER;

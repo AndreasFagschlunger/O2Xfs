@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_00_CashUnitError3Test.h"
+#include "cim/at_o2xfs_xfs_v3_00_cim_CashUnitError3Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -41,7 +41,7 @@ static LPWFSCIMPHCU lpPhysical[1];
 static LPSTR PhysicalPositionName[] = { "SLOT1" };
 static LPSTR Extra[] = { "Key1=Value1\0Key2=Value2\0", "CUKey1=CUValue1\0CUKey2=CUValue2\0" };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_100_CashUnitError3Test_buildCashUnitError3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cim_CashUnitError3Test_buildCashUnitError3(JNIEnv *env, jobject obj) {
 	CashUnitError.wFailure = WFS_CIM_CASHUNITERROR;
 	CashUnitError.lpCashUnit = &CashUnit;
 

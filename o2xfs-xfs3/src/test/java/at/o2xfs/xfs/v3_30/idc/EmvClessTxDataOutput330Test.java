@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_30.BaseXfs3_30Test;
 
-public class EmvClessTxDataOutput3_30Test extends BaseXfs3_30Test {
+public class EmvClessTxDataOutput330Test extends BaseXfs330Test {
 
 	@Test
 	public final void test() {
-		EmvClessTxDataOutput3_30 expected = new EmvClessTxDataOutput3_30(buildEmvClessTxDataOutput3_30().getPointer());
-		EmvClessTxDataOutput3_30 actual = new EmvClessTxDataOutput3_30(expected);
+		EmvClessTxDataOutput330 expected = new EmvClessTxDataOutput330(buildEmvClessTxDataOutput330().getPointer());
+		EmvClessTxDataOutput330 actual = new EmvClessTxDataOutput330(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildEmvClessTxDataOutput3_30();
+	private native Buffer buildEmvClessTxDataOutput330();
 }

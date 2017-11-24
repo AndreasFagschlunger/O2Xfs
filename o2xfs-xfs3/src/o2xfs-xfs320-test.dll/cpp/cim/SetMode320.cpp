@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_20_SetMode3_20Test.h"
+#include "cim/at_o2xfs_xfs_v3_20_cim_SetMode320Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -33,7 +33,7 @@
 
 static WFSCIMSETMODE Mode;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_SetMode3_120Test_buildSetMode3_120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_SetMode3120Test_buildSetMode3120(JNIEnv *env, jobject obj) {
 	Mode.wMixedMode = WFS_CIM_IPMMIXEDMEDIA;
 	return NewBuffer(env, &Mode, sizeof(WFSCIMSETMODE));
 }

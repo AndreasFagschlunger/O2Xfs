@@ -42,14 +42,14 @@ import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.cdm.CdmMessage;
 import at.o2xfs.xfs.cdm.Position;
-import at.o2xfs.xfs.cdm.v3_00.CashUnit3;
-import at.o2xfs.xfs.cdm.v3_00.CdmCaps3;
-import at.o2xfs.xfs.cdm.v3_00.CountsChanged3;
-import at.o2xfs.xfs.cdm.v3_00.CurrencyExp3;
-import at.o2xfs.xfs.cdm.v3_00.ItemPosition3;
-import at.o2xfs.xfs.cdm.v3_10.DevicePosition3_10;
-import at.o2xfs.xfs.cdm.v3_10.PowerSaveChange3_10;
-import at.o2xfs.xfs.cdm.v3_30.ShutterStatusChanged3_30;
+import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
+import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
+import at.o2xfs.xfs.v3_00.cdm.CountsChanged3;
+import at.o2xfs.xfs.v3_00.cdm.CurrencyExp3;
+import at.o2xfs.xfs.v3_00.cdm.ItemPosition3;
+import at.o2xfs.xfs.v3_10.cdm.DevicePosition310;
+import at.o2xfs.xfs.v3_10.cdm.PowerSaveChange310;
+import at.o2xfs.xfs.v3_30.cdm.ShutterStatusChanged330;
 import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.cdm.xfs3.CdmCapabilitiesCommand;
@@ -115,7 +115,7 @@ public final class CdmService extends XfsService {
 				fireCountsChanged(create(wfsResult.getResults(), CountsChanged3.class));
 				break;
 			case SRVE_DEVICEPOSITION:
-				fireDevicePosition(create(wfsResult.getResults(), DevicePosition3_10.class));
+				fireDevicePosition(create(wfsResult.getResults(), DevicePosition310.class));
 				break;
 			case SRVE_ITEMSPRESENTED:
 				fireItemsPresented();
@@ -131,7 +131,7 @@ public final class CdmService extends XfsService {
 				fireMediaDetected(itemPosition);
 				break;
 			case SRVE_POWER_SAVE_CHANGE:
-				firePowerSaveChange(create(wfsResult.getResults(), PowerSaveChange3_10.class));
+				firePowerSaveChange(create(wfsResult.getResults(), PowerSaveChange310.class));
 				break;
 			case SRVE_SAFEDOORCLOSED:
 				fireSafeDoorClosed();
@@ -140,7 +140,7 @@ public final class CdmService extends XfsService {
 				fireSafeDoorOpen();
 				break;
 			case SRVE_SHUTTERSTATUSCHANGED:
-				fireShutterStatusChanged(create(wfsResult.getResults(), ShutterStatusChanged3_30.class));
+				fireShutterStatusChanged(create(wfsResult.getResults(), ShutterStatusChanged330.class));
 				break;
 			case SRVE_TELLERINFOCHANGED:
 				fireTellerInfoChanged(new USHORT(wfsResult.getResults()).intValue());
@@ -247,27 +247,27 @@ public final class CdmService extends XfsService {
 		}
 	}
 
-	private void fireDevicePosition(DevicePosition3_10 devicePosition) {
+	private void fireDevicePosition(DevicePosition310 devicePosition) {
 		if (LOG.isInfoEnabled()) {
-			LOG.info("fireDevicePosition(DevicePosition3_10)", devicePosition);
+			LOG.info("fireDevicePosition(DevicePosition310)", devicePosition);
 		}
 		for (CdmServiceListener each : serviceListeners) {
 			each.onDevicePosition(devicePosition);
 		}
 	}
 
-	private void firePowerSaveChange(PowerSaveChange3_10 powerSaveChange) {
+	private void firePowerSaveChange(PowerSaveChange310 powerSaveChange) {
 		if (LOG.isInfoEnabled()) {
-			LOG.info("firePowerSaveChange(PowerSaveChange3_10)", powerSaveChange);
+			LOG.info("firePowerSaveChange(PowerSaveChange310)", powerSaveChange);
 		}
 		for (CdmServiceListener each : serviceListeners) {
 			each.onPowerSaveChange(powerSaveChange);
 		}
 	}
 
-	private void fireShutterStatusChanged(ShutterStatusChanged3_30 shutterStatusChanged) {
+	private void fireShutterStatusChanged(ShutterStatusChanged330 shutterStatusChanged) {
 		if (LOG.isInfoEnabled()) {
-			LOG.info("fireShutterStatusChanged(ShutterStatusChanged3_30)", shutterStatusChanged);
+			LOG.info("fireShutterStatusChanged(ShutterStatusChanged330)", shutterStatusChanged);
 		}
 		for (CdmServiceListener each : serviceListeners) {
 			each.onShutterStatusChanged(shutterStatusChanged);

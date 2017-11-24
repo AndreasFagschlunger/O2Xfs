@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -37,28 +37,28 @@ import at.o2xfs.xfs.cdm.Position;
 import at.o2xfs.xfs.cdm.Shutter;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class ShutterStatusChanged3_30 extends Struct {
+public class ShutterStatusChanged330 extends Struct {
 
 	protected final XfsWord<Position> position = new XfsWord<>(Position.class);
 	protected final XfsWord<Shutter> shutter = new XfsWord<>(Shutter.class);
 
-	protected ShutterStatusChanged3_30() {
+	protected ShutterStatusChanged330() {
 		add(position);
 		add(shutter);
 	}
 
-	public ShutterStatusChanged3_30(Pointer p) {
+	public ShutterStatusChanged330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ShutterStatusChanged3_30(ShutterStatusChanged3_30 copy) {
+	public ShutterStatusChanged330(ShutterStatusChanged330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(ShutterStatusChanged3_30 copy) {
+	protected void set(ShutterStatusChanged330 copy) {
 		position.set(copy.getPosition());
 		shutter.set(copy.getShutter());
 	}
@@ -78,8 +78,8 @@ public class ShutterStatusChanged3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ShutterStatusChanged3_30) {
-			ShutterStatusChanged3_30 shutterStatusChanged = (ShutterStatusChanged3_30) obj;
+		if (obj instanceof ShutterStatusChanged330) {
+			ShutterStatusChanged330 shutterStatusChanged = (ShutterStatusChanged330) obj;
 			return new EqualsBuilder().append(getPosition(), shutterStatusChanged.getPosition()).append(getShutter(), shutterStatusChanged.getShutter()).isEquals();
 		}
 		return false;

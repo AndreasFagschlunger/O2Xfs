@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_30_GetAllItemsInfo3_30Test.h"
+#include "cim/at_o2xfs_xfs_v3_30_cim_GetAllItemsInfo330Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -33,7 +33,7 @@
 
 static WFSCIMGETALLITEMSINFO GetAllItemsInfo;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_130_GetAllItemsInfo3_130Test_buildGetAllItemsInfo3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_GetAllItemsInfo3130Test_buildGetAllItemsInfo3130(JNIEnv *env, jobject obj) {
 	GetAllItemsInfo.usLevel = WFS_CIM_LEVEL_ALL;
 	return NewBuffer(env, &GetAllItemsInfo, sizeof(WFSCIMGETALLITEMSINFO));
 }

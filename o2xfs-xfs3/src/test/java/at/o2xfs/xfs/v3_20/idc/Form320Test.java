@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_20;
+package at.o2xfs.xfs.v3_20.idc;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_20.BaseXfs3_20Test;
 
-public class Form3_20Test extends BaseXfs3_20Test {
+public class Form320Test extends BaseXfs320Test {
 
 	@Test
 	public final void test() {
-		Form3_20 expected = new Form3_20(buildForm3_20().getPointer());
-		Form3_20 actual = new Form3_20(expected);
+		Form320 expected = new Form320(buildForm320().getPointer());
+		Form320 actual = new Form320(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildForm3_20();
+	private native Buffer buildForm320();
 }

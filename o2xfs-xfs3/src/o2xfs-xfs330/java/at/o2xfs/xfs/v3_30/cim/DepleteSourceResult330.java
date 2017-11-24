@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,30 +36,30 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.win32.USHORT;
 
-public class DepleteSourceResult3_30 extends Struct {
+public class DepleteSourceResult330 extends Struct {
 
 	protected final USHORT numberSource = new USHORT();
 	protected final USHORT noteID = new USHORT();
 	protected final ULONG numberOfItemsRemoved = new ULONG();
 
-	protected DepleteSourceResult3_30() {
+	protected DepleteSourceResult330() {
 		add(numberSource);
 		add(noteID);
 		add(numberOfItemsRemoved);
 	}
 
-	public DepleteSourceResult3_30(Pointer p) {
+	public DepleteSourceResult330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public DepleteSourceResult3_30(DepleteSourceResult3_30 copy) {
+	public DepleteSourceResult330(DepleteSourceResult330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(DepleteSourceResult3_30 copy) {
+	protected void set(DepleteSourceResult330 copy) {
 		numberSource.set(copy.getNumberSource());
 		noteID.set(copy.getNoteID());
 		numberOfItemsRemoved.set(copy.getNumberOfItemsRemoved());
@@ -84,10 +84,10 @@ public class DepleteSourceResult3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DepleteSourceResult3_30) {
-			DepleteSourceResult3_30 depleteSourceResult3_30 = (DepleteSourceResult3_30) obj;
-			return new EqualsBuilder().append(getNumberSource(), depleteSourceResult3_30.getNumberSource()).append(getNoteID(), depleteSourceResult3_30.getNoteID())
-					.append(getNumberOfItemsRemoved(), depleteSourceResult3_30.getNumberOfItemsRemoved()).isEquals();
+		if (obj instanceof DepleteSourceResult330) {
+			DepleteSourceResult330 depleteSourceResult330 = (DepleteSourceResult330) obj;
+			return new EqualsBuilder().append(getNumberSource(), depleteSourceResult330.getNumberSource()).append(getNoteID(), depleteSourceResult330.getNoteID())
+					.append(getNumberOfItemsRemoved(), depleteSourceResult330.getNumberOfItemsRemoved()).isEquals();
 		}
 		return false;
 	}

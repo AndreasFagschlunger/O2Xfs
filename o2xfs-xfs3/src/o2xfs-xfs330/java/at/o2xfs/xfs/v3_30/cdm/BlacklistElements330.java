@@ -25,32 +25,32 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsPointerArray;
 
-class BlacklistElements3_30 extends XfsPointerArray<BlacklistElement3_30> {
+class BlacklistElements330 extends XfsPointerArray<BlacklistElement330> {
 
-	public BlacklistElements3_30(BlacklistElement3_30[] array) {
+	public BlacklistElements330(BlacklistElement330[] array) {
 		super(array);
 	}
 
-	public BlacklistElements3_30(Pointer p, int length) {
+	public BlacklistElements330(Pointer p, int length) {
 		super(p, length);
 	}
 
 	@Override
-	public BlacklistElement3_30[] get() {
-		BlacklistElement3_30[] result = new BlacklistElement3_30[pointers.length];
+	public BlacklistElement330[] get() {
+		BlacklistElement330[] result = new BlacklistElement330[pointers.length];
 		for (int i = 0; i < result.length; i++) {
-			result[i] = copy(new BlacklistElement3_30(pointers[i]));
+			result[i] = copy(new BlacklistElement330(pointers[i]));
 		}
 		return result;
 	}
 
 	@Override
-	public BlacklistElement3_30 copy(BlacklistElement3_30 copy) {
-		return new BlacklistElement3_30(copy);
+	public BlacklistElement330 copy(BlacklistElement330 copy) {
+		return new BlacklistElement330(copy);
 	}
 }

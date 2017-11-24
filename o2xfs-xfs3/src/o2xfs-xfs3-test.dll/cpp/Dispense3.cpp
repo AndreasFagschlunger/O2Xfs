@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_00_Dispense3Test.h"
+#include "at_o2xfs_xfs_v3_00_cdm_Dispense3Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -35,7 +35,7 @@ static WFSCDMDISPENSE dispense;
 static WFSCDMDENOMINATION denomination;
 static ULONG values[] = { 1, 2, 1 };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_Dispense3Test_buildDispense3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cdm_Dispense3Test_buildDispense3(JNIEnv *env, jobject obj) {
 	dispense.usTellerID = 0;
 	dispense.usMixNumber = WFS_CDM_INDIVIDUAL;
 	dispense.fwPosition = WFS_CDM_POSFRONT;

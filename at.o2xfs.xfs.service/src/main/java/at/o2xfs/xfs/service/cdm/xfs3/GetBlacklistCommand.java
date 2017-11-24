@@ -28,13 +28,13 @@
 package at.o2xfs.xfs.service.cdm.xfs3;
 
 import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.cdm.v3_30.Blacklist3_30;
+import at.o2xfs.xfs.v3_30.cdm.Blacklist330;
 import at.o2xfs.xfs.service.ReflectiveInfoCommand;
 import at.o2xfs.xfs.service.cdm.CdmService;
 
-public class GetBlacklistCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, Blacklist3_30> {
+public class GetBlacklistCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, Blacklist330> {
 
 	public GetBlacklistCommand(CdmService service) {
-		super(service, CdmInfoCommand.GET_BLACKLIST, Blacklist3_30.class);
+		super(service, CdmInfoCommand.GET_BLACKLIST, Blacklist330.class);
 	}
 }

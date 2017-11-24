@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_30_ShutterStatusChanged3_30Test.h"
+#include "at_o2xfs_xfs_v3_30_cdm_ShutterStatusChanged330Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -33,7 +33,7 @@
 
 static WFSCDMSHUTTERSTATUSCHANGED ShutterStatusChanged;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_130_ShutterStatusChanged3_130Test_buildShutterStatusChanged3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_ShutterStatusChanged3130Test_buildShutterStatusChanged3130(JNIEnv *env, jobject obj) {
 	ShutterStatusChanged.fwPosition = WFS_CDM_POSFRONT;
 	ShutterStatusChanged.fwShutter = WFS_CDM_SHTJAMMED;
 	return NewBuffer(env, &ShutterStatusChanged, sizeof(WFSCDMSHUTTERSTATUSCHANGED));

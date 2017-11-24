@@ -25,31 +25,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsPointerArray;
 
-class ItemInfoAll3_30Array extends XfsPointerArray<ItemInfoAll3_30> {
+class ItemInfoAll330Array extends XfsPointerArray<ItemInfoAll330> {
 
-	public ItemInfoAll3_30Array(ItemInfoAll3_30[] array) {
+	public ItemInfoAll330Array(ItemInfoAll330[] array) {
 		super(array);
 	}
 
-	public ItemInfoAll3_30Array(Pointer p, int length) {
+	public ItemInfoAll330Array(Pointer p, int length) {
 		super(p, length);
 	}
 
 	@Override
-	public ItemInfoAll3_30 copy(ItemInfoAll3_30 copy) {
-		return new ItemInfoAll3_30(copy);
+	public ItemInfoAll330 copy(ItemInfoAll330 copy) {
+		return new ItemInfoAll330(copy);
 	}
 
 	@Override
-	public ItemInfoAll3_30[] get() {
-		ItemInfoAll3_30[] result = new ItemInfoAll3_30[pointers.length];
+	public ItemInfoAll330[] get() {
+		ItemInfoAll330[] result = new ItemInfoAll330[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new ItemInfoAll3_30(pointers[i]));
+			result[i] = copy(new ItemInfoAll330(pointers[i]));
 		}
 		return result;
 	}

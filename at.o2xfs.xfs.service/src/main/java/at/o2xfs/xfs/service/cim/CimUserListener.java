@@ -27,7 +27,7 @@
 
 package at.o2xfs.xfs.service.cim;
 
-import at.o2xfs.xfs.cim.v3_00.CashIn3;
+import at.o2xfs.xfs.v3_00.cim.CashIn3;
 
 public interface CimUserListener {
 

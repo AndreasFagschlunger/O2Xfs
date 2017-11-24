@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.bcr.v3_10;
+package at.o2xfs.xfs.v3_10.bcr;
 
 import java.util.List;
 import java.util.Map;
@@ -45,7 +45,7 @@ import at.o2xfs.xfs.bcr.Symbologies;
 import at.o2xfs.xfs.bcr.Symbology;
 import at.o2xfs.xfs.win32.XfsBitmaskArray;
 
-public class Capabilities3_10 extends Struct {
+public class Capabilities310 extends Struct {
 
 	private static final int GUIDLIGHTS_SIZE = 32;
 
@@ -57,7 +57,7 @@ public class Capabilities3_10 extends Struct {
 	protected final XfsExtra extra = new XfsExtra();
 	protected final BOOL powerSaveControl = new BOOL();
 
-	protected Capabilities3_10() {
+	protected Capabilities310() {
 		add(serviceClass);
 		add(compound);
 		add(canFilterSymbologies);
@@ -67,18 +67,18 @@ public class Capabilities3_10 extends Struct {
 		add(powerSaveControl);
 	}
 
-	public Capabilities3_10(Pointer p) {
+	public Capabilities310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Capabilities3_10(Capabilities3_10 copy) {
+	public Capabilities310(Capabilities310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Capabilities3_10 copy) {
+	protected void set(Capabilities310 copy) {
 		serviceClass.set(copy.getServiceClass());
 		compound.set(copy.isCompound());
 		canFilterSymbologies.set(copy.isCanFilterSymbologies());
@@ -126,12 +126,12 @@ public class Capabilities3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Capabilities3_10) {
-			Capabilities3_10 capabilities3_10 = (Capabilities3_10) obj;
-			return new EqualsBuilder().append(getServiceClass(), capabilities3_10.getServiceClass()).append(isCompound(), capabilities3_10.isCompound())
-					.append(isCanFilterSymbologies(), capabilities3_10.isCanFilterSymbologies()).append(getSymbologies(), capabilities3_10.getSymbologies())
-					.append(getGuidLights(), capabilities3_10.getGuidLights()).append(getExtra(), capabilities3_10.getExtra())
-					.append(isPowerSaveControl(), capabilities3_10.isPowerSaveControl()).isEquals();
+		if (obj instanceof Capabilities310) {
+			Capabilities310 capabilities310 = (Capabilities310) obj;
+			return new EqualsBuilder().append(getServiceClass(), capabilities310.getServiceClass()).append(isCompound(), capabilities310.isCompound())
+					.append(isCanFilterSymbologies(), capabilities310.isCanFilterSymbologies()).append(getSymbologies(), capabilities310.getSymbologies())
+					.append(getGuidLights(), capabilities310.getGuidLights()).append(getExtra(), capabilities310.getExtra())
+					.append(isPowerSaveControl(), capabilities310.isPowerSaveControl()).isEquals();
 		}
 		return false;
 	}

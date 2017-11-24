@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_00_Count3Test.h"
+#include "at_o2xfs_xfs_v3_00_cdm_Count3Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -36,7 +36,7 @@ static WFSCDMCOUNTEDPHYSCU countedPhysCUs[2];
 static LPWFSCDMCOUNTEDPHYSCU lppCountedPhysCUs[2];
 static LPSTR physicalPositionNames[2] = {"SLOT1", "SLOT2"};
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_Count3Test_buildCount3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cdm_Count3Test_buildCount3(JNIEnv *env, jobject obj) {
 	count.usNumPhysicalCUs = 2;
 	count.lppCountedPhysCUs = lppCountedPhysCUs;
 

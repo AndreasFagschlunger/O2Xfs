@@ -30,9 +30,9 @@ package at.o2xfs.operator.task.xfs.cdm;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.task.xfs.XfsServiceTask;
-import at.o2xfs.xfs.cdm.v3_00.CashUnitError3;
-import at.o2xfs.xfs.cdm.v3_30.IncompleteRetract3_30;
-import at.o2xfs.xfs.cdm.v3_30.ItemInfoSummary3_30;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+import at.o2xfs.xfs.v3_30.cdm.IncompleteRetract330;
+import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cdm.xfs3.ResetCommand;
 import at.o2xfs.xfs.service.cdm.xfs3.ResetListener;
@@ -94,11 +94,11 @@ public class ResetTask extends XfsServiceTask<CdmService> implements ResetListen
 	}
 
 	@Override
-	public void onInfoAvailable(ItemInfoSummary3_30 itemInfoSummary) {
+	public void onInfoAvailable(ItemInfoSummary330 itemInfoSummary) {
 	}
 
 	@Override
-	public void onIncompleteRetract(IncompleteRetract3_30 incompleteRetract) {
+	public void onIncompleteRetract(IncompleteRetract330 incompleteRetract) {
 	}
 
 	@Override

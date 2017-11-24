@@ -30,9 +30,9 @@ package at.o2xfs.xfs.service.cim.cmd;
 import java.util.List;
 
 import at.o2xfs.xfs.cim.Reason;
-import at.o2xfs.xfs.cim.v3_00.CashUnitError3;
-import at.o2xfs.xfs.cim.v3_00.P6Info3;
-import at.o2xfs.xfs.cim.v3_10.ItemInfoSummary3_10;
+import at.o2xfs.xfs.v3_00.cim.CashUnitError3;
+import at.o2xfs.xfs.v3_00.cim.P6Info3;
+import at.o2xfs.xfs.v3_10.cim.ItemInfoSummary310;
 import at.o2xfs.xfs.service.cmd.event.CommandListener;
 
 public interface CashInEndListener extends CommandListener<CashInEndCompleteEvent> {
@@ -43,5 +43,5 @@ public interface CashInEndListener extends CommandListener<CashInEndCompleteEven
 
 	public void onInputP6(List<P6Info3> p6Infos);
 
-	public void onInfoAvailable(List<ItemInfoSummary3_10> itemInfoSummaries);
+	public void onInfoAvailable(List<ItemInfoSummary310> itemInfoSummaries);
 }

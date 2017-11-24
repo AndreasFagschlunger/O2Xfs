@@ -25,32 +25,32 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_20;
+package at.o2xfs.xfs.v3_20.cdm;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsPointerArray;
 
-class ItemNumbers3_20 extends XfsPointerArray<ItemNumber3_20> {
+class ItemNumbers320 extends XfsPointerArray<ItemNumber320> {
 
-	public ItemNumbers3_20(ItemNumber3_20[] array) {
+	public ItemNumbers320(ItemNumber320[] array) {
 		super(array);
 	}
 
-	public ItemNumbers3_20(Pointer p, int length) {
+	public ItemNumbers320(Pointer p, int length) {
 		super(p, length);
 	}
 
 	@Override
-	public ItemNumber3_20[] get() {
-		ItemNumber3_20[] result = new ItemNumber3_20[pointers.length];
+	public ItemNumber320[] get() {
+		ItemNumber320[] result = new ItemNumber320[pointers.length];
 		for (int i = 0; i < result.length; i++) {
-			result[i] = copy(new ItemNumber3_20(pointers[i]));
+			result[i] = copy(new ItemNumber320(pointers[i]));
 		}
 		return result;
 	}
 
 	@Override
-	public ItemNumber3_20 copy(ItemNumber3_20 copy) {
-		return new ItemNumber3_20(copy);
+	public ItemNumber320 copy(ItemNumber320 copy) {
+		return new ItemNumber320(copy);
 	}
 }

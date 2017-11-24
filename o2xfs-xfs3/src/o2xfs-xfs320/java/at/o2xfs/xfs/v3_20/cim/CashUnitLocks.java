@@ -25,31 +25,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsZPointerArray;
 
-class CashUnitLocks extends XfsZPointerArray<CashUnitLock3_20> {
+class CashUnitLocks extends XfsZPointerArray<CashUnitLock320> {
 
 	public CashUnitLocks(Pointer aPointer) {
 		super(aPointer);
 	}
 
-	public CashUnitLocks(CashUnitLock3_20[] array) {
+	public CashUnitLocks(CashUnitLock320[] array) {
 		super(array);
 	}
 
 	@Override
-	public CashUnitLock3_20 copy(CashUnitLock3_20 copy) {
-		return new CashUnitLock3_20(copy);
+	public CashUnitLock320 copy(CashUnitLock320 copy) {
+		return new CashUnitLock320(copy);
 	}
 
 	@Override
-	public CashUnitLock3_20[] get() {
-		CashUnitLock3_20[] result = new CashUnitLock3_20[pointers.length];
+	public CashUnitLock320[] get() {
+		CashUnitLock320[] result = new CashUnitLock320[pointers.length];
 		for (int i = 0; i < pointers.length; i++) {
-			result[i] = copy(new CashUnitLock3_20(pointers[i]));
+			result[i] = copy(new CashUnitLock320(pointers[i]));
 		}
 		return result;
 	}

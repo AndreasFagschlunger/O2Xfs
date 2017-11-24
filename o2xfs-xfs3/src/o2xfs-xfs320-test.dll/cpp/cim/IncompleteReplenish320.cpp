@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_20_IncompleteReplenish3_20Test.h"
+#include "cim/at_o2xfs_xfs_v3_20_cim_IncompleteReplenish320Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -36,7 +36,7 @@ static WFSCIMREPRES Replenish;
 static WFSCIMREPTARGETRES ReplenishTargetResults[1];
 static LPWFSCIMREPTARGETRES lpReplenishTargetResults[2];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_IncompleteReplenish3_120Test_buildIncompleteReplenish3_120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_IncompleteReplenish3120Test_buildIncompleteReplenish3120(JNIEnv *env, jobject obj) {
 	IncompleteReplenish.lpReplenish = &Replenish;
 	Replenish.ulNumberOfItemsRemoved = 1234;
 	Replenish.ulNumberOfItemsRejected = 1;

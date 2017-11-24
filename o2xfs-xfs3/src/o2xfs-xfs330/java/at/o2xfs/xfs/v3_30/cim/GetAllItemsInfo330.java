@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,7 +36,7 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.cim.Level;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class GetAllItemsInfo3_30 extends Struct {
+public class GetAllItemsInfo330 extends Struct {
 
 	public static class Builder {
 
@@ -46,35 +46,35 @@ public class GetAllItemsInfo3_30 extends Struct {
 			this.level = level;
 		}
 
-		public GetAllItemsInfo3_30 build() {
-			return new GetAllItemsInfo3_30(this);
+		public GetAllItemsInfo330 build() {
+			return new GetAllItemsInfo330(this);
 		}
 	}
 
 	protected final XfsWord<Level> level = new XfsWord<>(Level.class);
 
-	protected GetAllItemsInfo3_30() {
+	protected GetAllItemsInfo330() {
 		add(level);
 	}
 
-	protected GetAllItemsInfo3_30(Builder builder) {
+	protected GetAllItemsInfo330(Builder builder) {
 		this();
 		allocate();
 		level.set(builder.level);
 	}
 
-	public GetAllItemsInfo3_30(Pointer p) {
+	public GetAllItemsInfo330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public GetAllItemsInfo3_30(GetAllItemsInfo3_30 copy) {
+	public GetAllItemsInfo330(GetAllItemsInfo330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(GetAllItemsInfo3_30 copy) {
+	protected void set(GetAllItemsInfo330 copy) {
 		level.set(copy.getLevel());
 	}
 
@@ -89,9 +89,9 @@ public class GetAllItemsInfo3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof GetAllItemsInfo3_30) {
-			GetAllItemsInfo3_30 getAllItemsInfo3_30 = (GetAllItemsInfo3_30) obj;
-			return new EqualsBuilder().append(getLevel(), getAllItemsInfo3_30.getLevel()).isEquals();
+		if (obj instanceof GetAllItemsInfo330) {
+			GetAllItemsInfo330 getAllItemsInfo330 = (GetAllItemsInfo330) obj;
+			return new EqualsBuilder().append(getLevel(), getAllItemsInfo330.getLevel()).isEquals();
 		}
 		return false;
 	}

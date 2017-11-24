@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,26 +35,26 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class PowerSaveChange3_10 extends Struct {
+public class PowerSaveChange310 extends Struct {
 
 	protected final USHORT powerSaveRecoveryTime = new USHORT();
 
-	protected PowerSaveChange3_10() {
+	protected PowerSaveChange310() {
 		add(powerSaveRecoveryTime);
 	}
 
-	public PowerSaveChange3_10(Pointer p) {
+	public PowerSaveChange310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public PowerSaveChange3_10(PowerSaveChange3_10 copy) {
+	public PowerSaveChange310(PowerSaveChange310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(PowerSaveChange3_10 copy) {
+	protected void set(PowerSaveChange310 copy) {
 		powerSaveRecoveryTime.set(copy.getPowerSaveRecoveryTime());
 	}
 
@@ -69,8 +69,8 @@ public class PowerSaveChange3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof PowerSaveChange3_10) {
-			PowerSaveChange3_10 powerSaveChange = (PowerSaveChange3_10) obj;
+		if (obj instanceof PowerSaveChange310) {
+			PowerSaveChange310 powerSaveChange = (PowerSaveChange310) obj;
 			return new EqualsBuilder().append(getPowerSaveRecoveryTime(), powerSaveChange.getPowerSaveRecoveryTime()).isEquals();
 		}
 		return false;

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,30 +34,30 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class DepleteInfoResult3_30 extends Struct {
+public class DepleteInfoResult330 extends Struct {
 
 	protected final Pointer depleteSources = new Pointer();
 
-	protected DepleteInfoResult3_30() {
+	protected DepleteInfoResult330() {
 		add(depleteSources);
 	}
 
-	public DepleteInfoResult3_30(Pointer p) {
+	public DepleteInfoResult330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public DepleteInfoResult3_30(DepleteInfoResult3_30 copy) {
+	public DepleteInfoResult330(DepleteInfoResult330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(DepleteInfoResult3_30 copy) {
+	protected void set(DepleteInfoResult330 copy) {
 		depleteSources.pointTo(new DepleteInfoSources(copy.getDepleteSources()));
 	}
 
-	public DepleteInfoSource3_30[] getDepleteSources() {
+	public DepleteInfoSource330[] getDepleteSources() {
 		return new DepleteInfoSources(depleteSources).get();
 	}
 
@@ -68,9 +68,9 @@ public class DepleteInfoResult3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DepleteInfoResult3_30) {
-			DepleteInfoResult3_30 depleteInfoResult3_30 = (DepleteInfoResult3_30) obj;
-			return new EqualsBuilder().append(getDepleteSources(), depleteInfoResult3_30.getDepleteSources()).isEquals();
+		if (obj instanceof DepleteInfoResult330) {
+			DepleteInfoResult330 depleteInfoResult330 = (DepleteInfoResult330) obj;
+			return new EqualsBuilder().append(getDepleteSources(), depleteInfoResult330.getDepleteSources()).isEquals();
 		}
 		return false;
 	}

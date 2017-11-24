@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,7 +35,7 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class DepleteInfo3_30 extends Struct {
+public class DepleteInfo330 extends Struct {
 
 	public static class Builder {
 
@@ -45,35 +45,35 @@ public class DepleteInfo3_30 extends Struct {
 			this.numberTarget = numberTarget;
 		}
 
-		public DepleteInfo3_30 build() {
-			return new DepleteInfo3_30(this);
+		public DepleteInfo330 build() {
+			return new DepleteInfo330(this);
 		}
 	}
 
 	protected final USHORT numberTarget = new USHORT();
 
-	protected DepleteInfo3_30() {
+	protected DepleteInfo330() {
 		add(numberTarget);
 	}
 
-	protected DepleteInfo3_30(Builder builder) {
+	protected DepleteInfo330(Builder builder) {
 		this();
 		allocate();
 		numberTarget.set(builder.numberTarget);
 	}
 
-	public DepleteInfo3_30(Pointer p) {
+	public DepleteInfo330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public DepleteInfo3_30(DepleteInfo3_30 copy) {
+	public DepleteInfo330(DepleteInfo330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(DepleteInfo3_30 copy) {
+	protected void set(DepleteInfo330 copy) {
 		numberTarget.set(copy.getNumberTarget());
 	}
 
@@ -88,9 +88,9 @@ public class DepleteInfo3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DepleteInfo3_30) {
-			DepleteInfo3_30 depleteInfo3_30 = (DepleteInfo3_30) obj;
-			return new EqualsBuilder().append(getNumberTarget(), depleteInfo3_30.getNumberTarget()).isEquals();
+		if (obj instanceof DepleteInfo330) {
+			DepleteInfo330 depleteInfo330 = (DepleteInfo330) obj;
+			return new EqualsBuilder().append(getNumberTarget(), depleteInfo330.getNumberTarget()).isEquals();
 		}
 		return false;
 	}

@@ -1,4 +1,4 @@
-#include "idc/at_o2xfs_xfs_idc_v3_20_TrackDetected3_20Test.h"
+#include "idc/at_o2xfs_xfs_v3_20_idc_TrackDetected320Test.h"
 
 #include <Windows.h>
 #include <XFSIDC.H>
@@ -6,7 +6,7 @@
 
 static WFSIDCTRACKDETECTED TrackDetected;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_idc_v3_120_TrackDetected3_120Test_buildTrackDetected3_120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_idc_TrackDetected3120Test_buildTrackDetected3120(JNIEnv *env, jobject obj) {
 	TrackDetected.fwTracks = WFS_IDC_TRACK1 | WFS_IDC_TRACK2 | WFS_IDC_TRACK3 | WFS_IDC_TRACK_WM | WFS_IDC_FRONT_TRACK_1;
 	return NewBuffer(env, &TrackDetected, sizeof(WFSIDCTRACKDETECTED));
 }

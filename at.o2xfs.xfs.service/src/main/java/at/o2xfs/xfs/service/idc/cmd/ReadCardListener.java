@@ -29,7 +29,7 @@ package at.o2xfs.xfs.service.idc.cmd;
 
 import java.util.List;
 
-import at.o2xfs.xfs.idc.v3_00.CardData3;
+import at.o2xfs.xfs.v3_00.idc.CardData3;
 import at.o2xfs.xfs.service.cmd.IAsyncCommandListener;
 
 public interface ReadCardListener extends IAsyncCommandListener {

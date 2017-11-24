@@ -38,7 +38,7 @@ import at.o2xfs.xfs.XfsCancelledException;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.IdcExecuteCommand;
 import at.o2xfs.xfs.idc.MediaRetainedException;
-import at.o2xfs.xfs.idc.v3_00.CardAction3;
+import at.o2xfs.xfs.v3_00.idc.CardAction3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;

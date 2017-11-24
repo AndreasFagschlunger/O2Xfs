@@ -27,7 +27,7 @@
 
 package at.o2xfs.xfs.service.idc;
 
-import at.o2xfs.xfs.idc.v3_00.CardAction3;
+import at.o2xfs.xfs.v3_00.idc.CardAction3;
 
 public interface IDCServiceListener {
 

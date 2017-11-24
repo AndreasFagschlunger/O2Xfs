@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_00_TellerUpdate3Test.h"
+#include "cim/at_o2xfs_xfs_v3_00_cim_TellerUpdate3Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -37,7 +37,7 @@ static LPWFSCIMTELLERDETAILS lpTellerDetails[2];
 static WFSCIMTELLERTOTALS TellerTotals[1];
 static LPWFSCIMTELLERTOTALS lpTellerTotals[2];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_100_TellerUpdate3Test_buildTellerUpdate3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cim_TellerUpdate3Test_buildTellerUpdate3(JNIEnv *env, jobject obj) {
 	TellerUpdate.usAction = WFS_CIM_CREATE_TELLER;
 	TellerUpdate.lpTellerDetails = TellerDetails;
 

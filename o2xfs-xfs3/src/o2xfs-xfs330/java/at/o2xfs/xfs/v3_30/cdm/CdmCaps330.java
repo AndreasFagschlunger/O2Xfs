@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_30;
+package at.o2xfs.xfs.v3_30.cdm;
 
 import java.util.Set;
 
@@ -37,33 +37,33 @@ import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.ItemInfoType;
-import at.o2xfs.xfs.cdm.v3_20.CdmCaps3_20;
+import at.o2xfs.xfs.v3_20.cdm.CdmCaps320;
 import at.o2xfs.xfs.win32.XfsDWordBitmask;
 
-public class CdmCaps3_30 extends CdmCaps3_20 {
+public class CdmCaps330 extends CdmCaps320 {
 
 	protected final XfsDWordBitmask<ItemInfoType> itemInfoTypes = new XfsDWordBitmask<>(ItemInfoType.class);
 	protected final BOOL blacklist = new BOOL();
 	protected final Pointer synchronizableCommands = new Pointer();
 
-	protected CdmCaps3_30() {
+	protected CdmCaps330() {
 		add(itemInfoTypes);
 		add(blacklist);
 		add(synchronizableCommands);
 	}
 
-	public CdmCaps3_30(Pointer p) {
+	public CdmCaps330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public CdmCaps3_30(CdmCaps3_30 copy) {
+	public CdmCaps330(CdmCaps330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(CdmCaps3_30 copy) {
+	protected void set(CdmCaps330 copy) {
 		super.set(copy);
 		itemInfoTypes.set(copy.getItemInfoTypes());
 		blacklist.set(copy.isBlacklist());
@@ -89,10 +89,10 @@ public class CdmCaps3_30 extends CdmCaps3_20 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CdmCaps3_30) {
-			CdmCaps3_30 cdmCaps3_30 = (CdmCaps3_30) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getItemInfoTypes(), cdmCaps3_30.getItemInfoTypes()).append(isBlacklist(), cdmCaps3_30.isBlacklist())
-					.append(getSynchronizableCommands(), cdmCaps3_30.getSynchronizableCommands()).isEquals();
+		if (obj instanceof CdmCaps330) {
+			CdmCaps330 cdmCaps330 = (CdmCaps330) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getItemInfoTypes(), cdmCaps330.getItemInfoTypes()).append(isBlacklist(), cdmCaps330.isBlacklist())
+					.append(getSynchronizableCommands(), cdmCaps330.getSynchronizableCommands()).isEquals();
 		}
 		return false;
 	}

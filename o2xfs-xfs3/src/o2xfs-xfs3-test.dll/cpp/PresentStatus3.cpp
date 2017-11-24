@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_00_PresentStatus3Test.h"
+#include "at_o2xfs_xfs_v3_00_cdm_PresentStatus3Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -36,7 +36,7 @@ static WFSCDMDENOMINATION denomination;
 static ULONG values[] = {1, 2, 2};
 static LPSTR lpszExtra = "Key1=Value1\0Key2=Value2\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_PresentStatus3Test_buildPresentStatus3(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cdm_PresentStatus3Test_buildPresentStatus3(JNIEnv *env, jobject obj) {
 	strcpy(denomination.cCurrencyID, "EUR");
 	denomination.ulAmount = 150;
 	denomination.usCount = 3;

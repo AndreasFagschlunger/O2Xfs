@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_20;
+package at.o2xfs.xfs.v3_20.cim;
 
 import java.util.Map;
 
@@ -40,32 +40,32 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.ULONG;
 import at.o2xfs.xfs.XfsExtra;
 
-public class PhysicalCashUnitCapabilities3_20 extends Struct {
+public class PhysicalCashUnitCapabilities320 extends Struct {
 
 	protected final LPSTR physicalPositionName = new LPSTR();
 	protected final ULONG maximum = new ULONG();
 	protected final BOOL hardwareSensors = new BOOL();
 	protected final XfsExtra extra = new XfsExtra();
 
-	protected PhysicalCashUnitCapabilities3_20() {
+	protected PhysicalCashUnitCapabilities320() {
 		add(physicalPositionName);
 		add(maximum);
 		add(hardwareSensors);
 		add(extra);
 	}
 
-	public PhysicalCashUnitCapabilities3_20(Pointer p) {
+	public PhysicalCashUnitCapabilities320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public PhysicalCashUnitCapabilities3_20(PhysicalCashUnitCapabilities3_20 copy) {
+	public PhysicalCashUnitCapabilities320(PhysicalCashUnitCapabilities320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(PhysicalCashUnitCapabilities3_20 copy) {
+	protected void set(PhysicalCashUnitCapabilities320 copy) {
 		physicalPositionName.set(copy.getPhysicalPositionName());
 		maximum.set(copy.getMaximum());
 		hardwareSensors.set(copy.isHardwareSensors());
@@ -95,11 +95,11 @@ public class PhysicalCashUnitCapabilities3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof PhysicalCashUnitCapabilities3_20) {
-			PhysicalCashUnitCapabilities3_20 physicalCashUnitCapabilities3_20 = (PhysicalCashUnitCapabilities3_20) obj;
-			return new EqualsBuilder().append(getPhysicalPositionName(), physicalCashUnitCapabilities3_20.getPhysicalPositionName())
-					.append(getMaximum(), physicalCashUnitCapabilities3_20.getMaximum()).append(isHardwareSensors(), physicalCashUnitCapabilities3_20.isHardwareSensors())
-					.append(getExtra(), physicalCashUnitCapabilities3_20.getExtra()).isEquals();
+		if (obj instanceof PhysicalCashUnitCapabilities320) {
+			PhysicalCashUnitCapabilities320 physicalCashUnitCapabilities320 = (PhysicalCashUnitCapabilities320) obj;
+			return new EqualsBuilder().append(getPhysicalPositionName(), physicalCashUnitCapabilities320.getPhysicalPositionName())
+					.append(getMaximum(), physicalCashUnitCapabilities320.getMaximum()).append(isHardwareSensors(), physicalCashUnitCapabilities320.isHardwareSensors())
+					.append(getExtra(), physicalCashUnitCapabilities320.getExtra()).isEquals();
 		}
 		return false;
 	}

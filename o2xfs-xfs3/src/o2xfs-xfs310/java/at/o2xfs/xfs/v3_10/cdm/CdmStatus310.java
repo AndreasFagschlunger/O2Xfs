@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import java.util.List;
 import java.util.Set;
@@ -38,35 +38,35 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.cdm.CdmGuidLights;
 import at.o2xfs.xfs.cdm.DevicePosition;
-import at.o2xfs.xfs.cdm.v3_00.CdmStatus3;
+import at.o2xfs.xfs.v3_00.cdm.CdmStatus3;
 import at.o2xfs.xfs.win32.XfsBitmaskArray;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class CdmStatus3_10 extends CdmStatus3 {
+public class CdmStatus310 extends CdmStatus3 {
 	private static final int GUIDLIGHTS_SIZE = 32;
 
 	protected final XfsBitmaskArray<CdmGuidLights> guidLights = new XfsBitmaskArray<>(GUIDLIGHTS_SIZE, CdmGuidLights.class);
 	protected final XfsWord<DevicePosition> devicePosition = new XfsWord<>(DevicePosition.class);
 	protected final USHORT powerSaveRecoveryTime = new USHORT();
 
-	protected CdmStatus3_10() {
+	protected CdmStatus310() {
 		add(guidLights);
 		add(devicePosition);
 		add(powerSaveRecoveryTime);
 	}
 
-	public CdmStatus3_10(Pointer p) {
+	public CdmStatus310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public CdmStatus3_10(CdmStatus3_10 copy) {
+	public CdmStatus310(CdmStatus310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(CdmStatus3_10 copy) {
+	protected void set(CdmStatus310 copy) {
 		super.set(copy);
 		guidLights.set(copy.getGuidLights());
 		devicePosition.set(copy.getDevicePosition());
@@ -92,10 +92,10 @@ public class CdmStatus3_10 extends CdmStatus3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof CdmStatus3_10) {
-			CdmStatus3_10 cdmStatus3_10 = (CdmStatus3_10) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getGuidLights(), cdmStatus3_10.getGuidLights())
-					.append(getDevicePosition(), cdmStatus3_10.getDevicePosition()).append(getPowerSaveRecoveryTime(), cdmStatus3_10.getPowerSaveRecoveryTime()).isEquals();
+		if (obj instanceof CdmStatus310) {
+			CdmStatus310 cdmStatus310 = (CdmStatus310) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getGuidLights(), cdmStatus310.getGuidLights())
+					.append(getDevicePosition(), cdmStatus310.getDevicePosition()).append(getPowerSaveRecoveryTime(), cdmStatus310.getPowerSaveRecoveryTime()).isEquals();
 		}
 		return false;
 	}

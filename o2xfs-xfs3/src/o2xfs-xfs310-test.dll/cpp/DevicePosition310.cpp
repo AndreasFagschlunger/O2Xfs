@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_10_DevicePosition3_10Test.h"
+#include "at_o2xfs_xfs_v3_10_cdm_DevicePosition310Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -33,7 +33,7 @@
 
 static WFSCDMDEVICEPOSITION DevicePosition;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_110_DevicePosition3_110Test_buildDevicePosition3_110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_DevicePosition3110Test_buildDevicePosition3110(JNIEnv *env, jobject obj) {
 	DevicePosition.wPosition = WFS_CDM_DEVICENOTINPOSITION;
 	return NewBuffer(env, &DevicePosition, sizeof(WFSCDMDEVICEPOSITION));
 }

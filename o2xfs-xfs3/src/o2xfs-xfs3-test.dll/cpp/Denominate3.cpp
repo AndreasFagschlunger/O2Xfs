@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_00_Denominate3Test.h"
+#include "at_o2xfs_xfs_v3_00_cdm_Denominate3Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -35,7 +35,7 @@ static WFSCDMDENOMINATE Denominate;
 static WFSCDMDENOMINATION Denomination;
 static ULONG Values[] = { 1, 2, 3};
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_100_Denominate3Test_buildDenominate3(JNIEnv *env, jobject object) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_100_cdm_Denominate3Test_buildDenominate3(JNIEnv *env, jobject object) {
 	Denominate.usTellerID = 0;
 	Denominate.usMixNumber = WFS_CDM_INDIVIDUAL;
 	Denominate.lpDenomination = &Denomination;

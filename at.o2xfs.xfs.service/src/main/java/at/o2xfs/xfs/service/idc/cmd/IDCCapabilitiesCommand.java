@@ -34,7 +34,7 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.IdcInfoCommand;
-import at.o2xfs.xfs.idc.v3_00.Capabilities3;
+import at.o2xfs.xfs.v3_00.idc.Capabilities3;
 import at.o2xfs.xfs.service.XfsService;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsCommand;

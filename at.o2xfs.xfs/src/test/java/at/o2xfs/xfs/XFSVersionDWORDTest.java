@@ -52,13 +52,13 @@ public class XFSVersionDWORDTest {
 	}
 
 	@Test
-	public void v2_11_3_00() {
+	public void v2_11300() {
 		final XFSVersionDWORD versions = new XFSVersionDWORD("2.11", "3.0");
 		assertEquals(0x0B020003L, versions.longValue());
 	}
 
 	@Test
-	public void v1_11_3_00() {
+	public void v1_11300() {
 		final XFSVersionDWORD versions = new XFSVersionDWORD("1.11", "3.0");
 		assertEquals(0x0B010003L, versions.longValue());
 	}

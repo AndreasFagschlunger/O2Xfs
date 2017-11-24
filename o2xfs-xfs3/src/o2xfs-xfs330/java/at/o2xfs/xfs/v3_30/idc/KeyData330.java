@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,7 +36,7 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 
-public class KeyData3_30 extends Struct {
+public class KeyData330 extends Struct {
 
 	protected final Pointer rid = new Pointer();
 	protected final WORD cAPublicKeyIndex = new WORD();
@@ -45,7 +45,7 @@ public class KeyData3_30 extends Struct {
 	protected final Pointer cAPublicKeyModulus = new Pointer();
 	protected final Pointer cAPublicKeyCheckSum = new Pointer();
 
-	protected KeyData3_30() {
+	protected KeyData330() {
 		add(rid);
 		add(cAPublicKeyIndex);
 		add(caPublicKeyAlgorithmIndicator);
@@ -54,28 +54,28 @@ public class KeyData3_30 extends Struct {
 		add(cAPublicKeyCheckSum);
 	}
 
-	public KeyData3_30(Pointer p) {
+	public KeyData330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public KeyData3_30(KeyData3_30 copy) {
+	public KeyData330(KeyData330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(KeyData3_30 copy) {
-		rid.pointTo(new HexData3_30(copy.getRID()));
+	protected void set(KeyData330 copy) {
+		rid.pointTo(new HexData330(copy.getRID()));
 		cAPublicKeyIndex.set(copy.getCAPublicKeyIndex());
 		caPublicKeyAlgorithmIndicator.set(copy.getCAPublicKeyAlgorithmIndicator());
-		cAPublicKeyExponent.pointTo(new HexData3_30(copy.getCAPublicKeyExponent()));
-		cAPublicKeyModulus.pointTo(new HexData3_30(copy.getCAPublicKeyModulus()));
+		cAPublicKeyExponent.pointTo(new HexData330(copy.getCAPublicKeyExponent()));
+		cAPublicKeyModulus.pointTo(new HexData330(copy.getCAPublicKeyModulus()));
 		cAPublicKeyCheckSum.pointTo(new ByteArray(copy.getCAPublicKeyCheckSum()));
 	}
 
 	public byte[] getRID() {
-		return new HexData3_30(rid).getData();
+		return new HexData330(rid).getData();
 	}
 
 	public int getCAPublicKeyIndex() {
@@ -87,11 +87,11 @@ public class KeyData3_30 extends Struct {
 	}
 
 	public byte[] getCAPublicKeyExponent() {
-		return new HexData3_30(cAPublicKeyExponent).getData();
+		return new HexData330(cAPublicKeyExponent).getData();
 	}
 
 	public byte[] getCAPublicKeyModulus() {
-		return new HexData3_30(cAPublicKeyModulus).getData();
+		return new HexData330(cAPublicKeyModulus).getData();
 	}
 
 	public byte[] getCAPublicKeyCheckSum() {
@@ -112,15 +112,15 @@ public class KeyData3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof KeyData3_30) {
-			KeyData3_30 keyData3_30 = (KeyData3_30) obj;
+		if (obj instanceof KeyData330) {
+			KeyData330 keyData330 = (KeyData330) obj;
 			return new EqualsBuilder()
-					.append(getRID(), keyData3_30.getRID())
-					.append(getCAPublicKeyIndex(), keyData3_30.getCAPublicKeyIndex())
-					.append(getCAPublicKeyAlgorithmIndicator(), keyData3_30.getCAPublicKeyAlgorithmIndicator())
-					.append(getCAPublicKeyExponent(), keyData3_30.getCAPublicKeyExponent())
-					.append(getCAPublicKeyModulus(), keyData3_30.getCAPublicKeyModulus())
-					.append(getCAPublicKeyCheckSum(), keyData3_30.getCAPublicKeyCheckSum())
+					.append(getRID(), keyData330.getRID())
+					.append(getCAPublicKeyIndex(), keyData330.getCAPublicKeyIndex())
+					.append(getCAPublicKeyAlgorithmIndicator(), keyData330.getCAPublicKeyAlgorithmIndicator())
+					.append(getCAPublicKeyExponent(), keyData330.getCAPublicKeyExponent())
+					.append(getCAPublicKeyModulus(), keyData330.getCAPublicKeyModulus())
+					.append(getCAPublicKeyCheckSum(), keyData330.getCAPublicKeyCheckSum())
 					.isEquals();
 		}
 		return false;

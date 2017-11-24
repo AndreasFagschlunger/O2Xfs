@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_20_Capabilities3_20Test.h"
+#include "cim/at_o2xfs_xfs_v3_20_cim_Capabilities320Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -34,7 +34,7 @@
 static WFSCIMCAPS Caps;
 static LPSTR lpszExtra = "Key=Value\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_120_Capabilities3_120Test_buildCapabilities3_120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_Capabilities3120Test_buildCapabilities3120(JNIEnv *env, jobject obj) {
 	Caps.wClass = WFS_SERVICE_CLASS_CIM;
 	Caps.fwType = WFS_CIM_SELFSERVICEBILL;
 	Caps.wMaxCashInItems = 200;

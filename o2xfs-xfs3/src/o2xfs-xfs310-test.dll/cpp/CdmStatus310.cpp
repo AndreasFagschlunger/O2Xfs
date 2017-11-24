@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_10_CdmStatus3_10Test.h"
+#include "at_o2xfs_xfs_v3_10_cdm_CdmStatus310Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -36,7 +36,7 @@ static WFSCDMOUTPOS position;
 static LPWFSCDMOUTPOS positions[2];
 static LPSTR lpszExtra = "Key1=Value1\0Key2=Value2\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_110_CdmStatus3_110Test_buildCdmStatus3_110(JNIEnv *env, jobject object) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CdmStatus3110Test_buildCdmStatus3110(JNIEnv *env, jobject object) {
 	position.fwPosition = WFS_CDM_POSFRONT;
 	position.fwShutter = WFS_CDM_SHTCLOSED;
 	position.fwPositionStatus = WFS_CDM_PSEMPTY;

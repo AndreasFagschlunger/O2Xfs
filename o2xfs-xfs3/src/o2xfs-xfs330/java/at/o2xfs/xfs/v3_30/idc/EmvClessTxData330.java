@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_30;
+package at.o2xfs.xfs.v3_30.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,31 +34,31 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 
-public class EmvClessTxData3_30 extends Struct {
+public class EmvClessTxData330 extends Struct {
 
 	protected final Pointer data = new Pointer();
 
-	protected EmvClessTxData3_30() {
+	protected EmvClessTxData330() {
 		add(data);
 	}
 
-	public EmvClessTxData3_30(Pointer p) {
+	public EmvClessTxData330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public EmvClessTxData3_30(EmvClessTxData3_30 copy) {
+	public EmvClessTxData330(EmvClessTxData330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(EmvClessTxData3_30 copy) {
-		data.pointTo(new HexData3_30(copy.getData()));
+	protected void set(EmvClessTxData330 copy) {
+		data.pointTo(new HexData330(copy.getData()));
 	}
 
 	public byte[] getData() {
-		return new HexData3_30(data).getData();
+		return new HexData330(data).getData();
 	}
 
 	@Override
@@ -68,9 +68,9 @@ public class EmvClessTxData3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof EmvClessTxData3_30) {
-			EmvClessTxData3_30 emvClessTxData3_30 = (EmvClessTxData3_30) obj;
-			return new EqualsBuilder().append(getData(), emvClessTxData3_30.getData()).isEquals();
+		if (obj instanceof EmvClessTxData330) {
+			EmvClessTxData330 emvClessTxData330 = (EmvClessTxData330) obj;
+			return new EqualsBuilder().append(getData(), emvClessTxData330.getData()).isEquals();
 		}
 		return false;
 	}

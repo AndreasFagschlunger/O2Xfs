@@ -29,7 +29,7 @@ package at.o2xfs.operator.task.xfs.cdm;
 
 import java.util.Comparator;
 
-import at.o2xfs.xfs.cdm.v3_00.CashUnit3;
+import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
 
 public class CashUnitComparator implements Comparator<CashUnit3> {
 

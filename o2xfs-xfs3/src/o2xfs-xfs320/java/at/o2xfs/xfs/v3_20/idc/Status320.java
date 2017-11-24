@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_20;
+package at.o2xfs.xfs.v3_20.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,30 +34,30 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.idc.Position;
-import at.o2xfs.xfs.idc.v3_10.Status3_10;
+import at.o2xfs.xfs.v3_10.idc.Status310;
 
-public class Status3_20 extends Status3_10 {
+public class Status320 extends Status310 {
 
 	protected final Pointer parkingStationMedia = new Pointer();
 	protected final WORD antiFraudModule = new WORD();
 
-	protected Status3_20() {
+	protected Status320() {
 		add(parkingStationMedia);
 		add(antiFraudModule);
 	}
 
-	public Status3_20(Pointer p) {
+	public Status320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Status3_20(Status3_20 copy) {
+	public Status320(Status320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Status3_20 copy) {
+	protected void set(Status320 copy) {
 		super.set(copy);
 		parkingStationMedia.pointTo(new ParkingStationMedias(copy.getParkingStationMedia()));
 		antiFraudModule.set(copy.getAntiFraudModule());
@@ -82,12 +82,12 @@ public class Status3_20 extends Status3_10 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Status3_20) {
-			Status3_20 status3_20 = (Status3_20) obj;
+		if (obj instanceof Status320) {
+			Status320 status320 = (Status320) obj;
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
-					.append(getParkingStationMedia(), status3_20.getParkingStationMedia())
-					.append(getAntiFraudModule(), status3_20.getAntiFraudModule())
+					.append(getParkingStationMedia(), status320.getParkingStationMedia())
+					.append(getAntiFraudModule(), status320.getAntiFraudModule())
 					.isEquals();
 		}
 		return false;

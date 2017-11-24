@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_10_SetGuidLight3_10Test.h"
+#include "at_o2xfs_xfs_v3_10_cdm_SetGuidLight310Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -33,7 +33,7 @@
 
 static WFSCDMSETGUIDLIGHT SetGuidLight;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_110_SetGuidLight3_110Test_buildSetGuidLight3_110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_SetGuidLight3110Test_buildSetGuidLight3110(JNIEnv *env, jobject obj) {
 	SetGuidLight.wGuidLight = WFS_CDM_GUIDANCE_POSOUTNULL;
 	SetGuidLight.dwCommand = WFS_CDM_GUIDANCE_MEDIUM_FLASH | WFS_CDM_GUIDANCE_GREEN;
 

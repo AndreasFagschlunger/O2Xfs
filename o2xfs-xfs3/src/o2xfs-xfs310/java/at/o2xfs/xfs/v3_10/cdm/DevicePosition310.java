@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -36,26 +36,26 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.cdm.DevicePosition;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class DevicePosition3_10 extends Struct {
+public class DevicePosition310 extends Struct {
 
 	protected final XfsWord<DevicePosition> position = new XfsWord<>(DevicePosition.class);
 
-	protected DevicePosition3_10() {
+	protected DevicePosition310() {
 		add(position);
 	}
 
-	public DevicePosition3_10(Pointer p) {
+	public DevicePosition310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public DevicePosition3_10(DevicePosition3_10 copy) {
+	public DevicePosition310(DevicePosition310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(DevicePosition3_10 copy) {
+	protected void set(DevicePosition310 copy) {
 		position.set(copy.getPosition());
 	}
 
@@ -70,8 +70,8 @@ public class DevicePosition3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DevicePosition3_10) {
-			DevicePosition3_10 devicePosition = (DevicePosition3_10) obj;
+		if (obj instanceof DevicePosition310) {
+			DevicePosition310 devicePosition = (DevicePosition310) obj;
 			return new EqualsBuilder().append(getPosition(), devicePosition.getPosition()).isEquals();
 		}
 		return false;

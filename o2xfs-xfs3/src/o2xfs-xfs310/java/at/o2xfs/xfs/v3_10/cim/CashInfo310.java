@@ -25,51 +25,51 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.cim.v3_00.CashInfo3;
+import at.o2xfs.xfs.v3_00.cim.CashInfo3;
 
-public class CashInfo3_10 extends CashInfo3 {
+public class CashInfo310 extends CashInfo3 {
 
 	public static class Builder {
 
-		private final CashIn3_10[] cashIn;
+		private final CashIn310[] cashIn;
 
-		public Builder(CashIn3_10[] cashIn) {
+		public Builder(CashIn310[] cashIn) {
 			this.cashIn = cashIn;
 		}
 
-		public CashInfo3_10 build() {
-			return new CashInfo3_10(this);
+		public CashInfo310 build() {
+			return new CashInfo310(this);
 		}
 	}
 
-	protected CashInfo3_10(Builder builder) {
+	protected CashInfo310(Builder builder) {
 		super();
 		allocate();
 		count.set(builder.cashIn.length);
-		cashIn.pointTo(new CashInArray3_10(builder.cashIn));
+		cashIn.pointTo(new CashInArray310(builder.cashIn));
 
 	}
 
-	public CashInfo3_10(CashInfo3_10 copy) {
+	public CashInfo310(CashInfo310 copy) {
 		super();
 		allocate();
 		set(copy);
 	}
 
-	public CashInfo3_10(Pointer p) {
+	public CashInfo310(Pointer p) {
 		super(p);
 	}
 
-	protected void set(CashInfo3_10 copy) {
+	protected void set(CashInfo310 copy) {
 		count.set(copy.getCount());
-		cashIn.pointTo(new CashInArray3_10(copy.getCashIn()));
+		cashIn.pointTo(new CashInArray310(copy.getCashIn()));
 	}
 
 	@Override
-	public CashIn3_10[] getCashIn() {
-		return new CashInArray3_10(cashIn, getCount()).get();
+	public CashIn310[] getCashIn() {
+		return new CashInArray310(cashIn, getCount()).get();
 	}
 }

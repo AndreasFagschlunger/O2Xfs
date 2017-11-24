@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.idc.v3_20;
+package at.o2xfs.xfs.v3_20.idc;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -34,9 +34,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.CHAR;
 import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.idc.v3_00.Form3;
+import at.o2xfs.xfs.v3_00.idc.Form3;
 
-public class Form3_20 extends Form3 {
+public class Form320 extends Form3 {
 
 	protected final LPZZSTR frontTrack1Fields = new LPZZSTR();
 	protected final CHAR fieldSeparatorFrontTrack1 = new CHAR();
@@ -45,7 +45,7 @@ public class Form3_20 extends Form3 {
 	protected final CHAR fieldSeparatorJIS1Track1 = new CHAR();
 	protected final CHAR fieldSeparatorJIS1Track3 = new CHAR();
 
-	protected Form3_20() {
+	protected Form320() {
 		add(frontTrack1Fields);
 		add(fieldSeparatorFrontTrack1);
 		add(jIS1Track1Fields);
@@ -54,18 +54,18 @@ public class Form3_20 extends Form3 {
 		add(fieldSeparatorJIS1Track3);
 	}
 
-	public Form3_20(Pointer p) {
+	public Form320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Form3_20(Form3_20 copy) {
+	public Form320(Form320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Form3_20 copy) {
+	protected void set(Form320 copy) {
 		super.set(copy);
 		frontTrack1Fields.set(copy.getFrontTrack1Fields());
 		fieldSeparatorFrontTrack1.set(copy.getFieldSeparatorFrontTrack1());
@@ -114,16 +114,16 @@ public class Form3_20 extends Form3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Form3_20) {
-			Form3_20 form3_20 = (Form3_20) obj;
+		if (obj instanceof Form320) {
+			Form320 form320 = (Form320) obj;
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
-					.append(getFrontTrack1Fields(), form3_20.getFrontTrack1Fields())
-					.append(getFieldSeparatorFrontTrack1(), form3_20.getFieldSeparatorFrontTrack1())
-					.append(getJIS1Track1Fields(), form3_20.getJIS1Track1Fields())
-					.append(getJIS1Track3Fields(), form3_20.getJIS1Track3Fields())
-					.append(getFieldSeparatorJIS1Track1(), form3_20.getFieldSeparatorJIS1Track1())
-					.append(getFieldSeparatorJIS1Track3(), form3_20.getFieldSeparatorJIS1Track3())
+					.append(getFrontTrack1Fields(), form320.getFrontTrack1Fields())
+					.append(getFieldSeparatorFrontTrack1(), form320.getFieldSeparatorFrontTrack1())
+					.append(getJIS1Track1Fields(), form320.getJIS1Track1Fields())
+					.append(getJIS1Track3Fields(), form320.getJIS1Track3Fields())
+					.append(getFieldSeparatorJIS1Track1(), form320.getFieldSeparatorJIS1Track1())
+					.append(getFieldSeparatorJIS1Track3(), form320.getFieldSeparatorJIS1Track3())
 					.isEquals();
 		}
 		return false;

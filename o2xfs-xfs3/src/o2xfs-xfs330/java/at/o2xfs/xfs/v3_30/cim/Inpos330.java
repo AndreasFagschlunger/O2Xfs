@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,29 +33,29 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.cim.JammedShutterPosition;
-import at.o2xfs.xfs.cim.v3_00.Inpos3;
+import at.o2xfs.xfs.v3_00.cim.Inpos3;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class Inpos3_30 extends Inpos3 {
+public class Inpos330 extends Inpos3 {
 
 	protected final XfsWord<JammedShutterPosition> jammedShutterPosition = new XfsWord<>(JammedShutterPosition.class);
 
-	protected Inpos3_30() {
+	protected Inpos330() {
 		add(jammedShutterPosition);
 	}
 
-	public Inpos3_30(Pointer p) {
+	public Inpos330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Inpos3_30(Inpos3_30 copy) {
+	public Inpos330(Inpos330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Inpos3_30 copy) {
+	protected void set(Inpos330 copy) {
 		super.set(copy);
 		jammedShutterPosition.set(copy.getJammedShutterPosition());
 	}
@@ -71,9 +71,9 @@ public class Inpos3_30 extends Inpos3 {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Inpos3_30) {
-			Inpos3_30 inpos3_30 = (Inpos3_30) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getJammedShutterPosition(), inpos3_30.getJammedShutterPosition()).isEquals();
+		if (obj instanceof Inpos330) {
+			Inpos330 inpos330 = (Inpos330) obj;
+			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getJammedShutterPosition(), inpos330.getJammedShutterPosition()).isEquals();
 		}
 		return false;
 	}

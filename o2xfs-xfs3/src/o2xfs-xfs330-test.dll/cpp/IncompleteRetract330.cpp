@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_30_IncompleteRetract3_30Test.h"
+#include "at_o2xfs_xfs_v3_30_cdm_IncompleteRetract330Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -36,7 +36,7 @@ static WFSCDMITEMNUMBERLIST ItemNumberList;
 static WFSCDMITEMNUMBER ItemNumber[3];
 static LPWFSCDMITEMNUMBER lppItemNumber[3];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_130_IncompleteRetract3_130Test_buildIncompleteRetract3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_IncompleteRetract3130Test_buildIncompleteRetract3130(JNIEnv *env, jobject obj) {
 	ItemNumberList.usNumOfItemNumbers = 3;
 	ItemNumberList.lppItemNumber = lppItemNumber;
 

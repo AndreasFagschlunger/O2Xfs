@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_10;
+package at.o2xfs.xfs.v3_10.cim;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -38,30 +38,30 @@ import at.o2xfs.xfs.cim.AdditionalBunches;
 import at.o2xfs.xfs.cim.Position;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class PositionInfo3_10 extends Struct {
+public class PositionInfo310 extends Struct {
 
 	protected final XfsWord<Position> position = new XfsWord<>(Position.class);
 	protected final XfsWord<AdditionalBunches> additionalBunches = new XfsWord<>(AdditionalBunches.class);
 	protected final USHORT bunchesRemaining = new USHORT();
 
-	protected PositionInfo3_10() {
+	protected PositionInfo310() {
 		add(position);
 		add(additionalBunches);
 		add(bunchesRemaining);
 	}
 
-	public PositionInfo3_10(Pointer p) {
+	public PositionInfo310(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public PositionInfo3_10(PositionInfo3_10 copy) {
+	public PositionInfo310(PositionInfo310 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(PositionInfo3_10 copy) {
+	protected void set(PositionInfo310 copy) {
 		position.set(copy.getPosition());
 		additionalBunches.set(copy.getAdditionalBunches());
 		bunchesRemaining.set(copy.getBunchesRemaining());
@@ -86,10 +86,10 @@ public class PositionInfo3_10 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof PositionInfo3_10) {
-			PositionInfo3_10 positionInfo3_10 = (PositionInfo3_10) obj;
-			return new EqualsBuilder().append(getPosition(), positionInfo3_10.getPosition()).append(getAdditionalBunches(), positionInfo3_10.getAdditionalBunches())
-					.append(getBunchesRemaining(), positionInfo3_10.getBunchesRemaining()).isEquals();
+		if (obj instanceof PositionInfo310) {
+			PositionInfo310 positionInfo310 = (PositionInfo310) obj;
+			return new EqualsBuilder().append(getPosition(), positionInfo310.getPosition()).append(getAdditionalBunches(), positionInfo310.getAdditionalBunches())
+					.append(getBunchesRemaining(), positionInfo310.getBunchesRemaining()).isEquals();
 		}
 		return false;
 	}

@@ -35,7 +35,7 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.idc.IdcMessage;
-import at.o2xfs.xfs.idc.v3_00.CardAction3;
+import at.o2xfs.xfs.v3_00.idc.CardAction3;
 import at.o2xfs.xfs.service.XfsService;
 
 public class IDCService extends XfsService {

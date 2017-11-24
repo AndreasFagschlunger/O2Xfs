@@ -28,14 +28,14 @@
 package at.o2xfs.xfs.service.cdm.xfs3;
 
 import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.cdm.v3_30.AllItemsInfo3_30;
-import at.o2xfs.xfs.cdm.v3_30.GetAllItemsInfo3_30;
+import at.o2xfs.xfs.v3_30.cdm.AllItemsInfo330;
+import at.o2xfs.xfs.v3_30.cdm.GetAllItemsInfo330;
 import at.o2xfs.xfs.service.ReflectiveInfoCommand;
 import at.o2xfs.xfs.service.cdm.CdmService;
 
-public class GetAllItemsInfoCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, AllItemsInfo3_30> {
+public class GetAllItemsInfoCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, AllItemsInfo330> {
 
-	public GetAllItemsInfoCommand(CdmService service, GetAllItemsInfo3_30 getAllItemsInfo) {
-		super(service, CdmInfoCommand.GET_ALL_ITEMS_INFO, getAllItemsInfo, AllItemsInfo3_30.class);
+	public GetAllItemsInfoCommand(CdmService service, GetAllItemsInfo330 getAllItemsInfo) {
+		super(service, CdmInfoCommand.GET_ALL_ITEMS_INFO, getAllItemsInfo, AllItemsInfo330.class);
 	}
 }

@@ -43,7 +43,7 @@ import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.DataSource;
 import at.o2xfs.xfs.idc.IdcExecuteCommand;
 import at.o2xfs.xfs.idc.IdcMessage;
-import at.o2xfs.xfs.idc.v3_00.CardData3;
+import at.o2xfs.xfs.v3_00.idc.CardData3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncCommand;
 import at.o2xfs.xfs.service.cmd.EventQueue;

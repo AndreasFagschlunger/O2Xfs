@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_10;
+package at.o2xfs.xfs.v3_10.cdm;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,15 +34,15 @@ import org.junit.Test;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.xfs.v3_10.BaseXfs3_10Test;
 
-public class PowerSaveChange3_10Test extends BaseXfs3_10Test {
+public class PowerSaveChange310Test extends BaseXfs310Test {
 
 	@Test
 	public final void test() {
-		PowerSaveChange3_10 expected = new PowerSaveChange3_10(buildPowerSaveChange3_10().getPointer());
-		PowerSaveChange3_10 actual = new PowerSaveChange3_10(expected);
+		PowerSaveChange310 expected = new PowerSaveChange310(buildPowerSaveChange310().getPointer());
+		PowerSaveChange310 actual = new PowerSaveChange310(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
 	}
 
-	private native Buffer buildPowerSaveChange3_10();
+	private native Buffer buildPowerSaveChange310();
 }

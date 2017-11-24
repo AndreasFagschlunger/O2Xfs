@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cim.v3_30;
+package at.o2xfs.xfs.v3_30.cim;
 
 import java.util.Optional;
 
@@ -38,30 +38,30 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class Blacklist3_30 extends Struct {
+public class Blacklist330 extends Struct {
 
 	protected final LPWSTR version = new LPWSTR();
 	protected final USHORT count = new USHORT();
 	protected final Pointer blacklistElements = new Pointer();
 
-	protected Blacklist3_30() {
+	protected Blacklist330() {
 		add(version);
 		add(count);
 		add(blacklistElements);
 	}
 
-	public Blacklist3_30(Pointer p) {
+	public Blacklist330(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public Blacklist3_30(Blacklist3_30 copy) {
+	public Blacklist330(Blacklist330 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	protected void set(Blacklist3_30 copy) {
+	protected void set(Blacklist330 copy) {
 		Optional<String> version = copy.getVersion();
 		if (version.isPresent()) {
 			this.version.set(copy.getVersion().get());
@@ -78,7 +78,7 @@ public class Blacklist3_30 extends Struct {
 		return count.get();
 	}
 
-	public BlacklistElement3_30[] getBlacklistElements() {
+	public BlacklistElement330[] getBlacklistElements() {
 		return new BlacklistElementArray(blacklistElements, getCount()).get();
 	}
 
@@ -89,10 +89,10 @@ public class Blacklist3_30 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Blacklist3_30) {
-			Blacklist3_30 blacklist3_30 = (Blacklist3_30) obj;
-			return new EqualsBuilder().append(getVersion(), blacklist3_30.getVersion()).append(getCount(), blacklist3_30.getCount())
-					.append(getBlacklistElements(), blacklist3_30.getBlacklistElements()).isEquals();
+		if (obj instanceof Blacklist330) {
+			Blacklist330 blacklist330 = (Blacklist330) obj;
+			return new EqualsBuilder().append(getVersion(), blacklist330.getVersion()).append(getCount(), blacklist330.getCount())
+					.append(getBlacklistElements(), blacklist330.getBlacklistElements()).isEquals();
 		}
 		return false;
 	}

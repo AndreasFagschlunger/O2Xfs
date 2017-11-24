@@ -27,10 +27,10 @@
 
 package at.o2xfs.xfs.service.cdm.xfs3;
 
-import at.o2xfs.xfs.cdm.v3_30.ItemInfoSummary3_30;
+import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 
 public interface InfoAvailableListener {
 
-	void onInfoAvailable(ItemInfoSummary3_30 itemInfoSummary);
+	void onInfoAvailable(ItemInfoSummary330 itemInfoSummary);
 
 }

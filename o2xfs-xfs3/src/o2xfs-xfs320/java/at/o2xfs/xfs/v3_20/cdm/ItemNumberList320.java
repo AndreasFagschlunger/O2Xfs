@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.cdm.v3_20;
+package at.o2xfs.xfs.v3_20.cdm;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -35,38 +35,38 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 
-public class ItemNumberList3_20 extends Struct {
+public class ItemNumberList320 extends Struct {
 
 	protected final USHORT numOfItemNumbers = new USHORT();
 	protected final Pointer itemNumber = new Pointer();
 
-	public ItemNumberList3_20() {
+	public ItemNumberList320() {
 		add(numOfItemNumbers);
 		add(itemNumber);
 	}
 
-	public ItemNumberList3_20(Pointer p) {
+	public ItemNumberList320(Pointer p) {
 		this();
 		assignBuffer(p);
 	}
 
-	public ItemNumberList3_20(ItemNumberList3_20 copy) {
+	public ItemNumberList320(ItemNumberList320 copy) {
 		this();
 		allocate();
 		set(copy);
 	}
 
-	public void set(ItemNumberList3_20 copy) {
+	public void set(ItemNumberList320 copy) {
 		numOfItemNumbers.set(copy.getNumOfItemNumbers());
-		itemNumber.pointTo(new ItemNumbers3_20(copy.getItemNumber()));
+		itemNumber.pointTo(new ItemNumbers320(copy.getItemNumber()));
 	}
 
 	public int getNumOfItemNumbers() {
 		return numOfItemNumbers.get();
 	}
 
-	public ItemNumber3_20[] getItemNumber() {
-		return new ItemNumbers3_20(itemNumber, getNumOfItemNumbers()).get();
+	public ItemNumber320[] getItemNumber() {
+		return new ItemNumbers320(itemNumber, getNumOfItemNumbers()).get();
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class ItemNumberList3_20 extends Struct {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ItemNumberList3_20) {
-			ItemNumberList3_20 itemNumberList = (ItemNumberList3_20) obj;
+		if (obj instanceof ItemNumberList320) {
+			ItemNumberList320 itemNumberList = (ItemNumberList320) obj;
 			return new EqualsBuilder().append(getNumOfItemNumbers(), itemNumberList.getNumOfItemNumbers()).append(getItemNumber(), itemNumberList.getItemNumber()).isEquals();
 		}
 		return false;

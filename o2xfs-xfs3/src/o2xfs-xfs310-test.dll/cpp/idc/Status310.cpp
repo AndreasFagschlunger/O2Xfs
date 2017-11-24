@@ -1,4 +1,4 @@
-#include "idc/at_o2xfs_xfs_idc_v3_10_Status3_10Test.h"
+#include "idc/at_o2xfs_xfs_v3_10_idc_Status310Test.h"
 
 #include <Windows.h>
 #include <XFSIDC.H>
@@ -7,7 +7,7 @@
 static WFSIDCSTATUS Status;
 static LPSTR lpszExtra = "0=Normal Operation\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_idc_v3_110_Status3_110Test_buildStatus3_110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_idc_Status3110Test_buildStatus3110(JNIEnv *env, jobject obj) {
 	Status.fwDevice = WFS_IDC_DEVONLINE;
 	Status.fwMedia = WFS_IDC_MEDIANOTPRESENT;
 	Status.fwRetainBin = WFS_IDC_RETAINBINOK;

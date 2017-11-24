@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "at_o2xfs_xfs_cdm_v3_30_Blacklist3_30Test.h"
+#include "at_o2xfs_xfs_v3_30_cdm_Blacklist330Test.h"
 
 #include <Windows.h>
 #include <XFSCDM.H>
@@ -37,7 +37,7 @@ static WFSCDMBLACKLISTELEMENT BlacklistElements[2];
 static LPWFSCDMBLACKLISTELEMENT lppBlacklistElements[2];
 static LPWSTR SerialNumber[] = { L"123", L"456" };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cdm_v3_130_Blacklist3_130Test_buildBlacklist3_130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_Blacklist3130Test_buildBlacklist3130(JNIEnv *env, jobject obj) {
 	Blacklist.lpszVersion = Version;
 	Blacklist.usCount = 2;
 	Blacklist.lppBlacklistElements = lppBlacklistElements;

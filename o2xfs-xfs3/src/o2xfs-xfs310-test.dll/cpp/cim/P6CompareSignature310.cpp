@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "cim/at_o2xfs_xfs_cim_v3_10_P6CompareSignature3_10Test.h"
+#include "cim/at_o2xfs_xfs_v3_10_cim_P6CompareSignature310Test.h"
 
 #include <Windows.h>
 #include <XFSCIM.H>
@@ -37,7 +37,7 @@ LPWFSCIMP6SIGNATURE lpP6ReferenceSignatures[2];
 LPWFSCIMP6SIGNATURE lpP6Signatures[2];
 char *lpSignature[] = { "ABC", "DEF" };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_cim_v3_110_P6CompareSignature3_110Test_buildP6CompareSignature3_110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_P6CompareSignature3110Test_buildP6CompareSignature3110(JNIEnv *env, jobject obj) {
 	P6Signatures[0].usNoteId = 1;
 	P6Signatures[0].ulLength = strlen(lpSignature[0]);
 	P6Signatures[0].dwOrientation = WFS_CIM_ORFRONTTOP;

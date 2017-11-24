@@ -34,36 +34,36 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cim.CimInfoCommand;
-import at.o2xfs.xfs.cim.v3_10.GetItemInfo3_10;
-import at.o2xfs.xfs.cim.v3_10.ItemInfo3_10;
+import at.o2xfs.xfs.v3_10.cim.GetItemInfo310;
+import at.o2xfs.xfs.v3_10.cim.ItemInfo310;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cim.CimFactory;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.cmd.XfsCallable;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 
-public final class GetItemInfoCommand implements Callable<ItemInfo3_10> {
+public final class GetItemInfoCommand implements Callable<ItemInfo310> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(GetItemInfoCommand.class);
 
 	private final CimService cimService;
 
-	private final GetItemInfo3_10 itemInfo;
+	private final GetItemInfo310 itemInfo;
 
-	public GetItemInfoCommand(CimService cimService, GetItemInfo3_10 itemInfo) {
+	public GetItemInfoCommand(CimService cimService, GetItemInfo310 itemInfo) {
 		this.cimService = cimService;
 		this.itemInfo = itemInfo;
 	}
 
 	@Override
-	public ItemInfo3_10 call() throws XfsException {
-		ItemInfo3_10 result;
+	public ItemInfo310 call() throws XfsException {
+		ItemInfo310 result;
 		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService,
 				CimInfoCommand.GET_ITEM_INFO, itemInfo);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
-			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), ItemInfo3_10.class);
+			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), ItemInfo310.class);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);
 			}
