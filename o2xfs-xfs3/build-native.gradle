@@ -40,21 +40,21 @@ task 'javah-xfs3'(type:Exec) {
                 'at.o2xfs.xfs.v3_00.WfsHardwareError3Test',
                 'at.o2xfs.xfs.v3_00.WfsUndeliverableMessageTest',
                 'at.o2xfs.xfs.v3_00.WfsVersionErrorTest',
-                'at.o2xfs.xfs.cdm.v3_00.Calibrate3Test',
-                'at.o2xfs.xfs.cdm.v3_00.CashUnitError3Test',
-                'at.o2xfs.xfs.cdm.v3_00.CashUnitInfo3Test',
-                'at.o2xfs.xfs.cdm.v3_00.CdmCaps3Test',
-                'at.o2xfs.xfs.cdm.v3_00.CdmStatus3Test',
-                'at.o2xfs.xfs.cdm.v3_00.Count3Test',
-                'at.o2xfs.xfs.cdm.v3_00.CountsChanged3Test',
-                'at.o2xfs.xfs.cdm.v3_00.CurrencyExp3Test',
-                'at.o2xfs.xfs.cdm.v3_00.Denominate3Test',
-                'at.o2xfs.xfs.cdm.v3_00.Dispense3Test',
-                'at.o2xfs.xfs.cdm.v3_00.MixTable3Test',
-                'at.o2xfs.xfs.cdm.v3_00.MixType3Test',
-                'at.o2xfs.xfs.cdm.v3_00.PresentStatus3Test',
-                'at.o2xfs.xfs.cdm.v3_00.StartEx3Test',
-                'at.o2xfs.xfs.cdm.v3_00.TellerDetails3Test'
+                'at.o2xfs.xfs.v3_00.cdm.Calibrate3Test',
+                'at.o2xfs.xfs.v3_00.cdm.CashUnitError3Test',
+                'at.o2xfs.xfs.v3_00.cdm.CashUnitInfo3Test',
+                'at.o2xfs.xfs.v3_00.cdm.CdmCaps3Test',
+                'at.o2xfs.xfs.v3_00.cdm.CdmStatus3Test',
+                'at.o2xfs.xfs.v3_00.cdm.Count3Test',
+                'at.o2xfs.xfs.v3_00.cdm.CountsChanged3Test',
+                'at.o2xfs.xfs.v3_00.cdm.CurrencyExp3Test',
+                'at.o2xfs.xfs.v3_00.cdm.Denominate3Test',
+                'at.o2xfs.xfs.v3_00.cdm.Dispense3Test',
+                'at.o2xfs.xfs.v3_00.cdm.MixTable3Test',
+                'at.o2xfs.xfs.v3_00.cdm.MixType3Test',
+                'at.o2xfs.xfs.v3_00.cdm.PresentStatus3Test',
+                'at.o2xfs.xfs.v3_00.cdm.StartEx3Test',
+                'at.o2xfs.xfs.v3_00.cdm.TellerDetails3Test'
 }
 
 task 'javah-xfs3-cim'(type:Exec) {
@@ -63,23 +63,23 @@ task 'javah-xfs3-cim'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs3-test.dll/headers/cim'),
-                'at.o2xfs.xfs.cim.v3_00.Capabilities3Test',
-                'at.o2xfs.xfs.cim.v3_00.CashInfo3Test',
-                'at.o2xfs.xfs.cim.v3_00.CashInStart3Test',
-                'at.o2xfs.xfs.cim.v3_00.CashInStatus3Test',
-                'at.o2xfs.xfs.cim.v3_00.CashInType3Test',
-                'at.o2xfs.xfs.cim.v3_00.CashUnitError3Test',
-                'at.o2xfs.xfs.cim.v3_00.CountsChanged3Test',
-                'at.o2xfs.xfs.cim.v3_00.CurrencyExp3Test',
-                'at.o2xfs.xfs.cim.v3_00.GetP6Signature3Test',
-                'at.o2xfs.xfs.cim.v3_00.ItemPosition3Test',
-                'at.o2xfs.xfs.cim.v3_00.NoteTypeList3Test',
-                'at.o2xfs.xfs.cim.v3_00.P6Info3Test',
-                'at.o2xfs.xfs.cim.v3_00.P6Signature3Test',
-                'at.o2xfs.xfs.cim.v3_00.StartEx3Test',
-                'at.o2xfs.xfs.cim.v3_00.Status3Test',
-                'at.o2xfs.xfs.cim.v3_00.TellerInfo3Test',
-                'at.o2xfs.xfs.cim.v3_00.TellerUpdate3Test'
+                'at.o2xfs.xfs.v3_00.cim.Capabilities3Test',
+                'at.o2xfs.xfs.v3_00.cim.CashInfo3Test',
+                'at.o2xfs.xfs.v3_00.cim.CashInStart3Test',
+                'at.o2xfs.xfs.v3_00.cim.CashInStatus3Test',
+                'at.o2xfs.xfs.v3_00.cim.CashInType3Test',
+                'at.o2xfs.xfs.v3_00.cim.CashUnitError3Test',
+                'at.o2xfs.xfs.v3_00.cim.CountsChanged3Test',
+                'at.o2xfs.xfs.v3_00.cim.CurrencyExp3Test',
+                'at.o2xfs.xfs.v3_00.cim.GetP6Signature3Test',
+                'at.o2xfs.xfs.v3_00.cim.ItemPosition3Test',
+                'at.o2xfs.xfs.v3_00.cim.NoteTypeList3Test',
+                'at.o2xfs.xfs.v3_00.cim.P6Info3Test',
+                'at.o2xfs.xfs.v3_00.cim.P6Signature3Test',
+                'at.o2xfs.xfs.v3_00.cim.StartEx3Test',
+                'at.o2xfs.xfs.v3_00.cim.Status3Test',
+                'at.o2xfs.xfs.v3_00.cim.TellerInfo3Test',
+                'at.o2xfs.xfs.v3_00.cim.TellerUpdate3Test'
 }
 
 task 'javah-xfs3-idc'(type:Exec) {
@@ -88,18 +88,18 @@ task 'javah-xfs3-idc'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs3-test.dll/headers/idc'),
-                 'at.o2xfs.xfs.idc.v3_00.Capabilities3Test',
-                 'at.o2xfs.xfs.idc.v3_00.CardAction3Test',
-                 'at.o2xfs.xfs.idc.v3_00.CardData3Test',
-                 'at.o2xfs.xfs.idc.v3_00.ChipIo3Test',
-                 'at.o2xfs.xfs.idc.v3_00.ChipPowerOut3Test',
-                 'at.o2xfs.xfs.idc.v3_00.Form3Test',
-                 'at.o2xfs.xfs.idc.v3_00.ParseData3Test',
-                 'at.o2xfs.xfs.idc.v3_00.RetainCard3Test',
-                 'at.o2xfs.xfs.idc.v3_00.Setkey3Test',
-                 'at.o2xfs.xfs.idc.v3_00.Status3Test',
-                 'at.o2xfs.xfs.idc.v3_00.TrackEvent3Test',
-                 'at.o2xfs.xfs.idc.v3_00.WriteTrack3Test'
+                 'at.o2xfs.xfs.v3_00.idc.Capabilities3Test',
+                 'at.o2xfs.xfs.v3_00.idc.CardAction3Test',
+                 'at.o2xfs.xfs.v3_00.idc.CardData3Test',
+                 'at.o2xfs.xfs.v3_00.idc.ChipIo3Test',
+                 'at.o2xfs.xfs.v3_00.idc.ChipPowerOut3Test',
+                 'at.o2xfs.xfs.v3_00.idc.Form3Test',
+                 'at.o2xfs.xfs.v3_00.idc.ParseData3Test',
+                 'at.o2xfs.xfs.v3_00.idc.RetainCard3Test',
+                 'at.o2xfs.xfs.v3_00.idc.Setkey3Test',
+                 'at.o2xfs.xfs.v3_00.idc.Status3Test',
+                 'at.o2xfs.xfs.v3_00.idc.TrackEvent3Test',
+                 'at.o2xfs.xfs.v3_00.idc.WriteTrack3Test'
 }
 
 task 'javah-xfs310'(type:Exec) {
@@ -108,15 +108,15 @@ task 'javah-xfs310'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs310-test.dll/headers'),
-                'at.o2xfs.xfs.cdm.v3_10.CashUnit3_10Test',
-                'at.o2xfs.xfs.cdm.v3_10.CashUnitError3_10Test',
-                'at.o2xfs.xfs.cdm.v3_10.CdmCaps3_10Test',
-                'at.o2xfs.xfs.cdm.v3_10.CdmStatus3_10Test',
-                'at.o2xfs.xfs.cdm.v3_10.DevicePosition3_10Test',
-                'at.o2xfs.xfs.cdm.v3_10.PowerSaveChange3_10Test',
-                'at.o2xfs.xfs.cdm.v3_10.PowerSaveControl3_10Test',
-                'at.o2xfs.xfs.cdm.v3_10.PrepareDispense3_10Test',
-                'at.o2xfs.xfs.cdm.v3_10.SetGuidLight3_10Test'
+                'at.o2xfs.xfs.v3_10.cdm.CashUnit310Test',
+                'at.o2xfs.xfs.v3_10.cdm.CashUnitError310Test',
+                'at.o2xfs.xfs.v3_10.cdm.CdmCaps310Test',
+                'at.o2xfs.xfs.v3_10.cdm.CdmStatus310Test',
+                'at.o2xfs.xfs.v3_10.cdm.DevicePosition310Test',
+                'at.o2xfs.xfs.v3_10.cdm.PowerSaveChange310Test',
+                'at.o2xfs.xfs.v3_10.cdm.PowerSaveControl310Test',
+                'at.o2xfs.xfs.v3_10.cdm.PrepareDispense310Test',
+                'at.o2xfs.xfs.v3_10.cdm.SetGuidLight310Test'
 }
 
 
@@ -126,7 +126,7 @@ task 'javah-xfs310-bcr'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs310-test.dll/headers/bcr'),
-                'at.o2xfs.xfs.bcr.v3_10.Capabilities3_10Test'
+                'at.o2xfs.xfs.v3_10.bcr.Capabilities310Test'
 }
 
 
@@ -136,22 +136,22 @@ task 'javah-xfs310-cim'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs310-test.dll/headers/cim'),
-                'at.o2xfs.xfs.cim.v3_10.Capabilities3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.CashIn3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.ConfigureNoteReader3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.ConfigureNoteReaderOut3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.DevicePosition3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.GetItemInfo3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.ItemInfo3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.ItemInfoSummary3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.P6CompareResult3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.P6CompareSignature3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.PositionCapabilities3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.PositionInfo3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.PowerSaveChange3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.PowerSaveControl3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.SetGuidLight3_10Test',
-                'at.o2xfs.xfs.cim.v3_10.Status3_10Test'
+                'at.o2xfs.xfs.v3_10.cim.Capabilities310Test',
+                'at.o2xfs.xfs.v3_10.cim.CashIn310Test',
+                'at.o2xfs.xfs.v3_10.cim.ConfigureNoteReader310Test',
+                'at.o2xfs.xfs.v3_10.cim.ConfigureNoteReaderOut310Test',
+                'at.o2xfs.xfs.v3_10.cim.DevicePosition310Test',
+                'at.o2xfs.xfs.v3_10.cim.GetItemInfo310Test',
+                'at.o2xfs.xfs.v3_10.cim.ItemInfo310Test',
+                'at.o2xfs.xfs.v3_10.cim.ItemInfoSummary310Test',
+                'at.o2xfs.xfs.v3_10.cim.P6CompareResult310Test',
+                'at.o2xfs.xfs.v3_10.cim.P6CompareSignature310Test',
+                'at.o2xfs.xfs.v3_10.cim.PositionCapabilities310Test',
+                'at.o2xfs.xfs.v3_10.cim.PositionInfo310Test',
+                'at.o2xfs.xfs.v3_10.cim.PowerSaveChange310Test',
+                'at.o2xfs.xfs.v3_10.cim.PowerSaveControl310Test',
+                'at.o2xfs.xfs.v3_10.cim.SetGuidLight310Test',
+                'at.o2xfs.xfs.v3_10.cim.Status310Test'
 }
 
 task 'javah-xfs310-idc'(type:Exec) {
@@ -160,14 +160,14 @@ task 'javah-xfs310-idc'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs310-test.dll/headers/idc'),
-                'at.o2xfs.xfs.idc.v3_10.Capabilities3_10Test',
-                'at.o2xfs.xfs.idc.v3_10.DevicePosition3_10Test',
-                'at.o2xfs.xfs.idc.v3_10.EjectCard3_10Test',
-                'at.o2xfs.xfs.idc.v3_10.InterfaceModuleIdentifier3_10Test',
-                'at.o2xfs.xfs.idc.v3_10.PowerSaveChange3_10Test',
-                'at.o2xfs.xfs.idc.v3_10.PowerSaveControl3_10Test',
-                'at.o2xfs.xfs.idc.v3_10.SetGuidlight3_10Test',
-                'at.o2xfs.xfs.idc.v3_10.Status3_10Test'
+                'at.o2xfs.xfs.v3_10.idc.Capabilities310Test',
+                'at.o2xfs.xfs.v3_10.idc.DevicePosition310Test',
+                'at.o2xfs.xfs.v3_10.idc.EjectCard310Test',
+                'at.o2xfs.xfs.v3_10.idc.InterfaceModuleIdentifier310Test',
+                'at.o2xfs.xfs.v3_10.idc.PowerSaveChange310Test',
+                'at.o2xfs.xfs.v3_10.idc.PowerSaveControl310Test',
+                'at.o2xfs.xfs.v3_10.idc.SetGuidlight310Test',
+                'at.o2xfs.xfs.v3_10.idc.Status310Test'
 }
 
 task 'javah-xfs320'(type:Exec) {
@@ -176,9 +176,9 @@ task 'javah-xfs320'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs320-test.dll/headers'),
-                'at.o2xfs.xfs.cdm.v3_20.CdmCaps3_20Test',
-                'at.o2xfs.xfs.cdm.v3_20.CdmStatus3_20Test',
-                'at.o2xfs.xfs.cdm.v3_20.ItemNumberList3_20Test'
+                'at.o2xfs.xfs.v3_20.cdm.CdmCaps320Test',
+                'at.o2xfs.xfs.v3_20.cdm.CdmStatus320Test',
+                'at.o2xfs.xfs.v3_20.cdm.ItemNumberList320Test'
 }
 
 task 'javah-xfs320-cim'(type:Exec) {
@@ -187,21 +187,21 @@ task 'javah-xfs320-cim'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs320-test.dll/headers/cim'),
-                'at.o2xfs.xfs.cim.v3_20.Capabilities3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.CashCapabilities3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.CashInLimit3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.Count3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.DeviceLockControl3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.DeviceLockStatus3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.IncompleteReplenish3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.PositionCapability3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.Present3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.Replenish3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.ReplenishInfo3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.ReplenishInfoResult3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.ReplenishResult3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.SetMode3_20Test',
-                'at.o2xfs.xfs.cim.v3_20.Status3_20Test'
+                'at.o2xfs.xfs.v3_20.cim.Capabilities320Test',
+                'at.o2xfs.xfs.v3_20.cim.CashCapabilities320Test',
+                'at.o2xfs.xfs.v3_20.cim.CashInLimit320Test',
+                'at.o2xfs.xfs.v3_20.cim.Count320Test',
+                'at.o2xfs.xfs.v3_20.cim.DeviceLockControl320Test',
+                'at.o2xfs.xfs.v3_20.cim.DeviceLockStatus320Test',
+                'at.o2xfs.xfs.v3_20.cim.IncompleteReplenish320Test',
+                'at.o2xfs.xfs.v3_20.cim.PositionCapability320Test',
+                'at.o2xfs.xfs.v3_20.cim.Present320Test',
+                'at.o2xfs.xfs.v3_20.cim.Replenish320Test',
+                'at.o2xfs.xfs.v3_20.cim.ReplenishInfo320Test',
+                'at.o2xfs.xfs.v3_20.cim.ReplenishInfoResult320Test',
+                'at.o2xfs.xfs.v3_20.cim.ReplenishResult320Test',
+                'at.o2xfs.xfs.v3_20.cim.SetMode320Test',
+                'at.o2xfs.xfs.v3_20.cim.Status320Test'
 }
 
 task 'javah-xfs320-idc'(type:Exec) {
@@ -210,11 +210,11 @@ task 'javah-xfs320-idc'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs320-test.dll/headers/idc'),
-                'at.o2xfs.xfs.idc.v3_20.Capabilities3_20Test',
-                'at.o2xfs.xfs.idc.v3_20.Form3_20Test',
-                'at.o2xfs.xfs.idc.v3_20.ParkCard3_20Test',
-                'at.o2xfs.xfs.idc.v3_20.Status3_20Test',
-                'at.o2xfs.xfs.idc.v3_20.TrackDetected3_20Test'
+                'at.o2xfs.xfs.v3_20.idc.Capabilities320Test',
+                'at.o2xfs.xfs.v3_20.idc.Form320Test',
+                'at.o2xfs.xfs.v3_20.idc.ParkCard320Test',
+                'at.o2xfs.xfs.v3_20.idc.Status320Test',
+                'at.o2xfs.xfs.v3_20.idc.TrackDetected320Test'
 }
 
 task 'javah-xfs330'(type:Exec) {
@@ -223,16 +223,16 @@ task 'javah-xfs330'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs330-test.dll/headers'),
-                'at.o2xfs.xfs.cdm.v3_30.AllItemsInfo3_30Test',
-                'at.o2xfs.xfs.cdm.v3_30.Blacklist3_30Test',
-                'at.o2xfs.xfs.cdm.v3_30.CdmCaps3_30Test',
-                'at.o2xfs.xfs.cdm.v3_30.GetAllItemsInfo3_30Test',
-                'at.o2xfs.xfs.cdm.v3_30.GetItemInfo3_30Test',
-                'at.o2xfs.xfs.cdm.v3_30.IncompleteRetract3_30Test',
-                'at.o2xfs.xfs.cdm.v3_30.ItemInfo3_30Test',
-                'at.o2xfs.xfs.cdm.v3_30.ItemInfoSummary3_30Test',
-                'at.o2xfs.xfs.cdm.v3_30.ShutterStatusChanged3_30Test',
-                'at.o2xfs.xfs.cdm.v3_30.SynchronizeCommand3_30Test'
+                'at.o2xfs.xfs.v3_30.cdm.AllItemsInfo330Test',
+                'at.o2xfs.xfs.v3_30.cdm.Blacklist330Test',
+                'at.o2xfs.xfs.v3_30.cdm.CdmCaps330Test',
+                'at.o2xfs.xfs.v3_30.cdm.GetAllItemsInfo330Test',
+                'at.o2xfs.xfs.v3_30.cdm.GetItemInfo330Test',
+                'at.o2xfs.xfs.v3_30.cdm.IncompleteRetract330Test',
+                'at.o2xfs.xfs.v3_30.cdm.ItemInfo330Test',
+                'at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330Test',
+                'at.o2xfs.xfs.v3_30.cdm.ShutterStatusChanged330Test',
+                'at.o2xfs.xfs.v3_30.cdm.SynchronizeCommand330Test'
 }
 
 task 'javah-xfs330-cim'(type:Exec) {
@@ -241,19 +241,19 @@ task 'javah-xfs330-cim'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs330-test.dll/headers/cim'),
-                'at.o2xfs.xfs.cim.v3_30.AllItemsInfo3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.Blacklist3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.Capabilities3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.Deplete3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.DepleteInfo3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.DepleteInfoResult3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.DepleteResult3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.GetAllItemsInfo3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.IncompleteDeplete3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.Inpos3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.ItemInfo3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.ShutterStatusChanged3_30Test',
-                'at.o2xfs.xfs.cim.v3_30.SynchronizeCommand3_30Test'
+                'at.o2xfs.xfs.v3_30.cim.AllItemsInfo330Test',
+                'at.o2xfs.xfs.v3_30.cim.Blacklist330Test',
+                'at.o2xfs.xfs.v3_30.cim.Capabilities330Test',
+                'at.o2xfs.xfs.v3_30.cim.Deplete330Test',
+                'at.o2xfs.xfs.v3_30.cim.DepleteInfo330Test',
+                'at.o2xfs.xfs.v3_30.cim.DepleteInfoResult330Test',
+                'at.o2xfs.xfs.v3_30.cim.DepleteResult330Test',
+                'at.o2xfs.xfs.v3_30.cim.GetAllItemsInfo330Test',
+                'at.o2xfs.xfs.v3_30.cim.IncompleteDeplete330Test',
+                'at.o2xfs.xfs.v3_30.cim.Inpos330Test',
+                'at.o2xfs.xfs.v3_30.cim.ItemInfo330Test',
+                'at.o2xfs.xfs.v3_30.cim.ShutterStatusChanged330Test',
+                'at.o2xfs.xfs.v3_30.cim.SynchronizeCommand330Test'
 }
 
 task 'javah-xfs330-idc'(type:Exec) {
@@ -262,13 +262,13 @@ task 'javah-xfs330-idc'(type:Exec) {
                 "${file('bin')};${file('../at.o2xfs.win32/bin')}",
                 '-d',
                 file('src/o2xfs-xfs330-test.dll/headers/idc'),
-                'at.o2xfs.xfs.idc.v3_30.AppData3_30Test',
-                'at.o2xfs.xfs.idc.v3_30.Capabilities3_30Test',
-                'at.o2xfs.xfs.idc.v3_30.EmvClessConfigData3_30Test',
-                'at.o2xfs.xfs.idc.v3_30.EmvClessReadStatus3_30Test',
-                'at.o2xfs.xfs.idc.v3_30.EmvClessTxData3_30Test',
-                'at.o2xfs.xfs.idc.v3_30.EmvClessTxDataOutput3_30Test',
-                'at.o2xfs.xfs.idc.v3_30.SynchronizeCommand3_30Test'
+                'at.o2xfs.xfs.v3_30.idc.AppData330Test',
+                'at.o2xfs.xfs.v3_30.idc.Capabilities330Test',
+                'at.o2xfs.xfs.v3_30.idc.EmvClessConfigData330Test',
+                'at.o2xfs.xfs.v3_30.idc.EmvClessReadStatus330Test',
+                'at.o2xfs.xfs.v3_30.idc.EmvClessTxData330Test',
+                'at.o2xfs.xfs.v3_30.idc.EmvClessTxDataOutput330Test',
+                'at.o2xfs.xfs.v3_30.idc.SynchronizeCommand330Test'
 }
 
 task javah
