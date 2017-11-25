@@ -277,6 +277,7 @@ javah.doLast {
     tasks.getByName('javah-xfs3-cim').execute()
     tasks.getByName('javah-xfs3-idc').execute()
     tasks.getByName('javah-xfs310').execute()
+    tasks.getByName('javah-xfs310-bcr').execute()
     tasks.getByName('javah-xfs310-cim').execute()
     tasks.getByName('javah-xfs310-idc').execute()
     tasks.getByName('javah-xfs320').execute()
