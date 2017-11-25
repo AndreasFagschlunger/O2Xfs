@@ -33,7 +33,7 @@
 
 static WFSCDMSHUTTERSTATUSCHANGED ShutterStatusChanged;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_ShutterStatusChanged3130Test_buildShutterStatusChanged3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_ShutterStatusChanged330Test_buildShutterStatusChanged330(JNIEnv *env, jobject obj) {
 	ShutterStatusChanged.fwPosition = WFS_CDM_POSFRONT;
 	ShutterStatusChanged.fwShutter = WFS_CDM_SHTJAMMED;
 	return NewBuffer(env, &ShutterStatusChanged, sizeof(WFSCDMSHUTTERSTATUSCHANGED));

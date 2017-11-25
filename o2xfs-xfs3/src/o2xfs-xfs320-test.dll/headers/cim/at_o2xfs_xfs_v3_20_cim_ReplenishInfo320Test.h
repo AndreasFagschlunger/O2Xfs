@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildReplenishInfo320
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_ReplenishInfo3120Test_buildReplenishInfo3120
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_ReplenishInfo320Test_buildReplenishInfo320
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

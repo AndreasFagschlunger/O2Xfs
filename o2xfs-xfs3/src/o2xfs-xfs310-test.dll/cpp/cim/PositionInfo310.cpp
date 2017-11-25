@@ -33,7 +33,7 @@
 
 WFSCIMPOSITIONINFO PositionInfo;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_PositionInfo3110Test_buildPositionInfo3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_PositionInfo310Test_buildPositionInfo310(JNIEnv *env, jobject obj) {
 	PositionInfo.wPosition = WFS_CIM_POSINFRONT;
 	PositionInfo.wAdditionalBunches = WFS_CIM_ADDBUNCHONEMORE;
 	PositionInfo.usBunchesRemaining = 1;

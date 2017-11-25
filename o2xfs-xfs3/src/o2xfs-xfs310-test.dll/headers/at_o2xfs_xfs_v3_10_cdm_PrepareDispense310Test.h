@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildPrepareDispense310
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_PrepareDispense3110Test_buildPrepareDispense3110
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_PrepareDispense310Test_buildPrepareDispense310
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

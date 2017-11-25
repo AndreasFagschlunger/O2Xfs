@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildConfigureNoteReader310
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_ConfigureNoteReader3110Test_buildConfigureNoteReader3110
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_ConfigureNoteReader310Test_buildConfigureNoteReader310
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

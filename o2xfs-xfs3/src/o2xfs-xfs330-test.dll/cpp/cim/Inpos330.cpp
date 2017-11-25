@@ -33,7 +33,7 @@
 
 static WFSCIMINPOS Position;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_Inpos3130Test_buildInpos3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_Inpos330Test_buildInpos330(JNIEnv *env, jobject obj) {
 	Position.fwPosition = WFS_CIM_POSINFRONT;
 	Position.fwShutter = WFS_CIM_SHTCLOSED;
 	Position.fwPositionStatus = WFS_CIM_PSEMPTY;

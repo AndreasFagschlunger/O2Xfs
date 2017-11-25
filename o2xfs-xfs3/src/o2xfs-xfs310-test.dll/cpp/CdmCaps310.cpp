@@ -34,7 +34,7 @@
 static WFSCDMCAPS caps;
 static LPSTR lpszExtra = "Key1=Value1\0Key2=Value2\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CdmCaps3110Test_buildCdmCaps3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CdmCaps310Test_buildCdmCaps310(JNIEnv *env, jobject obj) {
 	caps.wClass = WFS_SERVICE_CLASS_CDM;
 	caps.fwType = WFS_CDM_SELFSERVICEBILL;
 	caps.wMaxDispenseItems = 40;

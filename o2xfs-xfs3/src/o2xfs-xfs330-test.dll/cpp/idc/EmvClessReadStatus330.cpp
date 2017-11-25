@@ -10,7 +10,7 @@ static LPSTR Value = "100";
 static LPSTR CurrencyCode = "EUR";
 static LPSTR LanguagePreferenceData = "deen";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_EmvClessReadStatus3130Test_buildEmvClessReadStatus3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_EmvClessReadStatus330Test_buildEmvClessReadStatus330(JNIEnv *env, jobject obj) {
 	ClessUI.wMessageId = 0;
 	ClessUI.wStatus = WFS_IDC_CLESS_PROCESSING;
 	ClessUI.ulHoldTime = 10;

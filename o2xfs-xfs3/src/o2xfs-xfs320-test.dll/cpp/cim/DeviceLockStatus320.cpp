@@ -36,7 +36,7 @@ static WFSCIMCASHUNITLOCK CashUnitLock[1];
 static LPWFSCIMCASHUNITLOCK lpCashUnitLock[2];
 static LPSTR lpPhysicalPositionName = "COMPARTMENT2";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_DeviceLockStatus3120Test_buildDeviceLockStatus3120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_DeviceLockStatus320Test_buildDeviceLockStatus320(JNIEnv *env, jobject obj) {
 	DevLockStatus.wDeviceLockStatus = WFS_CIM_LOCK;
 	DevLockStatus.lppCashUnitLock = lpCashUnitLock;
 	lpCashUnitLock[0] = &CashUnitLock[0];

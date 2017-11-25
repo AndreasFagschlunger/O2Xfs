@@ -6,7 +6,7 @@
 
 static WFSIDCPARKCARD ParkCard;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_idc_ParkCard3120Test_buildParkCard3120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_idc_ParkCard320Test_buildParkCard320(JNIEnv *env, jobject obj) {
 	ParkCard.wDirection = WFS_IDC_PARK_IN;
 	ParkCard.usParkingStation = 1;	
 	return NewBuffer(env, &ParkCard, sizeof(WFSIDCPARKCARD));

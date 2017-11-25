@@ -33,7 +33,7 @@
 
 static WFSCDMPREPAREDISPENSE PrepareDispense;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_PrepareDispense3110Test_buildPrepareDispense3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_PrepareDispense310Test_buildPrepareDispense310(JNIEnv *env, jobject obj) {
 	PrepareDispense.wAction = WFS_CDM_START;
 	return NewBuffer(env, &PrepareDispense, sizeof(WFSCDMPREPAREDISPENSE));
 }

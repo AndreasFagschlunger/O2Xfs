@@ -37,7 +37,7 @@ static WFSCIMBLACKLISTELEMENT BlacklistElements[1];
 static LPWFSCIMBLACKLISTELEMENT lpBlacklistElements[1];
 static LPWSTR lpszSerialNumber = L"1234-5678-9123";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_Blacklist3130Test_buildBlacklist3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_Blacklist330Test_buildBlacklist330(JNIEnv *env, jobject obj) {
 	Blacklist.lpszVersion = lpszVersion;
 	Blacklist.usCount = 1;
 	Blacklist.lppBlacklistElements = lpBlacklistElements;

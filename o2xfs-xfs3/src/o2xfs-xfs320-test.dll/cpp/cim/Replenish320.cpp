@@ -35,7 +35,7 @@ static WFSCIMREP Replenish;
 static WFSCIMREPTARGET ReplenishTargets[1];
 static LPWFSCIMREPTARGET lpReplenishTargets[2];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_Replenish3120Test_buildReplenish3120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_Replenish320Test_buildReplenish320(JNIEnv *env, jobject obj) {
 	Replenish.usNumberSource = 1;
 	Replenish.lppReplenishTargets = lpReplenishTargets;
 	lpReplenishTargets[0] = &ReplenishTargets[0];

@@ -36,7 +36,7 @@ static LPSTR cashUnitName = "BIN_1\0";
 static WFSCDMPHCU physicalCashUnit;
 static LPWFSCDMPHCU lppPhysical = &physicalCashUnit;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CashUnit3110Test_buildCashUnit3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CashUnit310Test_buildCashUnit310(JNIEnv *env, jobject obj) {
 	cashUnit.usNumber = 1;
 	cashUnit.usType = WFS_CDM_TYPEBILLCASSETTE;
 	cashUnit.lpszCashUnitName = cashUnitName;

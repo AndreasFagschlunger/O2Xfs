@@ -14,7 +14,7 @@ static LPSTR CurrencyCode = "EUR";
 static LPSTR LanguagePreferenceData = "deen";
 static WFSIDCHEXDATA DiscretionaryData;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_EmvClessTxDataOutput3130Test_buildEmvClessTxDataOutput3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_EmvClessTxDataOutput330Test_buildEmvClessTxDataOutput330(JNIEnv *env, jobject obj) {
 	ClessTxDataOutput.wDataSource = WFS_IDC_CHIP;
 	ClessTxDataOutput.wTxOutcome = WFS_IDC_CLESS_APPROVE;
 	ClessTxDataOutput.wCardholderAction = WFS_IDC_CLESS_NOACTION;

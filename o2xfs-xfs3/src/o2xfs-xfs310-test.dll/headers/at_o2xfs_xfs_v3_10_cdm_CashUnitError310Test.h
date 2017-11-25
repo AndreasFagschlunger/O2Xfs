@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildCashUnitError310
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CashUnitError3110Test_buildCashUnitError3110
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CashUnitError310Test_buildCashUnitError310
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

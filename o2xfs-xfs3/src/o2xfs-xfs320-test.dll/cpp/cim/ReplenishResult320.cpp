@@ -35,7 +35,7 @@ static WFSCIMREPRES ReplenishResult;
 static WFSCIMREPTARGETRES ReplenishTargetResults[1];
 static LPWFSCIMREPTARGETRES lpReplenishTargetResults[2];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_ReplenishResult3120Test_buildReplenishResult3120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_ReplenishResult320Test_buildReplenishResult320(JNIEnv *env, jobject obj) {
 	ReplenishResult.ulNumberOfItemsRemoved = 1234;
 	ReplenishResult.ulNumberOfItemsRejected = 1;
 	ReplenishResult.lppReplenishTargetResults = lpReplenishTargetResults;

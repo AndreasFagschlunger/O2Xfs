@@ -33,7 +33,7 @@
 
 static WFSCDMITEMINFOSUMMARY ItemInfoSummary;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_ItemInfoSummary3130Test_buildItemInfoSummary3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_ItemInfoSummary330Test_buildItemInfoSummary330(JNIEnv *env, jobject obj) {
 	ItemInfoSummary.usLevel = WFS_CDM_LEVEL_3;
 	ItemInfoSummary.usNumOfItems = 3;
 	return NewBuffer(env, &ItemInfoSummary, sizeof(WFSCDMITEMINFOSUMMARY));

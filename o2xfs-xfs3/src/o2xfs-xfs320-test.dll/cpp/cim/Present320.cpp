@@ -33,7 +33,7 @@
 
 static WFSCIMPRESENT Present;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_Present3120Test_buildPresent3120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_Present320Test_buildPresent320(JNIEnv *env, jobject obj) {
 	Present.fwPosition = WFS_CIM_POSOUTFRONT;
 	return NewBuffer(env, &Present, sizeof(WFSCIMPRESENT));
 }

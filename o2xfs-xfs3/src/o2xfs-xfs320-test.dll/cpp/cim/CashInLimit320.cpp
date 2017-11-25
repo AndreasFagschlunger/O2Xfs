@@ -34,7 +34,7 @@
 static WFSCIMCASHINLIMIT CashInLimit;
 static WFSCIMAMOUNTLIMIT AmountLimit;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_CashInLimit3120Test_buildCashInLimit3120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_CashInLimit320Test_buildCashInLimit320(JNIEnv *env, jobject obj) {
 	CashInLimit.ulTotalItemsLimit = 200;
 	CashInLimit.lpAmountLimit = &AmountLimit;
 	strcpy(AmountLimit.cCurrencyID, "EUR");

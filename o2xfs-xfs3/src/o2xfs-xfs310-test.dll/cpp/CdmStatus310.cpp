@@ -36,7 +36,7 @@ static WFSCDMOUTPOS position;
 static LPWFSCDMOUTPOS positions[2];
 static LPSTR lpszExtra = "Key1=Value1\0Key2=Value2\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CdmStatus3110Test_buildCdmStatus3110(JNIEnv *env, jobject object) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CdmStatus310Test_buildCdmStatus310(JNIEnv *env, jobject object) {
 	position.fwPosition = WFS_CDM_POSFRONT;
 	position.fwShutter = WFS_CDM_SHTCLOSED;
 	position.fwPositionStatus = WFS_CDM_PSEMPTY;

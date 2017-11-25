@@ -35,7 +35,7 @@ WFSCIMPOSCAPABILITIES PosCaps;
 WFSCIMPOSCAPS PosCapabilities[1];
 LPWFSCIMPOSCAPS lpPosCapabilities[2];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_PositionCapabilities3110Test_buildPositionCapabilities3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_PositionCapabilities310Test_buildPositionCapabilities310(JNIEnv *env, jobject obj) {
 	PosCaps.lppPosCapabilities = lpPosCapabilities;
 	PosCapabilities[0].fwPosition = WFS_CIM_POSOUTFRONT;
 	PosCapabilities[0].fwUsage = WFS_CIM_POSREFUSE | WFS_CIM_POSROLLBACK;

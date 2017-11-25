@@ -33,7 +33,7 @@
 
 WFSCIMSETGUIDLIGHT SetGuidLight;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_SetGuidLight3110Test_buildSetGuidLight3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_SetGuidLight310Test_buildSetGuidLight310(JNIEnv *env, jobject obj) {
 	SetGuidLight.wGuidLight = 1;
 	SetGuidLight.dwCommand = WFS_CIM_GUIDANCE_MEDIUM_FLASH | WFS_CIM_GUIDANCE_GREEN;
 	return NewBuffer(env, &SetGuidLight, sizeof(WFSCIMSETGUIDLIGHT));

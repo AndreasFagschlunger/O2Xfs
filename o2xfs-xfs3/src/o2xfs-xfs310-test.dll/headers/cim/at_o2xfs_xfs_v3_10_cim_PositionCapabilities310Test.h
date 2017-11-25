@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildPositionCapabilities310
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_PositionCapabilities3110Test_buildPositionCapabilities3110
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_PositionCapabilities310Test_buildPositionCapabilities310
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

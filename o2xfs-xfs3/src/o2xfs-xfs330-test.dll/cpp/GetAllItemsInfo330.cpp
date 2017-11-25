@@ -33,7 +33,7 @@
 
 static WFSCDMGETALLITEMSINFO GetAllItemsInfo;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_GetAllItemsInfo3130Test_buildGetAllItemsInfo3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_GetAllItemsInfo330Test_buildGetAllItemsInfo330(JNIEnv *env, jobject obj) {
 	GetAllItemsInfo.usLevel = WFS_CDM_LEVEL_4;
 	return NewBuffer(env, &GetAllItemsInfo, sizeof(WFSCDMGETALLITEMSINFO));
 }

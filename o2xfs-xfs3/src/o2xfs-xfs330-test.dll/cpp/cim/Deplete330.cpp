@@ -35,7 +35,7 @@ static WFSCIMDEP Deplete;
 static WFSCIMDEPSOURCE DepleteSources[1];
 static LPWFSCIMDEPSOURCE lpDepleteSources[2];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_Deplete3130Test_buildDeplete3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_Deplete330Test_buildDeplete330(JNIEnv *env, jobject obj) {
 	Deplete.lppDepleteSources = lpDepleteSources;
 	lpDepleteSources[0] = &DepleteSources[0];
 	DepleteSources[0].usNumberSource = 1;

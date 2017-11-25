@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildDeviceLockControl320
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_DeviceLockControl3120Test_buildDeviceLockControl3120
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_DeviceLockControl320Test_buildDeviceLockControl320
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

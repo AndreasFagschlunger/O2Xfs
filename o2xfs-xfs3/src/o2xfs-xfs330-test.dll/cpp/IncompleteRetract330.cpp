@@ -36,7 +36,7 @@ static WFSCDMITEMNUMBERLIST ItemNumberList;
 static WFSCDMITEMNUMBER ItemNumber[3];
 static LPWFSCDMITEMNUMBER lppItemNumber[3];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_IncompleteRetract3130Test_buildIncompleteRetract3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_IncompleteRetract330Test_buildIncompleteRetract330(JNIEnv *env, jobject obj) {
 	ItemNumberList.usNumOfItemNumbers = 3;
 	ItemNumberList.lppItemNumber = lppItemNumber;
 

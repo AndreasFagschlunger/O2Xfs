@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildShutterStatusChanged330
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_ShutterStatusChanged3130Test_buildShutterStatusChanged3130
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_ShutterStatusChanged330Test_buildShutterStatusChanged330
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

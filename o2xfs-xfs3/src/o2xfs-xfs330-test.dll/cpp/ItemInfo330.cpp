@@ -37,7 +37,7 @@ static WFSCDMSIGNATURE Signature;
 static LPSTR lpszImageFileName = "C:\\Temp\\cash123456.jpg";
 static char Data[] = { 0xAB, 0xCD, 0xEF };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_ItemInfo3130Test_buildItemInfo3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_ItemInfo330Test_buildItemInfo330(JNIEnv *env, jobject obj) {
 	Signature.ulLength = 3;
 	Signature.lpData = Data;
 

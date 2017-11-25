@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildCashInLimit320
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_CashInLimit3120Test_buildCashInLimit3120
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_CashInLimit320Test_buildCashInLimit320
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

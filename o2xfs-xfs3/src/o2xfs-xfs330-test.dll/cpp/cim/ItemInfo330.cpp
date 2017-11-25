@@ -37,7 +37,7 @@ static WFSCIMP6SIGNATURE P6Signature;
 static LPSTR lpszImageFileName = "C:\\note.png";
 static char lpSignature[] = { 'C', 'A', 'F', 'E' };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_ItemInfo3130Test_buildItemInfo3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_ItemInfo330Test_buildItemInfo330(JNIEnv *env, jobject obj) {
 	ItemInfo.usNoteID = 1;
 	ItemInfo.lpszSerialNumber = lpszSerialNumber;
 	ItemInfo.lpP6Signature = &P6Signature;

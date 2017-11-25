@@ -8,7 +8,7 @@ static WFSIDCEMVCLESSTXDATA ClessTxData;
 static WFSIDCHEXDATA Data;
 static BYTE DataValue[] = { 0x5F, 0x2A, 0x03, 'E', 'U', 'R' };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_EmvClessTxData3130Test_buildEmvClessTxData3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_EmvClessTxData330Test_buildEmvClessTxData330(JNIEnv *env, jobject obj) {
 	Data.ulLength = 6;
 	Data.lpbData = DataValue;
 	ClessTxData.lpData = &Data;

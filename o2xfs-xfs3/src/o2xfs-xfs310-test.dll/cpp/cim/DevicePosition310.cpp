@@ -33,7 +33,7 @@
 
 WFSCIMDEVICEPOSITION DevicePosition;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_DevicePosition3110Test_buildDevicePosition3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_DevicePosition310Test_buildDevicePosition310(JNIEnv *env, jobject obj) {
 	DevicePosition.wPosition = WFS_CIM_DEVICENOTINPOSITION;
 	return NewBuffer(env, &DevicePosition, sizeof(WFSCIMDEVICEPOSITION));
 }

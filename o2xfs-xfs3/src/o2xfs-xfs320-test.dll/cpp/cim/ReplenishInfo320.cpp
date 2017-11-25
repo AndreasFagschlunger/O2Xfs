@@ -33,7 +33,7 @@
 
 static WFSCIMREPINFO ReplenishInfo;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_ReplenishInfo3120Test_buildReplenishInfo3120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_ReplenishInfo320Test_buildReplenishInfo320(JNIEnv *env, jobject obj) {
 	ReplenishInfo.usNumberSource = 1;
 	return NewBuffer(env, &ReplenishInfo, sizeof(WFSCIMREPINFO));
 }

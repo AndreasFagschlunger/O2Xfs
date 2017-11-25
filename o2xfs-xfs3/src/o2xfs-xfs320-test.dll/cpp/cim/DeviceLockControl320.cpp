@@ -36,7 +36,7 @@ static WFSCIMUNITLOCKCONTROL UnitLockControl[1];
 static LPWFSCIMUNITLOCKCONTROL lpUnitLockControl[2];
 static LPSTR lpPhysicalPositionName = "COMPARTMENT1";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_DeviceLockControl3120Test_buildDeviceLockControl3120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_DeviceLockControl320Test_buildDeviceLockControl320(JNIEnv *env, jobject obj) {
 	DeviceLockControl.wDeviceAction = WFS_CIM_LOCK;
 	DeviceLockControl.wCashUnitAction = WFS_CIM_LOCKINDIVIDUAL;
 	DeviceLockControl.lppUnitLockControl = lpUnitLockControl;

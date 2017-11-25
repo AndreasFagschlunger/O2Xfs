@@ -43,7 +43,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
 	return JNI_VERSION_1_6;
 }
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_CdmCaps3130Test_buildCdmCaps3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cdm_CdmCaps330Test_buildCdmCaps330(JNIEnv *env, jobject obj) {
 	caps.wClass = WFS_SERVICE_CLASS_CDM;
 	caps.fwType = WFS_CDM_SELFSERVICEBILL;
 	caps.wMaxDispenseItems = 40;

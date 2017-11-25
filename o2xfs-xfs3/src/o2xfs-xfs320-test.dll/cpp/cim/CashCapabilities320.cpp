@@ -39,7 +39,7 @@ static LPWFSCIMPHCUCAPABILITIES lpPhysical[2];
 static LPSTR lpPhysicalPositionName[] = { "SLOT1", "SLOT2" };
 static LPSTR lpszExtra = "Key=Value\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_CashCapabilities3120Test_buildCashCapabilities3120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_CashCapabilities320Test_buildCashCapabilities320(JNIEnv *env, jobject obj) {
 	CashCaps.usCount = 1;
 	CashCaps.lppCashUnitCaps = lpCashUnitCaps;
 	lpCashUnitCaps[0] = &CashUnitCaps[0];

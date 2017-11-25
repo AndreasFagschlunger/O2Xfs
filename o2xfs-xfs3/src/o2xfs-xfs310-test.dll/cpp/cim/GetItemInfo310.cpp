@@ -33,7 +33,7 @@
 
 WFSCIMGETITEMINFO GetItemInfo;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_GetItemInfo3110Test_buildGetItemInfo3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_GetItemInfo310Test_buildGetItemInfo310(JNIEnv *env, jobject obj) {
 	GetItemInfo.usLevel = WFS_CIM_LEVEL_2;
 	GetItemInfo.usIndex = 0;
 	GetItemInfo.dwItemInfoType = WFS_CIM_ITEM_SIGNATURE;

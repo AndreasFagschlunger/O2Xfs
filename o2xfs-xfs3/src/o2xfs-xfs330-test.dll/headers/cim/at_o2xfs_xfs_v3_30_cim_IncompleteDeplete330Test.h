@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildIncompleteDeplete330
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_IncompleteDeplete3130Test_buildIncompleteDeplete3130
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_IncompleteDeplete330Test_buildIncompleteDeplete330
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

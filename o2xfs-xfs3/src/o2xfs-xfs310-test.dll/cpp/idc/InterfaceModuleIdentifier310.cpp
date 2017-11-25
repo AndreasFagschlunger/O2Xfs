@@ -7,7 +7,7 @@
 static WFSIDCIFMIDENTIFIER IFMIdentifier;
 static LPSTR Identifier = "IFM";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_idc_InterfaceModuleIdentifier3110Test_buildInterfaceModuleIdentifier3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_idc_InterfaceModuleIdentifier310Test_buildInterfaceModuleIdentifier310(JNIEnv *env, jobject obj) {
 	IFMIdentifier.wIFMAuthority = WFS_IDC_IFMEMV;
 	IFMIdentifier.lpszIFMIdentifier = Identifier;
 	return NewBuffer(env, &IFMIdentifier, sizeof(WFSIDCIFMIDENTIFIER));

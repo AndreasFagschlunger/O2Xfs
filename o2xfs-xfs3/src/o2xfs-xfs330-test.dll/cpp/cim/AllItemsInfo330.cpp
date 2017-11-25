@@ -38,7 +38,7 @@ static LPWSTR lpszSerialNumber = L"12?4";
 static LPSTR lpszP6SignatureFileName = "P6.txt";
 static LPSTR lpszImageFileName = "note.jpg";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_AllItemsInfo3130Test_buildAllItemsInfo3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_AllItemsInfo330Test_buildAllItemsInfo330(JNIEnv *env, jobject obj) {
 	AllItemsInfo.usCount = 1;
 	AllItemsInfo.lppItemsList = lpItemsList;
 	lpItemsList[0] = &ItemsList[0];

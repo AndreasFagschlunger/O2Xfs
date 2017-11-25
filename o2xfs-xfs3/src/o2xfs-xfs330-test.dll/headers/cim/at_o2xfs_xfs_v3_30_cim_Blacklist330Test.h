@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildBlacklist330
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_Blacklist3130Test_buildBlacklist3130
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_Blacklist330Test_buildBlacklist330
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

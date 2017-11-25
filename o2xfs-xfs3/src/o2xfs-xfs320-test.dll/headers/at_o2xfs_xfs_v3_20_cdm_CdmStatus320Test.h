@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildCdmStatus320
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cdm_CdmStatus3120Test_buildCdmStatus3120
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cdm_CdmStatus320Test_buildCdmStatus320
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

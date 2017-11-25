@@ -33,7 +33,7 @@
 
 static WFSCDMSETGUIDLIGHT SetGuidLight;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_SetGuidLight3110Test_buildSetGuidLight3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_SetGuidLight310Test_buildSetGuidLight310(JNIEnv *env, jobject obj) {
 	SetGuidLight.wGuidLight = WFS_CDM_GUIDANCE_POSOUTNULL;
 	SetGuidLight.dwCommand = WFS_CDM_GUIDANCE_MEDIUM_FLASH | WFS_CDM_GUIDANCE_GREEN;
 

@@ -10,7 +10,7 @@ static WFSIDCHEXDATA KernelIdentifier;
 static BYTE AIDData[] = { 0xA0, 0x00, 0x00, 0x00, 0x0F, 0x12, 0x34 };
 static BYTE KernelIdentifierData[] = { 0xCA, 0xFE, 0xBA, 0xBE };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_AppData3130Test_buildAppData3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_AppData330Test_buildAppData330(JNIEnv *env, jobject obj) {
 	AID.ulLength = 7;
 	AID.lpbData = AIDData;
 	KernelIdentifier.ulLength = 4;

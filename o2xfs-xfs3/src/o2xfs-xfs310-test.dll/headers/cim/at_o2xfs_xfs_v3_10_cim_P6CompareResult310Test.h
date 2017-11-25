@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildP6CompareResult310
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_P6CompareResult3110Test_buildP6CompareResult3110
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_P6CompareResult310Test_buildP6CompareResult310
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

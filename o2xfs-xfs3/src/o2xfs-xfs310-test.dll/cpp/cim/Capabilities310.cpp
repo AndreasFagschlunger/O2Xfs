@@ -34,7 +34,7 @@
 static WFSCIMCAPS Caps;
 static LPSTR lpszExtra = "Key=Value\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_Capabilities3110Test_buildCapabilities3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_Capabilities310Test_buildCapabilities310(JNIEnv *env, jobject obj) {
 	Caps.wClass = WFS_SERVICE_CLASS_CIM;
 	Caps.fwType = WFS_CIM_SELFSERVICEBILL;
 	Caps.wMaxCashInItems = 200;

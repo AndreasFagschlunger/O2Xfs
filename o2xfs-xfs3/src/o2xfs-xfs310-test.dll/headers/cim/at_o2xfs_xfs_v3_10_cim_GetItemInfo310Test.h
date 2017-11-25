@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildGetItemInfo310
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_GetItemInfo3110Test_buildGetItemInfo3110
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_GetItemInfo310Test_buildGetItemInfo310
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

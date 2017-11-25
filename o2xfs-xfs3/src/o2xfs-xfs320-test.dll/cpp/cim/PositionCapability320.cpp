@@ -34,7 +34,7 @@
 static WFSCIMPOSCAPS PosCapabilities;
 static LPSTR lpszExtra = "P6=2\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_PositionCapability3120Test_buildPositionCapability3120(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_PositionCapability320Test_buildPositionCapability320(JNIEnv *env, jobject obj) {
 	PosCapabilities.fwPosition = WFS_CIM_POSOUTFRONT;
 	PosCapabilities.fwUsage = WFS_CIM_POSREFUSE | WFS_CIM_POSROLLBACK;
 	PosCapabilities.bShutterControl = FALSE;

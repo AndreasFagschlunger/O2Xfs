@@ -37,7 +37,7 @@ LPWFSCIMP6SIGNATURE lpP6ReferenceSignatures[2];
 LPWFSCIMP6SIGNATURE lpP6Signatures[2];
 char *lpSignature[] = { "ABC", "DEF" };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_P6CompareSignature3110Test_buildP6CompareSignature3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_P6CompareSignature310Test_buildP6CompareSignature310(JNIEnv *env, jobject obj) {
 	P6Signatures[0].usNoteId = 1;
 	P6Signatures[0].ulLength = strlen(lpSignature[0]);
 	P6Signatures[0].dwOrientation = WFS_CIM_ORFRONTTOP;

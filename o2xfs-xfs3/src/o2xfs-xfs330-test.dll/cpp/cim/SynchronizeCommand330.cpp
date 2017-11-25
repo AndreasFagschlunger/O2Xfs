@@ -34,7 +34,7 @@
 static WFSCIMSYNCHRONIZECOMMAND SynchronizeCommand;
 static WFSCIMRETRACT Retract;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_SynchronizeCommand3130Test_buildSynchronizeCommand3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_SynchronizeCommand330Test_buildSynchronizeCommand330(JNIEnv *env, jobject obj) {
 	SynchronizeCommand.dwCommand = WFS_CMD_CIM_RETRACT;
 	SynchronizeCommand.lpCmdData = &Retract;
 	Retract.fwOutputPosition = WFS_CIM_POSOUTFRONT;

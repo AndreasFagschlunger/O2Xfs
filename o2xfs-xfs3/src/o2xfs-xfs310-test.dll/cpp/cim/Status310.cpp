@@ -36,7 +36,7 @@ WFSCIMINPOS Positions[2];
 LPWFSCIMINPOS lppPositions[3];
 LPSTR lpszExtra = "LASTERROR=StClass=00000000\0StCode=00000000\0LastErrorText=OK:none\0";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_Status3110Test_buildStatus3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_Status310Test_buildStatus310(JNIEnv *env, jobject obj) {
 
 	Status.fwDevice = WFS_CIM_DEVONLINE;
 	Status.fwSafeDoor = WFS_CIM_DOORCLOSED;

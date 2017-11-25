@@ -33,7 +33,7 @@
 
 static WFSCIMDEPINFO DepleteInfo;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_DepleteInfo3130Test_buildDepleteInfo3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_DepleteInfo330Test_buildDepleteInfo330(JNIEnv *env, jobject obj) {
 	DepleteInfo.usNumberTarget = 1;
 	return NewBuffer(env, &DepleteInfo, sizeof(WFSCIMDEPINFO));
 }

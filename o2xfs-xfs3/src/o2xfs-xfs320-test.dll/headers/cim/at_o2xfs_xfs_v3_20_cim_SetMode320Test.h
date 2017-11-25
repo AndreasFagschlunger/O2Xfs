@@ -39,7 +39,7 @@ extern "C" {
  * Method:    buildSetMode320
  * Signature: ()Lat/o2xfs/win32/Buffer;
  */
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_SetMode3120Test_buildSetMode3120
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_120_cim_SetMode320Test_buildSetMode320
   (JNIEnv *, jobject);
 
 #ifdef __cplusplus

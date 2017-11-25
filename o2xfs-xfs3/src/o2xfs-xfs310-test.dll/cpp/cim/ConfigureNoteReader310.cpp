@@ -33,7 +33,7 @@
 
 static WFSCIMCONFIGURENOTEREADER ConfigureNoteReader;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_ConfigureNoteReader3110Test_buildConfigureNoteReader3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_ConfigureNoteReader310Test_buildConfigureNoteReader310(JNIEnv *env, jobject obj) {
 	ConfigureNoteReader.bLoadAlways = FALSE;
 	return NewBuffer(env, &ConfigureNoteReader, sizeof(WFSCIMCONFIGURENOTEREADER));
 }

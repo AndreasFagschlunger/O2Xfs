@@ -27,7 +27,7 @@ static BYTE Modulus[] = { 0xca, 0xfe, 0xba, 0xbe };
 static WFSIDCHEXDATA CAPublicKeyModulus;
 static BYTE CAPublicKeyChecksum[] = { 0xc0, 0x7b, 0x64, 0xd4, 0xa9, 0xed, 0x77, 0x91, 0xf6, 0xc4, 0xec, 0x69, 0x33, 0xff, 0xcc, 0x42, 0x3f, 0x33, 0x90, 0x18 };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_EmvClessConfigData3130Test_buildEmvClessConfigData3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_idc_EmvClessConfigData330Test_buildEmvClessConfigData330(JNIEnv *env, jobject obj) {
 	TerminalData.ulLength = 4;
 	TerminalData.lpbData = TerminalDataData;
 	ClessConfigData.lpTerminalData = &TerminalData;

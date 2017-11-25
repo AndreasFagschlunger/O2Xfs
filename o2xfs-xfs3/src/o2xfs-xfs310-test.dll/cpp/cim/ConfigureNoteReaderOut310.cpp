@@ -33,7 +33,7 @@
 
 WFSCIMCONFIGURENOTEREADEROUT ConfigureNoteReaderOut;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_ConfigureNoteReaderOut3110Test_buildConfigureNoteReaderOut3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_ConfigureNoteReaderOut310Test_buildConfigureNoteReaderOut310(JNIEnv *env, jobject obj) {
 	ConfigureNoteReaderOut.bRebootNecessary = FALSE;
 	return NewBuffer(env, &ConfigureNoteReaderOut, sizeof(WFSCIMCONFIGURENOTEREADEROUT));
 }

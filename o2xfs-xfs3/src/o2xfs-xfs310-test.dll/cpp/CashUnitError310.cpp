@@ -37,7 +37,7 @@ static WFSCDMPHCU PhysicalCUs[2];
 static LPWFSCDMPHCU lppPhysical[2];
 static LPSTR PhysicalPositionName[] = { "SLOT1", "SLOT2" };
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CashUnitError3110Test_buildCashUnitError3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_CashUnitError310Test_buildCashUnitError310(JNIEnv *env, jobject obj) {
 	CashUnitError.wFailure = WFS_CDM_CASHUNITERROR;
 	CashUnitError.lpCashUnit = &CashUnit;
 

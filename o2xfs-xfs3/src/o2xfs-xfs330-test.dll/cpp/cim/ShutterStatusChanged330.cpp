@@ -33,7 +33,7 @@
 
 static WFSCIMSHUTTERSTATUSCHANGED ShutterStatusChanged;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_ShutterStatusChanged3130Test_buildShutterStatusChanged3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_ShutterStatusChanged330Test_buildShutterStatusChanged330(JNIEnv *env, jobject obj) {
 	ShutterStatusChanged.fwPosition = WFS_CIM_POSOUTFRONT;
 	ShutterStatusChanged.fwShutter = WFS_CIM_SHTJAMMED;
 	return NewBuffer(env, &ShutterStatusChanged, sizeof(WFSCIMSHUTTERSTATUSCHANGED));

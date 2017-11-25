@@ -36,7 +36,7 @@ WFSCIMP6SIGNATURESINDEX P6SignaturesIndex[1];
 LPWFSCIMP6SIGNATURESINDEX lpP6SignaturesIndex[2];
 char* lpComparisonData = "ABC";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_P6CompareResult3110Test_buildP6CompareResult3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_P6CompareResult310Test_buildP6CompareResult310(JNIEnv *env, jobject obj) {
 	P6CompareResult.usCount = 1;
 	P6CompareResult.lppP6SignaturesIndex = lpP6SignaturesIndex;
 	P6SignaturesIndex[0].usIndex = 1;

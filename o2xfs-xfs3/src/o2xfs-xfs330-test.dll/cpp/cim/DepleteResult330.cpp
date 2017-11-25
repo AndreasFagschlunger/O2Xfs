@@ -35,7 +35,7 @@ static WFSCIMDEPRES DepleteResult;
 static WFSCIMDEPSOURCERES DepleteSourceResults[1];
 static LPWFSCIMDEPSOURCERES lpDepleteSourceResults[2];
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_DepleteResult3130Test_buildDepleteResult3130(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_130_cim_DepleteResult330Test_buildDepleteResult330(JNIEnv *env, jobject obj) {
 	DepleteResult.ulNumberOfItemsReceived = 1234;
 	DepleteResult.ulNumberOfItemsRejected = 0;
 	DepleteResult.lppDepleteSourceResults = lpDepleteSourceResults;

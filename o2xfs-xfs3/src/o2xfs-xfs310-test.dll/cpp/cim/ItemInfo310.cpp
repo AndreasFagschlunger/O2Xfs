@@ -34,7 +34,7 @@
 WFSCIMITEMINFO ItemInfo;
 LPWSTR lpszSerialNumber = L"1234-5678";
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_ItemInfo3110Test_buildItemInfo3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cim_ItemInfo310Test_buildItemInfo310(JNIEnv *env, jobject obj) {
 	ItemInfo.usNoteID = 1234;
 	ItemInfo.lpszSerialNumber = lpszSerialNumber;
 	ItemInfo.lpP6Signature = NULL;

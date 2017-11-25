@@ -33,7 +33,7 @@
 
 static WFSCDMPOWERSAVECHANGE PowerSaveChange;
 
-JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_PowerSaveChange3110Test_buildPowerSaveChange3110(JNIEnv *env, jobject obj) {
+JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_cdm_PowerSaveChange310Test_buildPowerSaveChange310(JNIEnv *env, jobject obj) {
 	PowerSaveChange.usPowerSaveRecoveryTime = 5;
 	return NewBuffer(env, &PowerSaveChange, sizeof(WFSCDMPOWERSAVECHANGE));
 }
