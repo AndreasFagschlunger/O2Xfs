@@ -93,7 +93,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
 JNIEXPORT void JNICALL Java_at_o2xfs_xfs_XfsAPI_loadLibrary(JNIEnv *env, jobject obj) {
 	hinstMsxfsLib = LoadLibrary("msxfs.dll");
 	if (hinstMsxfsLib == NULL) {
-		printf("Error loading msxfs.dll: %d\r\n", GetLastError());
+		printf("Error loading msxfs.dll: %d\r\n", GetLastError()); // FIXME: Error handling
 	} else {
 		lpWFSCancelAsyncRequest = (WFS_CANCEL_ASYNC_REQUEST) GetProcAddress(hinstMsxfsLib, "WFSCancelAsyncRequest");
 		lpWFSCancelBlockingCall = (WFS_CANCEL_BLOCKING_CALL) GetProcAddress(hinstMsxfsLib, "WFSCancelBlockingCall");

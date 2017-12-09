@@ -102,8 +102,6 @@ public class XfsServiceManager implements IXfsCallback {
 		serviceListeners = new CopyOnWriteArrayList<XfsServiceListener>();
 		eventDispatcher = new EventDispatcher();
 		messageHandler = new MessageHandler(this);
-		messageHandler.start();
-		hWnd = messageHandler.getHWnd();
 	}
 
 	public static XfsServiceManager getInstance() {
@@ -126,6 +124,8 @@ public class XfsServiceManager implements IXfsCallback {
 	}
 
 	public WFSVersion initialize() throws XfsException {
+		messageHandler.start();
+		hWnd = messageHandler.getHWnd();
 		startUpXfs();
 		hApp = xfsAPI.wfsCreateAppHandle();
 		new OpenServiceHandler().openServices();

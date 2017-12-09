@@ -68,7 +68,7 @@ public final class MessageHandler {
 	public void start() {
 		final String method = "start()";
 		synchronized (this) {
-			if (thread != null) {
+			if (thread != null && thread.isAlive()) {
 				throw new IllegalStateException("Already started");
 			}
 			thread = new Thread(new Runnable() {
@@ -131,6 +131,15 @@ public final class MessageHandler {
 		}
 		if (hWnd != null) {
 			close0(hWnd);
+		}
+		synchronized (this) {
+			if (thread != null && thread.isAlive()) {
+				try {
+					thread.join(1000L);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+			}
 		}
 	}
 
