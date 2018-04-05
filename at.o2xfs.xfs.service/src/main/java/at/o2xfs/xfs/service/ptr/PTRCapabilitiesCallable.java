@@ -33,16 +33,15 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.ptr.PTRInfoCommand;
-import at.o2xfs.xfs.ptr.WFSPTRCAPS;
+import at.o2xfs.xfs.ptr.PtrInfoCommand;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 import at.o2xfs.xfs.service.util.ExceptionUtil;
+import at.o2xfs.xfs.v3_00.ptr.PtrCapabilities3;
 
-public class PTRCapabilitiesCallable implements Callable<WFSPTRCAPS> {
+public class PTRCapabilitiesCallable implements Callable<PtrCapabilities3> {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(PTRCapabilitiesCallable.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PTRCapabilitiesCallable.class);
 
 	private final PTRService ptrService;
 
@@ -54,18 +53,18 @@ public class PTRCapabilitiesCallable implements Callable<WFSPTRCAPS> {
 	}
 
 	@Override
-	public WFSPTRCAPS call() throws XfsException {
+	public PtrCapabilities3 call() throws XfsException {
 		final String method = "call()";
-		final XfsInfoCommand infoCommand = new XfsInfoCommand(ptrService,
-				PTRInfoCommand.CAPABILITIES);
+		final XfsInfoCommand<PtrInfoCommand> infoCommand = new XfsInfoCommand<>(ptrService,
+				PtrInfoCommand.CAPABILITIES);
 		final WFSResult wfsResult = infoCommand.call();
 		try {
-			final WFSPTRCAPS caps = new WFSPTRCAPS(wfsResult.getResults(),
-					ptrService.getXfsVersion());
+			final PtrCapabilities3 result = PtrFactory.create(ptrService.getXfsVersion(), wfsResult.getResults(),
+					PtrCapabilities3.class);
 			if (LOG.isInfoEnabled()) {
-				LOG.info(method, "WFSPTRCAPS: " + caps);
+				LOG.info(method, "result=" + result);
 			}
-			return new WFSPTRCAPS(caps, ptrService.getXfsVersion());
+			return result;
 		} finally {
 			if (wfsResult != null) {
 				XfsServiceManager.getInstance().free(wfsResult);

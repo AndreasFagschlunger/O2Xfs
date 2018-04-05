@@ -34,31 +34,28 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.ZList;
-import at.o2xfs.xfs.ptr.PTRExecuteCommand;
-import at.o2xfs.xfs.ptr.PTRImageRequestStruct;
-import at.o2xfs.xfs.ptr.PTRImageStruct;
+import at.o2xfs.xfs.ptr.PtrExecuteCommand;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.ptr.PTRService;
+import at.o2xfs.xfs.service.ptr.PtrFactory;
+import at.o2xfs.xfs.v3_00.ptr.Image3;
+import at.o2xfs.xfs.v3_00.ptr.ImageRequest3;
 
-public class ReadImageCommand
-		extends
-		AbstractAsyncXfsCommand<ReadImageCommandListener, ReadImageCompleteEvent> {
+public class ReadImageCommand extends AbstractAsyncXfsCommand<ReadImageCommandListener, ReadImageCompleteEvent> {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ReadImageCommand.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ReadImageCommand.class);
 
 	private final PTRService ptrService;
 
-	private final PTRImageRequestStruct imageRequest;
+	private final ImageRequest3 imageRequest;
 
 	public ReadImageCommand(PTRService ptrService) {
 		this(ptrService, null);
 	}
 
-	public ReadImageCommand(PTRService ptrService,
-			PTRImageRequestStruct imageRequest) {
+	public ReadImageCommand(PTRService ptrService, ImageRequest3 imageRequest) {
 		if (ptrService == null) {
 			throw new IllegalArgumentException("ptrService must not be null");
 		}
@@ -68,22 +65,20 @@ public class ReadImageCommand
 
 	@Override
 	protected XfsCommand createCommand() {
-		return new XfsExecuteCommand(ptrService, PTRExecuteCommand.READ_IMAGE,
-				imageRequest);
+		return new XfsExecuteCommand<>(ptrService, PtrExecuteCommand.READ_IMAGE, imageRequest);
 	}
 
 	@Override
 	protected ReadImageCompleteEvent createCompleteEvent(Pointer results) {
 		final String method = "createCompleteEvent(Pointer)";
-		List<PTRImageStruct> images = new ArrayList<PTRImageStruct>();
+		List<Image3> images = new ArrayList<Image3>();
 		ZList list = new ZList(results);
 		for (Pointer p : list) {
-			PTRImageStruct image = new PTRImageStruct(
-					ptrService.getXfsVersion(), p);
+			Image3 image = PtrFactory.INSTANCE.create(ptrService.getXfsVersion(), p, Image3.class);
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "image=" + image);
 			}
-			images.add(new PTRImageStruct(ptrService.getXfsVersion(), image));
+			images.add(image);
 		}
 		return new ReadImageCompleteEvent(images);
 	}

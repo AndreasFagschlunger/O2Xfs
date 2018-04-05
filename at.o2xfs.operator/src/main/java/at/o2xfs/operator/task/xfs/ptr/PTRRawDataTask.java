@@ -29,10 +29,10 @@ package at.o2xfs.operator.task.xfs.ptr;
 
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.ptr.WFSPTRRAWDATA;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.ptr.PTRRawDataCallable;
 import at.o2xfs.xfs.service.ptr.PTRService;
+import at.o2xfs.xfs.v3_00.ptr.RawData3;
 
 public class PTRRawDataTask extends PTRServiceTask {
 
@@ -46,9 +46,7 @@ public class PTRRawDataTask extends PTRServiceTask {
 
 	@Override
 	protected void execute() {
-		final WFSPTRRAWDATA rawData = new WFSPTRRAWDATA();
-		rawData.allocate();
-		rawData.setData(new byte[] { 27, 64, 'A' });
+		final RawData3 rawData = new RawData3.Builder(new byte[] { 27, 64, 'A' }).build();
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = new PTRRawDataCallable(service, rawData).call();

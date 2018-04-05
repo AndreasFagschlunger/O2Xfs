@@ -37,9 +37,7 @@ import at.o2xfs.operator.task.xfs.ptr.PTRStatusTask;
 import at.o2xfs.operator.task.xfs.siu.SIUStatusTask;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.v3_00.idc.Status3;
 import at.o2xfs.xfs.pin.WFSPINSTATUS;
-import at.o2xfs.xfs.ptr.WFSPTRSTATUS;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.idc.cmd.IDCStatusCommand;
@@ -50,6 +48,8 @@ import at.o2xfs.xfs.service.ptr.PTRStatusCallable;
 import at.o2xfs.xfs.service.siu.SIUService;
 import at.o2xfs.xfs.service.siu.SIUStatusCallable;
 import at.o2xfs.xfs.siu.SIUStatus;
+import at.o2xfs.xfs.v3_00.idc.Status3;
+import at.o2xfs.xfs.v3_00.ptr.PtrStatus3;
 
 public class DeviceStatusTask extends Task {
 
@@ -79,7 +79,7 @@ public class DeviceStatusTask extends Task {
 
 	private void addPTRService(final PTRService service) {
 		try {
-			WFSPTRSTATUS status = new PTRStatusCallable(service).call();
+			PtrStatus3 status = new PTRStatusCallable(service).call();
 			table.addRowWithCommand(new ExecuteSubTaskCommand(taskManager, new PTRStatusTask(service)), service,
 					status.getDevice());
 		} catch (XfsException e) {

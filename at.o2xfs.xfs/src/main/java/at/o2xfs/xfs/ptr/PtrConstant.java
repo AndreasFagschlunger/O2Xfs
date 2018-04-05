@@ -30,6 +30,7 @@ package at.o2xfs.xfs.ptr;
 public final class PtrConstant {
 
 	public static final int GUIDLIGHTS_SIZE = 32;
+	public static final int SUPPLYSIZE = 16;
 
 	private PtrConstant() {
 		throw new AssertionError();

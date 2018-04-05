@@ -27,21 +27,19 @@
 
 package at.o2xfs.xfs.service.ptr;
 
-import at.o2xfs.xfs.ptr.PTRReadForm;
-import at.o2xfs.xfs.ptr.WFSPTRCAPS;
+import org.junit.Assert;
+import org.junit.Test;
+
+import at.o2xfs.xfs.ptr.ReadForm;
 import at.o2xfs.xfs.service.XfsCommandTest;
 import at.o2xfs.xfs.service.cmd.event.CancelEvent;
 import at.o2xfs.xfs.service.cmd.event.ErrorEvent;
 import at.o2xfs.xfs.service.ptr.cmd.ReadImageCommand;
 import at.o2xfs.xfs.service.ptr.cmd.ReadImageCommandListener;
 import at.o2xfs.xfs.service.ptr.cmd.ReadImageCompleteEvent;
+import at.o2xfs.xfs.v3_00.ptr.PtrCapabilities3;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-public class ReadImageTest
-		extends XfsCommandTest
-		implements ReadImageCommandListener {
+public class ReadImageTest extends XfsCommandTest implements ReadImageCommandListener {
 
 	private boolean running = false;
 
@@ -50,8 +48,8 @@ public class ReadImageTest
 	@Test
 	public final void test() throws Exception {
 		for (PTRService service : serviceManager.getServices(PTRService.class)) {
-			WFSPTRCAPS caps = new PTRCapabilitiesCallable(service).call();
-			if (caps.getReadForm().contains(PTRReadForm.IMAGE)) {
+			PtrCapabilities3 caps = new PTRCapabilitiesCallable(service).call();
+			if (caps.getReadForms().contains(ReadForm.IMAGE)) {
 				readImage(service);
 			}
 		}

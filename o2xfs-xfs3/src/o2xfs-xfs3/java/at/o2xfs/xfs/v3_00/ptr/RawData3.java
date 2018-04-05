@@ -31,6 +31,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import at.o2xfs.common.Bytes;
 import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
@@ -39,6 +40,25 @@ import at.o2xfs.xfs.ptr.InputData;
 import at.o2xfs.xfs.win32.XfsWord;
 
 public class RawData3 extends Struct {
+
+	public static class Builder {
+
+		private InputData inputData = InputData.NOINPUTDATA;
+		private byte[] data;
+
+		public Builder(byte[] data) {
+			this.data = Bytes.copy(data);
+		}
+
+		public Builder inputData(InputData inputData) {
+			this.inputData = inputData;
+			return this;
+		}
+
+		public RawData3 build() {
+			return new RawData3(this);
+		}
+	}
 
 	protected final XfsWord<InputData> inputData = new XfsWord<>(InputData.class);
 	protected final ULONG size = new ULONG();
@@ -59,6 +79,14 @@ public class RawData3 extends Struct {
 		this();
 		allocate();
 		set(copy);
+	}
+
+	private RawData3(Builder builder) {
+		this();
+		allocate();
+		inputData.set(builder.inputData);
+		size.set(builder.data.length);
+		data.pointTo(new ByteArray(builder.data));
 	}
 
 	protected void set(RawData3 copy) {

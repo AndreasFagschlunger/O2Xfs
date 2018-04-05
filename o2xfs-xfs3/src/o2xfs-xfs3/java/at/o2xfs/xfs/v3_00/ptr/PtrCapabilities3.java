@@ -45,9 +45,9 @@ import at.o2xfs.xfs.ptr.BackImageColorFormat;
 import at.o2xfs.xfs.ptr.BackImageFormat;
 import at.o2xfs.xfs.ptr.CharSupport;
 import at.o2xfs.xfs.ptr.CodelineFormat;
-import at.o2xfs.xfs.ptr.MediaControl;
 import at.o2xfs.xfs.ptr.Extents;
 import at.o2xfs.xfs.ptr.ImageSource;
+import at.o2xfs.xfs.ptr.MediaControl;
 import at.o2xfs.xfs.ptr.PaperSource;
 import at.o2xfs.xfs.ptr.ReadForm;
 import at.o2xfs.xfs.ptr.Resolution;
@@ -59,13 +59,13 @@ import at.o2xfs.xfs.win32.XfsWordBitmask;
 public class PtrCapabilities3 extends Struct {
 
 	protected final WORD serviceClass = new WORD();
-	protected final XfsWord<Type> type = new XfsWord<>(Type.class);
+	protected final XfsWordBitmask<Type> types = new XfsWordBitmask<>(Type.class);
 	protected final BOOL compound = new BOOL();
-	protected final XfsWord<Resolution> resolution = new XfsWord<>(Resolution.class);
-	protected final XfsWord<ReadForm> readForm = new XfsWord<>(ReadForm.class);
-	protected final XfsWord<WriteForm> writeForm = new XfsWord<>(WriteForm.class);
+	protected final XfsWordBitmask<Resolution> resolutions = new XfsWordBitmask<>(Resolution.class);
+	protected final XfsWordBitmask<ReadForm> readForms = new XfsWordBitmask<>(ReadForm.class);
+	protected final XfsWordBitmask<WriteForm> writeForms = new XfsWordBitmask<>(WriteForm.class);
 	protected final XfsWordBitmask<Extents> extents = new XfsWordBitmask<>(Extents.class);
-	protected final XfsWord<MediaControl> control = new XfsWord<>(MediaControl.class);
+	protected final XfsWordBitmask<MediaControl> controls = new XfsWordBitmask<>(MediaControl.class);
 	protected final USHORT maxMediaOnStacker = new USHORT();
 	protected final BOOL acceptMedia = new BOOL();
 	protected final BOOL multiPage = new BOOL();
@@ -73,24 +73,26 @@ public class PtrCapabilities3 extends Struct {
 	protected final BOOL mediaTaken = new BOOL();
 	protected final USHORT retractBins = new USHORT();
 	protected final Pointer maxRetract = new Pointer();
-	protected final XfsWord<BackImageFormat> imageType = new XfsWord<>(BackImageFormat.class);
-	protected final XfsWord<BackImageColorFormat> frontImageColorFormat = new XfsWord<>(BackImageColorFormat.class);
-	protected final XfsWord<BackImageColorFormat> backImageColorFormat = new XfsWord<>(BackImageColorFormat.class);
-	protected final XfsWord<CodelineFormat> codelineFormat = new XfsWord<>(CodelineFormat.class);
-	protected final XfsWord<ImageSource> imageSource = new XfsWord<>(ImageSource.class);
+	protected final XfsWordBitmask<BackImageFormat> imageTypes = new XfsWordBitmask<>(BackImageFormat.class);
+	protected final XfsWordBitmask<BackImageColorFormat> frontImageColorFormats = new XfsWordBitmask<>(
+			BackImageColorFormat.class);
+	protected final XfsWordBitmask<BackImageColorFormat> backImageColorFormats = new XfsWordBitmask<>(
+			BackImageColorFormat.class);
+	protected final XfsWordBitmask<CodelineFormat> codelineFormats = new XfsWordBitmask<>(CodelineFormat.class);
+	protected final XfsWordBitmask<ImageSource> imageSources = new XfsWordBitmask<>(ImageSource.class);
 	protected final XfsWord<CharSupport> charSupport = new XfsWord<>(CharSupport.class);
 	protected final BOOL dispensePaper = new BOOL();
 	protected final XfsExtra extra = new XfsExtra();
 
 	protected PtrCapabilities3() {
 		add(serviceClass);
-		add(type);
+		add(types);
 		add(compound);
-		add(resolution);
-		add(readForm);
-		add(writeForm);
+		add(resolutions);
+		add(readForms);
+		add(writeForms);
 		add(extents);
-		add(control);
+		add(controls);
 		add(maxMediaOnStacker);
 		add(acceptMedia);
 		add(multiPage);
@@ -98,11 +100,11 @@ public class PtrCapabilities3 extends Struct {
 		add(mediaTaken);
 		add(retractBins);
 		add(maxRetract);
-		add(imageType);
-		add(frontImageColorFormat);
-		add(backImageColorFormat);
-		add(codelineFormat);
-		add(imageSource);
+		add(imageTypes);
+		add(frontImageColorFormats);
+		add(backImageColorFormats);
+		add(codelineFormats);
+		add(imageSources);
 		add(charSupport);
 		add(dispensePaper);
 		add(extra);
@@ -121,13 +123,13 @@ public class PtrCapabilities3 extends Struct {
 
 	protected void set(PtrCapabilities3 copy) {
 		serviceClass.set(copy.getServiceClass());
-		type.set(copy.getType());
+		types.set(copy.getTypes());
 		compound.set(copy.isCompound());
-		resolution.set(copy.getResolution());
-		readForm.set(copy.getReadForm());
-		writeForm.set(copy.getWriteForm());
+		resolutions.set(copy.getResolutions());
+		readForms.set(copy.getReadForms());
+		writeForms.set(copy.getWriteForms());
 		extents.set(copy.getExtents());
-		control.set(copy.getControl());
+		controls.set(copy.getControls());
 		maxMediaOnStacker.set(copy.getMaxMediaOnStacker());
 		acceptMedia.set(copy.isAcceptMedia());
 		multiPage.set(copy.isMultiPage());
@@ -135,11 +137,11 @@ public class PtrCapabilities3 extends Struct {
 		mediaTaken.set(copy.isMediaTaken());
 		retractBins.set(copy.getRetractBins());
 		maxRetract.pointTo(new UShortArray(copy.getMaxRetract()));
-		imageType.set(copy.getImageType());
-		frontImageColorFormat.set(copy.getFrontImageColorFormat());
-		backImageColorFormat.set(copy.getBackImageColorFormat());
-		codelineFormat.set(copy.getCodelineFormat());
-		imageSource.set(copy.getImageSource());
+		imageTypes.set(copy.getImageTypes());
+		frontImageColorFormats.set(copy.getFrontImageColorFormats());
+		backImageColorFormats.set(copy.getBackImageColorFormats());
+		codelineFormats.set(copy.getCodelineFormats());
+		imageSources.set(copy.getImageSources());
 		charSupport.set(copy.getCharSupport());
 		dispensePaper.set(copy.isDispensePaper());
 		extra.set(copy.getExtra());
@@ -149,32 +151,32 @@ public class PtrCapabilities3 extends Struct {
 		return serviceClass.get();
 	}
 
-	public Type getType() {
-		return type.get();
+	public Set<Type> getTypes() {
+		return types.get();
 	}
 
 	public boolean isCompound() {
 		return compound.get();
 	}
 
-	public Resolution getResolution() {
-		return resolution.get();
+	public Set<Resolution> getResolutions() {
+		return resolutions.get();
 	}
 
-	public ReadForm getReadForm() {
-		return readForm.get();
+	public Set<ReadForm> getReadForms() {
+		return readForms.get();
 	}
 
-	public WriteForm getWriteForm() {
-		return writeForm.get();
+	public Set<WriteForm> getWriteForms() {
+		return writeForms.get();
 	}
 
 	public Set<Extents> getExtents() {
 		return extents.get();
 	}
 
-	public MediaControl getControl() {
-		return control.get();
+	public Set<MediaControl> getControls() {
+		return controls.get();
 	}
 
 	public int getMaxMediaOnStacker() {
@@ -205,24 +207,24 @@ public class PtrCapabilities3 extends Struct {
 		return new UShortArray(maxRetract, getRetractBins()).get();
 	}
 
-	public BackImageFormat getImageType() {
-		return imageType.get();
+	public Set<BackImageFormat> getImageTypes() {
+		return imageTypes.get();
 	}
 
-	public BackImageColorFormat getFrontImageColorFormat() {
-		return frontImageColorFormat.get();
+	public Set<BackImageColorFormat> getFrontImageColorFormats() {
+		return frontImageColorFormats.get();
 	}
 
-	public BackImageColorFormat getBackImageColorFormat() {
-		return backImageColorFormat.get();
+	public Set<BackImageColorFormat> getBackImageColorFormats() {
+		return backImageColorFormats.get();
 	}
 
-	public CodelineFormat getCodelineFormat() {
-		return codelineFormat.get();
+	public Set<CodelineFormat> getCodelineFormats() {
+		return codelineFormats.get();
 	}
 
-	public ImageSource getImageSource() {
-		return imageSource.get();
+	public Set<ImageSource> getImageSources() {
+		return imageSources.get();
 	}
 
 	public CharSupport getCharSupport() {
@@ -241,13 +243,13 @@ public class PtrCapabilities3 extends Struct {
 	public int hashCode() {
 		return new HashCodeBuilder()
 				.append(getServiceClass())
-				.append(getType())
+				.append(getTypes())
 				.append(isCompound())
-				.append(getResolution())
-				.append(getReadForm())
-				.append(getWriteForm())
+				.append(getResolutions())
+				.append(getReadForms())
+				.append(getWriteForms())
 				.append(getExtents())
-				.append(getControl())
+				.append(getControls())
 				.append(getMaxMediaOnStacker())
 				.append(isAcceptMedia())
 				.append(isMultiPage())
@@ -255,11 +257,11 @@ public class PtrCapabilities3 extends Struct {
 				.append(isMediaTaken())
 				.append(getRetractBins())
 				.append(getMaxRetract())
-				.append(getImageType())
-				.append(getFrontImageColorFormat())
-				.append(getBackImageColorFormat())
-				.append(getCodelineFormat())
-				.append(getImageSource())
+				.append(getImageTypes())
+				.append(getFrontImageColorFormats())
+				.append(getBackImageColorFormats())
+				.append(getCodelineFormats())
+				.append(getImageSources())
 				.append(getCharSupport())
 				.append(isDispensePaper())
 				.append(getExtra())
@@ -272,13 +274,13 @@ public class PtrCapabilities3 extends Struct {
 			PtrCapabilities3 ptrCapabilities3 = (PtrCapabilities3) obj;
 			return new EqualsBuilder()
 					.append(getServiceClass(), ptrCapabilities3.getServiceClass())
-					.append(getType(), ptrCapabilities3.getType())
+					.append(getTypes(), ptrCapabilities3.getTypes())
 					.append(isCompound(), ptrCapabilities3.isCompound())
-					.append(getResolution(), ptrCapabilities3.getResolution())
-					.append(getReadForm(), ptrCapabilities3.getReadForm())
-					.append(getWriteForm(), ptrCapabilities3.getWriteForm())
+					.append(getResolutions(), ptrCapabilities3.getResolutions())
+					.append(getReadForms(), ptrCapabilities3.getReadForms())
+					.append(getWriteForms(), ptrCapabilities3.getWriteForms())
 					.append(getExtents(), ptrCapabilities3.getExtents())
-					.append(getControl(), ptrCapabilities3.getControl())
+					.append(getControls(), ptrCapabilities3.getControls())
 					.append(getMaxMediaOnStacker(), ptrCapabilities3.getMaxMediaOnStacker())
 					.append(isAcceptMedia(), ptrCapabilities3.isAcceptMedia())
 					.append(isMultiPage(), ptrCapabilities3.isMultiPage())
@@ -286,11 +288,11 @@ public class PtrCapabilities3 extends Struct {
 					.append(isMediaTaken(), ptrCapabilities3.isMediaTaken())
 					.append(getRetractBins(), ptrCapabilities3.getRetractBins())
 					.append(getMaxRetract(), ptrCapabilities3.getMaxRetract())
-					.append(getImageType(), ptrCapabilities3.getImageType())
-					.append(getFrontImageColorFormat(), ptrCapabilities3.getFrontImageColorFormat())
-					.append(getBackImageColorFormat(), ptrCapabilities3.getBackImageColorFormat())
-					.append(getCodelineFormat(), ptrCapabilities3.getCodelineFormat())
-					.append(getImageSource(), ptrCapabilities3.getImageSource())
+					.append(getImageTypes(), ptrCapabilities3.getImageTypes())
+					.append(getFrontImageColorFormats(), ptrCapabilities3.getFrontImageColorFormats())
+					.append(getBackImageColorFormats(), ptrCapabilities3.getBackImageColorFormats())
+					.append(getCodelineFormats(), ptrCapabilities3.getCodelineFormats())
+					.append(getImageSources(), ptrCapabilities3.getImageSources())
 					.append(getCharSupport(), ptrCapabilities3.getCharSupport())
 					.append(isDispensePaper(), ptrCapabilities3.isDispensePaper())
 					.append(getExtra(), ptrCapabilities3.getExtra())
@@ -303,13 +305,13 @@ public class PtrCapabilities3 extends Struct {
 	public String toString() {
 		return new ToStringBuilder(this)
 				.append("serviceClass", getServiceClass())
-				.append("type", getType())
+				.append("types", getTypes())
 				.append("compound", isCompound())
-				.append("resolution", getResolution())
-				.append("readForm", getReadForm())
-				.append("writeForm", getWriteForm())
+				.append("resolutions", getResolutions())
+				.append("readForms", getReadForms())
+				.append("writeForms", getWriteForms())
 				.append("extents", getExtents())
-				.append("control", getControl())
+				.append("controls", getControls())
 				.append("maxMediaOnStacker", getMaxMediaOnStacker())
 				.append("acceptMedia", isAcceptMedia())
 				.append("multiPage", isMultiPage())
@@ -317,11 +319,11 @@ public class PtrCapabilities3 extends Struct {
 				.append("mediaTaken", isMediaTaken())
 				.append("retractBins", getRetractBins())
 				.append("maxRetract", getMaxRetract())
-				.append("imageType", getImageType())
-				.append("frontImageColorFormat", getFrontImageColorFormat())
-				.append("backImageColorFormat", getBackImageColorFormat())
-				.append("codelineFormat", getCodelineFormat())
-				.append("imageSource", getImageSource())
+				.append("imageTypes", getImageTypes())
+				.append("frontImageColorFormats", getFrontImageColorFormats())
+				.append("backImageColorFormats", getBackImageColorFormats())
+				.append("codelineFormats", getCodelineFormats())
+				.append("imageSources", getImageSources())
 				.append("charSupport", getCharSupport())
 				.append("dispensePaper", isDispensePaper())
 				.append("extra", getExtra())

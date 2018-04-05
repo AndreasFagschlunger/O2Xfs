@@ -29,18 +29,18 @@ package at.o2xfs.xfs.service.ptr.cmd;
 
 import java.util.List;
 
-import at.o2xfs.xfs.ptr.PTRImageStruct;
 import at.o2xfs.xfs.service.cmd.event.CompleteEvent;
+import at.o2xfs.xfs.v3_00.ptr.Image3;
 
 public class ReadImageCompleteEvent implements CompleteEvent {
 
-	private final List<PTRImageStruct> images;
+	private final List<Image3> images;
 
-	public ReadImageCompleteEvent(List<PTRImageStruct> images) {
+	public ReadImageCompleteEvent(List<Image3> images) {
 		this.images = images;
 	}
 
-	public List<PTRImageStruct> getImages() {
+	public List<Image3> getImages() {
 		return images;
 	}
 }

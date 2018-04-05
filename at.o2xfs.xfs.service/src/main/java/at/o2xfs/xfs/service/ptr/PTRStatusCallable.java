@@ -33,16 +33,15 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.ptr.PTRInfoCommand;
-import at.o2xfs.xfs.ptr.WFSPTRSTATUS;
+import at.o2xfs.xfs.ptr.PtrInfoCommand;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
+import at.o2xfs.xfs.v3_00.ptr.PtrStatus3;
 
-public class PTRStatusCallable implements Callable<WFSPTRSTATUS> {
+public class PTRStatusCallable implements Callable<PtrStatus3> {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(PTRStatusCallable.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PTRStatusCallable.class);
 
 	private final PTRService ptrService;
 
@@ -54,18 +53,17 @@ public class PTRStatusCallable implements Callable<WFSPTRSTATUS> {
 	}
 
 	@Override
-	public WFSPTRSTATUS call() throws XfsException {
-		final XfsCommand infoCommand = new XfsInfoCommand(ptrService,
-				PTRInfoCommand.STATUS);
+	public PtrStatus3 call() throws XfsException {
+		final XfsCommand infoCommand = new XfsInfoCommand<>(ptrService, PtrInfoCommand.STATUS);
 		final WFSResult wfsResult = infoCommand.call();
 		try {
-			final WFSPTRSTATUS status = new WFSPTRSTATUS(
-					ptrService.getXfsVersion(), wfsResult.getResults());
+			final PtrStatus3 result = PtrFactory.create(ptrService.getXfsVersion(), wfsResult.getResults(),
+					PtrStatus3.class);
 			if (LOG.isInfoEnabled()) {
 				final String method = "call()";
-				LOG.info(method, "WFSPTRSTATUS: " + status);
+				LOG.info(method, "result=" + result);
 			}
-			return new WFSPTRSTATUS(ptrService.getXfsVersion(), status);
+			return result;
 		} finally {
 			if (wfsResult != null) {
 				XfsServiceManager.getInstance().free(wfsResult);

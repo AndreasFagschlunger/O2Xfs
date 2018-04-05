@@ -30,10 +30,12 @@ package at.o2xfs.operator.task.xfs.ptr;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.ptr.PTRPaper;
-import at.o2xfs.xfs.ptr.WFSPTRSTATUS;
+import at.o2xfs.xfs.ptr.PaperStatus;
 import at.o2xfs.xfs.service.ptr.PTRService;
 import at.o2xfs.xfs.service.ptr.PTRStatusCallable;
+import at.o2xfs.xfs.v3_00.ptr.PtrStatus3;
+import at.o2xfs.xfs.v3_10.ptr.PtrStatus310;
+import at.o2xfs.xfs.v3_20.ptr.PtrStatus320;
 
 public class PTRStatusTask extends PTRServiceTask {
 
@@ -51,7 +53,7 @@ public class PTRStatusTask extends PTRServiceTask {
 	protected void execute() {
 		table = new Table(getClass(), "Component", "Value");
 		try {
-			final WFSPTRSTATUS status = new PTRStatusCallable(service).call();
+			final PtrStatus3 status = new PTRStatusCallable(service).call();
 			addRow("Device", status.getDevice());
 			addRow("Media", status.getMedia());
 			addPaperSupplyStates(status.getPaper());
@@ -61,20 +63,26 @@ public class PTRStatusTask extends PTRServiceTask {
 			addRow("RetractBins", status.getRetractBins());
 			addRow("MediaOnStacker", status.getMediaOnStacker());
 			addRow("Extra", status.getExtra());
-			addRow("GuidLights", status.getGuidLights());
-			addRow("DevicePosition", status.getDevicePosition());
-			addRow("PowerSaveRecoveryTime", status.getPowerSaveRecoveryTime());
-			addRow("PaperType", status.getPaperType());
-			addRow("AntiFraudModule", status.getAntiFraudModule());
+			if (status instanceof PtrStatus310) {
+				PtrStatus310 status310 = (PtrStatus310) status;
+				addRow("GuidLights", status310.getGuidLights());
+				addRow("DevicePosition", status310.getDevicePosition());
+				addRow("PowerSaveRecoveryTime", status310.getPowerSaveRecoveryTime());
+			}
+			if (status instanceof PtrStatus320) {
+				PtrStatus320 status320 = (PtrStatus320) status;
+				addRow("PaperTypes", status320.getPaperTypes());
+				addRow("AntiFraudModule", status320.getAntiFraudModule());
+			}
 			getContent().setUIElement(table);
 		} catch (final XfsException e) {
 			showException(e);
 		}
 	}
 
-	private void addPaperSupplyStates(final PTRPaper[] paperStates) {
+	private void addPaperSupplyStates(final PaperStatus[] paperStates) {
 		for (int i = 0; i < paperStates.length; i++) {
-			if (PTRPaper.NOTSUPP.equals(paperStates[i])) {
+			if (PaperStatus.NOTSUPP.equals(paperStates[i])) {
 				continue;
 			}
 			addRow("Paper_" + i, paperStates[i]);

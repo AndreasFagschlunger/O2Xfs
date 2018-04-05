@@ -33,11 +33,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.ptr.AntiFraudModule;
+import at.o2xfs.xfs.ptr.PaperType;
+import at.o2xfs.xfs.ptr.PtrConstant;
 import at.o2xfs.xfs.v3_10.ptr.PtrStatus310;
 import at.o2xfs.xfs.win32.XfsWord;
+import at.o2xfs.xfs.win32.XfsWordArray;
 
 public class PtrStatus320 extends PtrStatus310 {
 
+	protected final XfsWordArray<PaperType> paperTypes = new XfsWordArray<>(PaperType.class, PtrConstant.SUPPLYSIZE);
 	protected final XfsWord<AntiFraudModule> antiFraudModule = new XfsWord<>(AntiFraudModule.class);
 
 	protected PtrStatus320() {
@@ -57,7 +61,12 @@ public class PtrStatus320 extends PtrStatus310 {
 
 	protected void set(PtrStatus320 copy) {
 		super.set(copy);
+		paperTypes.set(copy.getPaperTypes());
 		antiFraudModule.set(copy.getAntiFraudModule());
+	}
+
+	public XfsWordArray<PaperType> getPaperTypes() {
+		return paperTypes;
 	}
 
 	public AntiFraudModule getAntiFraudModule() {
@@ -66,7 +75,11 @@ public class PtrStatus320 extends PtrStatus310 {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().appendSuper(super.hashCode()).append(getAntiFraudModule()).toHashCode();
+		return new HashCodeBuilder()
+				.appendSuper(super.hashCode())
+				.append(getPaperTypes())
+				.append(getAntiFraudModule())
+				.toHashCode();
 	}
 
 	@Override
@@ -75,6 +88,7 @@ public class PtrStatus320 extends PtrStatus310 {
 			PtrStatus320 ptrStatus320 = (PtrStatus320) obj;
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
+					.append(getPaperTypes(), ptrStatus320.getPaperTypes())
 					.append(getAntiFraudModule(), ptrStatus320.getAntiFraudModule())
 					.isEquals();
 		}
@@ -85,6 +99,7 @@ public class PtrStatus320 extends PtrStatus310 {
 	public String toString() {
 		return new ToStringBuilder(this)
 				.appendSuper(super.toString())
+				.append("paperTypes", getPaperTypes())
 				.append("antiFraudModule", getAntiFraudModule())
 				.toString();
 	}

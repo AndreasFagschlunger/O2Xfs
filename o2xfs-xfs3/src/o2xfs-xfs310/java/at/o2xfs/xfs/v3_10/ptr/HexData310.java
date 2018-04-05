@@ -51,6 +51,10 @@ public class HexData310 extends Struct {
 		assignBuffer(p);
 	}
 
+	public HexData310(HexData310 copy) {
+		this(copy.getBytes());
+	}
+
 	public HexData310(byte[] copy) {
 		this();
 		allocate();

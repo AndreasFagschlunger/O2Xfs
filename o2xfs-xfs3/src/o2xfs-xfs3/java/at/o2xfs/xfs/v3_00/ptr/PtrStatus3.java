@@ -42,6 +42,7 @@ import at.o2xfs.xfs.ptr.Ink;
 import at.o2xfs.xfs.ptr.Lamp;
 import at.o2xfs.xfs.ptr.MediaPosition;
 import at.o2xfs.xfs.ptr.PaperStatus;
+import at.o2xfs.xfs.ptr.PtrConstant;
 import at.o2xfs.xfs.ptr.PtrDeviceState;
 import at.o2xfs.xfs.ptr.Toner;
 import at.o2xfs.xfs.win32.XfsWord;
@@ -49,11 +50,9 @@ import at.o2xfs.xfs.win32.XfsWordArray;
 
 public class PtrStatus3 extends Struct {
 
-	private static final int SUPPLYSIZE = 16;
-
 	protected final XfsWord<PtrDeviceState> device = new XfsWord<>(PtrDeviceState.class);
 	protected final XfsWord<MediaPosition> media = new XfsWord<>(MediaPosition.class);
-	protected final XfsWordArray<PaperStatus> paper = new XfsWordArray<>(PaperStatus.class, SUPPLYSIZE);
+	protected final XfsWordArray<PaperStatus> paper = new XfsWordArray<>(PaperStatus.class, PtrConstant.SUPPLYSIZE);
 	protected final XfsWord<Toner> toner = new XfsWord<>(Toner.class);
 	protected final XfsWord<Ink> ink = new XfsWord<>(Ink.class);
 	protected final XfsWord<Lamp> lamp = new XfsWord<>(Lamp.class);

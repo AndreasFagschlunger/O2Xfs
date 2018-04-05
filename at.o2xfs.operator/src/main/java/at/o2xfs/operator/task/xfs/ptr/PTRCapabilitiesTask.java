@@ -32,9 +32,9 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.ptr.WFSPTRCAPS;
 import at.o2xfs.xfs.service.ptr.PTRCapabilitiesCallable;
 import at.o2xfs.xfs.service.ptr.PTRService;
+import at.o2xfs.xfs.v3_00.ptr.PtrCapabilities3;
 
 public class PTRCapabilitiesTask extends PTRServiceTask {
 
@@ -54,41 +54,32 @@ public class PTRCapabilitiesTask extends PTRServiceTask {
 	protected void execute() {
 		final String method = "execute()";
 		try {
-			final WFSPTRCAPS caps = new PTRCapabilitiesCallable(service).call();
+			final PtrCapabilities3 caps = new PTRCapabilitiesCallable(service).call();
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(method, "caps=" + caps);
 			}
 			table = new Table(getClass(), "Capability", "Value");
 			addRow("ServiceClass", caps.getServiceClass());
-			addRow("Type", caps.getType());
+			addRow("Type", caps.getTypes());
 			addRow("Compound", caps.isCompound());
-			addRow("Resolution", caps.getResolution());
-			addRow("ReadForm", caps.getReadForm());
-			addRow("WriteForm", caps.getWriteForm());
+			addRow("Resolution", caps.getResolutions());
+			addRow("ReadForm", caps.getReadForms());
+			addRow("WriteForm", caps.getWriteForms());
 			addRow("Extents", caps.getExtents());
-			addRow("Control", caps.getControl());
+			addRow("Control", caps.getControls());
 			addRow("MaxMediaOnStacker", caps.getMaxMediaOnStacker());
 			addRow("AcceptMedia", caps.isAcceptMedia());
 			addRow("MultiPage", caps.isMultiPage());
 			addRow("PaperSources", caps.getPaperSources());
 			addRow("MediaTaken", caps.isMediaTaken());
-			addRow("MaxRetracts", caps.getMaxRetracts());
-			addRow("ImageType", caps.getImageType());
-			addRow("FrontImageColorFormat", caps.getFrontImageColorFormat());
-			addRow("BackImageColorFormat", caps.getBackImageColorFormat());
-			addRow("CodelineFormat", caps.getCodelineFormat());
-			addRow("ImageSource", caps.getImageSource());
+			addRow("ImageType", caps.getImageTypes());
+			addRow("FrontImageColorFormat", caps.getFrontImageColorFormats());
+			addRow("BackImageColorFormat", caps.getBackImageColorFormats());
+			addRow("CodelineFormat", caps.getCodelineFormats());
+			addRow("ImageSource", caps.getImageSources());
 			addRow("CharSupport", caps.getCharSupport());
 			addRow("DispensePaper", caps.isDispensePaper());
 			addRow("Extra", caps.getExtra());
-			addRow("GuidLights", caps.getGuidLights());
-			addRow("WindowsPrinter", caps.getWindowsPrinter());
-			addRow("MediaPresented", caps.isMediaPresented());
-			addRow("AutoRetractPeriod", caps.getAutoRetractPeriod());
-			addRow("RetractToTransport", caps.isRetractToTransport());
-			addRow("PowerSaveControl", caps.isPowerSaveControl());
-			addRow("CoercivityType", caps.getCoercivityType());
-			addRow("ControlPassbook", caps.getControlPassbook());
 			getContent().setUIElement(table);
 		} catch (final XfsException e) {
 			showException(e);
