@@ -28,58 +28,52 @@
 package at.o2xfs.xfs.ptr;
 
 import at.o2xfs.xfs.XfsConstant;
-import at.o2xfs.xfs.XfsDeviceState;
 
-public enum PtrDeviceState implements XfsConstant {
-
-	/*
-	 * @since v3.00
-	 */
-	ONLINE(XfsDeviceState.ONLINE.getValue()),
+public enum PtrInfoCommand implements XfsConstant {
 
 	/*
 	 * @since v3.00
 	 */
-	OFFLINE(XfsDeviceState.OFFLINE.getValue()),
+	STATUS(101L),
 
 	/*
 	 * @since v3.00
 	 */
-	POWEROFF(XfsDeviceState.POWEROFF.getValue()),
+	CAPABILITIES(102L),
 
 	/*
 	 * @since v3.00
 	 */
-	NODEVICE(XfsDeviceState.NODEVICE.getValue()),
+	FORM_LIST(103L),
 
 	/*
 	 * @since v3.00
 	 */
-	HWERROR(XfsDeviceState.HWERROR.getValue()),
+	MEDIA_LIST(104L),
 
 	/*
 	 * @since v3.00
 	 */
-	USERERROR(XfsDeviceState.USERERROR.getValue()),
+	QUERY_FORM(105L),
 
 	/*
 	 * @since v3.00
 	 */
-	BUSY(XfsDeviceState.BUSY.getValue()),
+	QUERY_MEDIA(106L),
+
+	/*
+	 * @since v3.00
+	 */
+	QUERY_FIELD(107L),
 
 	/*
 	 * @since v3.10
 	 */
-	FRAUDATTEMPT(XfsDeviceState.FRAUDATTEMPT.getValue()),
-
-	/*
-	 * @since v3.20
-	 */
-	POTENTIALFRAUD(XfsDeviceState.POTENTIALFRAUD.getValue());
+	CODELINE_MAPPING(108L);
 
 	private final long value;
 
-	private PtrDeviceState(final long value) {
+	private PtrInfoCommand(final long value) {
 		this.value = value;
 	}
 

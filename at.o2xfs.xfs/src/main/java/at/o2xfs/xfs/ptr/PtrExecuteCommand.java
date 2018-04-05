@@ -28,58 +28,102 @@
 package at.o2xfs.xfs.ptr;
 
 import at.o2xfs.xfs.XfsConstant;
-import at.o2xfs.xfs.XfsDeviceState;
 
-public enum PtrDeviceState implements XfsConstant {
-
-	/*
-	 * @since v3.00
-	 */
-	ONLINE(XfsDeviceState.ONLINE.getValue()),
+public enum PtrExecuteCommand implements XfsConstant {
 
 	/*
 	 * @since v3.00
 	 */
-	OFFLINE(XfsDeviceState.OFFLINE.getValue()),
+	CONTROL_MEDIA(101L),
 
 	/*
 	 * @since v3.00
 	 */
-	POWEROFF(XfsDeviceState.POWEROFF.getValue()),
+	PRINT_FORM(102L),
 
 	/*
 	 * @since v3.00
 	 */
-	NODEVICE(XfsDeviceState.NODEVICE.getValue()),
+	READ_FORM(103L),
 
 	/*
 	 * @since v3.00
 	 */
-	HWERROR(XfsDeviceState.HWERROR.getValue()),
+	RAW_DATA(104L),
 
 	/*
 	 * @since v3.00
 	 */
-	USERERROR(XfsDeviceState.USERERROR.getValue()),
+	MEDIA_EXTENTS(105L),
 
 	/*
 	 * @since v3.00
 	 */
-	BUSY(XfsDeviceState.BUSY.getValue()),
+	RESET_COUNT(106L),
+
+	/*
+	 * @since v3.00
+	 */
+	READ_IMAGE(107L),
+
+	/*
+	 * @since v3.00
+	 */
+	RESET(108L),
+
+	/*
+	 * @since v3.00
+	 */
+	RETRACT_MEDIA(109L),
+
+	/*
+	 * @since v3.00
+	 */
+	DISPENSE_PAPER(110L),
 
 	/*
 	 * @since v3.10
 	 */
-	FRAUDATTEMPT(XfsDeviceState.FRAUDATTEMPT.getValue()),
+	SET_GUIDANCE_LIGHT(111L),
+
+	/*
+	 * @since v3.10
+	 */
+	PRINT_RAW_FILE(112L),
+
+	/*
+	 * @since v3.10
+	 */
+	LOAD_DEFINITION(113L),
+
+	/*
+	 * @since v3.10
+	 */
+	SUPPLY_REPLENISH(114L),
+
+	/*
+	 * @since v3.10
+	 */
+	POWER_SAVE_CONTROL(115L),
 
 	/*
 	 * @since v3.20
 	 */
-	POTENTIALFRAUD(XfsDeviceState.POTENTIALFRAUD.getValue());
+	CONTROL_PASSBOOK(116L),
+
+	/*
+	 * @since v3.30
+	 */
+	SET_BLACK_MARK_MODE(117L),
+
+	/*
+	 * @since v3.30
+	 */
+	SYNCHRONIZE_COMMAND(118L);
 
 	private final long value;
 
-	private PtrDeviceState(final long value) {
+	private PtrExecuteCommand(final long value) {
 		this.value = value;
 	}
 
