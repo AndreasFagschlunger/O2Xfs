@@ -45,6 +45,7 @@ public class PtrStatus320 extends PtrStatus310 {
 	protected final XfsWord<AntiFraudModule> antiFraudModule = new XfsWord<>(AntiFraudModule.class);
 
 	protected PtrStatus320() {
+		add(paperTypes);
 		add(antiFraudModule);
 	}
 
