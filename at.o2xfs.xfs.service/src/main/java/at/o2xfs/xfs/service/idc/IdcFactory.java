@@ -111,9 +111,9 @@ public enum IdcFactory {
 
 	private Capabilities3 createCapabilities(XfsVersion xfsVersion, Pointer p) {
 		Capabilities3 result;
-		if (XfsVersion.V3_30.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_30) >= 0) {
 			result = new Capabilities330(new Capabilities330(p));
-		} else if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
+		} else if (xfsVersion.compareTo(XfsVersion.V3_10) >= 0) {
 			result = new Capabilities310(new Capabilities310(p));
 		} else {
 			result = new Capabilities3(new Capabilities3(p));
@@ -123,7 +123,7 @@ public enum IdcFactory {
 
 	private Form3 createForm(XfsVersion xfsVersion, Pointer p) {
 		Form3 result;
-		if (XfsVersion.V3_20.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_20) >= 0) {
 			result = new Form320(new Form320(p));
 		} else {
 			result = new Form3(new Form3(p));
@@ -133,9 +133,9 @@ public enum IdcFactory {
 
 	private Status3 createStatus(XfsVersion xfsVersion, Pointer p) {
 		Status3 result;
-		if (XfsVersion.V3_20.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_20) >= 0) {
 			result = new Status320(new Status320(p));
-		} else if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
+		} else if (xfsVersion.compareTo(XfsVersion.V3_10) >= 0) {
 			result = new Status310(new Status310(p));
 		} else {
 			result = new Status3(new Status3(p));

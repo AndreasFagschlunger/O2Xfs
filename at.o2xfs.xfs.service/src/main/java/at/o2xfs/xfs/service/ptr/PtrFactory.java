@@ -199,9 +199,9 @@ public enum PtrFactory {
 
 	private FormField3 createFormField(Pointer p, XfsVersion xfsVersion) {
 		FormField3 result;
-		if (XfsVersion.V3_20.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_20) >= 0) {
 			result = new FormField320(new FormField320(p));
-		} else if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
+		} else if (xfsVersion.compareTo(XfsVersion.V3_10) >= 0) {
 			result = new FormField310(new FormField310(p));
 		} else {
 			result = new FormField3(new FormField3(p));
@@ -211,7 +211,7 @@ public enum PtrFactory {
 
 	private FormHeader3 createFormHeader(Pointer p, XfsVersion xfsVersion) {
 		FormHeader3 result;
-		if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_10) >= 0) {
 			result = new FormHeader310(new FormHeader310(p));
 		} else {
 			result = new FormHeader3(new FormHeader3(p));
@@ -285,11 +285,11 @@ public enum PtrFactory {
 
 	private PtrCapabilities3 createPtrCapabilities(Pointer p, XfsVersion xfsVersion) {
 		PtrCapabilities3 result;
-		if (XfsVersion.V3_30.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_30) >= 0) {
 			result = new PtrCapabilities330(new PtrCapabilities330(p));
-		} else if (XfsVersion.V3_20.compareTo(xfsVersion) >= 0) {
+		} else if (xfsVersion.compareTo(XfsVersion.V3_20) >= 0) {
 			result = new PtrCapabilities320(new PtrCapabilities320(p));
-		} else if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
+		} else if (xfsVersion.compareTo(XfsVersion.V3_10) >= 0) {
 			result = new PtrCapabilities310(new PtrCapabilities310(p));
 		} else {
 			result = new PtrCapabilities3(new PtrCapabilities3(p));
@@ -299,11 +299,11 @@ public enum PtrFactory {
 
 	private PtrStatus3 createPtrStatus(Pointer p, XfsVersion xfsVersion) {
 		PtrStatus3 result;
-		if (XfsVersion.V3_30.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_30) >= 0) {
 			result = new PtrStatus330(new PtrStatus330(p));
-		} else if (XfsVersion.V3_20.compareTo(xfsVersion) >= 0) {
+		} else if (xfsVersion.compareTo(XfsVersion.V3_20) >= 0) {
 			result = new PtrStatus320(new PtrStatus320(p));
-		} else if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
+		} else if (xfsVersion.compareTo(XfsVersion.V3_10) >= 0) {
 			result = new PtrStatus310(new PtrStatus310(p));
 		} else {
 			result = new PtrStatus3(new PtrStatus3(p));

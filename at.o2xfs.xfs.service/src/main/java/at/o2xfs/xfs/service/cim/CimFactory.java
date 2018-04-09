@@ -163,11 +163,11 @@ public enum CimFactory {
 
 	private Capabilities3 createCapabilities(XfsVersion xfsVersion, Pointer p) {
 		Capabilities3 result;
-		if (XfsVersion.V3_30.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_30) >= 0) {
 			result = new Capabilities330(new Capabilities330(p));
-		} else if (XfsVersion.V3_20.compareTo(xfsVersion) >= 0) {
+		} else if (xfsVersion.compareTo(XfsVersion.V3_20) >= 0) {
 			result = new Capabilities320(new Capabilities320(p));
-		} else if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
+		} else if (xfsVersion.compareTo(XfsVersion.V3_10) >= 0) {
 			result = new Capabilities310(new Capabilities310(p));
 		} else {
 			result = new Capabilities3(new Capabilities3(p));
@@ -177,7 +177,7 @@ public enum CimFactory {
 
 	private CashIn3 createCashIn(XfsVersion xfsVersion, Pointer p) {
 		CashIn3 result;
-		if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_10) >= 0) {
 			result = new CashIn310(new CashIn310(p));
 		} else {
 			result = new CashIn3(new CashIn3(p));
@@ -239,7 +239,7 @@ public enum CimFactory {
 
 	private ItemInfo310 createItemInfo(XfsVersion xfsVersion, Pointer p) {
 		ItemInfo310 result;
-		if (XfsVersion.V3_30.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_30) >= 0) {
 			result = new ItemInfo330(new ItemInfo330(p));
 		} else {
 			result = new ItemInfo310(new ItemInfo310(p));
@@ -301,9 +301,9 @@ public enum CimFactory {
 
 	private Status3 createStatus(XfsVersion xfsVersion, Pointer p) {
 		Status3 result;
-		if (XfsVersion.V3_20.compareTo(xfsVersion) >= 0) {
+		if (xfsVersion.compareTo(XfsVersion.V3_20) >= 0) {
 			result = new Status320(new Status320(p));
-		} else if (XfsVersion.V3_10.compareTo(xfsVersion) >= 0) {
+		} else if (xfsVersion.compareTo(XfsVersion.V3_10) >= 0) {
 			result = new Status310(new Status310(p));
 		} else {
 			result = new Status3(new Status3(p));
