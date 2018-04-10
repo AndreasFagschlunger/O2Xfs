@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.v3_30.ptr;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -42,13 +43,11 @@ import at.o2xfs.xfs.win32.XfsDWordBitmask;
 
 public class PtrCapabilities330 extends PtrCapabilities320 {
 
-	protected final BOOL antiFraudModule = new BOOL();
 	protected final XfsDWordBitmask<MediaControl> controlEx = new XfsDWordBitmask<>(MediaControl.class);
 	protected final BOOL blackMarkModeSupported = new BOOL();
 	protected final Pointer synchronizableCommands = new Pointer();
 
 	protected PtrCapabilities330() {
-		add(antiFraudModule);
 		add(controlEx);
 		add(blackMarkModeSupported);
 		add(synchronizableCommands);
@@ -67,14 +66,12 @@ public class PtrCapabilities330 extends PtrCapabilities320 {
 
 	protected void set(PtrCapabilities330 copy) {
 		super.set(copy);
-		antiFraudModule.set(copy.isAntiFraudModule());
 		controlEx.set(copy.getControlEx());
 		blackMarkModeSupported.set(copy.isBlackMarkModeSupported());
-		synchronizableCommands.pointTo(new SynchronizableCommands(copy.getSynchronizableCommands()));
-	}
-
-	public boolean isAntiFraudModule() {
-		return antiFraudModule.get();
+		Optional<PtrExecuteCommand[]> synchronizableCommands = copy.getSynchronizableCommands();
+		if (synchronizableCommands.isPresent()) {
+			this.synchronizableCommands.pointTo(new SynchronizableCommands(synchronizableCommands.get()));
+		}
 	}
 
 	public Set<MediaControl> getControlEx() {
@@ -85,18 +82,21 @@ public class PtrCapabilities330 extends PtrCapabilities320 {
 		return blackMarkModeSupported.get();
 	}
 
-	public PtrExecuteCommand[] getSynchronizableCommands() {
-		return new SynchronizableCommands(synchronizableCommands).get();
+	public Optional<PtrExecuteCommand[]> getSynchronizableCommands() {
+		Optional<PtrExecuteCommand[]> result = Optional.empty();
+		if (!Pointer.NULL.equals(synchronizableCommands)) {
+			result = Optional.of(new SynchronizableCommands(synchronizableCommands).get());
+		}
+		return result;
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
 				.appendSuper(super.hashCode())
-				.append(isAntiFraudModule())
 				.append(getControlEx())
 				.append(isBlackMarkModeSupported())
-				.append(getSynchronizableCommands())
+				.append(getSynchronizableCommands().orElse(null))
 				.toHashCode();
 	}
 
@@ -106,10 +106,10 @@ public class PtrCapabilities330 extends PtrCapabilities320 {
 			PtrCapabilities330 ptrCapabilities330 = (PtrCapabilities330) obj;
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
-					.append(isAntiFraudModule(), ptrCapabilities330.isAntiFraudModule())
 					.append(getControlEx(), ptrCapabilities330.getControlEx())
 					.append(isBlackMarkModeSupported(), ptrCapabilities330.isBlackMarkModeSupported())
-					.append(getSynchronizableCommands(), ptrCapabilities330.getSynchronizableCommands())
+					.append(getSynchronizableCommands().orElse(null),
+							ptrCapabilities330.getSynchronizableCommands().orElse(null))
 					.isEquals();
 		}
 		return false;
@@ -119,7 +119,6 @@ public class PtrCapabilities330 extends PtrCapabilities320 {
 	public String toString() {
 		return new ToStringBuilder(this)
 				.appendSuper(super.toString())
-				.append("antiFraudModule", isAntiFraudModule())
 				.append("controlEx", getControlEx())
 				.append("blackMarkModeSupported", isBlackMarkModeSupported())
 				.append("synchronizableCommands", getSynchronizableCommands())

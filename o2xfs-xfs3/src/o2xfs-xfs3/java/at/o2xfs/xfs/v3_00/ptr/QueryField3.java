@@ -27,6 +27,8 @@
 
 package at.o2xfs.xfs.v3_00.ptr;
 
+import java.util.Optional;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -58,15 +60,22 @@ public class QueryField3 extends Struct {
 
 	protected void set(QueryField3 copy) {
 		formName.set(copy.getFormName());
-		fieldName.set(copy.getFieldName());
+		Optional<String> fieldName = copy.getFieldName();
+		if (fieldName.isPresent()) {
+			this.fieldName.set(fieldName.get());
+		}
 	}
 
 	public String getFormName() {
 		return formName.get();
 	}
 
-	public String getFieldName() {
-		return fieldName.get();
+	public Optional<String> getFieldName() {
+		Optional<String> result = Optional.empty();
+		if (!Pointer.NULL.equals(fieldName)) {
+			result = Optional.of(fieldName.get());
+		}
+		return result;
 	}
 
 	@Override

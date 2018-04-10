@@ -27,19 +27,21 @@
 
 package at.o2xfs.xfs.v3_00.ptr;
 
+import java.util.Map;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import at.o2xfs.win32.LPSTR;
-import at.o2xfs.win32.LPWSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
+import at.o2xfs.xfs.XfsExtra;
+import at.o2xfs.xfs.win32.XfsUnicodeMap;
 
 public class ReadFormOut3 extends Struct {
 
-	protected final LPSTR fields = new LPSTR();
-	protected final LPWSTR unicodeFields = new LPWSTR();
+	protected final XfsExtra fields = new XfsExtra();
+	protected final XfsUnicodeMap unicodeFields = new XfsUnicodeMap();
 
 	protected ReadFormOut3() {
 		add(fields);
@@ -62,11 +64,11 @@ public class ReadFormOut3 extends Struct {
 		unicodeFields.set(copy.getUnicodeFields());
 	}
 
-	public String getFields() {
+	public Map<String, String> getFields() {
 		return fields.get();
 	}
 
-	public String getUnicodeFields() {
+	public Map<String, String> getUnicodeFields() {
 		return unicodeFields.get();
 	}
 

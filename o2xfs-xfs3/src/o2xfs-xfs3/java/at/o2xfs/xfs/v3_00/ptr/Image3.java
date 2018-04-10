@@ -27,6 +27,8 @@
 
 package at.o2xfs.xfs.v3_00.ptr;
 
+import java.util.Optional;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -67,8 +69,11 @@ public class Image3 extends Struct {
 	protected void set(Image3 copy) {
 		imageSource.set(copy.getImageSource());
 		status.set(copy.getStatus());
-		dataLength.set(copy.getDataLength());
-		data.pointTo(new ByteArray(copy.getData()));
+		dataLength.set(copy.dataLength);
+		Optional<byte[]> data = copy.getData();
+		if (data.isPresent()) {
+			this.data.pointTo(new ByteArray(data.get()));
+		}
 	}
 
 	public ImageSource getImageSource() {
@@ -83,8 +88,12 @@ public class Image3 extends Struct {
 		return dataLength.get();
 	}
 
-	public byte[] getData() {
-		return data.buffer(dataLength.intValue()).get();
+	public Optional<byte[]> getData() {
+		Optional<byte[]> result = Optional.empty();
+		if (!Pointer.NULL.equals(data)) {
+			result = Optional.of(data.buffer(dataLength.intValue()).get());
+		}
+		return result;
 	}
 
 	@Override
@@ -93,7 +102,7 @@ public class Image3 extends Struct {
 				.append(getImageSource())
 				.append(getStatus())
 				.append(getDataLength())
-				.append(getData())
+				.append(getData().orElse(null))
 				.toHashCode();
 	}
 
@@ -105,7 +114,7 @@ public class Image3 extends Struct {
 					.append(getImageSource(), image3.getImageSource())
 					.append(getStatus(), image3.getStatus())
 					.append(getDataLength(), image3.getDataLength())
-					.append(getData(), image3.getData())
+					.append(getData().orElse(null), image3.getData().orElse(null))
 					.isEquals();
 		}
 		return false;

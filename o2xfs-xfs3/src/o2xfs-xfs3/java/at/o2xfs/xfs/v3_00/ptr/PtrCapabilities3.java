@@ -41,11 +41,11 @@ import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.UShortArray;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsExtra;
-import at.o2xfs.xfs.ptr.BackImageColorFormat;
-import at.o2xfs.xfs.ptr.BackImageFormat;
 import at.o2xfs.xfs.ptr.CharSupport;
 import at.o2xfs.xfs.ptr.CodelineFormat;
 import at.o2xfs.xfs.ptr.Extents;
+import at.o2xfs.xfs.ptr.ImageColorFormat;
+import at.o2xfs.xfs.ptr.ImageFormat;
 import at.o2xfs.xfs.ptr.ImageSource;
 import at.o2xfs.xfs.ptr.MediaControl;
 import at.o2xfs.xfs.ptr.PaperSource;
@@ -53,7 +53,6 @@ import at.o2xfs.xfs.ptr.ReadForm;
 import at.o2xfs.xfs.ptr.Resolution;
 import at.o2xfs.xfs.ptr.Type;
 import at.o2xfs.xfs.ptr.WriteForm;
-import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 public class PtrCapabilities3 extends Struct {
@@ -73,14 +72,14 @@ public class PtrCapabilities3 extends Struct {
 	protected final BOOL mediaTaken = new BOOL();
 	protected final USHORT retractBins = new USHORT();
 	protected final Pointer maxRetract = new Pointer();
-	protected final XfsWordBitmask<BackImageFormat> imageTypes = new XfsWordBitmask<>(BackImageFormat.class);
-	protected final XfsWordBitmask<BackImageColorFormat> frontImageColorFormats = new XfsWordBitmask<>(
-			BackImageColorFormat.class);
-	protected final XfsWordBitmask<BackImageColorFormat> backImageColorFormats = new XfsWordBitmask<>(
-			BackImageColorFormat.class);
+	protected final XfsWordBitmask<ImageFormat> imageTypes = new XfsWordBitmask<>(ImageFormat.class);
+	protected final XfsWordBitmask<ImageColorFormat> frontImageColorFormats = new XfsWordBitmask<>(
+			ImageColorFormat.class);
+	protected final XfsWordBitmask<ImageColorFormat> backImageColorFormats = new XfsWordBitmask<>(
+			ImageColorFormat.class);
 	protected final XfsWordBitmask<CodelineFormat> codelineFormats = new XfsWordBitmask<>(CodelineFormat.class);
 	protected final XfsWordBitmask<ImageSource> imageSources = new XfsWordBitmask<>(ImageSource.class);
-	protected final XfsWord<CharSupport> charSupport = new XfsWord<>(CharSupport.class);
+	protected final XfsWordBitmask<CharSupport> charSupport = new XfsWordBitmask<>(CharSupport.class);
 	protected final BOOL dispensePaper = new BOOL();
 	protected final XfsExtra extra = new XfsExtra();
 
@@ -207,15 +206,15 @@ public class PtrCapabilities3 extends Struct {
 		return new UShortArray(maxRetract, getRetractBins()).get();
 	}
 
-	public Set<BackImageFormat> getImageTypes() {
+	public Set<ImageFormat> getImageTypes() {
 		return imageTypes.get();
 	}
 
-	public Set<BackImageColorFormat> getFrontImageColorFormats() {
+	public Set<ImageColorFormat> getFrontImageColorFormats() {
 		return frontImageColorFormats.get();
 	}
 
-	public Set<BackImageColorFormat> getBackImageColorFormats() {
+	public Set<ImageColorFormat> getBackImageColorFormats() {
 		return backImageColorFormats.get();
 	}
 
@@ -227,7 +226,7 @@ public class PtrCapabilities3 extends Struct {
 		return imageSources.get();
 	}
 
-	public CharSupport getCharSupport() {
+	public Set<CharSupport> getCharSupport() {
 		return charSupport.get();
 	}
 

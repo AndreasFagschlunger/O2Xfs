@@ -52,7 +52,7 @@ public class HexData310 extends Struct {
 	}
 
 	public HexData310(HexData310 copy) {
-		this(copy.getBytes());
+		this(copy.getData());
 	}
 
 	public HexData310(byte[] copy) {

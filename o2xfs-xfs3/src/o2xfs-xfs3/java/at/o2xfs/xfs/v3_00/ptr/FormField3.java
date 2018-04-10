@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.v3_00.ptr;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -34,13 +35,14 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPSTR;
+import at.o2xfs.win32.LPWSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
+import at.o2xfs.xfs.ptr.FieldType;
 import at.o2xfs.xfs.ptr.FormAccess;
 import at.o2xfs.xfs.ptr.FormClass;
 import at.o2xfs.xfs.ptr.FormOverflow;
-import at.o2xfs.xfs.ptr.FieldType;
 import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
@@ -49,13 +51,13 @@ public class FormField3 extends Struct {
 	protected final LPSTR fieldName = new LPSTR();
 	protected final WORD indexCount = new WORD();
 	protected final XfsWord<FieldType> type = new XfsWord<>(FieldType.class);
-	protected final XfsWordBitmask<FormClass> serviceClass = new XfsWordBitmask<>(FormClass.class);
+	protected final XfsWord<FormClass> serviceClass = new XfsWord<>(FormClass.class);
 	protected final XfsWordBitmask<FormAccess> access = new XfsWordBitmask<>(FormAccess.class);
 	protected final XfsWord<FormOverflow> overflow = new XfsWord<>(FormOverflow.class);
 	protected final LPSTR initialValue = new LPSTR();
-	protected final LPSTR uNICODEInitialValue = new LPSTR();
+	protected final LPWSTR unicodeInitialValue = new LPWSTR();
 	protected final LPSTR format = new LPSTR();
-	protected final LPSTR uNICODEFormat = new LPSTR();
+	protected final LPWSTR unicodeFormat = new LPWSTR();
 
 	protected FormField3() {
 		add(fieldName);
@@ -65,9 +67,9 @@ public class FormField3 extends Struct {
 		add(access);
 		add(overflow);
 		add(initialValue);
-		add(uNICODEInitialValue);
+		add(unicodeInitialValue);
 		add(format);
-		add(uNICODEFormat);
+		add(unicodeFormat);
 	}
 
 	public FormField3(Pointer p) {
@@ -88,10 +90,22 @@ public class FormField3 extends Struct {
 		serviceClass.set(copy.getServiceClass());
 		access.set(copy.getAccess());
 		overflow.set(copy.getOverflow());
-		initialValue.set(copy.getInitialValue());
-		uNICODEInitialValue.set(copy.getUNICODEInitialValue());
-		format.set(copy.getFormat());
-		uNICODEFormat.set(copy.getUNICODEFormat());
+		Optional<String> initialValue = copy.getInitialValue();
+		if (initialValue.isPresent()) {
+			this.initialValue.set(initialValue.get());
+		}
+		Optional<String> unicodeInitialValue = copy.getUnicodeInitialValue();
+		if (unicodeInitialValue.isPresent()) {
+			this.unicodeInitialValue.set(unicodeInitialValue.get());
+		}
+		Optional<String> format = copy.getFormat();
+		if (format.isPresent()) {
+			this.format.set(format.get());
+		}
+		Optional<String> unicodeFormat = copy.getUnicodeFormat();
+		if (unicodeFormat.isPresent()) {
+			this.unicodeFormat.set(unicodeFormat.get());
+		}
 	}
 
 	public String getFieldName() {
@@ -106,7 +120,7 @@ public class FormField3 extends Struct {
 		return type.get();
 	}
 
-	public Set<FormClass> getServiceClass() {
+	public FormClass getServiceClass() {
 		return serviceClass.get();
 	}
 
@@ -118,20 +132,20 @@ public class FormField3 extends Struct {
 		return overflow.get();
 	}
 
-	public String getInitialValue() {
-		return initialValue.get();
+	public Optional<String> getInitialValue() {
+		return Optional.ofNullable(initialValue.get());
 	}
 
-	public String getUNICODEInitialValue() {
-		return uNICODEInitialValue.get();
+	public Optional<String> getUnicodeInitialValue() {
+		return Optional.ofNullable(unicodeInitialValue.get());
 	}
 
-	public String getFormat() {
-		return format.get();
+	public Optional<String> getFormat() {
+		return Optional.ofNullable(format.get());
 	}
 
-	public String getUNICODEFormat() {
-		return uNICODEFormat.get();
+	public Optional<String> getUnicodeFormat() {
+		return Optional.ofNullable(unicodeFormat.get());
 	}
 
 	@Override
@@ -144,9 +158,9 @@ public class FormField3 extends Struct {
 				.append(getAccess())
 				.append(getOverflow())
 				.append(getInitialValue())
-				.append(getUNICODEInitialValue())
+				.append(getUnicodeInitialValue())
 				.append(getFormat())
-				.append(getUNICODEFormat())
+				.append(getUnicodeFormat())
 				.toHashCode();
 	}
 
@@ -162,9 +176,9 @@ public class FormField3 extends Struct {
 					.append(getAccess(), formField3.getAccess())
 					.append(getOverflow(), formField3.getOverflow())
 					.append(getInitialValue(), formField3.getInitialValue())
-					.append(getUNICODEInitialValue(), formField3.getUNICODEInitialValue())
+					.append(getUnicodeInitialValue(), formField3.getUnicodeInitialValue())
 					.append(getFormat(), formField3.getFormat())
-					.append(getUNICODEFormat(), formField3.getUNICODEFormat())
+					.append(getUnicodeFormat(), formField3.getUnicodeFormat())
 					.isEquals();
 		}
 		return false;
@@ -180,9 +194,9 @@ public class FormField3 extends Struct {
 				.append("access", getAccess())
 				.append("overflow", getOverflow())
 				.append("initialValue", getInitialValue())
-				.append("uNICODEInitialValue", getUNICODEInitialValue())
+				.append("unicodeInitialValue", getUnicodeInitialValue())
 				.append("format", getFormat())
-				.append("uNICODEFormat", getUNICODEFormat())
+				.append("unicodeFormat", getUnicodeFormat())
 				.toString();
 	}
 }

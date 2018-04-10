@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.v3_00.ptr;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -34,6 +35,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPSTR;
+import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.ptr.MediaControl;
@@ -42,7 +44,7 @@ import at.o2xfs.xfs.win32.XfsDWordBitmask;
 public class ReadForm3 extends Struct {
 
 	protected final LPSTR formName = new LPSTR();
-	protected final LPSTR fieldNames = new LPSTR();
+	protected final LPZZSTR fieldNames = new LPZZSTR();
 	protected final LPSTR mediaName = new LPSTR();
 	protected final XfsDWordBitmask<MediaControl> mediaControl = new XfsDWordBitmask<>(MediaControl.class);
 
@@ -66,8 +68,14 @@ public class ReadForm3 extends Struct {
 
 	protected void set(ReadForm3 copy) {
 		formName.set(copy.getFormName());
-		fieldNames.set(copy.getFieldNames());
-		mediaName.set(copy.getMediaName());
+		Optional<String[]> fieldNames = copy.getFieldNames();
+		if (fieldNames.isPresent()) {
+			this.fieldNames.set(fieldNames.get());
+		}
+		Optional<String> mediaName = copy.getMediaName();
+		if (mediaName.isPresent()) {
+			this.mediaName.set(mediaName.get());
+		}
 		mediaControl.set(copy.getMediaControl());
 	}
 
@@ -75,12 +83,20 @@ public class ReadForm3 extends Struct {
 		return formName.get();
 	}
 
-	public String getFieldNames() {
-		return fieldNames.get();
+	public Optional<String[]> getFieldNames() {
+		Optional<String[]> result = Optional.empty();
+		if (!Pointer.NULL.equals(fieldNames)) {
+			result = Optional.of(fieldNames.get());
+		}
+		return result;
 	}
 
-	public String getMediaName() {
-		return mediaName.get();
+	public Optional<String> getMediaName() {
+		Optional<String> result = Optional.empty();
+		if (!Pointer.NULL.equals(mediaName)) {
+			result = Optional.of(mediaName.get());
+		}
+		return result;
 	}
 
 	public Set<MediaControl> getMediaControl() {
@@ -91,7 +107,7 @@ public class ReadForm3 extends Struct {
 	public int hashCode() {
 		return new HashCodeBuilder()
 				.append(getFormName())
-				.append(getFieldNames())
+				.append(getFieldNames().orElse(null))
 				.append(getMediaName())
 				.append(getMediaControl())
 				.toHashCode();
@@ -103,7 +119,7 @@ public class ReadForm3 extends Struct {
 			ReadForm3 readForm3 = (ReadForm3) obj;
 			return new EqualsBuilder()
 					.append(getFormName(), readForm3.getFormName())
-					.append(getFieldNames(), readForm3.getFieldNames())
+					.append(getFieldNames().orElse(null), readForm3.getFieldNames().orElse(null))
 					.append(getMediaName(), readForm3.getMediaName())
 					.append(getMediaControl(), readForm3.getMediaControl())
 					.isEquals();

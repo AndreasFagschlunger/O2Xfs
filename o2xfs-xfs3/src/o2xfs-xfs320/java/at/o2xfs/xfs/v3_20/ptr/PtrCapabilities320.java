@@ -33,6 +33,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.ptr.CoercivityType;
 import at.o2xfs.xfs.ptr.ControlPassbookAction;
@@ -43,14 +44,17 @@ import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 public class PtrCapabilities320 extends PtrCapabilities310 {
 
-	protected final XfsWord<CoercivityType> coercivityType = new XfsWord<>(CoercivityType.class);
-	protected final XfsWord<ControlPassbookAction> controlPassbook = new XfsWord<>(ControlPassbookAction.class);
-	protected final XfsWordBitmask<PrintSides> printSides = new XfsWordBitmask<>(PrintSides.class);
+	protected final XfsWordBitmask<CoercivityType> coercivityTypes = new XfsWordBitmask<>(CoercivityType.class);
+	protected final XfsWordBitmask<ControlPassbookAction> controlPassbook = new XfsWordBitmask<>(
+			ControlPassbookAction.class);
+	protected final XfsWord<PrintSides> printSides = new XfsWord<>(PrintSides.class);
+	protected final BOOL antiFraudModule = new BOOL();
 
 	protected PtrCapabilities320() {
-		add(coercivityType);
+		add(coercivityTypes);
 		add(controlPassbook);
 		add(printSides);
+		add(antiFraudModule);
 	}
 
 	public PtrCapabilities320(Pointer p) {
@@ -66,30 +70,36 @@ public class PtrCapabilities320 extends PtrCapabilities310 {
 
 	protected void set(PtrCapabilities320 copy) {
 		super.set(copy);
-		coercivityType.set(copy.getCoercivityType());
+		coercivityTypes.set(copy.getCoercivityTypes());
 		controlPassbook.set(copy.getControlPassbook());
 		printSides.set(copy.getPrintSides());
+		antiFraudModule.set(copy.isAntiFraudModule());
 	}
 
-	public CoercivityType getCoercivityType() {
-		return coercivityType.get();
+	public Set<CoercivityType> getCoercivityTypes() {
+		return coercivityTypes.get();
 	}
 
-	public ControlPassbookAction getControlPassbook() {
+	public Set<ControlPassbookAction> getControlPassbook() {
 		return controlPassbook.get();
 	}
 
-	public Set<PrintSides> getPrintSides() {
+	public PrintSides getPrintSides() {
 		return printSides.get();
+	}
+
+	public boolean isAntiFraudModule() {
+		return antiFraudModule.get();
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
 				.appendSuper(super.hashCode())
-				.append(getCoercivityType())
+				.append(getCoercivityTypes())
 				.append(getControlPassbook())
 				.append(getPrintSides())
+				.append(isAntiFraudModule())
 				.toHashCode();
 	}
 
@@ -99,9 +109,10 @@ public class PtrCapabilities320 extends PtrCapabilities310 {
 			PtrCapabilities320 ptrCapabilities320 = (PtrCapabilities320) obj;
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
-					.append(getCoercivityType(), ptrCapabilities320.getCoercivityType())
+					.append(getCoercivityTypes(), ptrCapabilities320.getCoercivityTypes())
 					.append(getControlPassbook(), ptrCapabilities320.getControlPassbook())
 					.append(getPrintSides(), ptrCapabilities320.getPrintSides())
+					.append(isAntiFraudModule(), ptrCapabilities320.isAntiFraudModule())
 					.isEquals();
 		}
 		return false;
@@ -111,9 +122,10 @@ public class PtrCapabilities320 extends PtrCapabilities310 {
 	public String toString() {
 		return new ToStringBuilder(this)
 				.appendSuper(super.toString())
-				.append("coercivityType", getCoercivityType())
+				.append("coercivityTypes", getCoercivityTypes())
 				.append("controlPassbook", getControlPassbook())
 				.append("printSides", getPrintSides())
+				.append("antiFraudModule", isAntiFraudModule())
 				.toString();
 	}
 }

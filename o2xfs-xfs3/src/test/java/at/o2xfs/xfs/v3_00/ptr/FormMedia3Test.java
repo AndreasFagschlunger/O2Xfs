@@ -25,35 +25,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.ptr;
+package at.o2xfs.xfs.v3_00.ptr;
 
-import at.o2xfs.xfs.XfsConstant;
+import static org.junit.Assert.assertEquals;
 
-public enum BackImageColorFormat implements XfsConstant {
+import org.junit.Test;
 
-	/*
-	 * @since v3.00
-	 */
-	BINARY(0x0001),
+import at.o2xfs.win32.Buffer;
+import at.o2xfs.xfs.v3_00.BaseXfs3Test;
 
-	/*
-	 * @since v3.00
-	 */
-	GRAYSCALE(0x0002),
+public class FormMedia3Test extends BaseXfs3Test {
 
-	/*
-	 * @since v3.00
-	 */
-	FULL(0x0004);
-
-	private final long value;
-
-	private BackImageColorFormat(final long value) {
-		this.value = value;
+	@Test
+	public final void test() {
+		FormMedia3 expected = new FormMedia3(buildFormMedia3().getPointer());
+		FormMedia3 actual = new FormMedia3(expected);
+		System.out.println(actual);
+		assertEquals(expected, actual);
 	}
 
-	@Override
-	public long getValue() {
-		return value;
-	}
+	private native Buffer buildFormMedia3();
 }

@@ -28,6 +28,7 @@
 package at.o2xfs.xfs.v3_10.ptr;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -76,7 +77,10 @@ public class PtrCapabilities310 extends PtrCapabilities3 {
 	protected void set(PtrCapabilities310 copy) {
 		super.set(copy);
 		guidLights.set(copy.getGuidLights());
-		windowsPrinter.set(copy.getWindowsPrinter());
+		Optional<String> windowsPrinter = copy.getWindowsPrinter();
+		if (windowsPrinter.isPresent()) {
+			this.windowsPrinter.set(windowsPrinter.get());
+		}
 		mediaPresented.set(copy.isMediaPresented());
 		autoRetractPeriod.set(copy.getAutoRetractPeriod());
 		retractToTransport.set(copy.isRetractToTransport());
@@ -87,8 +91,12 @@ public class PtrCapabilities310 extends PtrCapabilities3 {
 		return guidLights.get();
 	}
 
-	public String getWindowsPrinter() {
-		return windowsPrinter.get();
+	public Optional<String> getWindowsPrinter() {
+		Optional<String> result = Optional.empty();
+		if (!Pointer.NULL.equals(windowsPrinter)) {
+			result = Optional.of(windowsPrinter.get());
+		}
+		return result;
 	}
 
 	public boolean isMediaPresented() {

@@ -27,17 +27,20 @@
 
 package at.o2xfs.xfs.v3_00.ptr;
 
+import java.util.Optional;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.LPSTR;
+import at.o2xfs.win32.LPZZSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
-import at.o2xfs.xfs.ptr.FormBaseUnit;
 import at.o2xfs.xfs.ptr.CharSupport;
 import at.o2xfs.xfs.ptr.FormAlignment;
+import at.o2xfs.xfs.ptr.FormBaseUnit;
 import at.o2xfs.xfs.ptr.FormOrientation;
 import at.o2xfs.xfs.win32.XfsWord;
 
@@ -57,7 +60,7 @@ public class FormHeader3 extends Struct {
 	protected final WORD versionMinor = new WORD();
 	protected final LPSTR userPrompt = new LPSTR();
 	protected final XfsWord<CharSupport> charSupport = new XfsWord<>(CharSupport.class);
-	protected final LPSTR fields = new LPSTR();
+	protected final LPZZSTR fields = new LPZZSTR();
 
 	protected FormHeader3() {
 		add(formName);
@@ -101,7 +104,10 @@ public class FormHeader3 extends Struct {
 		offsetY.set(copy.getOffsetY());
 		versionMajor.set(copy.getVersionMajor());
 		versionMinor.set(copy.getVersionMinor());
-		userPrompt.set(copy.getUserPrompt());
+		Optional<String> userPrompt = copy.getUserPrompt();
+		if (userPrompt.isPresent()) {
+			this.userPrompt.set(userPrompt.get());
+		}
 		charSupport.set(copy.getCharSupport());
 		fields.set(copy.getFields());
 	}
@@ -154,15 +160,15 @@ public class FormHeader3 extends Struct {
 		return versionMinor.get();
 	}
 
-	public String getUserPrompt() {
-		return userPrompt.get();
+	public Optional<String> getUserPrompt() {
+		return Optional.ofNullable(userPrompt.get());
 	}
 
 	public CharSupport getCharSupport() {
 		return charSupport.get();
 	}
 
-	public String getFields() {
+	public String[] getFields() {
 		return fields.get();
 	}
 

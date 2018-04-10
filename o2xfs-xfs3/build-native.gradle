@@ -102,6 +102,35 @@ task 'javah-xfs3-idc'(type:Exec) {
                  'at.o2xfs.xfs.v3_00.idc.WriteTrack3Test'
 }
 
+task 'javah-xfs3-ptr'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs3-test.dll/headers/ptr'),
+                 'at.o2xfs.xfs.v3_00.ptr.BinThreshold3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.FieldFailure3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.FormField3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.FormHeader3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.FormMedia3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.Image3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.ImageRequest3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.MediaDetected3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.MediaExt3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.MediaUnit3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.PaperThreshold3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.PrintForm3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.PtrCapabilities3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.PtrStatus3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.QueryField3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.RawData3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.RawDataIn3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.ReadForm3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.ReadFormOut3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.Reset3Test',
+                 'at.o2xfs.xfs.v3_00.ptr.RetractBin3Test'
+}
+
 task 'javah-xfs310'(type:Exec) {
     commandLine 'javah',
                 '-cp',
@@ -170,6 +199,33 @@ task 'javah-xfs310-idc'(type:Exec) {
                 'at.o2xfs.xfs.v3_10.idc.Status310Test'
 }
 
+task 'javah-xfs310-ptr'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs310-test.dll/headers/ptr'),
+                'at.o2xfs.xfs.v3_10.ptr.BinStatus310Test',
+                'at.o2xfs.xfs.v3_10.ptr.CodelineMapping310Test',
+                'at.o2xfs.xfs.v3_10.ptr.CodelineMappingOut310Test',
+                'at.o2xfs.xfs.v3_10.ptr.DefinitionLoaded310Test',
+                'at.o2xfs.xfs.v3_10.ptr.DevicePosition310Test',
+                'at.o2xfs.xfs.v3_10.ptr.FormField310Test',
+                'at.o2xfs.xfs.v3_10.ptr.FormHeader310Test',
+                'at.o2xfs.xfs.v3_10.ptr.HexData310Test',
+                'at.o2xfs.xfs.v3_10.ptr.LoadDefinition310Test',
+                'at.o2xfs.xfs.v3_10.ptr.MediaPresented310Test',
+                'at.o2xfs.xfs.v3_10.ptr.MediaRejected310Test',
+                'at.o2xfs.xfs.v3_10.ptr.MediaRetracted310Test',
+                'at.o2xfs.xfs.v3_10.ptr.PowerSaveChange310Test',
+                'at.o2xfs.xfs.v3_10.ptr.PowerSaveControl310Test',
+                'at.o2xfs.xfs.v3_10.ptr.PrintRawFile310Test',
+                'at.o2xfs.xfs.v3_10.ptr.PtrCapabilities310Test',
+                'at.o2xfs.xfs.v3_10.ptr.PtrStatus310Test',
+                'at.o2xfs.xfs.v3_10.ptr.SetGuidlight310Test',
+                'at.o2xfs.xfs.v3_10.ptr.SupplyReplenish310Test'
+}
+
 task 'javah-xfs320'(type:Exec) {
     commandLine 'javah',
                 '-cp',
@@ -215,6 +271,18 @@ task 'javah-xfs320-idc'(type:Exec) {
                 'at.o2xfs.xfs.v3_20.idc.ParkCard320Test',
                 'at.o2xfs.xfs.v3_20.idc.Status320Test',
                 'at.o2xfs.xfs.v3_20.idc.TrackDetected320Test'
+}
+
+task 'javah-xfs320-ptr'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs320-test.dll/headers/ptr'),
+                'at.o2xfs.xfs.v3_20.ptr.ControlPassbook320Test',
+                'at.o2xfs.xfs.v3_20.ptr.FormField320Test',
+                'at.o2xfs.xfs.v3_20.ptr.PtrCapabilities320Test',
+                'at.o2xfs.xfs.v3_20.ptr.PtrStatus320Test'
 }
 
 task 'javah-xfs330'(type:Exec) {
@@ -271,21 +339,37 @@ task 'javah-xfs330-idc'(type:Exec) {
                 'at.o2xfs.xfs.v3_30.idc.SynchronizeCommand330Test'
 }
 
+task 'javah-xfs330-ptr'(type:Exec) {
+    commandLine 'javah',
+                '-cp',
+                "${file('bin')};${file('../at.o2xfs.win32/bin')}",
+                '-d',
+                file('src/o2xfs-xfs330-test.dll/headers/ptr'),
+                'at.o2xfs.xfs.v3_30.ptr.PtrCapabilities330Test',
+                'at.o2xfs.xfs.v3_30.ptr.PtrStatus330Test',
+                'at.o2xfs.xfs.v3_30.ptr.SetBlackMarkMode330Test',
+                'at.o2xfs.xfs.v3_30.ptr.SynchronizeCommand330Test'
+}
+
 task javah
 javah.doLast {
     tasks.getByName('javah-xfs3').execute()
     tasks.getByName('javah-xfs3-cim').execute()
     tasks.getByName('javah-xfs3-idc').execute()
+    tasks.getByName('javah-xfs3-ptr').execute()
     tasks.getByName('javah-xfs310').execute()
     tasks.getByName('javah-xfs310-bcr').execute()
     tasks.getByName('javah-xfs310-cim').execute()
     tasks.getByName('javah-xfs310-idc').execute()
+    tasks.getByName('javah-xfs310-ptr').execute()
     tasks.getByName('javah-xfs320').execute()
     tasks.getByName('javah-xfs320-cim').execute()
     tasks.getByName('javah-xfs320-idc').execute()
+    tasks.getByName('javah-xfs320-ptr').execute()
     tasks.getByName('javah-xfs330').execute()
     tasks.getByName('javah-xfs330-cim').execute()
     tasks.getByName('javah-xfs330-idc').execute()
+    tasks.getByName('javah-xfs330-ptr').execute()
 }
 
 model {

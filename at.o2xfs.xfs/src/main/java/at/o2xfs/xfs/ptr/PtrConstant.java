@@ -32,6 +32,13 @@ public final class PtrConstant {
 	public static final int GUIDLIGHTS_SIZE = 32;
 	public static final int SUPPLYSIZE = 16;
 
+	public static final int SUPPLYUPPER = 0;
+	public static final int SUPPLYLOWER = 1;
+	public static final int SUPPLYEXTERNAL = 2;
+	public static final int SUPPLYAUX = 3;
+	public static final int SUPPLYAUX2 = 4;
+	public static final int SUPPLYPARK = 5;
+
 	private PtrConstant() {
 		throw new AssertionError();
 	}

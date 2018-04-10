@@ -31,13 +31,14 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
+import at.o2xfs.xfs.ptr.PtrExecuteCommand;
+import at.o2xfs.xfs.win32.XfsDWord;
 
 public class SynchronizeCommand330 extends Struct {
 
-	protected final DWORD command = new DWORD();
+	protected final XfsDWord<PtrExecuteCommand> command = new XfsDWord<>(PtrExecuteCommand.class);
 	protected final Pointer cmdData = new Pointer();
 
 	protected SynchronizeCommand330() {
@@ -50,7 +51,7 @@ public class SynchronizeCommand330 extends Struct {
 		assignBuffer(p);
 	}
 
-	public long getCommand() {
+	public PtrExecuteCommand getCommand() {
 		return command.get();
 	}
 

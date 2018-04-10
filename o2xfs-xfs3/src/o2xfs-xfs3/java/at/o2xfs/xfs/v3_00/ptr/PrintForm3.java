@@ -27,31 +27,40 @@
 
 package at.o2xfs.xfs.v3_00.ptr;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
-import at.o2xfs.xfs.ptr.OffsetY;
+import at.o2xfs.win32.WORD;
+import at.o2xfs.xfs.XfsExtra;
+import at.o2xfs.xfs.ptr.Alignment;
+import at.o2xfs.xfs.ptr.MediaControl;
 import at.o2xfs.xfs.ptr.PaperSource;
 import at.o2xfs.xfs.ptr.Resolution;
-import at.o2xfs.xfs.ptr.Alignment;
+import at.o2xfs.xfs.win32.XfsDWordBitmask;
+import at.o2xfs.xfs.win32.XfsUnicodeMap;
 import at.o2xfs.xfs.win32.XfsWord;
 
 public class PrintForm3 extends Struct {
 
+	public static final int OFFSETUSEFORMDEFN = 0xffff;
+
 	protected final LPSTR formName = new LPSTR();
 	protected final LPSTR mediaName = new LPSTR();
 	protected final XfsWord<Alignment> alignment = new XfsWord<>(Alignment.class);
-	protected final XfsWord<OffsetY> offsetX = new XfsWord<>(OffsetY.class);
-	protected final XfsWord<OffsetY> offsetY = new XfsWord<>(OffsetY.class);
+	protected final WORD offsetX = new WORD();
+	protected final WORD offsetY = new WORD();
 	protected final XfsWord<Resolution> resolution = new XfsWord<>(Resolution.class);
-	protected final DWORD mediaControl = new DWORD();
-	protected final LPSTR fields = new LPSTR();
-	protected final LPSTR uNICODEFields = new LPSTR();
+	protected final XfsDWordBitmask<MediaControl> mediaControl = new XfsDWordBitmask<>(MediaControl.class);
+	protected final XfsExtra fields = new XfsExtra();
+	protected final XfsUnicodeMap unicodeFields = new XfsUnicodeMap();
 	protected final XfsWord<PaperSource> paperSource = new XfsWord<>(PaperSource.class);
 
 	protected PrintForm3() {
@@ -63,7 +72,7 @@ public class PrintForm3 extends Struct {
 		add(resolution);
 		add(mediaControl);
 		add(fields);
-		add(uNICODEFields);
+		add(unicodeFields);
 		add(paperSource);
 	}
 
@@ -80,14 +89,17 @@ public class PrintForm3 extends Struct {
 
 	protected void set(PrintForm3 copy) {
 		formName.set(copy.getFormName());
-		mediaName.set(copy.getMediaName());
+		Optional<String> mediaName = copy.getMediaName();
+		if (mediaName.isPresent()) {
+			this.mediaName.set(mediaName.get());
+		}
 		alignment.set(copy.getAlignment());
 		offsetX.set(copy.getOffsetX());
 		offsetY.set(copy.getOffsetY());
 		resolution.set(copy.getResolution());
 		mediaControl.set(copy.getMediaControl());
 		fields.set(copy.getFields());
-		uNICODEFields.set(copy.getUNICODEFields());
+		unicodeFields.set(copy.getUnicodeFields());
 		paperSource.set(copy.getPaperSource());
 	}
 
@@ -95,19 +107,23 @@ public class PrintForm3 extends Struct {
 		return formName.get();
 	}
 
-	public String getMediaName() {
-		return mediaName.get();
+	public Optional<String> getMediaName() {
+		Optional<String> result = Optional.empty();
+		if (!Pointer.NULL.equals(mediaName)) {
+			result = Optional.of(mediaName.get());
+		}
+		return result;
 	}
 
 	public Alignment getAlignment() {
 		return alignment.get();
 	}
 
-	public OffsetY getOffsetX() {
+	public int getOffsetX() {
 		return offsetX.get();
 	}
 
-	public OffsetY getOffsetY() {
+	public int getOffsetY() {
 		return offsetY.get();
 	}
 
@@ -115,16 +131,16 @@ public class PrintForm3 extends Struct {
 		return resolution.get();
 	}
 
-	public long getMediaControl() {
+	public Set<MediaControl> getMediaControl() {
 		return mediaControl.get();
 	}
 
-	public String getFields() {
+	public Map<String, String> getFields() {
 		return fields.get();
 	}
 
-	public String getUNICODEFields() {
-		return uNICODEFields.get();
+	public Map<String, String> getUnicodeFields() {
+		return unicodeFields.get();
 	}
 
 	public PaperSource getPaperSource() {
@@ -142,7 +158,7 @@ public class PrintForm3 extends Struct {
 				.append(getResolution())
 				.append(getMediaControl())
 				.append(getFields())
-				.append(getUNICODEFields())
+				.append(getUnicodeFields())
 				.append(getPaperSource())
 				.toHashCode();
 	}
@@ -160,7 +176,7 @@ public class PrintForm3 extends Struct {
 					.append(getResolution(), printForm3.getResolution())
 					.append(getMediaControl(), printForm3.getMediaControl())
 					.append(getFields(), printForm3.getFields())
-					.append(getUNICODEFields(), printForm3.getUNICODEFields())
+					.append(getUnicodeFields(), printForm3.getUnicodeFields())
 					.append(getPaperSource(), printForm3.getPaperSource())
 					.isEquals();
 		}
@@ -178,7 +194,7 @@ public class PrintForm3 extends Struct {
 				.append("resolution", getResolution())
 				.append("mediaControl", getMediaControl())
 				.append("fields", getFields())
-				.append("uNICODEFields", getUNICODEFields())
+				.append("unicodeFields", getUnicodeFields())
 				.append("paperSource", getPaperSource())
 				.toString();
 	}

@@ -147,7 +147,7 @@ public class PtrStatus3 extends Struct {
 				.append(getToner())
 				.append(getInk())
 				.append(getLamp())
-				.append(getRetractBins())
+				.append(getRetractBins().orElse(null))
 				.append(getMediaOnStacker())
 				.append(getExtra())
 				.toHashCode();
@@ -164,7 +164,7 @@ public class PtrStatus3 extends Struct {
 					.append(getToner(), ptrStatus3.getToner())
 					.append(getInk(), ptrStatus3.getInk())
 					.append(getLamp(), ptrStatus3.getLamp())
-					.append(getRetractBins(), ptrStatus3.getRetractBins())
+					.append(getRetractBins().orElse(null), ptrStatus3.getRetractBins().orElse(null))
 					.append(getMediaOnStacker(), ptrStatus3.getMediaOnStacker())
 					.append(getExtra(), ptrStatus3.getExtra())
 					.isEquals();

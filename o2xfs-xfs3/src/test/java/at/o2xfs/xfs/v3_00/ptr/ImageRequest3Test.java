@@ -25,40 +25,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.ptr;
+package at.o2xfs.xfs.v3_00.ptr;
 
-import at.o2xfs.xfs.XfsConstant;
+import static org.junit.Assert.assertEquals;
 
-public enum BackImageFormat implements XfsConstant {
+import org.junit.Test;
 
-	/*
-	 * @since v3.00
-	 */
-	TIF(0x0001),
+import at.o2xfs.win32.Buffer;
+import at.o2xfs.xfs.v3_00.BaseXfs3Test;
 
-	/*
-	 * @since v3.00
-	 */
-	WMF(0x0002),
+public class ImageRequest3Test extends BaseXfs3Test {
 
-	/*
-	 * @since v3.00
-	 */
-	BMP(0x0004),
-
-	/*
-	 * @since v3.10
-	 */
-	JPG(0x0008);
-
-	private final long value;
-
-	private BackImageFormat(final long value) {
-		this.value = value;
+	@Test
+	public final void test() {
+		ImageRequest3 expected = new ImageRequest3(buildImageRequest3().getPointer());
+		ImageRequest3 actual = new ImageRequest3(expected);
+		System.out.println(actual);
+		assertEquals(expected, actual);
 	}
 
-	@Override
-	public long getValue() {
-		return value;
-	}
+	private native Buffer buildImageRequest3();
 }

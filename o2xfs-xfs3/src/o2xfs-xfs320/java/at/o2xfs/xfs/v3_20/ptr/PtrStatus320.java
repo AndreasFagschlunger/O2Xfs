@@ -66,8 +66,8 @@ public class PtrStatus320 extends PtrStatus310 {
 		antiFraudModule.set(copy.getAntiFraudModule());
 	}
 
-	public XfsWordArray<PaperType> getPaperTypes() {
-		return paperTypes;
+	public PaperType[] getPaperTypes() {
+		return paperTypes.get();
 	}
 
 	public AntiFraudModule getAntiFraudModule() {

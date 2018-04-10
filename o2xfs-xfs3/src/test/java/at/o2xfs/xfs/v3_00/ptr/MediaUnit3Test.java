@@ -25,25 +25,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.ptr;
+package at.o2xfs.xfs.v3_00.ptr;
 
-import at.o2xfs.xfs.XfsConstant;
+import static org.junit.Assert.assertEquals;
 
-public enum OffsetY implements XfsConstant {
+import org.junit.Test;
 
-	/*
-	 * @since v3.00
-	 */
-	WFS_PTR_OFFSETUSEFORMDEFN(0xffff);
+import at.o2xfs.win32.Buffer;
+import at.o2xfs.xfs.v3_00.BaseXfs3Test;
 
-	private final long value;
+public class MediaUnit3Test extends BaseXfs3Test {
 
-	private OffsetY(final long value) {
-		this.value = value;
+	@Test
+	public final void test() {
+		MediaUnit3 expected = new MediaUnit3(buildMediaUnit3().getPointer());
+		MediaUnit3 actual = new MediaUnit3(expected);
+		System.out.println(actual);
+		assertEquals(expected, actual);
 	}
 
-	@Override
-	public long getValue() {
-		return value;
-	}
+	private native Buffer buildMediaUnit3();
 }
