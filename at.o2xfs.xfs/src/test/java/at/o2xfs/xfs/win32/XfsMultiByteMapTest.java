@@ -27,16 +27,32 @@
 
 package at.o2xfs.xfs.win32;
 
-import java.nio.charset.StandardCharsets;
+import static org.junit.Assert.assertEquals;
 
-/**
- * Pointer to a series of "&lt;Key&gt;=&lt;Value&gt;" UNICODE strings, where
- * each string is <code>null</code>-terminated with the entire field string
- * terminating with two <code>null</code> characters.
- */
-public class XfsUnicodeMap extends XfsStringMap {
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-	public XfsUnicodeMap() {
-		super(2, StandardCharsets.UTF_16LE);
+import org.junit.Before;
+import org.junit.Test;
+
+public class XfsMultiByteMapTest {
+
+	private XfsMultiByteMap multiByteMap;
+
+	@Before
+	public void init() {
+		multiByteMap = new XfsMultiByteMap();
+		multiByteMap.allocate();
 	}
+
+	@Test
+	public final void test() {
+		Map<String, String> expected = new LinkedHashMap<>();
+		expected.put("Key1", "Value1");
+		expected.put("Key2", "");
+		expected.put("Key3", "Value3");
+		multiByteMap.set(expected);
+		assertEquals(expected, multiByteMap.get());
+	}
+
 }

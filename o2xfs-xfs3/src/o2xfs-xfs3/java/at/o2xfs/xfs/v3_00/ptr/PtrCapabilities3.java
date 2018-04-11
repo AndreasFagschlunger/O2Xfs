@@ -40,7 +40,6 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.UShortArray;
 import at.o2xfs.win32.WORD;
-import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.ptr.CharSupport;
 import at.o2xfs.xfs.ptr.CodelineFormat;
 import at.o2xfs.xfs.ptr.Extents;
@@ -53,6 +52,7 @@ import at.o2xfs.xfs.ptr.ReadForm;
 import at.o2xfs.xfs.ptr.Resolution;
 import at.o2xfs.xfs.ptr.Type;
 import at.o2xfs.xfs.ptr.WriteForm;
+import at.o2xfs.xfs.win32.XfsMultiByteMap;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 public class PtrCapabilities3 extends Struct {
@@ -81,7 +81,7 @@ public class PtrCapabilities3 extends Struct {
 	protected final XfsWordBitmask<ImageSource> imageSources = new XfsWordBitmask<>(ImageSource.class);
 	protected final XfsWordBitmask<CharSupport> charSupport = new XfsWordBitmask<>(CharSupport.class);
 	protected final BOOL dispensePaper = new BOOL();
-	protected final XfsExtra extra = new XfsExtra();
+	protected final XfsMultiByteMap extra = new XfsMultiByteMap();
 
 	protected PtrCapabilities3() {
 		add(serviceClass);

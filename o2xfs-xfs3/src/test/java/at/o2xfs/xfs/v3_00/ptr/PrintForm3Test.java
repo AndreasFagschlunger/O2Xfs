@@ -40,7 +40,6 @@ public class PrintForm3Test extends BaseXfs3Test {
 	@Test
 	public final void test() {
 		PrintForm3 expected = new PrintForm3(buildPrintForm3().getPointer());
-		System.out.println(expected);
 		PrintForm3 actual = new PrintForm3(expected);
 		System.out.println(actual);
 		assertEquals("XFSFORM", actual.getFormName());

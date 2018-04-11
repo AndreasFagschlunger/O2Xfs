@@ -39,12 +39,12 @@ import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
-import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.ptr.Alignment;
 import at.o2xfs.xfs.ptr.MediaControl;
 import at.o2xfs.xfs.ptr.PaperSource;
 import at.o2xfs.xfs.ptr.Resolution;
 import at.o2xfs.xfs.win32.XfsDWordBitmask;
+import at.o2xfs.xfs.win32.XfsMultiByteMap;
 import at.o2xfs.xfs.win32.XfsUnicodeMap;
 import at.o2xfs.xfs.win32.XfsWord;
 
@@ -59,7 +59,7 @@ public class PrintForm3 extends Struct {
 	protected final WORD offsetY = new WORD();
 	protected final XfsWord<Resolution> resolution = new XfsWord<>(Resolution.class);
 	protected final XfsDWordBitmask<MediaControl> mediaControl = new XfsDWordBitmask<>(MediaControl.class);
-	protected final XfsExtra fields = new XfsExtra();
+	protected final XfsMultiByteMap fields = new XfsMultiByteMap();
 	protected final XfsUnicodeMap unicodeFields = new XfsUnicodeMap();
 	protected final XfsWord<PaperSource> paperSource = new XfsWord<>(PaperSource.class);
 

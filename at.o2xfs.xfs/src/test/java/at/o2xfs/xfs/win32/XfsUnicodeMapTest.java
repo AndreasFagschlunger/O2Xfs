@@ -27,16 +27,24 @@
 
 package at.o2xfs.xfs.win32;
 
-import java.nio.charset.StandardCharsets;
+import static org.junit.Assert.assertEquals;
 
-/**
- * Pointer to a series of "&lt;Key&gt;=&lt;Value&gt;" UNICODE strings, where
- * each string is <code>null</code>-terminated with the entire field string
- * terminating with two <code>null</code> characters.
- */
-public class XfsUnicodeMap extends XfsStringMap {
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-	public XfsUnicodeMap() {
-		super(2, StandardCharsets.UTF_16LE);
+import org.junit.Test;
+
+public class XfsUnicodeMapTest {
+
+	@Test
+	public final void test() {
+		Map<String, String> expected = new LinkedHashMap<>();
+		expected.put("zh", "平台中的增补字符");
+		expected.put("kr", "지원받기");
+		expected.put("ja", "プラットフォームにおける補助文字のサポート");
+		XfsUnicodeMap unicodeMap = new XfsUnicodeMap();
+		unicodeMap.allocate();
+		unicodeMap.set(expected);
+		assertEquals(expected, unicodeMap.get());
 	}
 }
