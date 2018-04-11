@@ -30,13 +30,13 @@ package at.o2xfs.xfs.win32;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Pointer to a series of "&lt;Key&gt;=&lt;Value&gt;" UNICODE strings, where
- * each string is <code>null</code>-terminated with the entire field string
- * terminating with two <code>null</code> characters.
+ * Pointer to a series of "&lt;Key&gt;=&lt;Value&gt;" strings, where each string
+ * is <code>null</code>-terminated with the entire field string terminating with
+ * two <code>null</code> characters.
  */
-public class XfsUnicodeMap extends XfsStringMap {
+public class XfsMultiByteMap extends XfsStringMap {
 
-	public XfsUnicodeMap() {
-		super(2, StandardCharsets.UTF_16LE);
+	public XfsMultiByteMap() {
+		super(1, StandardCharsets.US_ASCII);
 	}
 }

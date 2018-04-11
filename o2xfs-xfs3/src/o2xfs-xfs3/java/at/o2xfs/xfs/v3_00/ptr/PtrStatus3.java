@@ -37,7 +37,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
-import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.ptr.Ink;
 import at.o2xfs.xfs.ptr.Lamp;
 import at.o2xfs.xfs.ptr.MediaPosition;
@@ -45,6 +44,7 @@ import at.o2xfs.xfs.ptr.PaperStatus;
 import at.o2xfs.xfs.ptr.PtrConstant;
 import at.o2xfs.xfs.ptr.PtrDeviceState;
 import at.o2xfs.xfs.ptr.Toner;
+import at.o2xfs.xfs.win32.XfsMultiByteMap;
 import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordArray;
 
@@ -58,7 +58,7 @@ public class PtrStatus3 extends Struct {
 	protected final XfsWord<Lamp> lamp = new XfsWord<>(Lamp.class);
 	protected final Pointer retractBins = new Pointer();
 	protected final USHORT mediaOnStacker = new USHORT();
-	protected final XfsExtra extra = new XfsExtra();
+	protected final XfsMultiByteMap extra = new XfsMultiByteMap();
 
 	protected PtrStatus3() {
 		add(device);

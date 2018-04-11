@@ -35,12 +35,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
-import at.o2xfs.xfs.XfsExtra;
+import at.o2xfs.xfs.win32.XfsMultiByteMap;
 import at.o2xfs.xfs.win32.XfsUnicodeMap;
 
 public class ReadFormOut3 extends Struct {
 
-	protected final XfsExtra fields = new XfsExtra();
+	protected final XfsMultiByteMap fields = new XfsMultiByteMap();
 	protected final XfsUnicodeMap unicodeFields = new XfsUnicodeMap();
 
 	protected ReadFormOut3() {

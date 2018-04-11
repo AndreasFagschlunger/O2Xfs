@@ -41,7 +41,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import at.o2xfs.win32.ByteArray;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.ValueType;
+import at.o2xfs.xfs.win32.XfsMultiByteMap;
 
+/**
+ * @deprecated use {@link XfsMultiByteMap} instead.
+ */
+@Deprecated
 public class XfsExtra extends Pointer implements ValueType<Map<String, String>> {
 
 	public void set(XfsExtra value) {
