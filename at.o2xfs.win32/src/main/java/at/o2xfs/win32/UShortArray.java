@@ -49,7 +49,9 @@ public class UShortArray extends Array<USHORT> implements ValueType<int[]> {
 
 	public UShortArray(final Pointer p, final int length) {
 		this(length);
-		assignBuffer(p);
+		if (length != 0) {
+			assignBuffer(p);
+		}
 	}
 
 	public void set(UShortArray values) {

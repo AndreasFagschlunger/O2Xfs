@@ -44,7 +44,9 @@ public class ULongArray extends Array<ULONG> implements ValueType<long[]> {
 
 	public ULongArray(Pointer pointer, int length) {
 		this(length);
-		assignBuffer(pointer);
+		if (length != 0) {
+			assignBuffer(pointer);
+		}
 	}
 
 	@Override
