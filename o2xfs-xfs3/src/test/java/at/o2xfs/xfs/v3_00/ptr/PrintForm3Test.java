@@ -30,6 +30,9 @@ package at.o2xfs.xfs.v3_00.ptr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
@@ -47,6 +50,10 @@ public class PrintForm3Test extends BaseXfs3Test {
 		assertEquals(expected, actual);
 		assertEquals(0, actual.getOffsetX());
 		assertEquals(PrintForm3.OFFSETUSEFORMDEFN, actual.getOffsetY());
+		Map<String, String> unicodeFields = new LinkedHashMap<>();
+		unicodeFields.put("<FieldName1>[0]", "<FieldValue1>");
+		unicodeFields.put("<FieldName2>[1]", "<FieldValue2>");
+		assertEquals(unicodeFields, actual.getUnicodeFields());
 	}
 
 	private native Buffer buildPrintForm3();

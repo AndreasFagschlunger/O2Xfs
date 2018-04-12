@@ -45,10 +45,10 @@ class XfsStringMap extends Pointer implements ValueType<Map<String, String>> {
 
 	private final Charset charset;
 
-	private final int bytesPerChar​;
+	private final int bytesPerChar;
 
-	XfsStringMap(int bytesPerChar​, Charset charset) {
-		this.bytesPerChar​ = bytesPerChar​;
+	XfsStringMap(int bytesPerChar, Charset charset) {
+		this.bytesPerChar = bytesPerChar;
 		this.charset = charset;
 	}
 
@@ -78,20 +78,20 @@ class XfsStringMap extends Pointer implements ValueType<Map<String, String>> {
 	public Map<String, String> get() {
 		Map<String, String> result = Collections.emptyMap();
 		if (!Pointer.NULL.equals(this)) {
-			int length = bytesPerChar​;
+			int length = bytesPerChar;
 			byte[] buf;
 			do {
-				length += bytesPerChar​;
+				length += bytesPerChar;
 				buf = buffer(length).get();
 			} while (!isTerminated(buf));
-			result = decode(new String(buf, 0, buf.length - (bytesPerChar​ * 2), charset));
+			result = decode(new String(buf, 0, buf.length - (bytesPerChar * 2), charset));
 		}
 		return result;
 	}
 
 	private boolean isTerminated(byte[] buf) {
 		boolean result = true;
-		for (int i = bytesPerChar​ * 2; i >= 1; i--) {
+		for (int i = bytesPerChar * 2; i >= 1; i--) {
 			if (buf[buf.length - i] != NUL) {
 				result = false;
 				break;
