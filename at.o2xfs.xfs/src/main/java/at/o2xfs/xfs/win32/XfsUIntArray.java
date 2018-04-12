@@ -48,7 +48,9 @@ public class XfsUIntArray extends Array<UINT> implements ValueType<long[]> {
 		for (int i = 0; i < array.length; i++) {
 			array[i] = new UINT();
 		}
-		assignBuffer(pointer);
+		if (length != 0) {
+			assignBuffer(pointer);
+		}
 	}
 
 	@Override

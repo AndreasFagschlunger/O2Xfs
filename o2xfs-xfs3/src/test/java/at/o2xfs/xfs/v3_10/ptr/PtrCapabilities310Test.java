@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.v3_10.ptr;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -42,6 +43,7 @@ public class PtrCapabilities310Test extends BaseXfs310Test {
 		PtrCapabilities310 actual = new PtrCapabilities310(expected);
 		System.out.println(actual);
 		assertEquals(expected, actual);
+		assertArrayEquals(new int[0], actual.getMaxRetract());
 	}
 
 	private native Buffer buildPtrCapabilities310();

@@ -5,7 +5,6 @@
 #include "at.o2xfs.win32.h"
 
 static WFSPTRCAPS Caps;
-static USHORT MaxRetract[] = { 10 };
 static LPSTR Extra = "Key1=Value1\0Key2=Value2\0";
 static LPSTR WindowsPrinter = "WindowsPrinter";
 
@@ -23,8 +22,8 @@ JNIEXPORT jobject JNICALL Java_at_o2xfs_xfs_v3_110_ptr_PtrCapabilities310Test_bu
 	Caps.bMultiPage = FALSE;
 	Caps.fwPaperSources = WFS_PTR_PAPERUPPER | WFS_PTR_PAPERLOWER;
 	Caps.bMediaTaken = TRUE;
-	Caps.usRetractBins = 1;
-	Caps.lpusMaxRetract = MaxRetract;
+	Caps.usRetractBins = 0;
+	Caps.lpusMaxRetract = NULL;
 	Caps.fwImageType = WFS_PTR_IMAGETIF | WFS_PTR_IMAGEWMF | WFS_PTR_IMAGEBMP;
 	Caps.fwFrontImageColorFormat = WFS_PTR_IMAGECOLORBINARY | WFS_PTR_IMAGECOLORGRAYSCALE | WFS_PTR_IMAGECOLORFULL;
 	Caps.fwBackImageColorFormat = WFS_PTR_IMAGECOLORFULL;
