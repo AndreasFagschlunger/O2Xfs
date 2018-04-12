@@ -32,6 +32,12 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
 
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
     configurations {
         debugDll
         releaseDll
