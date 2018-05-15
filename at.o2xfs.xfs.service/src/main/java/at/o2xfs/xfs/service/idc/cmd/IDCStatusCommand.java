@@ -33,12 +33,12 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
-import at.o2xfs.xfs.cim.CimInfoCommand;
-import at.o2xfs.xfs.v3_00.idc.Status3;
+import at.o2xfs.xfs.idc.IdcInfoCommand;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.idc.IdcFactory;
+import at.o2xfs.xfs.v3_00.idc.Status3;
 
 /**
  * This command reports the full range of information available, including the
@@ -63,7 +63,7 @@ public class IDCStatusCommand implements Callable<Status3> {
 	@Override
 	public Status3 call() throws XfsException {
 		Status3 result;
-		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(idcService, CimInfoCommand.STATUS);
+		XfsInfoCommand<IdcInfoCommand> command = new XfsInfoCommand<IdcInfoCommand>(idcService, IdcInfoCommand.STATUS);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
