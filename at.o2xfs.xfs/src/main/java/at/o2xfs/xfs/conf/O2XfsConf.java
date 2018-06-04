@@ -154,7 +154,7 @@ public final class O2XfsConf {
 	 */
 	public String wfmQueryValue(final HKEY hKey, final String valueName) throws XfsException {
 		final ZSTR data = new ZSTR(SIZE_LIMIT, true);
-		final DWORD cchData = new DWORD(0L);
+		final DWORD cchData = new DWORD(data.getSize());
 		final int errorCode = wfmQueryValue0(hKey, new ZSTR(valueName), data, cchData);
 		XfsException.throwFor(errorCode);
 		return data.toString();
