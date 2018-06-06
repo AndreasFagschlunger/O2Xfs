@@ -28,6 +28,7 @@
 package at.o2xfs.xfs.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import at.o2xfs.common.Assert;
@@ -38,8 +39,7 @@ import at.o2xfs.xfs.type.RequestId;
 
 public class XfsRequestWatchdog {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(XfsRequestWatchdog.class);
+	private static final Logger LOG = LoggerFactory.getLogger(XfsRequestWatchdog.class);
 
 	private class Request {
 
@@ -104,11 +104,9 @@ public class XfsRequestWatchdog {
 						}
 						requests.wait();
 					} else {
-						long waitTime = nextTimeout()
-								- System.currentTimeMillis();
+						long waitTime = nextTimeout() - System.currentTimeMillis();
 						if (LOG.isDebugEnabled()) {
-							LOG.debug(method, "Waiting for " + waitTime
-									+ " milliseconds");
+							LOG.debug(method, "Waiting for " + waitTime + " milliseconds");
 						}
 						if (waitTime > 0) {
 							requests.wait(waitTime);
@@ -135,26 +133,22 @@ public class XfsRequestWatchdog {
 	private void checkRequests() {
 		final String method = "checkRequests()";
 		final long currentTime = System.currentTimeMillis();
-		for (int i = 0; i < requests.size(); i++) {
-			Request request = requests.get(i);
+		for (Iterator<Request> i = requests.iterator(); i.hasNext();) {
+			Request request = i.next();
 			if (request.getTimeoutTime() > currentTime) {
 				continue;
 			}
 			long activeTime = request.getTimeoutTime() - request.startTime;
 			if (request.cancelled) {
 				if (LOG.isWarnEnabled()) {
-					LOG.warn(
-							method,
-							"Request "
-									+ request.requestId
-									+ " has been cancelled but is still active, terminate ...");
+					LOG.warn(method,
+							"Request " + request.requestId + " has been cancelled but is still active, terminate ...");
 				}
-				requests.remove(i);
+				i.remove();
 				requestQueue.terminateRequest(request.requestId);
 			} else {
 				if (LOG.isWarnEnabled()) {
-					LOG.warn(method, "Request " + request.requestId
-							+ " has been active for " + activeTime
+					LOG.warn(method, "Request " + request.requestId + " has been active for " + activeTime
 							+ " milliseconds and may be hung, try cancel ...");
 				}
 				request.cancelled = true;
@@ -169,8 +163,7 @@ public class XfsRequestWatchdog {
 			for (Request request : requests) {
 				if (request.requestId.equals(requestId)) {
 					if (LOG.isDebugEnabled()) {
-						LOG.debug(method, "Remove RequestId: "
-								+ request.requestId);
+						LOG.debug(method, "Remove RequestId: " + request.requestId);
 					}
 					requests.remove(request);
 					return;
@@ -181,8 +174,7 @@ public class XfsRequestWatchdog {
 
 	public void add(RequestId requestId, Long timeOut) {
 		final String method = "add(RequestId, Long)";
-		if (timeOut == null
-				|| timeOut.longValue() == XfsAPI.WFS_INDEFINITE_WAIT) {
+		if (timeOut == null || timeOut.longValue() == XfsAPI.WFS_INDEFINITE_WAIT) {
 			return;
 		}
 		synchronized (requests) {

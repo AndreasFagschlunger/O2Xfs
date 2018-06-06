@@ -38,8 +38,7 @@ import at.o2xfs.operator.ui.content.text.ExceptionMessage;
 
 public class TaskManager implements CommandsChangedListener, UIContentListener {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(TaskManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TaskManager.class);
 
 	private final List<TaskManagerListener> listeners;
 
@@ -114,7 +113,7 @@ public class TaskManager implements CommandsChangedListener, UIContentListener {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(method, "task=" + task + ",taskPath=" + taskPath);
 		}
-		for (int i = 0; i < taskPath.size(); i++) {
+		for (int i = taskPath.size() - 1; i >= 0; i--) {
 			Task activeTask = taskPath.remove(i);
 			activeTask.getCommands().removeCommandsChangedListener(this);
 			activeTask.getContent().removeUIContentListener(this);
@@ -150,8 +149,7 @@ public class TaskManager implements CommandsChangedListener, UIContentListener {
 			if (LOG.isErrorEnabled()) {
 				LOG.error(method, "Exception in Task: " + task, e);
 			}
-			task.getContent().setUIElement(
-					new ExceptionMessage(task.getClass(), e));
+			task.getContent().setUIElement(new ExceptionMessage(task.getClass(), e));
 			task.getCommands().clear();
 			task.getCommands().setBackCommand(new CloseTaskCommand(this));
 		}
