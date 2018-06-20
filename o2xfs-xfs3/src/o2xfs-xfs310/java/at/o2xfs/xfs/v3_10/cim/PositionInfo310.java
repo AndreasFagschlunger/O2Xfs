@@ -27,21 +27,51 @@
 
 package at.o2xfs.xfs.v3_10.cim;
 
+import java.util.Optional;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
+import at.o2xfs.xfs.XfsStruct;
 import at.o2xfs.xfs.cim.AdditionalBunches;
 import at.o2xfs.xfs.cim.Position;
+import at.o2xfs.xfs.win32.OptionalXfsWord;
 import at.o2xfs.xfs.win32.XfsWord;
 
-public class PositionInfo310 extends Struct {
+public class PositionInfo310 extends XfsStruct {
+
+	public static class Builder {
+
+		private final Position position;
+		private Optional<AdditionalBunches> additionalBunches;
+		private int bunchesRemaining;
+
+		public Builder(Position position) {
+			this.position = position;
+			additionalBunches = Optional.empty();
+		}
+
+		public Builder additionalBunches(AdditionalBunches additionalBunches) {
+			this.additionalBunches = Optional.ofNullable(additionalBunches);
+			return this;
+		}
+
+		public Builder bunchesRemaining(int bunchesRemaining) {
+			this.bunchesRemaining = bunchesRemaining;
+			return this;
+		}
+
+		public PositionInfo310 build() {
+			return new PositionInfo310(this);
+		}
+	}
 
 	protected final XfsWord<Position> position = new XfsWord<>(Position.class);
-	protected final XfsWord<AdditionalBunches> additionalBunches = new XfsWord<>(AdditionalBunches.class);
+	protected final OptionalXfsWord<AdditionalBunches> additionalBunches = new OptionalXfsWord<>(
+			AdditionalBunches.class);
 	protected final USHORT bunchesRemaining = new USHORT();
 
 	protected PositionInfo310() {
@@ -61,6 +91,14 @@ public class PositionInfo310 extends Struct {
 		set(copy);
 	}
 
+	private PositionInfo310(Builder builder) {
+		this();
+		allocate();
+		position.set(builder.position);
+		additionalBunches.set(builder.additionalBunches);
+		bunchesRemaining.set(builder.bunchesRemaining);
+	}
+
 	protected void set(PositionInfo310 copy) {
 		position.set(copy.getPosition());
 		additionalBunches.set(copy.getAdditionalBunches());
@@ -71,7 +109,7 @@ public class PositionInfo310 extends Struct {
 		return position.get();
 	}
 
-	public AdditionalBunches getAdditionalBunches() {
+	public Optional<AdditionalBunches> getAdditionalBunches() {
 		return additionalBunches.get();
 	}
 
@@ -81,22 +119,32 @@ public class PositionInfo310 extends Struct {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getPosition()).append(getAdditionalBunches()).append(getBunchesRemaining()).toHashCode();
+		return new HashCodeBuilder()
+				.append(getPosition())
+				.append(getAdditionalBunches())
+				.append(getBunchesRemaining())
+				.toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof PositionInfo310) {
 			PositionInfo310 positionInfo310 = (PositionInfo310) obj;
-			return new EqualsBuilder().append(getPosition(), positionInfo310.getPosition()).append(getAdditionalBunches(), positionInfo310.getAdditionalBunches())
-					.append(getBunchesRemaining(), positionInfo310.getBunchesRemaining()).isEquals();
+			return new EqualsBuilder()
+					.append(getPosition(), positionInfo310.getPosition())
+					.append(getAdditionalBunches(), positionInfo310.getAdditionalBunches())
+					.append(getBunchesRemaining(), positionInfo310.getBunchesRemaining())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("position", getPosition()).append("additionalBunches", getAdditionalBunches()).append("bunchesRemaining", getBunchesRemaining())
+		return new ToStringBuilder(this)
+				.append("position", getPosition())
+				.append("additionalBunches", getAdditionalBunches())
+				.append("bunchesRemaining", getBunchesRemaining())
 				.toString();
 	}
 }
