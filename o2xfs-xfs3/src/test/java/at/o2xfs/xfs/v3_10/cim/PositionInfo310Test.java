@@ -28,10 +28,13 @@
 package at.o2xfs.xfs.v3_10.cim;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
+import at.o2xfs.xfs.cim.AdditionalBunches;
+import at.o2xfs.xfs.cim.Position;
 import at.o2xfs.xfs.v3_10.BaseXfs310Test;
 
 public class PositionInfo310Test extends BaseXfs310Test {
@@ -45,4 +48,14 @@ public class PositionInfo310Test extends BaseXfs310Test {
 	}
 
 	private native Buffer buildPositionInfo310();
+
+	@Test
+	public void issue67() {
+		PositionInfo310.Builder builder = new PositionInfo310.Builder(Position.OUTFRONT);
+		PositionInfo310 positionInfo = new PositionInfo310.Builder(Position.OUTFRONT).build();
+		assertNotNull(positionInfo.getAdditionalBunches());
+		for (AdditionalBunches expected : AdditionalBunches.values()) {
+			assertEquals(expected, builder.additionalBunches(expected).build().getAdditionalBunches().get());
+		}
+	}
 }
