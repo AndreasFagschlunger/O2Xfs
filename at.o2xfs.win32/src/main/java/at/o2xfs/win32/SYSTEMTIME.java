@@ -27,13 +27,19 @@
 
 package at.o2xfs.win32;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
+
 /**
  * @see <a href=
  *      "http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx">http://msdn.microsoft.com/en-us/library/aa383751%28v=vs.85%29.aspx</a>
  *
  * @author Andreas Fagschlunger
  */
-public class SYSTEMTIME extends Struct {
+public class SYSTEMTIME extends Struct implements ValueType<LocalDateTime> {
+
+	public static final int SUNDAY = 0;
 
 	private WORD year = new WORD();
 	private WORD month = new WORD();
@@ -53,6 +59,24 @@ public class SYSTEMTIME extends Struct {
 		add(minute);
 		add(second);
 		add(milliseconds);
+	}
+
+	@Override
+	public void set(LocalDateTime value) {
+		year.set(value.getYear());
+		month.set(value.getMonthValue());
+		dayOfWeek.set(DayOfWeek.SUNDAY == value.getDayOfWeek() ? SUNDAY : value.getDayOfWeek().getValue());
+		day.set(value.getDayOfMonth());
+		hour.set(value.getHour());
+		minute.set(value.getMinute());
+		second.set(value.getSecond());
+		milliseconds.set(value.get(ChronoField.MILLI_OF_SECOND));
+	}
+
+	@Override
+	public LocalDateTime get() {
+		return LocalDateTime
+				.of(getYear(), getMonth(), getDay(), getHour(), getMinute(), getSecond(), getMilliseconds() * 1000000);
 	}
 
 	public void set(SYSTEMTIME value) {

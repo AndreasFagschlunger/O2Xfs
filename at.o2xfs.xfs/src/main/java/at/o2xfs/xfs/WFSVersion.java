@@ -39,6 +39,50 @@ public class WFSVersion extends Struct {
 	private final static int WFSDDESCRIPTION_LEN = 256;
 	private final static int WFSDSYSSTATUS_LEN = 256;
 
+	public static class Builder {
+
+		private XfsVersion version = new XfsVersion(0);
+		private XfsVersion lowVersion = new XfsVersion(0);
+		private XfsVersion highVersion = new XfsVersion(0);
+		private String description = "";
+		private String systemStatus = "";
+
+		public Builder version(XfsVersion version) {
+			this.version = version;
+			return this;
+		}
+
+		public Builder lowVersion(XfsVersion lowVersion) {
+			this.lowVersion = lowVersion;
+			return this;
+		}
+
+		public Builder highVersion(XfsVersion highVersion) {
+			this.highVersion = highVersion;
+			return this;
+		}
+
+		public Builder description(String description) {
+			this.description = description;
+			return this;
+		}
+
+		public Builder systemStatus(String systemStatus) {
+			this.systemStatus = systemStatus;
+			return this;
+		}
+
+		public WFSVersion build(Pointer p) {
+			WFSVersion result = new WFSVersion(p);
+			result.version.set(version.intValue());
+			result.lowVersion.set(lowVersion.intValue());
+			result.highVersion.set(highVersion.intValue());
+			result.description.set(description);
+			result.systemStatus.set(systemStatus);
+			return result;
+		}
+	}
+
 	/**
 	 * The version number to be used.
 	 */
@@ -55,18 +99,19 @@ public class WFSVersion extends Struct {
 	private WORD highVersion = new WORD();
 
 	/**
-	 * A null-terminated ASCII string into which the called DLL copies a description
-	 * of the implementation. The text (up to 256 characters in length) may contain
-	 * any characters: the most likely use that an application will make of this is
-	 * to display it (possibly truncated) in a status message.
+	 * A null-terminated ASCII string into which the called DLL copies a
+	 * description of the implementation. The text (up to 256 characters in
+	 * length) may contain any characters: the most likely use that an
+	 * application will make of this is to display it (possibly truncated) in a
+	 * status message.
 	 */
 	private ZSTR description = new ZSTR(WFSDDESCRIPTION_LEN + 1);
 
 	/**
 	 * A null-terminated ASCII string into which the called DLL copies relevant
-	 * status or configuration information. Not to be considered as an extension of
-	 * the szDescription field. Used only if the information might be useful to the
-	 * user or support staff.
+	 * status or configuration information. Not to be considered as an extension
+	 * of the szDescription field. Used only if the information might be useful
+	 * to the user or support staff.
 	 */
 	private ZSTR systemStatus = new ZSTR(WFSDSYSSTATUS_LEN + 1);
 

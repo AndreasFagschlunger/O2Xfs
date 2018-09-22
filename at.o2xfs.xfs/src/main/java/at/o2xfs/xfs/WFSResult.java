@@ -27,6 +27,8 @@
 
 package at.o2xfs.xfs;
 
+import java.time.LocalDateTime;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -47,45 +49,46 @@ import at.o2xfs.xfs.util.XfsConstants;
  */
 public class WFSResult extends Struct {
 
-	private final static String COMMANDCODE = "commandCode";
-	private final static String EVENTID = "eventID";
+	protected final static String COMMANDCODE = "commandCode";
+	protected final static String EVENTID = "eventID";
 
 	/**
-	 * Request ID of the completed command; not used for event notifications other
-	 * than Execute events.
+	 * Request ID of the completed command; not used for event notifications
+	 * other than Execute events.
 	 */
-	private final RequestId requestID = new RequestId();
+	protected final RequestId requestID = new RequestId();
 
 	/**
 	 * Service handle identifying the session that created the result, i.e. the
 	 * service handle of the session that the event is sent to.
 	 */
-	private final HSERVICE service = new HSERVICE();
+	protected final HSERVICE service = new HSERVICE();
 
 	/**
 	 * Time the event occurred (local time, in a Win32 SYSTEMTIME structure).
 	 */
-	private final SYSTEMTIME timestamp = new SYSTEMTIME();
+	protected final SYSTEMTIME timestamp = new SYSTEMTIME();
 
 	/**
-	 * Result handle (note that for synchronous WFSExecute and WFSGetInfo commands,
-	 * this value is identical to the synchronous function return value).
+	 * Result handle (note that for synchronous WFSExecute and WFSGetInfo
+	 * commands, this value is identical to the synchronous function return
+	 * value).
 	 */
-	private final INT result = new INT();
+	protected final INT result = new INT();
 
 	/**
-	 * WFSExecute "command" code or WFSGetInfo "category" code; not used for other
-	 * command completions.
+	 * WFSExecute "command" code or WFSGetInfo "category" code; not used for
+	 * other command completions.
 	 *
 	 * ID of the event (for unsolicited events).
 	 */
-	private Union u = new Union(new Field[] { new Field(COMMANDCODE, new DWORD()), new Field(EVENTID, new DWORD()) });
+	protected Union u = new Union(new Field[] { new Field(COMMANDCODE, new DWORD()), new Field(EVENTID, new DWORD()) });
 
 	/**
-	 * Pointer to the results of the command (if any) or the contents of the event
-	 * notification.
+	 * Pointer to the results of the command (if any) or the contents of the
+	 * event notification.
 	 */
-	private Pointer buffer = new Pointer();
+	protected Pointer buffer = new Pointer();
 
 	public WFSResult() {
 		add(requestID);
@@ -128,8 +131,8 @@ public class WFSResult extends Struct {
 		return service;
 	}
 
-	public SYSTEMTIME getTimestamp() {
-		return timestamp;
+	public LocalDateTime getTimestamp() {
+		return timestamp.get();
 	}
 
 	public int getResult() {

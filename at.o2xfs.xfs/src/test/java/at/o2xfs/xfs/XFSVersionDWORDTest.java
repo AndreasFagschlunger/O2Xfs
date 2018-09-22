@@ -68,4 +68,11 @@ public class XFSVersionDWORDTest {
 		final XFSVersionDWORD versions = new XFSVersionDWORD("255.255", "255.255");
 		assertEquals(0xFFFFFFFFL, versions.longValue());
 	}
+
+	@Test
+	public void test0x14020A03() {
+		XFSVersionDWORD versions = XFSVersionDWORD.build(0x14020A03);
+		assertEquals("2.20", versions.getLowVersion().toString());
+		assertEquals("3.10", versions.getHighVersion().toString());
+	}
 }

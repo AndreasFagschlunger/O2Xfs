@@ -27,10 +27,10 @@
 
 package at.o2xfs.win32;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import at.o2xfs.common.Bytes;
 import at.o2xfs.common.Hex;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public abstract class Buffer {
 
@@ -92,7 +92,17 @@ public abstract class Buffer {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("size", size).append("address", Hex.encode(address)).toString();
+		return new ToStringBuilder(this).append("size", size).append("address", addressString()).toString();
+	}
+
+	private String addressString() {
+		byte[] array = getAddress();
+		for (int i = 0; i < array.length / 2; i++) {
+			byte temp = array[i];
+			array[i] = array[array.length - i - 1];
+			array[array.length - i - 1] = temp;
+		}
+		return Hex.encode(array);
 	}
 
 	@Override

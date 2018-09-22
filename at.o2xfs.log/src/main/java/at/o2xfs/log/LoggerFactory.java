@@ -27,7 +27,9 @@
 
 package at.o2xfs.log;
 
-import at.o2xfs.log.slf4j.SLF4JLogger;
+import org.apache.logging.log4j.LogManager;
+
+import at.o2xfs.log.log4j.Log4jLogger;
 
 /**
  * @author Andreas Fagschlunger
@@ -36,6 +38,6 @@ import at.o2xfs.log.slf4j.SLF4JLogger;
 public class LoggerFactory {
 
 	public static Logger getLogger(Class<?> clazz) {
-		return new SLF4JLogger(org.slf4j.LoggerFactory.getLogger(clazz));
+		return new Log4jLogger(LogManager.getLogger(clazz));
 	}
 }

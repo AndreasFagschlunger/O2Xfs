@@ -55,6 +55,10 @@ public class Pointer extends BaseType {
 		assignBuffer(p);
 	}
 
+	/**
+	 * @deprecated use {@link #build(Buffer)}
+	 */
+	@Deprecated
 	public Pointer(Buffer buffer) {
 		this();
 		assignBuffer(buffer);
@@ -74,10 +78,10 @@ public class Pointer extends BaseType {
 
 	/**
 	 * @param size
-	 *            The buffer's capacity, in bytes
+	 *                 The buffer's capacity, in bytes
 	 * @return Buffer for the memory this Pointer points to
 	 * @throws NullPointerException
-	 *             if this Pointer points to NULL
+	 *                                  if this Pointer points to NULL
 	 */
 	public Buffer buffer(final int size) throws NullPointerException {
 		if (Pointer.NULL.equals(this)) {
@@ -90,7 +94,7 @@ public class Pointer extends BaseType {
 	 * Lets this Pointer point to the specified {@link Type}.
 	 *
 	 * @param aReference
-	 *            the Type this Pointer should point to
+	 *                       the Type this Pointer should point to
 	 */
 	public void pointTo(final Type aReference) {
 		if (this == NULL) {
@@ -117,6 +121,19 @@ public class Pointer extends BaseType {
 
 	@Override
 	public String toString() {
-		return "Address: " + Hex.encode(getBuffer().getAddress()) + ", Value: " + Hex.encode(getBytes());
+		return "Address: " + toAddressString(getBuffer().getAddress()) + ", Value: " + toAddressString(getBytes());
+	}
+
+	private String toAddressString(byte[] bytes) {
+		for (int i = 0; i < bytes.length / 2; i++) {
+			byte temp = bytes[i];
+			bytes[i] = bytes[bytes.length - i - 1];
+			bytes[bytes.length - i - 1] = temp;
+		}
+		return Hex.encode(bytes);
+	}
+
+	public static final Pointer build(Buffer buffer) {
+		return new Pointer(buffer);
 	}
 }

@@ -25,7 +25,6 @@ public class ShortTest {
 	@Test
 	public void testRandom() {
 		Random random = new Random();
-		byte[] b = new byte[Short.BYTES];
 		SHORT actual = new SHORT((short) 0);
 		for (int i = 0; i <= 100; i++) {
 			short expected = (short) random.nextInt();

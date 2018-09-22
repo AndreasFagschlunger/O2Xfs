@@ -35,11 +35,15 @@ public interface Logger {
 
 	public boolean isDebugEnabled();
 
+	public void debug(String message, Object... params);
+
 	public void debug(String method, Object message);
 
 	public void debug(String method, Object message, Throwable t);
 
 	public boolean isInfoEnabled();
+
+	public void info(String message, Object... params);
 
 	public void info(String method, Object message);
 
@@ -47,11 +51,15 @@ public interface Logger {
 
 	public boolean isWarnEnabled();
 
+	public void warn(String message, Object... params);
+
 	public void warn(String method, Object message);
 
 	public void warn(String method, Object message, Throwable t);
 
 	public boolean isErrorEnabled();
+
+	public void error(String message, Object... params);
 
 	public void error(String method, Object message, Throwable t);
 

@@ -64,27 +64,7 @@ public enum NoteErrorReason implements XfsConstant {
 	/*
 	 * @since v3.10
 	 */
-	SHORTNOTEDETECTED(7L),
-
-	/*
-	 * @since v3.30
-	 */
-	IRRETRACTFAILURE(1L),
-
-	/*
-	 * @since v3.30
-	 */
-	IRRETRACTAREAFULL(2L),
-
-	/*
-	 * @since v3.30
-	 */
-	IRFOREIGNITEMSDETECTED(3L),
-
-	/*
-	 * @since v3.30
-	 */
-	IRINVALIDBUNCH(4L);
+	SHORTNOTEDETECTED(7L);
 
 	private final long value;
 

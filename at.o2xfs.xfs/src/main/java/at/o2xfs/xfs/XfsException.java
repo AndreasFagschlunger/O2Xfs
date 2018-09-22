@@ -44,7 +44,7 @@ import at.o2xfs.xfs.siu.SIUServiceExceptionFactory;
  *
  * @author Andreas Fagschlunger
  */
-public abstract class XfsException extends Exception {
+public class XfsException extends Exception {
 
 	private static List<AbstractXfsExceptionFactory> exceptionFactories = null;
 
@@ -95,5 +95,9 @@ public abstract class XfsException extends Exception {
 
 	public long getErrorCode() {
 		return ((XfsConstant) error).getValue();
+	}
+
+	public static XfsException of(Enum<? extends XfsConstant> error) {
+		return new XfsException(error);
 	}
 }

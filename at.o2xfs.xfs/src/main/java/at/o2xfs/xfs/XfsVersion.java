@@ -165,7 +165,10 @@ public class XfsVersion implements Comparable<XfsVersion> {
 	public boolean equals(final Object obj) {
 		if (obj instanceof XfsVersion) {
 			final XfsVersion v = (XfsVersion) obj;
-			return new EqualsBuilder().append(majorVersion, v.majorVersion).append(minorVersion, v.minorVersion).isEquals();
+			return new EqualsBuilder()
+					.append(majorVersion, v.majorVersion)
+					.append(minorVersion, v.minorVersion)
+					.isEquals();
 		}
 		return false;
 	}
@@ -173,5 +176,9 @@ public class XfsVersion implements Comparable<XfsVersion> {
 	@Override
 	public String toString() {
 		return String.format("%d.%02d", Integer.valueOf(majorVersion), Integer.valueOf(minorVersion));
+	}
+
+	public static final XfsVersion build(int value) {
+		return new XfsVersion(value);
 	}
 }

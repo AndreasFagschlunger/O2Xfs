@@ -42,6 +42,44 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class OutputPosition3 extends Struct {
 
+	public static class Builder {
+
+		private Position position = Position.NULL;
+		private Shutter shutter = Shutter.CLOSED;
+		private PositionStatus positionStatus = PositionStatus.EMPTY;
+		private Transport transport = Transport.OK;
+		private TransportStatus transportStatus = TransportStatus.EMPTY;
+
+		public Builder position(Position position) {
+			this.position = position;
+			return this;
+		}
+
+		public Builder shutter(Shutter shutter) {
+			this.shutter = shutter;
+			return this;
+		}
+
+		public Builder positionStatus(PositionStatus positionStatus) {
+			this.positionStatus = positionStatus;
+			return this;
+		}
+
+		public Builder transport(Transport transport) {
+			this.transport = transport;
+			return this;
+		}
+
+		public Builder transportStatus(TransportStatus transportStatus) {
+			this.transportStatus = transportStatus;
+			return this;
+		}
+
+		public OutputPosition3 build() {
+			return new OutputPosition3(this);
+		}
+	}
+
 	private final XfsWord<Position> position = new XfsWord<>(Position.class);
 	private final XfsWord<Shutter> shutter = new XfsWord<>(Shutter.class);
 	private final XfsWord<PositionStatus> positionStatus = new XfsWord<>(PositionStatus.class);
@@ -54,6 +92,16 @@ public class OutputPosition3 extends Struct {
 		add(positionStatus);
 		add(transport);
 		add(transportStatus);
+	}
+
+	protected OutputPosition3(Builder builder) {
+		this();
+		allocate();
+		position.set(builder.position);
+		shutter.set(builder.shutter);
+		positionStatus.set(builder.positionStatus);
+		transport.set(builder.transport);
+		transportStatus.set(builder.transportStatus);
 	}
 
 	public OutputPosition3(Pointer p) {
@@ -93,22 +141,38 @@ public class OutputPosition3 extends Struct {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getPosition()).append(getShutter()).append(getPositionStatus()).append(getTransport()).append(getTransportStatus()).toHashCode();
+		return new HashCodeBuilder()
+				.append(getPosition())
+				.append(getShutter())
+				.append(getPositionStatus())
+				.append(getTransport())
+				.append(getTransportStatus())
+				.toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof OutputPosition3) {
 			OutputPosition3 rhs = (OutputPosition3) obj;
-			return new EqualsBuilder().append(getPosition(), rhs.getPosition()).append(getShutter(), rhs.getShutter()).append(getPositionStatus(), rhs.getPositionStatus())
-					.append(getTransport(), rhs.getTransport()).append(getTransportStatus(), rhs.getTransportStatus()).isEquals();
+			return new EqualsBuilder()
+					.append(getPosition(), rhs.getPosition())
+					.append(getShutter(), rhs.getShutter())
+					.append(getPositionStatus(), rhs.getPositionStatus())
+					.append(getTransport(), rhs.getTransport())
+					.append(getTransportStatus(), rhs.getTransportStatus())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("position", getPosition()).append("shutter", getShutter()).append("positionStatus", getPositionStatus())
-				.append("transport", getTransport()).append("transportStatus", getTransportStatus()).toString();
+		return new ToStringBuilder(this)
+				.append("position", getPosition())
+				.append("shutter", getShutter())
+				.append("positionStatus", getPositionStatus())
+				.append("transport", getTransport())
+				.append("transportStatus", getTransportStatus())
+				.toString();
 	}
 }

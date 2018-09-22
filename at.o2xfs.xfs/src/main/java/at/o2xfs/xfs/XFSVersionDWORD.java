@@ -27,19 +27,22 @@
 
 package at.o2xfs.xfs;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.xfs.util.XFSUtils;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * @author Andreas Fagschlunger
  */
-public class XFSVersionDWORD
-		extends DWORD {
+public class XFSVersionDWORD extends DWORD {
 
 	public XFSVersionDWORD() {
 		super();
+	}
+
+	public XFSVersionDWORD(int value) {
+		super(value);
 	}
 
 	public XFSVersionDWORD(final String version) {
@@ -51,6 +54,14 @@ public class XFSVersionDWORD
 		allocate();
 		setLowVersion(lowVersion);
 		setHighVersion(highVersion);
+	}
+
+	public XfsVersion getLowVersion() {
+		return new XfsVersion(highWord.intValue());
+	}
+
+	public XfsVersion getHighVersion() {
+		return new XfsVersion(lowWord.intValue());
 	}
 
 	public void setLowVersion(final XfsVersion lowVersion) {
@@ -71,8 +82,13 @@ public class XFSVersionDWORD
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("lowVersion", XFSUtils.getVersionAsString(highWord.intValue()))
-										.append("highVersion", XFSUtils.getVersionAsString(lowWord.intValue()))
-										.toString();
+		return new ToStringBuilder(this)
+				.append("lowVersion", XFSUtils.getVersionAsString(highWord.intValue()))
+				.append("highVersion", XFSUtils.getVersionAsString(lowWord.intValue()))
+				.toString();
+	}
+
+	public static final XFSVersionDWORD build(int value) {
+		return new XFSVersionDWORD(value);
 	}
 }

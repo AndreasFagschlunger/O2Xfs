@@ -27,6 +27,8 @@
 
 package at.o2xfs.win32;
 
+import java.nio.charset.StandardCharsets;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -81,7 +83,7 @@ public class LPSTR extends Pointer implements ASCII, ValueType<String> {
 			for (int length = 1;; length++) {
 				byte[] bytes = buffer(length).get();
 				if (bytes[length - 1] == NUL) {
-					return new String(bytes, 0, length - 1, US_ASCII);
+					return new String(bytes, 0, length - 1, StandardCharsets.US_ASCII);
 				}
 			}
 		}
