@@ -28,11 +28,11 @@
 package at.o2xfs.xfs.service.cdm.xfs3;
 
 import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.v3_00.cdm.CashUnitInfo3;
-import at.o2xfs.xfs.service.ReflectiveInfoCommand;
+import at.o2xfs.xfs.service.cdm.AbstractCdmInfoCommand;
 import at.o2xfs.xfs.service.cdm.CdmService;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitInfo3;
 
-public class CashUnitInfoCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, CashUnitInfo3> {
+public class CashUnitInfoCommand extends AbstractCdmInfoCommand<CashUnitInfo3> {
 
 	public CashUnitInfoCommand(CdmService service) {
 		super(service, CdmInfoCommand.CASH_UNIT_INFO, CashUnitInfo3.class);

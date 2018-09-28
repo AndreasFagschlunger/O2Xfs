@@ -28,11 +28,11 @@
 package at.o2xfs.xfs.service.cdm.xfs3;
 
 import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.v3_00.cdm.CdmStatus3;
-import at.o2xfs.xfs.service.ReflectiveInfoCommand;
+import at.o2xfs.xfs.service.cdm.AbstractCdmInfoCommand;
 import at.o2xfs.xfs.service.cdm.CdmService;
+import at.o2xfs.xfs.v3_00.cdm.CdmStatus3;
 
-public class CdmStatusCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, CdmStatus3> {
+public class CdmStatusCommand extends AbstractCdmInfoCommand<CdmStatus3> {
 
 	public CdmStatusCommand(CdmService service) {
 		super(service, CdmInfoCommand.STATUS, CdmStatus3.class);

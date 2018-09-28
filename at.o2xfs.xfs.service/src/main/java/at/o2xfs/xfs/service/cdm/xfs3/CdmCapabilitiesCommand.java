@@ -28,11 +28,11 @@
 package at.o2xfs.xfs.service.cdm.xfs3;
 
 import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
-import at.o2xfs.xfs.service.ReflectiveInfoCommand;
+import at.o2xfs.xfs.service.cdm.AbstractCdmInfoCommand;
 import at.o2xfs.xfs.service.cdm.CdmService;
+import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
 
-public class CdmCapabilitiesCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, CdmCaps3> {
+public class CdmCapabilitiesCommand extends AbstractCdmInfoCommand<CdmCaps3> {
 
 	public CdmCapabilitiesCommand(CdmService service) {
 		super(service, CdmInfoCommand.CAPABILITIES, CdmCaps3.class);

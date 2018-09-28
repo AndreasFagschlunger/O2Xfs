@@ -38,11 +38,11 @@ import at.o2xfs.win32.ZList;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.v3_00.cdm.CurrencyExp3;
-import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
+import at.o2xfs.xfs.service.cdm.CdmFactory;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
+import at.o2xfs.xfs.v3_00.cdm.CurrencyExp3;
 
 public class CurrencyExpCommand implements Callable<Collection<CurrencyExp3>> {
 
@@ -55,14 +55,15 @@ public class CurrencyExpCommand implements Callable<Collection<CurrencyExp3>> {
 	@Override
 	public Collection<CurrencyExp3> call() throws XfsException {
 		List<CurrencyExp3> result;
-		XfsInfoCommand<CdmInfoCommand> infoCommand = new XfsInfoCommand<CdmInfoCommand>(service, CdmInfoCommand.CURRENCY_EXP);
+		XfsInfoCommand<CdmInfoCommand> infoCommand = new XfsInfoCommand<CdmInfoCommand>(service,
+				CdmInfoCommand.CURRENCY_EXP);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = infoCommand.call();
 			result = new ArrayList<>();
 			ZList lppCurrencyExp = new ZList(wfsResult.getResults());
 			for (Pointer p : lppCurrencyExp) {
-				result.add(ReflectiveFactory.create(service.getXfsVersion(), p, CurrencyExp3.class));
+				result.add(CdmFactory.create(service.getXfsVersion(), p, CurrencyExp3.class));
 			}
 		} finally {
 			if (wfsResult != null) {

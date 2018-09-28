@@ -33,15 +33,15 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.CdmMessage;
-import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
-import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
-import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
+import at.o2xfs.xfs.service.cdm.CdmFactory;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 
 public class RejectCommand extends AbstractAsyncXfsCommand<RejectListener, SuccessEvent> {
 
@@ -67,17 +67,19 @@ public class RejectCommand extends AbstractAsyncXfsCommand<RejectListener, Succe
 		try {
 			CdmMessage message = wfsResult.getEventID(CdmMessage.class);
 			switch (message) {
-				case EXEE_CASHUNITERROR:
-					fireCashUnitError(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), CashUnitError3.class));
-					break;
-				case EXEE_INPUT_P6:
-					fireInputP6();
-					break;
-				case EXEE_INFO_AVAILABLE:
-					fireInfoAvailable(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), ItemInfoSummary330.class));
-					break;
-				default:
-					throw new IllegalArgumentException("CdmMessage: " + message);
+			case EXEE_CASHUNITERROR:
+				fireCashUnitError(
+						CdmFactory.create(service.getXfsVersion(), wfsResult.getResults(), CashUnitError3.class));
+				break;
+			case EXEE_INPUT_P6:
+				fireInputP6();
+				break;
+			case EXEE_INFO_AVAILABLE:
+				fireInfoAvailable(
+						CdmFactory.create(service.getXfsVersion(), wfsResult.getResults(), ItemInfoSummary330.class));
+				break;
+			default:
+				throw new IllegalArgumentException("CdmMessage: " + message);
 			}
 		} finally {
 			XfsServiceManager.getInstance().free(wfsResult);

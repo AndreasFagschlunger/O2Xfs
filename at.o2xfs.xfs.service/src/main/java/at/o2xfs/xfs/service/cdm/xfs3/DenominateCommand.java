@@ -33,15 +33,15 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.CdmMessage;
-import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
-import at.o2xfs.xfs.v3_00.cdm.Denominate3;
-import at.o2xfs.xfs.v3_00.cdm.Denomination3;
-import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
+import at.o2xfs.xfs.service.cdm.CdmFactory;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+import at.o2xfs.xfs.v3_00.cdm.Denominate3;
+import at.o2xfs.xfs.v3_00.cdm.Denomination3;
 
 public class DenominateCommand extends AbstractAsyncXfsCommand<DenominateListener, DenominationEvent> {
 
@@ -70,11 +70,12 @@ public class DenominateCommand extends AbstractAsyncXfsCommand<DenominateListene
 		try {
 			CdmMessage message = wfsResult.getEventID(CdmMessage.class);
 			switch (message) {
-				case EXEE_CASHUNITERROR:
-					fireCashUnitError(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), CashUnitError3.class));
-					break;
-				default:
-					throw new IllegalArgumentException("CdmMessage: " + message);
+			case EXEE_CASHUNITERROR:
+				fireCashUnitError(
+						CdmFactory.create(service.getXfsVersion(), wfsResult.getResults(), CashUnitError3.class));
+				break;
+			default:
+				throw new IllegalArgumentException("CdmMessage: " + message);
 			}
 		} finally {
 			XfsServiceManager.getInstance().free(wfsResult);
@@ -93,6 +94,6 @@ public class DenominateCommand extends AbstractAsyncXfsCommand<DenominateListene
 
 	@Override
 	protected DenominationEvent createCompleteEvent(Pointer results) {
-		return DenominationEvent.build(ReflectiveFactory.create(service.getXfsVersion(), results, Denomination3.class));
+		return DenominationEvent.build(CdmFactory.create(service.getXfsVersion(), results, Denomination3.class));
 	}
 }

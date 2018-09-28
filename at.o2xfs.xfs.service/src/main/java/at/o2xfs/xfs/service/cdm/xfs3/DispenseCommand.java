@@ -36,17 +36,17 @@ import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.CdmMessage;
 import at.o2xfs.xfs.cdm.NoteErrorReason;
-import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
-import at.o2xfs.xfs.v3_00.cdm.Denomination3;
-import at.o2xfs.xfs.v3_00.cdm.Dispense3;
-import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
-import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
+import at.o2xfs.xfs.service.cdm.CdmFactory;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.type.RequestId;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+import at.o2xfs.xfs.v3_00.cdm.Denomination3;
+import at.o2xfs.xfs.v3_00.cdm.Dispense3;
+import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 import at.o2xfs.xfs.win32.XfsWord;
 
 public class DispenseCommand extends AbstractAsyncXfsCommand<DispenseListener, DenominationEvent> {
@@ -75,35 +75,39 @@ public class DispenseCommand extends AbstractAsyncXfsCommand<DispenseListener, D
 		try {
 			CdmMessage message = wfsResult.getEventID(CdmMessage.class);
 			switch (message) {
-				case EXEE_DELAYEDDISPENSE:
-					fireDelayedDispense(new ULONG(wfsResult.getResults()).longValue());
-					break;
-				case EXEE_STARTDISPENSE:
-					fireStartDispense(new RequestId(wfsResult.getResults()));
-					break;
-				case EXEE_CASHUNITERROR:
-					fireCashUnitError(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), CashUnitError3.class));
-					break;
-				case EXEE_PARTIALDISPENSE:
-					firePartialDispense(new USHORT(wfsResult.getResults()).intValue());
-					break;
-				case EXEE_SUBDISPENSEOK:
-					fireSubDispenseOk(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), Denomination3.class));
-					break;
-				case EXEE_INCOMPLETEDISPENSE:
-					fireIncompleteDispense(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), Denomination3.class));
-					break;
-				case EXEE_NOTEERROR:
-					fireNoteError(new XfsWord<>(NoteErrorReason.class, wfsResult.getResults()).get());
-					break;
-				case EXEE_INPUT_P6:
-					fireInputP6();
-					break;
-				case EXEE_INFO_AVAILABLE:
-					fireInfoAvailable(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), ItemInfoSummary330.class));
-					break;
-				default:
-					throw new IllegalArgumentException("CdmMessage: " + message);
+			case EXEE_DELAYEDDISPENSE:
+				fireDelayedDispense(new ULONG(wfsResult.getResults()).longValue());
+				break;
+			case EXEE_STARTDISPENSE:
+				fireStartDispense(new RequestId(wfsResult.getResults()));
+				break;
+			case EXEE_CASHUNITERROR:
+				fireCashUnitError(
+						CdmFactory.create(service.getXfsVersion(), wfsResult.getResults(), CashUnitError3.class));
+				break;
+			case EXEE_PARTIALDISPENSE:
+				firePartialDispense(new USHORT(wfsResult.getResults()).intValue());
+				break;
+			case EXEE_SUBDISPENSEOK:
+				fireSubDispenseOk(
+						CdmFactory.create(service.getXfsVersion(), wfsResult.getResults(), Denomination3.class));
+				break;
+			case EXEE_INCOMPLETEDISPENSE:
+				fireIncompleteDispense(
+						CdmFactory.create(service.getXfsVersion(), wfsResult.getResults(), Denomination3.class));
+				break;
+			case EXEE_NOTEERROR:
+				fireNoteError(new XfsWord<>(NoteErrorReason.class, wfsResult.getResults()).get());
+				break;
+			case EXEE_INPUT_P6:
+				fireInputP6();
+				break;
+			case EXEE_INFO_AVAILABLE:
+				fireInfoAvailable(
+						CdmFactory.create(service.getXfsVersion(), wfsResult.getResults(), ItemInfoSummary330.class));
+				break;
+			default:
+				throw new IllegalArgumentException("CdmMessage: " + message);
 			}
 		} finally {
 			XfsServiceManager.getInstance().free(wfsResult);
@@ -202,6 +206,6 @@ public class DispenseCommand extends AbstractAsyncXfsCommand<DispenseListener, D
 
 	@Override
 	protected DenominationEvent createCompleteEvent(Pointer results) {
-		return DenominationEvent.build(ReflectiveFactory.create(service.getXfsVersion(), results, Denomination3.class));
+		return DenominationEvent.build(CdmFactory.create(service.getXfsVersion(), results, Denomination3.class));
 	}
 }

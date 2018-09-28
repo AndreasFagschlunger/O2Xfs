@@ -28,11 +28,11 @@
 package at.o2xfs.xfs.service.cdm.xfs3;
 
 import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.v3_00.cdm.MixType3;
-import at.o2xfs.xfs.service.ReflectiveInfoCommand;
+import at.o2xfs.xfs.service.cdm.AbstractCdmInfoCommand;
 import at.o2xfs.xfs.service.cdm.CdmService;
+import at.o2xfs.xfs.v3_00.cdm.MixType3;
 
-public class MixTypesCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, MixType3> {
+public class MixTypesCommand extends AbstractCdmInfoCommand<MixType3> {
 
 	public MixTypesCommand(CdmService service) {
 		super(service, CdmInfoCommand.MIX_TYPES, MixType3.class);

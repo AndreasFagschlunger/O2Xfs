@@ -35,13 +35,15 @@ import java.util.Optional;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.cdm.CdmMessage;
 import at.o2xfs.xfs.cdm.Position;
+import at.o2xfs.xfs.service.XfsService;
+import at.o2xfs.xfs.service.cdm.xfs3.CdmCapabilitiesCommand;
+import at.o2xfs.xfs.service.cdm.xfs3.CurrencyExpCommand;
 import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
 import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
 import at.o2xfs.xfs.v3_00.cdm.CountsChanged3;
@@ -50,10 +52,6 @@ import at.o2xfs.xfs.v3_00.cdm.ItemPosition3;
 import at.o2xfs.xfs.v3_10.cdm.DevicePosition310;
 import at.o2xfs.xfs.v3_10.cdm.PowerSaveChange310;
 import at.o2xfs.xfs.v3_30.cdm.ShutterStatusChanged330;
-import at.o2xfs.xfs.service.ReflectiveFactory;
-import at.o2xfs.xfs.service.XfsService;
-import at.o2xfs.xfs.service.cdm.xfs3.CdmCapabilitiesCommand;
-import at.o2xfs.xfs.service.cdm.xfs3.CurrencyExpCommand;
 import at.o2xfs.xfs.win32.XfsWord;
 
 public final class CdmService extends XfsService {
@@ -108,45 +106,47 @@ public final class CdmService extends XfsService {
 	public void fireServiceEvent(WFSResult wfsResult) {
 		CdmMessage message = wfsResult.getEventID(CdmMessage.class);
 		switch (message) {
-			case SRVE_CASHUNITINFOCHANGED:
-				fireCashUnitInfoChanged(create(wfsResult.getResults(), CashUnit3.class));
-				break;
-			case SRVE_COUNTS_CHANGED:
-				fireCountsChanged(create(wfsResult.getResults(), CountsChanged3.class));
-				break;
-			case SRVE_DEVICEPOSITION:
-				fireDevicePosition(create(wfsResult.getResults(), DevicePosition310.class));
-				break;
-			case SRVE_ITEMSPRESENTED:
-				fireItemsPresented();
-				break;
-			case SRVE_ITEMSTAKEN:
-				fireItemsTaken(new XfsWord<Position>(Position.class, wfsResult.getResults()).get());
-				break;
-			case SRVE_MEDIADETECTED:
-				Optional<ItemPosition3> itemPosition = Optional.empty();
-				if (!Pointer.NULL.equals(wfsResult.getResults())) {
-					itemPosition = Optional.of(create(wfsResult.getResults(), ItemPosition3.class));
-				}
-				fireMediaDetected(itemPosition);
-				break;
-			case SRVE_POWER_SAVE_CHANGE:
-				firePowerSaveChange(create(wfsResult.getResults(), PowerSaveChange310.class));
-				break;
-			case SRVE_SAFEDOORCLOSED:
-				fireSafeDoorClosed();
-				break;
-			case SRVE_SAFEDOOROPEN:
-				fireSafeDoorOpen();
-				break;
-			case SRVE_SHUTTERSTATUSCHANGED:
-				fireShutterStatusChanged(create(wfsResult.getResults(), ShutterStatusChanged330.class));
-				break;
-			case SRVE_TELLERINFOCHANGED:
-				fireTellerInfoChanged(new USHORT(wfsResult.getResults()).intValue());
-				break;
-			default:
-				throw new IllegalArgumentException("CdmMessage: " + message);
+		case SRVE_CASHUNITINFOCHANGED:
+			fireCashUnitInfoChanged(CdmFactory.create(getXfsVersion(), wfsResult.getResults(), CashUnit3.class));
+			break;
+		case SRVE_COUNTS_CHANGED:
+			fireCountsChanged(CdmFactory.create(getXfsVersion(), wfsResult.getResults(), CountsChanged3.class));
+			break;
+		case SRVE_DEVICEPOSITION:
+			fireDevicePosition(CdmFactory.create(getXfsVersion(), wfsResult.getResults(), DevicePosition310.class));
+			break;
+		case SRVE_ITEMSPRESENTED:
+			fireItemsPresented();
+			break;
+		case SRVE_ITEMSTAKEN:
+			fireItemsTaken(new XfsWord<Position>(Position.class, wfsResult.getResults()).get());
+			break;
+		case SRVE_MEDIADETECTED:
+			Optional<ItemPosition3> itemPosition = Optional.empty();
+			if (!Pointer.NULL.equals(wfsResult.getResults())) {
+				itemPosition = Optional
+						.of(CdmFactory.create(getXfsVersion(), wfsResult.getResults(), ItemPosition3.class));
+			}
+			fireMediaDetected(itemPosition);
+			break;
+		case SRVE_POWER_SAVE_CHANGE:
+			firePowerSaveChange(CdmFactory.create(getXfsVersion(), wfsResult.getResults(), PowerSaveChange310.class));
+			break;
+		case SRVE_SAFEDOORCLOSED:
+			fireSafeDoorClosed();
+			break;
+		case SRVE_SAFEDOOROPEN:
+			fireSafeDoorOpen();
+			break;
+		case SRVE_SHUTTERSTATUSCHANGED:
+			fireShutterStatusChanged(
+					CdmFactory.create(getXfsVersion(), wfsResult.getResults(), ShutterStatusChanged330.class));
+			break;
+		case SRVE_TELLERINFOCHANGED:
+			fireTellerInfoChanged(new USHORT(wfsResult.getResults()).intValue());
+			break;
+		default:
+			throw new IllegalArgumentException("CdmMessage: " + message);
 		}
 	}
 
@@ -154,16 +154,12 @@ public final class CdmService extends XfsService {
 	public void fireUserEvent(WFSResult wfsResult) {
 		CdmMessage message = wfsResult.getEventID(CdmMessage.class);
 		switch (message) {
-			case USRE_CASHUNITTHRESHOLD:
-				fireCashUnitThreshold(create(wfsResult.getResults(), CashUnit3.class));
-				break;
-			default:
-				throw new IllegalArgumentException("CdmMessage: " + message);
+		case USRE_CASHUNITTHRESHOLD:
+			fireCashUnitThreshold(CdmFactory.create(getXfsVersion(), wfsResult.getResults(), CashUnit3.class));
+			break;
+		default:
+			throw new IllegalArgumentException("CdmMessage: " + message);
 		}
-	}
-
-	private <R extends Struct> R create(Pointer buffer, Class<R> type) {
-		return ReflectiveFactory.create(getXfsVersion(), buffer, type);
 	}
 
 	private void fireSafeDoorOpen() {
