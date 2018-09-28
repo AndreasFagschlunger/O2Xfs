@@ -81,7 +81,10 @@ public class CashUnitInfo3 extends Struct {
 	public boolean equals(Object obj) {
 		if (obj instanceof CashUnitInfo3) {
 			CashUnitInfo3 cashUnitInfo3 = (CashUnitInfo3) obj;
-			return new EqualsBuilder().append(getTellerID(), cashUnitInfo3.getTellerID()).append(getCount(), cashUnitInfo3.getCount()).append(getList(), cashUnitInfo3.getList())
+			return new EqualsBuilder()
+					.append(getTellerID(), cashUnitInfo3.getTellerID())
+					.append(getCount(), cashUnitInfo3.getCount())
+					.append(getList(), cashUnitInfo3.getList())
 					.isEquals();
 		}
 		return false;
@@ -89,6 +92,10 @@ public class CashUnitInfo3 extends Struct {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("tellerID", getTellerID()).append("count", getCount()).append("list", getList()).toString();
+		return new ToStringBuilder(this)
+				.append("tellerID", getTellerID())
+				.append("count", getCount())
+				.append("list", getList())
+				.toString();
 	}
 }
