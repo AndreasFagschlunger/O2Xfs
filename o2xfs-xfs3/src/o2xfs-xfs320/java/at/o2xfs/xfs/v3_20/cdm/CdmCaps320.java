@@ -32,10 +32,34 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.BOOL;
+import at.o2xfs.win32.BufferFactory;
 import at.o2xfs.win32.Pointer;
+import at.o2xfs.xfs.XfsBuilder;
 import at.o2xfs.xfs.v3_10.cdm.CdmCaps310;
 
 public class CdmCaps320 extends CdmCaps310 {
+
+	public static class Builder implements XfsBuilder<CdmCaps320> {
+
+		private final CdmCaps310.Builder builder;
+
+		private boolean antiFraudModule;
+
+		public Builder(CdmCaps310.Builder builder) {
+			this.builder = builder;
+		}
+
+		public Builder antiFraudModule(boolean antiFraudModule) {
+			this.antiFraudModule = antiFraudModule;
+			return this;
+		}
+
+		@Override
+		public CdmCaps320 build(BufferFactory factory) {
+			return new CdmCaps320(this, factory);
+		}
+
+	}
 
 	protected final BOOL antiFraudModule = new BOOL();
 
@@ -48,10 +72,21 @@ public class CdmCaps320 extends CdmCaps310 {
 		assignBuffer(p);
 	}
 
+	protected CdmCaps320(Builder builder, BufferFactory factory) {
+		this();
+		allocate(factory);
+		postConstruct(builder, factory);
+	}
+
 	public CdmCaps320(CdmCaps320 copy) {
 		this();
 		allocate();
 		set(copy);
+	}
+
+	protected void postConstruct(Builder builder, BufferFactory factory) {
+		super.postConstruct(builder.builder, factory);
+		antiFraudModule.set(builder.antiFraudModule);
 	}
 
 	protected void set(CdmCaps320 copy) {
@@ -72,13 +107,19 @@ public class CdmCaps320 extends CdmCaps310 {
 	public boolean equals(Object obj) {
 		if (obj instanceof CdmCaps320) {
 			CdmCaps320 cdmCaps320 = (CdmCaps320) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(isAntiFraudModule(), cdmCaps320.isAntiFraudModule()).isEquals();
+			return new EqualsBuilder()
+					.appendSuper(super.equals(obj))
+					.append(isAntiFraudModule(), cdmCaps320.isAntiFraudModule())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).appendSuper(super.toString()).append("antiFraudModule", isAntiFraudModule()).toString();
+		return new ToStringBuilder(this)
+				.appendSuper(super.toString())
+				.append("antiFraudModule", isAntiFraudModule())
+				.toString();
 	}
 }

@@ -28,10 +28,21 @@
 package at.o2xfs.xfs.v3_00.cdm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.EnumSet;
 
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
+import at.o2xfs.win32.BufferFactory;
+import at.o2xfs.xfs.XfsServiceClass;
+import at.o2xfs.xfs.cdm.CdmType;
+import at.o2xfs.xfs.cdm.ExchangeType;
+import at.o2xfs.xfs.cdm.MoveItems;
+import at.o2xfs.xfs.cdm.Position;
+import at.o2xfs.xfs.cdm.RetractArea;
+import at.o2xfs.xfs.cdm.RetractStackerActions;
 import at.o2xfs.xfs.v3_00.BaseXfs3Test;
 
 public class CdmCaps3Test extends BaseXfs3Test {
@@ -45,4 +56,28 @@ public class CdmCaps3Test extends BaseXfs3Test {
 	}
 
 	private native Buffer buildCdmCaps3();
+
+	@Test
+	public void testBuilder() {
+		CdmCaps3 capabilities = new CdmCaps3.Builder()
+				.serviceClass(XfsServiceClass.CDM)
+				.type(CdmType.SELFSERVICEBILL)
+				.maxDispenseItems(40)
+				.compound(false)
+				.shutter(true)
+				.shutterControl(false)
+				.retractAreas(EnumSet.of(RetractArea.RETRACT, RetractArea.TRANSPORT))
+				.retractTransportActions(EnumSet.of(RetractStackerActions.RETRACT))
+				.retractStackerActions(EnumSet.of(RetractStackerActions.RETRACT))
+				.safeDoor(false)
+				.cashBox(false)
+				.intermediateStacker(true)
+				.itemsTakenSensor(true)
+				.positions(EnumSet.of(Position.FRONT))
+				.moveItems(EnumSet.of(MoveItems.FROMCU, MoveItems.TOTRANSPORT))
+				.exchangeType(EnumSet.of(ExchangeType.BYHAND))
+				.build(BufferFactory.getInstance());
+		assertEquals(XfsServiceClass.CDM, capabilities.getServiceClass());
+		assertTrue(capabilities.getExtra().isEmpty());
+	}
 }

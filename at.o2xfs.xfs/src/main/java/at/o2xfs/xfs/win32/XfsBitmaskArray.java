@@ -48,7 +48,7 @@ public class XfsBitmaskArray<T extends Enum<T> & XfsConstant> extends DWORDArray
 
 	@Override
 	public void set(List<Set<T>> value) {
-		for (int i = 0; i < array.length; i++) {
+		for (int i = 0; i < Math.min(value.size(), length); i++) {
 			long l = 0L;
 			for (T each : value.get(i)) {
 				l |= each.getValue();

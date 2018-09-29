@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.v3_30.cdm;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -34,13 +35,52 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.BOOL;
+import at.o2xfs.win32.BufferFactory;
 import at.o2xfs.win32.Pointer;
+import at.o2xfs.xfs.XfsBuilder;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.ItemInfoType;
 import at.o2xfs.xfs.v3_20.cdm.CdmCaps320;
 import at.o2xfs.xfs.win32.XfsDWordBitmask;
 
 public class CdmCaps330 extends CdmCaps320 {
+
+	public static class Builder implements XfsBuilder<CdmCaps330> {
+
+		private final CdmCaps320.Builder builder;
+
+		private Set<ItemInfoType> itemInfoTypes;
+
+		private boolean blacklist;
+
+		private CdmExecuteCommand[] synchronizableCommands;
+
+		public Builder(at.o2xfs.xfs.v3_20.cdm.CdmCaps320.Builder builder) {
+			this.builder = builder;
+			itemInfoTypes = new HashSet<>();
+			synchronizableCommands = new CdmExecuteCommand[0];
+		}
+
+		public Builder itemInfoTypes(Set<ItemInfoType> itemInfoTypes) {
+			this.itemInfoTypes = itemInfoTypes;
+			return this;
+		}
+
+		public Builder blacklist(boolean blacklist) {
+			this.blacklist = blacklist;
+			return this;
+		}
+
+		public Builder synchronizableCommands(CdmExecuteCommand[] synchronizableCommands) {
+			this.synchronizableCommands = synchronizableCommands;
+			return this;
+		}
+
+		@Override
+		public CdmCaps330 build(BufferFactory factory) {
+			return new CdmCaps330(this, factory);
+		}
+	}
 
 	protected final XfsDWordBitmask<ItemInfoType> itemInfoTypes = new XfsDWordBitmask<>(ItemInfoType.class);
 	protected final BOOL blacklist = new BOOL();
@@ -57,10 +97,23 @@ public class CdmCaps330 extends CdmCaps320 {
 		assignBuffer(p);
 	}
 
+	protected CdmCaps330(Builder builder, BufferFactory factory) {
+		this();
+		allocate(factory);
+		postConstruct(builder, factory);
+	}
+
 	public CdmCaps330(CdmCaps330 copy) {
 		this();
 		allocate();
 		set(copy);
+	}
+
+	protected void postConstruct(Builder builder, BufferFactory factory) {
+		super.postConstruct(builder.builder, factory);
+		itemInfoTypes.set(builder.itemInfoTypes);
+		blacklist.set(builder.blacklist);
+		synchronizableCommands.pointTo(new SynchronizableCommands(builder.synchronizableCommands, factory));
 	}
 
 	protected void set(CdmCaps330 copy) {
@@ -84,22 +137,35 @@ public class CdmCaps330 extends CdmCaps320 {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().appendSuper(super.hashCode()).append(getItemInfoTypes()).append(isBlacklist()).append(getSynchronizableCommands()).toHashCode();
+		return new HashCodeBuilder()
+				.appendSuper(super.hashCode())
+				.append(getItemInfoTypes())
+				.append(isBlacklist())
+				.append(getSynchronizableCommands())
+				.toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof CdmCaps330) {
 			CdmCaps330 cdmCaps330 = (CdmCaps330) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getItemInfoTypes(), cdmCaps330.getItemInfoTypes()).append(isBlacklist(), cdmCaps330.isBlacklist())
-					.append(getSynchronizableCommands(), cdmCaps330.getSynchronizableCommands()).isEquals();
+			return new EqualsBuilder()
+					.appendSuper(super.equals(obj))
+					.append(getItemInfoTypes(), cdmCaps330.getItemInfoTypes())
+					.append(isBlacklist(), cdmCaps330.isBlacklist())
+					.append(getSynchronizableCommands(), cdmCaps330.getSynchronizableCommands())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).appendSuper(super.toString()).append("itemInfoTypes", getItemInfoTypes()).append("blacklist", isBlacklist())
-				.append("synchronizableCommands", getSynchronizableCommands()).toString();
+		return new ToStringBuilder(this)
+				.appendSuper(super.toString())
+				.append("itemInfoTypes", getItemInfoTypes())
+				.append("blacklist", isBlacklist())
+				.append("synchronizableCommands", getSynchronizableCommands())
+				.toString();
 	}
 }

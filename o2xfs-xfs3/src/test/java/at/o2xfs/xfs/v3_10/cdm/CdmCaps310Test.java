@@ -28,10 +28,27 @@
 package at.o2xfs.xfs.v3_10.cdm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
+import at.o2xfs.win32.BufferFactory;
+import at.o2xfs.xfs.XfsServiceClass;
+import at.o2xfs.xfs.cdm.CdmGuidLights;
+import at.o2xfs.xfs.cdm.CdmType;
+import at.o2xfs.xfs.cdm.ExchangeType;
+import at.o2xfs.xfs.cdm.MoveItems;
+import at.o2xfs.xfs.cdm.Position;
+import at.o2xfs.xfs.cdm.RetractArea;
+import at.o2xfs.xfs.cdm.RetractStackerActions;
+import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
 import at.o2xfs.xfs.v3_10.BaseXfs310Test;
 
 public class CdmCaps310Test extends BaseXfs310Test {
@@ -45,4 +62,35 @@ public class CdmCaps310Test extends BaseXfs310Test {
 	}
 
 	private native Buffer buildCdmCaps310();
+
+	@Test
+	public void testBuilder() {
+		List<Set<CdmGuidLights>> guidLights = new ArrayList<>();
+		guidLights.add(EnumSet.of(CdmGuidLights.GREEN, CdmGuidLights.MEDIUM_FLASH));
+		CdmCaps310 capabilities = new CdmCaps310.Builder(new CdmCaps3.Builder()
+				.serviceClass(XfsServiceClass.CDM)
+				.type(CdmType.SELFSERVICEBILL)
+				.maxDispenseItems(40)
+				.compound(false)
+				.shutter(true)
+				.shutterControl(false)
+				.retractAreas(EnumSet.of(RetractArea.RETRACT, RetractArea.TRANSPORT))
+				.retractTransportActions(EnumSet.of(RetractStackerActions.RETRACT))
+				.retractStackerActions(EnumSet.of(RetractStackerActions.RETRACT))
+				.safeDoor(false)
+				.cashBox(false)
+				.intermediateStacker(true)
+				.itemsTakenSensor(true)
+				.positions(EnumSet.of(Position.FRONT))
+				.moveItems(EnumSet.of(MoveItems.FROMCU, MoveItems.TOTRANSPORT))
+				.exchangeType(EnumSet.of(ExchangeType.BYHAND)))
+						.guidLights(guidLights)
+						.powerSaveControl(true)
+						.build(BufferFactory.getInstance());
+		assertEquals(XfsServiceClass.CDM, capabilities.getServiceClass());
+		assertTrue(capabilities.getExtra().isEmpty());
+		assertEquals(guidLights.get(0), capabilities.getGuidLights().get(0));
+		assertTrue(capabilities.isPowerSaveControl());
+		assertFalse(capabilities.isPrepareDispense());
+	}
 }

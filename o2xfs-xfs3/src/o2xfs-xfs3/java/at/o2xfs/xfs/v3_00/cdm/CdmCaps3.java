@@ -38,22 +38,23 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.BOOL;
 import at.o2xfs.win32.BufferFactory;
+import at.o2xfs.win32.MappedPointer;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.XfsBuilder;
 import at.o2xfs.xfs.XfsServiceClass;
+import at.o2xfs.xfs.XfsStruct;
 import at.o2xfs.xfs.cdm.CdmType;
 import at.o2xfs.xfs.cdm.ExchangeType;
 import at.o2xfs.xfs.cdm.MoveItems;
 import at.o2xfs.xfs.cdm.Position;
 import at.o2xfs.xfs.cdm.RetractArea;
 import at.o2xfs.xfs.cdm.RetractStackerActions;
-import at.o2xfs.xfs.win32.XfsMultiByteMap;
+import at.o2xfs.xfs.win32.StringMapConverter;
 import at.o2xfs.xfs.win32.XfsWord;
 import at.o2xfs.xfs.win32.XfsWordBitmask;
 
-public class CdmCaps3 extends Struct {
+public class CdmCaps3 extends XfsStruct {
 
 	public static class Builder implements XfsBuilder<CdmCaps3> {
 
@@ -161,27 +162,8 @@ public class CdmCaps3 extends Struct {
 		}
 
 		@Override
-		public CdmCaps3 build(BufferFactory factory) {
-			CdmCaps3 result = new CdmCaps3();
-			result.assignBuffer(factory.createBuffer(result.getSize()));
-			result.serviceClass.set(serviceClass);
-			result.type.set(type);
-			result.maxDispenseItems.set(maxDispenseItems);
-			result.compound.set(compound);
-			result.shutter.set(shutter);
-			result.shutterControl.set(shutterControl);
-			result.retractAreas.set(retractAreas);
-			result.retractTransportActions.set(retractTransportActions);
-			result.retractStackerActions.set(retractStackerActions);
-			result.safeDoor.set(safeDoor);
-			result.cashBox.set(cashBox);
-			result.intermediateStacker.set(intermediateStacker);
-			result.itemsTakenSensor.set(itemsTakenSensor);
-			result.positions.set(positions);
-			result.moveItems.set(moveItems);
-			result.exchangeType.set(exchangeType);
-			result.extra.set(extra);
-			return result;
+		public CdmCaps3 build(BufferFactory bufferFactory) {
+			return new CdmCaps3(this, bufferFactory);
 		}
 
 	}
@@ -204,7 +186,7 @@ public class CdmCaps3 extends Struct {
 	protected final XfsWordBitmask<Position> positions = new XfsWordBitmask<>(Position.class);
 	protected final XfsWordBitmask<MoveItems> moveItems = new XfsWordBitmask<>(MoveItems.class);
 	protected final XfsWordBitmask<ExchangeType> exchangeType = new XfsWordBitmask<>(ExchangeType.class);
-	protected final XfsMultiByteMap extra = new XfsMultiByteMap();
+	protected final MappedPointer<Map<String, String>> extra = new MappedPointer<>(StringMapConverter.US_ASCII);
 
 	protected CdmCaps3() {
 		add(serviceClass);
@@ -231,10 +213,36 @@ public class CdmCaps3 extends Struct {
 		assignBuffer(p);
 	}
 
+	protected CdmCaps3(Builder builder, BufferFactory factory) {
+		this();
+		allocate(factory);
+		postConstruct(builder, factory);
+	}
+
 	public CdmCaps3(CdmCaps3 copy) {
 		this();
 		allocate();
 		set(copy);
+	}
+
+	protected void postConstruct(Builder builder, BufferFactory factory) {
+		serviceClass.set(builder.serviceClass);
+		type.set(builder.type);
+		maxDispenseItems.set(builder.maxDispenseItems);
+		compound.set(builder.compound);
+		shutter.set(builder.shutter);
+		shutterControl.set(builder.shutterControl);
+		retractAreas.set(builder.retractAreas);
+		retractTransportActions.set(builder.retractTransportActions);
+		retractStackerActions.set(builder.retractStackerActions);
+		safeDoor.set(builder.safeDoor);
+		cashBox.set(builder.cashBox);
+		intermediateStacker.set(builder.intermediateStacker);
+		itemsTakenSensor.set(builder.itemsTakenSensor);
+		positions.set(builder.positions);
+		moveItems.set(builder.moveItems);
+		exchangeType.set(builder.exchangeType);
+		extra.put(builder.extra, factory);
 	}
 
 	protected void set(CdmCaps3 copy) {
@@ -254,7 +262,7 @@ public class CdmCaps3 extends Struct {
 		positions.set(copy.getPositions());
 		moveItems.set(copy.getMoveItems());
 		exchangeType.set(copy.getExchangeType());
-		extra.set(copy.getExtra());
+		extra.put(copy.getExtra(), BufferFactory.getInstance());
 	}
 
 	public XfsServiceClass getServiceClass() {

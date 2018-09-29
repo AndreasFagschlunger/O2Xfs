@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.v3_10.cdm;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +36,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import at.o2xfs.win32.BOOL;
+import at.o2xfs.win32.BufferFactory;
 import at.o2xfs.win32.Pointer;
+import at.o2xfs.xfs.XfsBuilder;
 import at.o2xfs.xfs.cdm.CdmGuidLights;
 import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
 import at.o2xfs.xfs.win32.XfsBitmaskArray;
@@ -44,7 +47,42 @@ public class CdmCaps310 extends CdmCaps3 {
 
 	private static final int GUIDLIGHTS_SIZE = 32;
 
-	protected final XfsBitmaskArray<CdmGuidLights> guidLights = new XfsBitmaskArray<>(GUIDLIGHTS_SIZE, CdmGuidLights.class);
+	public static class Builder implements XfsBuilder<CdmCaps310> {
+
+		private final CdmCaps3.Builder builder;
+		private List<Set<CdmGuidLights>> guidLights;
+		private boolean powerSaveControl;
+		private boolean prepareDispense;
+
+		public Builder(CdmCaps3.Builder builder) {
+			this.builder = builder;
+			this.guidLights = Collections.emptyList();
+		}
+
+		public Builder guidLights(List<Set<CdmGuidLights>> guidLights) {
+			this.guidLights = guidLights;
+			return this;
+		}
+
+		public Builder powerSaveControl(boolean powerSaveControl) {
+			this.powerSaveControl = powerSaveControl;
+			return this;
+		}
+
+		public Builder prepareDispense(boolean prepareDispense) {
+			this.prepareDispense = prepareDispense;
+			return this;
+		}
+
+		@Override
+		public CdmCaps310 build(BufferFactory factory) {
+			return new CdmCaps310(this, factory);
+		}
+
+	}
+
+	protected final XfsBitmaskArray<CdmGuidLights> guidLights = new XfsBitmaskArray<>(GUIDLIGHTS_SIZE,
+			CdmGuidLights.class);
 	protected final BOOL powerSaveControl = new BOOL();
 	protected final BOOL prepareDispense = new BOOL();
 
@@ -59,10 +97,23 @@ public class CdmCaps310 extends CdmCaps3 {
 		assignBuffer(p);
 	}
 
+	protected CdmCaps310(Builder builder, BufferFactory factory) {
+		this();
+		allocate(factory);
+		postConstruct(builder, factory);
+	}
+
 	public CdmCaps310(CdmCaps310 copy) {
 		this();
 		allocate();
 		set(copy);
+	}
+
+	protected void postConstruct(Builder builder, BufferFactory factory) {
+		super.postConstruct(builder.builder, factory);
+		guidLights.set(builder.guidLights);
+		powerSaveControl.set(builder.powerSaveControl);
+		prepareDispense.set(builder.prepareDispense);
 	}
 
 	protected void set(CdmCaps310 copy) {
@@ -86,22 +137,35 @@ public class CdmCaps310 extends CdmCaps3 {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().appendSuper(super.hashCode()).append(getGuidLights()).append(isPowerSaveControl()).append(isPrepareDispense()).toHashCode();
+		return new HashCodeBuilder()
+				.appendSuper(super.hashCode())
+				.append(getGuidLights())
+				.append(isPowerSaveControl())
+				.append(isPrepareDispense())
+				.toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof CdmCaps310) {
 			CdmCaps310 cdmCaps310 = (CdmCaps310) obj;
-			return new EqualsBuilder().appendSuper(super.equals(obj)).append(getGuidLights(), cdmCaps310.getGuidLights())
-					.append(isPowerSaveControl(), cdmCaps310.isPowerSaveControl()).append(isPrepareDispense(), cdmCaps310.isPrepareDispense()).isEquals();
+			return new EqualsBuilder()
+					.appendSuper(super.equals(obj))
+					.append(getGuidLights(), cdmCaps310.getGuidLights())
+					.append(isPowerSaveControl(), cdmCaps310.isPowerSaveControl())
+					.append(isPrepareDispense(), cdmCaps310.isPrepareDispense())
+					.isEquals();
 		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).appendSuper(super.toString()).append("guidLights", getGuidLights()).append("powerSaveControl", isPowerSaveControl())
-				.append("prepareDispense", isPrepareDispense()).toString();
+		return new ToStringBuilder(this)
+				.appendSuper(super.toString())
+				.append("guidLights", getGuidLights())
+				.append("powerSaveControl", isPowerSaveControl())
+				.append("prepareDispense", isPrepareDispense())
+				.toString();
 	}
 }

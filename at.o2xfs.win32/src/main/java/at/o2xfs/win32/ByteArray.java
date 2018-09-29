@@ -34,19 +34,23 @@ import at.o2xfs.common.Hex;
  *
  * @author Andreas Fagschlunger
  */
-public class ByteArray
-		extends Array<BYTE> {
+public class ByteArray extends Array<BYTE> {
 
 	public ByteArray(int length) {
 		this(new byte[length]);
 	}
 
+	@Deprecated
 	public ByteArray(final byte[] src) {
+		this(src, BufferFactory.getInstance());
+	}
+
+	public ByteArray(final byte[] src, BufferFactory bufferFactory) {
 		super(new BYTE[src.length]);
 		for (int i = 0; i < array.length; i++) {
 			array[i] = new BYTE();
 		}
-		allocate();
+		allocate(bufferFactory);
 		put(src);
 	}
 

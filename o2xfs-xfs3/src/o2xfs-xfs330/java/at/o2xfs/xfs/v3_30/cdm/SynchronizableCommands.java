@@ -28,6 +28,7 @@
 package at.o2xfs.xfs.v3_30.cdm;
 
 import at.o2xfs.win32.Buffer;
+import at.o2xfs.win32.BufferFactory;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Type;
 import at.o2xfs.win32.UINT;
@@ -42,6 +43,12 @@ public class SynchronizableCommands extends Type implements ValueType<CdmExecute
 	public SynchronizableCommands(CdmExecuteCommand[] commands) {
 		synchronizableCommands = new UINT[commands.length];
 		allocate();
+		set(commands);
+	}
+
+	public SynchronizableCommands(CdmExecuteCommand[] commands, BufferFactory bufferFactory) {
+		synchronizableCommands = new UINT[commands.length];
+		allocate(bufferFactory);
 		set(commands);
 	}
 

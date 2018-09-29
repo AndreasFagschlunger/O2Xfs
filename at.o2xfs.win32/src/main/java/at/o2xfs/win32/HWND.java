@@ -41,7 +41,17 @@ public class HWND extends HANDLE {
 		allocate();
 	}
 
+	/**
+	 * @deprecated use {@link #of(Buffer)}
+	 */
+	@Deprecated
 	public HWND(Buffer buffer) {
 		assignBuffer(buffer);
+	}
+
+	public static final HWND copy(Buffer buffer) {
+		HWND result = new HWND();
+		result.put(buffer.get());
+		return result;
 	}
 }

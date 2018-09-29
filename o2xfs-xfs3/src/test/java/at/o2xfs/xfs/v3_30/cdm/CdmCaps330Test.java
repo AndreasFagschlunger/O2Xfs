@@ -27,13 +27,24 @@
 
 package at.o2xfs.xfs.v3_30.cdm;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.EnumSet;
+import java.util.Set;
 
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
+import at.o2xfs.win32.BufferFactory;
+import at.o2xfs.xfs.XfsServiceClass;
+import at.o2xfs.xfs.cdm.CdmExecuteCommand;
+import at.o2xfs.xfs.cdm.CdmType;
 import at.o2xfs.xfs.cdm.ItemInfoType;
+import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
+import at.o2xfs.xfs.v3_10.cdm.CdmCaps310;
+import at.o2xfs.xfs.v3_20.cdm.CdmCaps320;
 import at.o2xfs.xfs.v3_30.BaseXfs330Test;
 
 public class CdmCaps330Test extends BaseXfs330Test {
@@ -50,4 +61,20 @@ public class CdmCaps330Test extends BaseXfs330Test {
 	}
 
 	private native Buffer buildCdmCaps330();
+
+	@Test
+	public void testBuilder() {
+		Set<ItemInfoType> itemInfoTypes = EnumSet.of(ItemInfoType.SIGNATURE, ItemInfoType.SERIALNUMBER);
+		CdmExecuteCommand[] synchronizableCommands = new CdmExecuteCommand[] { CdmExecuteCommand.DENOMINATE,
+				CdmExecuteCommand.DISPENSE };
+		CdmCaps330 capabilities = new CdmCaps330.Builder(new CdmCaps320.Builder(new CdmCaps310.Builder(
+				new CdmCaps3.Builder().serviceClass(XfsServiceClass.CDM).type(CdmType.SELFSERVICEBILL))))
+						.itemInfoTypes(itemInfoTypes)
+						.blacklist(true)
+						.synchronizableCommands(synchronizableCommands)
+						.build(BufferFactory.getInstance());
+		assertEquals(itemInfoTypes, capabilities.getItemInfoTypes());
+		assertTrue(capabilities.isBlacklist());
+		assertArrayEquals(synchronizableCommands, capabilities.getSynchronizableCommands());
+	}
 }

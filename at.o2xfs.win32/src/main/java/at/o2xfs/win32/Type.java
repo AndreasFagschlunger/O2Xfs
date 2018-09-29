@@ -63,10 +63,14 @@ public abstract class Type {
 	}
 
 	public final void allocate() {
+		allocate(BufferFactory.getInstance());
+	}
+
+	public final void allocate(BufferFactory factory) {
 		if (buffer != null) {
 			throw new IllegalStateException("Buffer already exists");
 		}
-		assignBuffer(BufferFactory.getInstance().createBuffer(getSize()));
+		assignBuffer(factory.createBuffer(getSize()));
 	}
 
 	public abstract int getSize();

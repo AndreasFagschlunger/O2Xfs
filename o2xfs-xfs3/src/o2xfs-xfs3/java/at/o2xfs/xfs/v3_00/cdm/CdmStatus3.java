@@ -65,7 +65,7 @@ public class CdmStatus3 extends Struct {
 		assignBuffer(p);
 	}
 
-	protected CdmStatus3(CdmStatus3 copy) {
+	public CdmStatus3(CdmStatus3 copy) {
 		this();
 		allocate();
 		set(copy);
@@ -106,16 +106,27 @@ public class CdmStatus3 extends Struct {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getDeviceState()).append(getSafeDoor()).append(getDispenser()).append(getIntermediateStacker()).append(getPositions())
-				.append(getExtra()).toHashCode();
+		return new HashCodeBuilder()
+				.append(getDeviceState())
+				.append(getSafeDoor())
+				.append(getDispenser())
+				.append(getIntermediateStacker())
+				.append(getPositions())
+				.append(getExtra())
+				.toHashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof CdmStatus3) {
 			CdmStatus3 status = (CdmStatus3) obj;
-			return new EqualsBuilder().append(getDeviceState(), status.getDeviceState()).append(getSafeDoor(), status.getSafeDoor()).append(getDispenser(), status.getDispenser())
-					.append(getIntermediateStacker(), status.getIntermediateStacker()).append(getPositions(), status.getPositions()).append(getExtra(), status.getExtra())
+			return new EqualsBuilder()
+					.append(getDeviceState(), status.getDeviceState())
+					.append(getSafeDoor(), status.getSafeDoor())
+					.append(getDispenser(), status.getDispenser())
+					.append(getIntermediateStacker(), status.getIntermediateStacker())
+					.append(getPositions(), status.getPositions())
+					.append(getExtra(), status.getExtra())
 					.isEquals();
 		}
 		return false;
@@ -123,7 +134,13 @@ public class CdmStatus3 extends Struct {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("deviceState", getDeviceState()).append("safeDoor", getSafeDoor()).append("dispenser", getDispenser())
-				.append("intermediateStacker", getIntermediateStacker()).append("positions", getPositions()).append("extra", getExtra()).toString();
+		return new ToStringBuilder(this)
+				.append("deviceState", getDeviceState())
+				.append("safeDoor", getSafeDoor())
+				.append("dispenser", getDispenser())
+				.append("intermediateStacker", getIntermediateStacker())
+				.append("positions", getPositions())
+				.append("extra", getExtra())
+				.toString();
 	}
 }
