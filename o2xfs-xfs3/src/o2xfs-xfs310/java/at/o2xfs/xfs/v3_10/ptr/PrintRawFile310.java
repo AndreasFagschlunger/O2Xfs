@@ -27,6 +27,8 @@
 
 package at.o2xfs.xfs.v3_10.ptr;
 
+import java.util.EnumSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -42,6 +44,40 @@ import at.o2xfs.xfs.win32.XfsDWord;
 import at.o2xfs.xfs.win32.XfsDWordBitmask;
 
 public class PrintRawFile310 extends Struct {
+
+	public static class Builder {
+
+		private final String fileName;
+		private Set<MediaControl> mediaControl;
+		private Optional<PaperSource> paperSource;
+
+		public Builder(String fileName) {
+			this.fileName = fileName;
+			mediaControl = EnumSet.noneOf(MediaControl.class);
+			paperSource = Optional.empty();
+		}
+
+		public Builder mediaControl(Set<MediaControl> mediaControl) {
+			this.mediaControl = mediaControl;
+			return this;
+		}
+
+		public Builder paperSource(Optional<PaperSource> paperSource) {
+			this.paperSource = paperSource;
+			return this;
+		}
+
+		public PrintRawFile310 build() {
+			PrintRawFile310 result = new PrintRawFile310();
+			result.allocate();
+			result.fileName.set(fileName);
+			result.mediaControl.set(mediaControl);
+			if (paperSource.isPresent()) {
+				result.paperSource.set(paperSource.get());
+			}
+			return result;
+		}
+	}
 
 	protected final LPSTR fileName = new LPSTR();
 	protected final XfsDWordBitmask<MediaControl> mediaControl = new XfsDWordBitmask<>(MediaControl.class);

@@ -29,9 +29,14 @@ package at.o2xfs.xfs.v3_10.ptr;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.EnumSet;
+import java.util.Optional;
+
 import org.junit.Test;
 
 import at.o2xfs.win32.Buffer;
+import at.o2xfs.xfs.ptr.MediaControl;
+import at.o2xfs.xfs.ptr.PaperSource;
 import at.o2xfs.xfs.v3_10.BaseXfs310Test;
 
 public class PrintRawFile310Test extends BaseXfs310Test {
@@ -45,4 +50,12 @@ public class PrintRawFile310Test extends BaseXfs310Test {
 	}
 
 	private native Buffer buildPrintRawFile310();
+
+	@Test
+	public void testBuilder() {
+		PrintRawFile310 printRawFile = new PrintRawFile310.Builder("test.jpg")
+				.mediaControl(EnumSet.of(MediaControl.CUT, MediaControl.EJECTTOTRANSPORT))
+				.paperSource(Optional.of(PaperSource.ANY))
+				.build();
+	}
 }
