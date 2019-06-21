@@ -34,12 +34,11 @@ import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cim.CimInfoCommand;
-import at.o2xfs.xfs.v3_00.cim.CashInStatus3;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cim.CimFactory;
 import at.o2xfs.xfs.service.cim.CimService;
-import at.o2xfs.xfs.service.cmd.XfsCallable;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
+import at.o2xfs.xfs.v3_00.cim.CashInStatus3;
 
 public final class CashInStatusCommand implements Callable<CashInStatus3> {
 
@@ -55,7 +54,7 @@ public final class CashInStatusCommand implements Callable<CashInStatus3> {
 	public CashInStatus3 call() throws XfsException {
 		CashInStatus3 result;
 		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService,
-				CimInfoCommand.BANKNOTE_TYPES);
+				CimInfoCommand.CASH_IN_STATUS);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
