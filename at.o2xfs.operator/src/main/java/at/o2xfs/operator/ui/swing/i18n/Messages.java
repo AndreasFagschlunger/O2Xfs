@@ -90,9 +90,10 @@ public class Messages {
 
 	public static final String getMessage(final ExceptionMessage error) {
 		final Throwable cause = error.getCause();
+		Label label = new Label(error.getTaskClass(), cause.getClass().getName());
 		if (cause instanceof XfsException) {
 			final XfsException e = (XfsException) cause;
-			final Label label = new Label(error.getTaskClass(), e.getError().name());
+			label = new Label(error.getTaskClass(), e.getError().name());
 			final Iterator<String> iterator = new LabelIterator(label);
 			while (iterator.hasNext()) {
 				final String key = iterator.next();
@@ -101,7 +102,6 @@ public class Messages {
 				}
 			}
 		}
-		final Label label = new Label(error.getTaskClass(), cause.getClass().getName());
 		return getText(label);
 	}
 
