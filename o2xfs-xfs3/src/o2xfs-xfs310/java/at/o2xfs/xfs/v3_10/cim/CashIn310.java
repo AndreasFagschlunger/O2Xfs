@@ -38,7 +38,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.ULONG;
-import at.o2xfs.xfs.cdm.CdmType;
+import at.o2xfs.xfs.cdm.CashUnitType;
 import at.o2xfs.xfs.cim.CashInItemType;
 import at.o2xfs.xfs.cim.CashInType;
 import at.o2xfs.xfs.cim.CashUnitStatus;
@@ -52,7 +52,7 @@ public class CashIn310 extends CashIn3 {
 	public static class Builder extends CashIn3.Builder {
 
 		private int[] noteIds;
-		private final CdmType cdmType;
+		private final CashUnitType cdmType;
 		private Optional<String> cashUnitName;
 		private long initialCount;
 		private long dispensedCount;
@@ -62,7 +62,7 @@ public class CashIn310 extends CashIn3 {
 		private long minimum;
 
 		public Builder(int number, CashInType type, Set<CashInItemType> itemType, char[] unitID, char[] currencyID,
-				CashUnitStatus status, PhysicalCashUnit310[] physicalCashUnits, CdmType cdmType) {
+				CashUnitStatus status, PhysicalCashUnit310[] physicalCashUnits, CashUnitType cdmType) {
 			super(number, type, itemType, unitID, currencyID, status, physicalCashUnits);
 			noteIds = new int[0];
 			this.cdmType = cdmType;
@@ -158,7 +158,7 @@ public class CashIn310 extends CashIn3 {
 	}
 
 	protected final Pointer noteIds = new Pointer();
-	protected final XfsWord<CdmType> cdmType = new XfsWord<>(CdmType.class);
+	protected final XfsWord<CashUnitType> cdmType = new XfsWord<>(CashUnitType.class);
 	protected final LPSTR cashUnitName = new LPSTR();
 	protected final ULONG initialCount = new ULONG();
 	protected final ULONG dispensedCount = new ULONG();
@@ -208,7 +208,7 @@ public class CashIn310 extends CashIn3 {
 	protected void set(CashIn310 copy) {
 		super.set(copy);
 		noteIds.pointTo(new NoteIDs(copy.getNoteIds()));
-		cdmType.set(copy.getCdmType());
+		cdmType.set(copy.getCashUnitType());
 		cashUnitName.set(copy.getCashUnitName().orElse(null));
 		initialCount.set(copy.getInitialCount());
 		dispensedCount.set(copy.getDispensedCount());
@@ -227,7 +227,7 @@ public class CashIn310 extends CashIn3 {
 		return new NoteIDs(noteIds).get();
 	}
 
-	public CdmType getCdmType() {
+	public CashUnitType getCashUnitType() {
 		return cdmType.get();
 	}
 
@@ -264,7 +264,7 @@ public class CashIn310 extends CashIn3 {
 		return new HashCodeBuilder()
 				.appendSuper(super.hashCode())
 				.append(getNoteIds())
-				.append(getCdmType())
+				.append(getCashUnitType())
 				.append(getCashUnitName())
 				.append(getInitialCount())
 				.append(getDispensedCount())
@@ -282,7 +282,7 @@ public class CashIn310 extends CashIn3 {
 			return new EqualsBuilder()
 					.appendSuper(super.equals(obj))
 					.append(getNoteIds(), cashIn310.getNoteIds())
-					.append(getCdmType(), cashIn310.getCdmType())
+					.append(getCashUnitType(), cashIn310.getCashUnitType())
 					.append(getCashUnitName(), cashIn310.getCashUnitName())
 					.append(getInitialCount(), cashIn310.getInitialCount())
 					.append(getDispensedCount(), cashIn310.getDispensedCount())
@@ -300,7 +300,7 @@ public class CashIn310 extends CashIn3 {
 		return new ToStringBuilder(this)
 				.appendSuper(super.toString())
 				.append("noteIds", getNoteIds())
-				.append("cdmType", getCdmType())
+				.append("cdmType", getCashUnitType())
 				.append("cashUnitName", getCashUnitName())
 				.append("initialCount", getInitialCount())
 				.append("dispensedCount", getDispensedCount())
