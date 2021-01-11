@@ -41,10 +41,10 @@ $zipExe = $sevenZipPath+ '7z.exe'
 [Net.ServicePointManager]::SecurityProtocol = 'Tls12'
 
 New-Item -ItemType 'directory' -Force -Path $sdkPath
-Invoke-WebRequest 'https://repo.fagschlunger.co.at/install/eu/cencenelec/XFS/sdk303.zip' -OutFile "$sdkPath\sdk303.zip"
-Invoke-WebRequest 'https://repo.fagschlunger.co.at/install/eu/cencenelec/XFS/XFS310SDKInstall.zip' -OutFile "$sdkPath\XFS310SDKInstall.zip"
-Invoke-WebRequest 'https://repo.fagschlunger.co.at/install/eu/cencenelec/XFS/SDK320.zip' -OutFile "$sdkPath\SDK320.zip"
-Invoke-WebRequest 'https://repo.fagschlunger.co.at/install/eu/cencenelec/XFS/SDK330.zip' -OutFile "$sdkPath\SDK330.zip"
+Invoke-WebRequest 'https://repo.fagschlunger.co.at/artifactory/install/eu/cencenelec/XFS/sdk303.zip' -OutFile "$sdkPath\sdk303.zip"
+Invoke-WebRequest 'https://repo.fagschlunger.co.at/artifactory/install/eu/cencenelec/XFS/XFS310SDKInstall.zip' -OutFile "$sdkPath\XFS310SDKInstall.zip"
+Invoke-WebRequest 'https://repo.fagschlunger.co.at/artifactory/install/eu/cencenelec/XFS/SDK320.zip' -OutFile "$sdkPath\SDK320.zip"
+Invoke-WebRequest 'https://repo.fagschlunger.co.at/artifactory/install/eu/cencenelec/XFS/SDK330.zip' -OutFile "$sdkPath\SDK330.zip"
 
 & "$zipExe" e -o"$sdkPath" -r "$sdkPath\sdk303.zip" Install.EXE
 & "$zipExe" e -o"$sdkPath" -r "$sdkPath\Install.EXE" XFS_Manager_SDK.msi Data1.cab
