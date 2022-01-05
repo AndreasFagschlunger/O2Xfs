@@ -28,6 +28,11 @@
 apply from: "./libraries.gradle"
 
 allprojects {
+    tasks.withType(JavaCompile).configureEach {
+        options.fork = true
+        options.incremental = true
+    }
+
 
     apply plugin: 'java'
     apply plugin: 'maven-publish'
