@@ -29,11 +29,10 @@ package at.o2xfs.xfs.siu;
 
 import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.util.XfsConstants;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class SIUSensorsStatus {
 
@@ -114,6 +113,16 @@ public class SIUSensorsStatus {
 		return portStates;
 	}
 
+	public SIUHeadsetMicroPhoneSensorState getHeadsetMicroPhoneSensorState()
+	{
+		return getState(SIUSensor.HEADSETMICROPHONE, SIUHeadsetMicroPhoneSensorState.class);
+	}
+
+	public SIUFasciaMicroPhoneSensorState getFasciaMicroPhoneSensorState()
+	{
+		return getState(SIUSensor.FASCIAMICROPHONE, SIUFasciaMicroPhoneSensorState.class);
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("operatorSwitchState", getOperatorSwitchState())
@@ -129,6 +138,8 @@ public class SIUSensorsStatus {
 										.append("operatorCallButtonState", getOperatorCallButtonState())
 										.append("handsetState", getHandsetState())
 										.append("generalPurposeInputPortStates", getGeneralPurposeInputPortStates())
+										.append("headsetMicroPhoneSensorState", getHeadsetMicroPhoneSensorState())
+										.append("fasciaMicroPhoneSensorState", getFasciaMicroPhoneSensorState())
 										.toString();
 	}
 }

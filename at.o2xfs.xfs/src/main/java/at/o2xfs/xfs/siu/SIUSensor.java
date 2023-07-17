@@ -94,7 +94,11 @@ public enum SIUSensor implements XfsConstant, SIUPortIndex {
 	/**
 	 *
 	 */
-	GENERALINPUTPORT(12L);
+	GENERALINPUTPORT(12L),
+
+	HEADSETMICROPHONE(13L),
+
+	FASCIAMICROPHONE(14L);
 
 	private final long value;
 

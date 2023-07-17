@@ -29,10 +29,9 @@ package at.o2xfs.xfs.siu;
 
 import at.o2xfs.xfs.XfsConstant;
 import at.o2xfs.xfs.util.XfsConstants;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Set;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class SIUAuxiliariesStatus {
 
@@ -77,6 +76,14 @@ public class SIUAuxiliariesStatus {
 		return getState(SIUAuxiliary.ENHANCEDAUDIOCONTROL, SIUEnhancedAudioControllerState.class);
 	}
 
+	public SIUEnhancedMicroPhoneControllerState getEnhancedMicroPhoneControllerState() {
+		return getState(SIUAuxiliary.ENHANCEDMICROPHONECONTROL, SIUEnhancedMicroPhoneControllerState.class);
+	}
+
+	public int getMicroPhoneVolumeControlValue() {
+		return auxiliaries[(int) SIUAuxiliary.MICROPHONEVOLUME.getValue()];
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("volumeControlValue", getVolumeControlValue())
@@ -84,6 +91,8 @@ public class SIUAuxiliariesStatus {
 										.append("remoteStatusMonitorStates", getRemoteStatusMonitorStates())
 										.append("audibleAlarmState", getAudibleAlarmState())
 										.append("enhancedAudioControllerState", getEnhancedAudioControllerState())
+										.append("enhancedMicroPhoneControllerState", getEnhancedMicroPhoneControllerState())
+										.append("microPhoneVolumeControlValue", getMicroPhoneVolumeControlValue())
 										.toString();
 	}
 }
